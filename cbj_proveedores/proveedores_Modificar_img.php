@@ -123,7 +123,7 @@ function process_form(){
 		// print($extension);
 		// $extension = end(explode('.', $_FILES['myimg']['name']) );
 		date('H:i:s');
-		date('Y_m_d');
+		date('Y-m-d');
 		$dt = date('is');
 		global $new_name;
 		$nn = $_SESSION['refx'];
@@ -275,7 +275,7 @@ $sqla = "UPDATE `$db_name`.$vname SET `myimg` = '$new_name'  WHERE $vname.`dni` 
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function show_form($errors=''){
+function show_form($errors=[]){
 	
 global $dt;
 global $db; 	
@@ -448,7 +448,7 @@ global $text;
 $text = "\n- PROVEEDORES IMG MODIFICADA ".$ActionTime.".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\t".$destination_file.".\n\t".$rename_filename;
 
 	$logdocu = $_SESSION['ref'];
-	$logdate = date('Y_m_d');
+	$logdate = date('Y-m-d');
 	$logtext = $text."\n";
 	$filename = $dir."/".$logdate."_".$logdocu.".log";
 	$log = fopen($filename, 'ab+');
@@ -461,19 +461,6 @@ $text = "\n- PROVEEDORES IMG MODIFICADA ".$ActionTime.".\n\tR. Social: ".$_POST[
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 	
-	function desconexion(){
-
-			print("<form name='cerrar' action='mcgexit.php' method='post'>
-							<tr>
-								<td valign='bottom' align='right' colspan='8'>
-											<input type='submit' value='Cerrar Sesion' />
-								</td>
-							</tr>								
-											<input type='hidden' name='cerrar' value=1 />
-					</form>	
-							");
-	
-			} 
 	
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

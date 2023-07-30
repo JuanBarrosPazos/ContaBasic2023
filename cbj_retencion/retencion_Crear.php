@@ -161,7 +161,7 @@ function process_form(){
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-function show_form($errors=''){
+function show_form($errors=[]){
 	
 	global $db;
 	global $db_name;
@@ -252,7 +252,7 @@ global $text;
 $text = "\n- TIPO IMPUESTO CREADO ".$ActionTime.".\n\t TIPO % IMPUESTO: ".$tret.".\n\t NOMBRE: ".$name.".";
 
 		$logdocu = $_SESSION['ref'];
-		$logdate = date('Y_m_d');
+		$logdate = date('Y-m-d');
 		$logtext = $text."\n";
 		$filename = $dir."/".$logdate."_".$logdocu.".log";
 		$log = fopen($filename, 'ab+');
@@ -271,19 +271,6 @@ $text = "\n- TIPO IMPUESTO CREADO ".$ActionTime.".\n\t TIPO % IMPUESTO: ".$tret.
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	function desconexion(){
-
-			print("<form name='cerrar' action='../Admin/mcgexit.php' method='post'>
-							<tr>
-								<td valign='bottom' align='right' colspan='8'>
-											<input type='submit' value='Cerrar Sesion' />
-								</td>
-							</tr>								
-											<input type='hidden' name='cerrar' value=1 />
-					</form>	
-							");
-	
-			} 
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

@@ -183,7 +183,7 @@ $sqlc =  "SELECT * FROM $vname WHERE `ref` = '$ref' OR `dni` = '$dni' OR `rsocia
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function show_form($errors=''){
+function show_form($errors=[]){
 	
 	global $titulo;
 	$titulo = "VER CLIENTES";
@@ -347,7 +347,7 @@ function info(){
 	$text = "\n- CLIENTES BUSCAR ".$ActionTime.$filtro;
 
 	$logdocu = $_SESSION['ref'];
-	$logdate = date('Y_m_d');
+	$logdate = date('Y-m-d');
 	$logtext = $text."\n";
 	$filename = $dir."/".$logdate."_".$logdocu.".log";
 	$log = fopen($filename, 'ab+');
@@ -360,19 +360,6 @@ function info(){
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	function desconexion(){
-
-			print("<form name='cerrar' action='mcgexit.php' method='post'>
-							<tr>
-								<td valign='bottom' align='right' colspan='8'>
-											<input type='submit' value='Cerrar Sesion' />
-								</td>
-							</tr>								
-											<input type='hidden' name='cerrar' value=1 />
-					</form>	
-							");
-	
-			}
 	
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

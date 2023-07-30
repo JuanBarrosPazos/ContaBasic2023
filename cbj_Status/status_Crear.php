@@ -455,7 +455,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 global $year;
 $logdocu = $_SESSION['ref'];
-$logdate = date('Y_m_d');
+$logdate = date('Y-m-d');
 $logtext = "\n** CREADO NUEVO EJERCICIO => ".$year.".\n\t User Ref: ".$_SESSION['ref'].".\n\t User Name: ".$_SESSION['Nombre']." ".$_SESSION['Apellidos']."\n \n".$datos;
 $filename = $dir."/".$logdate."_".$logdocu.".log";
 $log = fopen($filename, 'ab+');
@@ -465,7 +465,7 @@ fclose($log);
 }
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-function show_form($errors=''){
+function show_form($errors=[]){
 	
 	if($_POST['oculto']){
 						$defaults = $_POST;
@@ -546,7 +546,7 @@ function info(){
 	$text = "\n- NUEVO EJERCICIO CREADO ".$ActionTime.".\n\t ".$year.".";
 
 		$logdocu = $_SESSION['ref'];
-		$logdate = date('Y_m_d');
+		$logdate = date('Y-m-d');
 		$logtext = $text."\n";
 		$filename = $dir."/".$logdate."_".$logdocu.".log";
 		$log = fopen($filename, 'ab+');
@@ -565,19 +565,6 @@ function info(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	function desconexion(){
-
-			print("<form name='cerrar' action='../Admin/mcgexit.php' method='post'>
-							<tr>
-								<td valign='bottom' align='right' colspan='8'>
-											<input type='submit' value='Cerrar Sesion' />
-								</td>
-							</tr>								
-											<input type='hidden' name='cerrar' value=1 />
-					</form>	
-							");
-	
-			} 
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

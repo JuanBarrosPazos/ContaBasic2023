@@ -332,7 +332,7 @@ global $text;
 $text = "\n- RECUPERAR FEEDBACK SELECCIONADO ".$ActionTime.".\n\t ID: ".$_POST['id'].".\n\t YEAR: ".$_POST['year'].".\n\t STATUS: ".$_POST['stat'].".\n\t HIDDEN: ".$_POST['hidden'].".";
 
 		$logdocu = $_SESSION['ref'];
-		$logdate = date('Y_m_d');
+		$logdate = date('Y-m-d');
 		$logtext = $text."\n";
 		$filename = $dir."/".$logdate."_".$logdocu.".log";
 		$log = fopen($filename, 'ab+');
@@ -358,7 +358,7 @@ global $text;
 $text = "\n- FEEDBACK RECUPERADO ".$ActionTime.".\n\t ID: ".$_POST['id'].".\n\t YEAR: ".$_POST['year'].".\n\t STATUS: ".$_POST['stat'].".\n\t HIDDEN: ".$_POST['hidden'].".";
 
 		$logdocu = $_SESSION['ref'];
-		$logdate = date('Y_m_d');
+		$logdate = date('Y-m-d');
 		$logtext = $text."\n";
 		$filename = $dir."/".$logdate."_".$logdocu.".log";
 		$log = fopen($filename, 'ab+');
@@ -377,19 +377,6 @@ $text = "\n- FEEDBACK RECUPERADO ".$ActionTime.".\n\t ID: ".$_POST['id'].".\n\t 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	function desconexion(){
-
-			print("<form name='cerrar' action='../Admin/mcgexit.php' method='post'>
-							<tr>
-								<td valign='bottom' align='right' colspan='8'>
-											<input type='submit' value='Cerrar Sesion' />
-								</td>
-							</tr>								
-											<input type='hidden' name='cerrar' value=1 />
-					</form>	
-							");
-	
-			} 
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

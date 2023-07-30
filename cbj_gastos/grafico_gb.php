@@ -132,7 +132,7 @@ function info(){
 $text = "- GASTOS CONSULTA GRAFICA BARRAS.\n\t".$mensaje.$ActionTime.".\n\t* ".$titulo.".\n\tORDENADA X\n\t".implode(", ",$gd)."\n\tDATOS\n\t".implode(", ",$data);
 
 	$logdocu = $_SESSION['ref'];
-	$logdate = date('Y_m_d');
+	$logdate = date('Y-m-d');
 	$logtext = $text."\n";
 	$filename = $dir."/".$logdate."_".$logdocu.".log";
 	$log = fopen($filename, 'ab+');

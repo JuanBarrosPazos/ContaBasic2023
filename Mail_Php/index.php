@@ -1,22 +1,16 @@
-<?php
-session_start();
-
-require 'misdatos.php';
-?>
-
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
 	
 <head>
 	
-<meta http-equiv="content-type" content="text/html" charset="<?php print($meta_type_charset);?>" />
-<meta http-equiv="Content-Language" content="<?php print($meta_lang_cotent2);?>">
-<meta name="Language" content="<?php print($meta_lang_cotent);?>">
-<meta name="description" content="<?php print($meta_desc_cotent);?>" />
-<meta name="keywords" content="<?php print($meta_key_cotent);?>" />
-<meta name="robots" content="<?php print($meta_robots_cotent);?>" />
-<meta name="audience" content="<?php print($meta_audience_cotent);?>" />
-<title><?php print($meta_titulo_contac);?></title>
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta http-equiv="content-type" content="text/html" charset="utf-8" />
+<meta http-equiv="Content-Language" content="es-es">
+<meta name="Language" content="Spanish">
+<meta name="description" content="Modulo Administrador" />
+<meta name="keywords" content="Juan Barros Pazos, Programas gratis, Spain, Mallorca, Palma de Mallorca" />
+<meta name="robots" content="all, index, follow" />
+<meta name="audience" content="All" />
+<title>Juan Manuel Barros Pazos</title>
 
 <link href="Descargas.css" rel="stylesheet" type="text/css" />
 <link href="favicon.png" type='image/ico' rel='shortcut icon' />
@@ -83,15 +77,15 @@ function MM_validateForm() {
 <body topmargin="0">
 <div id="Conte">
 
-  <div id="head" style="padding-bottom:12px; padding-top:6px">
-  			<font style="font-family:'Times New Roman', Times, serif; font-size:24px">
-  							<?php print(strtoupper($head_titulo));?>
-            </font>
-  	<br />
-			<font style="font-family:'Times New Roman', Times, serif; font-size:16px">
-  				<?php print("".$head_direc." / ".$head_email." / ".$head_telef."."); ?>
-          	</font>
- </div>
+  <div id="head"> 
+  			<span style="font-size:18px">
+			  		JUAN BARROS PAZOS
+            </span>
+  	</br>
+  			<span style="font-size:12px">
+			  	Design & Programming in Palma de Mallorca
+            </span>
+   </div>
 
   	<div style="clear:both"></div>
    
@@ -99,7 +93,7 @@ function MM_validateForm() {
    
         <font color="#FFFFFF">
 					<strong> <i>
-  							<?php print(strtoupper($head_titulo3));?>
+					Design & Programming in Palma de Mallorca
             		</i></strong>
     	</font>
 
@@ -114,8 +108,6 @@ function MM_validateForm() {
 	  
 <?php
 		
-	/* OJO APUNTA A MISDATOS.PHP DEL SERVIDOR
-		HAY OTRO ARCHIVO MISDATOS.PHP EN ESTE DIRECTORIO */
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -212,7 +204,7 @@ function MM_validateForm() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-function show_form($errors=''){
+function show_form($errors=[]){
 	
 	if(isset($_POST['oculto'])){
 				$defaults = $_POST;
@@ -286,7 +278,7 @@ print(" <table align='center' style=\"border:0px;margin_bottom:6px;margin-top:15
             <td>&nbsp;</td>
         	<td>&nbsp;</td>
             <td align='right'>
-                <input type='submit' value='ENVIAR FORMULARIO CONTACTO' />
+                <input type='submit' value='ENVIAR FORMULARIO CONTACTO' class='botonverde' />
 				<input type='hidden' name='oculto' value=1 />
             </td>
 		</form>	
@@ -301,50 +293,47 @@ print(" <table align='center' style=\"border:0px;margin_bottom:6px;margin-top:15
 
 	global $mail_from;
 	$mail_from = 'juanbarrospazos@hotmail.es';
-
-	 $text_body = '<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-						<html>
-						<head>
-						<title>Untitled Document</title>
-						<meta http-equiv="content-type" content="text/html" charset="utf-8" />
-						<meta http-equiv="Content-Language" content="es-es">
-						<META NAME="Language" CONTENT="Spanish">
-						</head>
-						
-						<body bgcolor="#D7F0E7">
-						
-						<STYLE>
-						body {
-							font-family: "Times New Roman", Times, serif;
-						}
-						body a {
-							text-decoration:none;
-						}
-						table a {
-							color: #666666;
-							text-decoration: none;
-							font-family: "Times New Roman", Times, serif;
-						}
-						table a:hover {
-							color: #FF9900;
-							text-decoration: none;
-						}
-						tr {
-							margin: 0px;
-							padding: 0px;
-						}
-						td {
-							margin: 0px;
-							padding: 6px;
-						}
-						th {
-							padding: 6px;
-							margin: 0px;
-							text-align: center;
-							color: #666666;
-						}
-						
-						</STYLE>
+	
+	global $mensaje;
+	$mensaje = '<html lang="es">
+					 <head>
+						 <meta charset="UTF-8">
+						 <meta http-equiv="X-UA-Compatible" content="IE=edge">
+						 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+						 <title>Document</title>
+						 <style>
+							 body {
+								 font-family: "Times New Roman", Times, serif;
+							 }
+							 body a {
+								 text-decoration:none;
+							 }
+							 table a {
+								 color: #666666;
+								 text-decoration: none;
+								 font-family: "Times New Roman", Times, serif;
+							 }
+							 table a:hover {
+								 color: #FF9900;
+								 text-decoration: none;
+							 }
+							 tr {
+								 margin: 0px;
+								 padding: 0px;
+							 }
+							 td {
+								 margin: 0px;
+								 padding: 6px;
+							 }
+							 th {
+								 padding: 6px;
+								 margin: 0px;
+								 text-align: center;
+								 color: #666666;
+							 }
+						 </style>
+		 </head>
+		<body bgcolor="#D7F0E7">
 
 	<table font-family="Times New Roman" width="600px" border="0" align="center" cellpadding="0" cellspacing="0">
 						  <tr>
@@ -378,46 +367,28 @@ print(" <table align='center' style=\"border:0px;margin_bottom:6px;margin-top:15
 						  </tr>
 					</table>
 						</body>
-							</html>
-									';
+							</html>';
 			
-	$headers = array ('From' => $_SESSION['mail_destin'],
-					  'Subject' => $_POST['asunto']);
-					  
 		# datos del mensaje
 	 
 				global $destinatario;
-				$destinatario = $_SESSION['mail_destin']; /*../INCLU/MISDATOS.PHP // MISDATOS.PHP */
+				$destinatario = 'juanbarrospazos@hotmail.es'; 
 				$titulo= $_POST['asunto']." ".$_POST['nombre']." ".$_POST['apellidos'].".";
 				$responder= $_POST['Email'];
 				$remite= $_POST['Email'];
-				$remitente= $_POST['nombre']." ".$_POST['apellidos']."."; //sin tilde para evitar errores de servidor
+				$remitente= $_POST['nombre']." ".$_POST['apellidos']."."; 
 
-				$separador = "_separador".md5 (uniqid (rand()));
-				
 		# cabecera
 				global $cabecera;
 				$cabecera = "Date: ".date("l j F Y, G:i")."\n";
-				$cabecera .="MIME-Version: 1.0\n";
-				$cabecera .="From: ".$remitente."<".$destinatario.">\n";
-				$cabecera .="Return-path: ". $remite."\n";
-				$cabecera .="Reply-To: ".$responder."\n";
-				$cabecera .="X-Mailer: PHP/". phpversion()."\n";
-				$cabecera .="Content-Type: multipart/mixed;"."\n";
-				
-				$cabecera .= " boundary=$separador"."\r\n\r\n";	/**/
-				
-	 			global $texto_html;
-				$texto_html ="\n"."--$separador"."\n";			/**/
-				$texto_html .="Content-Type:text/html; charset=\"utf-8\""."\n";
-				$texto_html .="Content-Transfer-Encoding: 7bit"."\r\n\r\n";
-				
-				# Añado la cadena que contiene el mensaje
-				$texto_html .= $text_body;
-				
-				/* Le pasamos a la variable $mensaje el valor de $texto_html*/
-	 			global $mensaje;
-				$mensaje= $texto_html;
+				//$cabecera .="MIME-Version: 1.0\n";
+				$cabecera .= 'MIME-Version: 1.0' . "\r\n";
+				$cabecera .= 'Content-type: text/html; charset=UTF-8' . "\n";				
+				$cabecera .= "From: ".$remitente."<".$destinatario.">\n";
+				//$cabecera .= "Return-path: ". $remite."\n";
+				$cabecera .= "Reply-To: ".$responder."\n";
+				//$cabecera .="X-Mailer: PHP/". phpversion()."\n";
+				//$cabecera .="Content-Type: multipart/mixed;"."\n";
 				
 			if( mail($destinatario, $titulo, $mensaje, $cabecera)){
 						print("<table align='center' style=\"margin-top:40px\">
@@ -438,7 +409,7 @@ print(" <table align='center' style=\"border:0px;margin_bottom:6px;margin-top:15
 									</td>
 								</tr>
 							<table>
-			<embed src='../audi/form_submit_1.mp3' autostart='true' loop='false' width='0' height='0' hidden='true' ></embed>");
+			<embed src='../audi/form_submit_1.mp3' autostart='true' loop='false' width='0' height='0' hidden='true'></embed>");
 		}else{
 			global $head_footer;
 			print("<table align='center' style=\"margin-top:20px;margin-bottom:20px\">
@@ -454,7 +425,7 @@ print(" <table align='center' style=\"border:0px;margin_bottom:6px;margin-top:15
 						<tr>
 							<td align='center'>
 								<a href='http://juanbarrospazos.blogspot.com.es/' target='_blank'>
-								".$head_footer."
+									&copy; Juan Barr&oacute;s Pazos 2021 - 2023.
 								</a>
 							</td>
 						</tr>
@@ -467,12 +438,12 @@ print(" <table align='center' style=\"border:0px;margin_bottom:6px;margin-top:15
 			
 /////////////////////////////////////////////////////////////////////////////////////////////////
 	
-/* Creado por Juan Barros Pazos 2020 */
+/* Creado por Juan Barros Pazos 2021 */
 ?>
 
-</div>
-<div style="clear:both"></div>
-<div id="footer"><?php print($head_footer);?></div>
-</div>
+	</div>
+	<div style="clear:both"></div>
+		<div id="footer">&copy; Juan Barr&oacute;s Pazos 2021 - 2023.</div>
+	</div>
 </body>
 </html>

@@ -6,142 +6,105 @@
 					
 			show_form();	
 			
-		} else {
+	} else {
 			
-			if(mysqli_num_rows($qb)== 0){
-							print ("<table align='center' style=\"border:0px\">
-										<tr>
-											<td align='center'>
-												<font color='#FF0000'>
-													NO HAY DATOS
-												</font>
-											</td>
-										</tr>
-									</table>");
+		if(mysqli_num_rows($qb)== 0){
+			print ("<table style=\"text-align:center; border:0px;\">
+						<tr><td>
+							".$inicioadmincrear.$inciobajas."<hr>
+							<font color='#FF0000'>NO HAY DATOS</font>
+						</td></tr>
+					</table>");
+		} else { global $page;
+				 if ($page >= 1){ } 
+				 else { $page = 1;}
 
-				} else { 	print ("<table align='center'>
-									<tr>
-										<th colspan=7 class='BorderInf'>
-					".$twhile.": ".mysqli_num_rows($qb).".
-										</th>
-									</tr>
-									
-									<tr>
-										<th class='BorderInfDch'>
-											Nivel
-										</th>
-										
-										<th class='BorderInfDch'>
-											Referencia
-										</th>
-										
-										<th class='BorderInfDch'>
-											Nombre
-										</th>
-										
-										<th class='BorderInfDch'>
-											Apellidos
-										</th>
-										
-										<th class='BorderInfDch'>
-											
-										</th>
-										
-										<th class='BorderInfDch'>
-											Usuario
-										</th>
-										
-										<th class='BorderInfDch'>
-											Password
-										</th>
-										
-                                    </tr>");
+			if(isset($_POST['ocultoc'])){
+
+				$defaults['Nombre'] = $_POST['Nombre'];
+				$defaults['Apellidos'] = $_POST['Apellidos'];
+				global $refrescaimg;
+				$refrescaimg = "<form name='refresimg' action='".$ruta."Admin_Ver.php' method='POST'>
+					<input type='hidden' name='Nombre' value='".@$defaults['Nombre']."' />
+					<input type='hidden' name='Apellidos' value='".@$defaults['Apellidos']."' />
+					<input type='submit' value='REFRESCAR DESPUES DE MODIFICAR DATOS' class='botonazul' />
+					<input type='hidden' name='ocultoc' value=1 />
+								</form>";
+			} else { global $refrescaimg;
+					 $refrescaimg = "<form name='refresimg' action='".$ruta."Admin_Ver.php'>
+						<input type='submit' value='REFRESCAR DESPUES DE MODIFICAR DATOS' class='botonazul' />
+						<input type='hidden' name='page' value=".$page." />
+								</form>";
+					}
+
+	print ("<div class=\"juancentra\">
+		<!--".$twhile.": ".mysqli_num_rows($qb).".-->".@$inicioadmincrear.@$inciobajas."<hr>".$refrescaimg);
                                     
 	while($rowb = mysqli_fetch_assoc($qb)){
     
-    global $formularioh;
-    global $formulariof;
-	global $formulariohi;
-	global $formulariofi;
+		global $formularioh;
+		global $formulariof;
+		global $formulariohi;
+		global $formulariofi;
+		global $formulariohe;
+		global $formulariofe;
 
-	print (	"<tr align='center'>".$formularioh."
+	print (	"<hr><div class='whiletotalaimg'>
+	<img src='".$rutaimg.$rowb['ref']."/img_admin/".$rowb['myimg']."' style=\"height:34px; width:auto;\" />
+				</div>
+				<div class='whiletotala'>NOMBRE<br>".$rowb['Nombre']."</div>
+				<div class='whiletotala'>APELLIDO<br>".$rowb['Apellidos']."</div>
+				<br>
+				<div class='whiletotala'>NIVEL<br>".$rowb['Nivel']."</div>
+				<div class='whiletotala'>REF USER<br>".$rowb['ref']."</div>
+				<div class='whiletotala'>USER<br>".$rowb['Usuario']."</div>
+				<div class='whiletotala'>PASS<br>".$rowb['Pass']."</div><br>
+				
+        <!-- AQUÍ VA LA BOTONERA -->
+	
+		".$formularioh);
 
-            <!-- AQUÍ VA LA CABECERA DEL FORMULARIO -->
+		require 'rowbtotal.php';
 
-	<input name='id' type='hidden' value='".$rowb['id']."' />
-						
-				<td class='BorderInfDch'>
-	<input name='Nivel' type='hidden' value='".$rowb['Nivel']."' />".$rowb['Nivel']."
-				</td>
-							
-				<td class='BorderInfDch'>
-	<input name='ref' type='hidden' value='".$rowb['ref']."' />".$rowb['ref']."
-				</td>
-							
-				<td class='BorderInfDch'>
-	<input name='Nombre' type='hidden' value='".$rowb['Nombre']."' />".$rowb['Nombre']."
-				</td>
-							
-				<td class='BorderInfDch'>
-	<input name='Apellidos' type='hidden' value='".$rowb['Apellidos']."' />".$rowb['Apellidos']."
-				</td>
-						
-				<td class='BorderInfDch'>
-	<input name='myimg' type='hidden' value='".$rowb['myimg']."' />
-	<img src='../cbj_Docs/img_admin/".$rowb['myimg']."' height='40px' width='30px' />
-				</td>
-												
-	<input name='doc' type='hidden' value='".$rowb['doc']."' />
-	<input name='dni' type='hidden' value='".$rowb['dni']."' />
-	<input name='ldni' type='hidden' value='".$rowb['ldni']."' />
-	<input name='Email' type='hidden' value='".$rowb['Email']."' />
-													
-				<td class='BorderInfDch'>
-	<input name='Usuario' type='hidden' value='".$rowb['Usuario']."' />".$rowb['Usuario']."
-				</td>
-						
-				<td class='BorderInfDch'>
-	<input name='Password' type='hidden' value='".$rowb['Password']."' />".$rowb['Password']."
-				</td>
-						
-	<input name='Direccion' type='hidden' value='".$rowb['Direccion']."' />
-	<input name='Tlf1' type='hidden' value='".$rowb['Tlf1']."' />
-	<input name='Tlf2' type='hidden' value='".$rowb['Tlf2']."' />
-	<input name='lastin' type='hidden' value='".$rowb['lastin']."' />
-	<input name='lastout' type='hidden' value='".$rowb['lastout']."' />
-	<input name='visitadmin' type='hidden' value='".$rowb['visitadmin']."' />
-			</tr>
-					
-            <tr>".$formulariof.$formulariohi."
+			print($formulariof.$formulariohg);
 
-                <!-- AQUÍ VA LA BOTONERA -->
+		require 'rowbtotal.php';
 
-	<input name='id' type='hidden' value='".$rowb['id']."' />
-	<input name='ref' type='hidden' value='".$rowb['ref']."' />
-	<input name='Nivel' type='hidden' value='".$rowb['Nivel']."' />
-	<input name='Nombre' type='hidden' value='".$rowb['Nombre']."' />
-	<input name='Apellidos' type='hidden' value='".$rowb['Apellidos']."' />
-	<input name='myimg' type='hidden' value='".$rowb['myimg']."' />
-	<input name='doc' type='hidden' value='".$rowb['doc']."' />
-	<input name='dni' type='hidden' value='".$rowb['dni']."' />
-	<input name='ldni' type='hidden' value='".$rowb['ldni']."' />
-	<input name='Email' type='hidden' value='".$rowb['Email']."' />
-	<input name='Usuario' type='hidden' value='".$rowb['Usuario']."' />
-	<input name='Password' type='hidden' value='".$rowb['Password']."' />						
-	<input name='Direccion' type='hidden' value='".$rowb['Direccion']."' />
-	<input name='Tlf1' type='hidden' value='".$rowb['Tlf1']."' />
-	<input name='Tlf2' type='hidden' value='".$rowb['Tlf2']."' />
-	<input name='lastin' type='hidden' value='".$rowb['lastin']."' />
-	<input name='lastout' type='hidden' value='".$rowb['lastout']."' />
-	<input name='visitadmin' type='hidden' value='".$rowb['visitadmin']."' />
-                                     
-        ".$formulariofi."</tr>");
+			print($formulariofg.$formulariohi);
+		
+		require 'rowbtotal.php';
+		
+			print($formulariofi.$formulariohe);
+
+	if(($_SESSION['Nivel'] == 'admin')&&($rowb['dni'] != $_SESSION['webmaster'])){
+
+		global $formulariohe;
+		$formulariohe = "<form style=\"display:inline-block;\" name='borra' action='".@$ruta."Admin_Borrar_02.php' method='POST'>";
+		global $formulariofe;
+		$formulariofe = "<input type='submit' value='DAR DE BAJA' class='botonrojo' />
+						<input type='hidden' name='oculto2' value=1 />
+						</form>
+						</td>";
+	} else {	
+		global $formulariohe;
+		$formulariohe = "";
+			
+		global $formulariofe;
+		$formulariofe = "";
+		}
+
+		print($formulariohe);
+			require 'rowbtotal.php';
+		print($formulariofe);
                     
-	 }  // FIN DEL WHILE
+	}  // FIN DEL WHILE
 
-	    print("</table>");
+	    print("</div>");
 			
 			} 
+
+	require 'Paginacion_Footter.php';
+	
 		} 
 
 ?>

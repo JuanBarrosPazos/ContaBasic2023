@@ -322,7 +322,7 @@ $sg6 = "UPDATE `$db_name`.$gastos6 SET `refprovee` = '$rf', `factnif` = '$factni
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function show_form($errors=''){
+function show_form($errors=[]){
 	
 	if($_POST['oculto2']){
 		
@@ -584,7 +584,7 @@ function info_01(){
 	$text = "\n- PROVEEDORES MODIFICAR SELECCIONADO ".$ActionTime.$filtro;
 
 	$logdocu = $_SESSION['ref'];
-	$logdate = date('Y_m_d');
+	$logdate = date('Y-m-d');
 	$logtext = $text."\n";
 	$filename = $dir."/".$logdate."_".$logdocu.".log";
 	$log = fopen($filename, 'ab+');
@@ -614,7 +614,7 @@ function info_02(){
 	$text = "\n- PROVEEDORES GASTO MODIFICADO ".$ActionTime.".\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$rf.".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";			
 
 	$logdocu = $_SESSION['ref'];
-	$logdate = date('Y_m_d');
+	$logdate = date('Y-m-d');
 	$logtext = $text.$texerror."\n";
 	$filename = $dir."/".$logdate."_".$logdocu.".log";
 	$log = fopen($filename, 'ab+');
@@ -627,19 +627,6 @@ function info_02(){
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 	
-	function desconexion(){
-
-			print("<form name='cerrar' action='mcgexit.php' method='post'>
-							<tr>
-								<td valign='bottom' align='right' colspan='8'>
-											<input type='submit' value='Cerrar Sesion' />
-								</td>
-							</tr>								
-											<input type='hidden' name='cerrar' value=1 />
-					</form>	
-							");
-	
-			}
 	
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

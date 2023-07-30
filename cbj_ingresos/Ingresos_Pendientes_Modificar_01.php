@@ -437,7 +437,7 @@ else{
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-function show_form($errors=''){
+function show_form($errors=[]){
 	
 	unset ($_SESSION['myimg1b']);
 	unset ($_SESSION['myimg2b']);
@@ -1173,7 +1173,7 @@ function info(){
 	$text = "\n- INGRESOS PENDIENTES MODIFICAR CONSULTAR ".$ActionTime.$filtro;
 	
 	$logdocu = $_SESSION['ref'];
-	$logdate = date('Y_m_d');
+	$logdate = date('Y-m-d');
 	$logtext = $text."\n";
 	$filename = $dir."/".$logdate."_".$logdocu.".log";
 	$log = fopen($filename, 'ab+');
@@ -1184,19 +1184,6 @@ function info(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	function desconexion(){
-
-			print("<form name='cerrar' action='mcgexit.php' method='post'>
-							<tr>
-								<td valign='bottom' align='right' colspan='8'>
-											<input type='submit' value='Cerrar Sesion' />
-								</td>
-							</tr>								
-											<input type='hidden' name='cerrar' value=1 />
-					</form>	
-							");
-	
-			} 
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

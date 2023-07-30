@@ -594,7 +594,7 @@ function info(){
 $text = "\n- BALANCE CONSULTA GRAFICA BARRAS ".$mensaje.$ActionTime.".\n\t* ".$titulo1.".\n\tORDENADA X\n\t".$coordenadax."\n\tDATOS INGRESOS\n\t".implode(", ",$datai)."\n\tDATOS GASTOS\n\t".implode(", ",$datag)."\n\tDATOS DIFERENCIALES\n\t".implode(", ",$datad);
 
 	$logdocu = $_SESSION['ref'];
-	$logdate = date('Y_m_d');
+	$logdate = date('Y-m-d');
 	$logtext = $text."\n";
 	$filename = $dir."/".$logdate."_".$logdocu.".log";
 	$log = fopen($filename, 'ab+');

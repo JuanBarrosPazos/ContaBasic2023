@@ -1,10 +1,11 @@
 <?php
 session_start();
  
-	//require '../Inclu/error_hidden.php';
+	require '../Inclu/error_hidden.php';
 	require '../Inclu/Admin_Inclu_01b.php';
 	require '../Conections/conection.php';
 	require '../Conections/conect.php';
+	require '../Inclu/my_bbdd_clave.php';
 
 	global $userid;
 	$userid = $_SESSION['id'];
@@ -15,60 +16,58 @@ session_start();
 
 if (($_SESSION['Nivel'] == 'admin') || ($_SESSION['Nivel'] == 'user') || ($_SESSION['Nivel'] == 'plus')){
  		
-		if (isset($_POST['salir'])){ info();
+		if (isset($_POST['salir'])){ UserLog();
 							  		 salir();
-									}
+								}
 		elseif ($_POST['cerrar']){  master_index();
 									desconex(); }
-									
+
 	} else { require '../Inclu/table_permisos.php';}
 		
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function info(){
+function UserLog(){
 
-	global $db;
-	global $db_name;
-	global $userid;
+	global $db; 	global $db_name; 	global $userid;
 	
-	global $dir;
-	$dir = "../cbj_Docs/log";
+	global $dir; 	$dir = "../cbj_Docs/log";
 
 	global $dateadout;
-	$dateadout = date('Y-m-d/H:i:s');
+	$dateadout = date('Y-m-d H:i:s');
 
-	$sqladout = "UPDATE `$db_name`.`admin` SET `lastout` = '$dateadout' WHERE `admin`.`id` = '$userid' LIMIT 1 ";
+	global $table_name;
+	$table_name = "`".$_SESSION['clave']."admin`";
+
+	$sqladout = "UPDATE `$db_name`.$table_name SET `lastout` = '$dateadout' WHERE $table_name.`id` = '$userid' LIMIT 1 ";
 		
-	if(mysqli_query($db, $sqladout)){
-				} else {
-				print("</br>
-				<font color='#FF0000'>
-		* FATAL ERROR funcion admin_entrada(): </font></br> ".mysqli_error($db))."
-				</br>";
-					}
-					
-	$text = PHP_EOL."** FIN DE SESION ".$_SESSION['Nombre']." ".$_SESSION['Apellidos']." => ".$dateadout;
-	$logdocu = $_SESSION['ref'];
-	$logdate = date('Y_m_d');
-	$logtext = PHP_EOL.$text.PHP_EOL.PHP_EOL;
-	$filename = $dir."/".$logdate."_".$logdocu.".log";
-	$log = fopen($filename, 'ab+');
-	fwrite($log, $logtext);
-	fclose($log);
+	if(mysqli_query($db, $sqladout)){ } else { 
+		print("</br><font color='#FF0000'>* FATAL ERROR funcion admin_entrada(): </font></br> ".mysqli_error($db))."</br>";
+			}
+	
+	// PASA LOG AL SISTEMA
+	$ActionTime = date('H:i:s');
 
-	}
+	global $text;
+	$text = "!! CIERRE SESION USUARIO: ".$_SESSION['Nombre']." ".$_SESSION['Apellidos']." => ".$dateadout.PHP_EOL."\t\tREFERENCIA: ".$_SESSION['ref']." NIVEL: ".$_SESSION['Nivel'].PHP_EOL;
+
+	$text = "** ".$ActionTime.PHP_EOL."\t ** ".$text.PHP_EOL;
+
+	require 'log_write.php';
+
+	
+	} // FIN FUNCION
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 	
 	function master_index(){
-
+		
 		require '../'.$_SESSION['menu'].'/Master_Index_Admin.php';
-
-				} 
+		
+	} 
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -76,16 +75,16 @@ function info(){
 	
 	function desconex(){
 
-			print("<table align='center'style=\"margin-top:80px; margin-bottom:80px;\">
-						<form name='salir' action='$_SERVER[PHP_SELF]' method='post'>
-							<tr>
-								<td valign='bottom' align='center'>
-									<input type='submit' value='CONFIRME CERRAR SESION' />
-								</td>
-							</tr>								
-									<input type='hidden' name='salir' value=1 />
-						</form>	
-					</table>");
+		print("<table style=\"margin:8.0em auto 8.0em auto;\">
+					<form name='salir' action='$_SERVER[PHP_SELF]' method='post'>
+						<tr><td valign='bottom' align='center'>
+				<input type='submit' value='CONFIRME CERRAR SESION' class='botonverde' />
+						</td></tr>								
+							<input type='hidden' name='salir' value=1 />
+					</form>	
+				</table>
+		<embed src='../audi/sesion_close_confirm.mp3' autostart='true' loop='false' width='0' height='0' hidden='true' >
+		</embed>");
 	
 			} 
 			
@@ -95,13 +94,15 @@ function info(){
 
 	function salir() {	
 
-				print("<table align='center'>
-							<tr>
-								<th style='text-align:center'>
-									HA CERRADO SESION.
-								</th>
-							</tr>
-						</table>");
+	print("<table align='center'>
+				<tr>
+					<th style='text-align:center'>
+						HA CERRADO SESION.
+					</th>
+				</tr>
+	<embed src='../audi/sesion_close.mp3' autostart='true' loop='false' width='0' height='0' hidden='true' >
+	</embed>
+			</table>");
 				
 				global $redir;
 				// 600000 microsegundos 10 minutos
@@ -110,22 +111,20 @@ function info(){
 								function redir(){
 								window.location.href='../index.php?salir=1';
 							}
-							setTimeout('redir()',2000);
+							setTimeout('redir()',3000);
 							</script>";
 				print ($redir);
-	
-	
-				}
+	}
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	require '../Inclu/Inclu_Footer_01.php';
+	require '../Inclu/Admin_Inclu_footer.php';
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-/* Creado por Juan Barros Pazos 2020*/
+/* Creado por Juan Barros Pazos 2021 */
 ?>

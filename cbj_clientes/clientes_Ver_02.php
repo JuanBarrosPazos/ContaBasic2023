@@ -169,7 +169,7 @@ function info(){
 	$text = "\n- CLIENTES DETALLES ".$ActionTime.".\n\tID: ".$_POST['id'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".";
 
 	$logdocu = $_SESSION['ref'];
-	$logdate = date('Y_m_d');
+	$logdate = date('Y-m-d');
 	$logtext = $text."\n";
 	$filename = $dir."/".$logdate."_".$logdocu.".log";
 	$log = fopen($filename, 'ab+');
@@ -182,19 +182,6 @@ function info(){
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 	
-	function desconexion(){
-
-			print("<form name='cerrar' action='mcgexit.php' method='post'>
-							<tr>
-								<td valign='bottom' align='right' colspan='8'>
-											<input type='submit' value='Cerrar Sesion' />
-								</td>
-							</tr>								
-											<input type='hidden' name='cerrar' value=1 />
-					</form>	
-							");
-	
-			} 
 	
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

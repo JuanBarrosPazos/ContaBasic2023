@@ -362,8 +362,8 @@ if (preg_match('/^(\w{1})*(\s\w{1})/',$_POST['Apellidos'],$ref4)){	$rf4 = $ref4[
 			</table>");
 
 global $cfone;
-$datein = date('Y-m-d/H:i:s');
-$logdate = date('Y_m_d');
+$datein = date('Y-m-d H:i:s');
+$logdate = date('Y-m-d');
 $logtext = $cfone."\n - CREADO USER ADMIN 1. ".$datein.". User Ref: ".$rf.".\n \t Name: ".$_POST['Nombre']." ".$_POST['Apellidos'].". \n \t User: ".$_POST['Usuario'].".\n \t Pass: ".$_POST['Password'].".\n";
 $filename = "logs/".$logdate."_CONFIG_INIT.log";
 $log = fopen($filename, 'ab+');
@@ -601,8 +601,8 @@ fclose($log);
 	
 	/************	PASAMOS LOS PARAMETROS A .LOG	*****************/
 	
-$datein = date('Y-m-d/H:i:s');
-$logdate = date('Y_m_d');
+$datein = date('Y-m-d H:i:s');
+$logdate = date('Y-m-d');
 $logtext = "- CONFIG INIT ".$datein.".\n * ".$db_name.". \n * ".$db_host.". \n * ".$db_user.". \n * ".$db_pass."\n".$dbconecterror.$data1.$data2.$data3.$data4.$data5.$data6.$data7.$data8."\n";
 $filename = "logs/".$logdate."_CONFIG_INIT.log";
 $log = fopen($filename, 'ab+');
@@ -615,7 +615,7 @@ fwrite($log, $logtext);
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function show_form($errors=''){
+function show_form($errors=[]){
 	
 	if(isset($_POST['oculto'])){
 		$defaults = $_POST;
@@ -916,19 +916,6 @@ function show_form($errors=''){
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 	
-	function desconexion(){
-
-			print("<form name='cerrar' action='mcgexit.php' method='post'>
-							<tr>
-								<td valign='bottom' align='right' colspan='8'>
-											<input type='submit' value='Cerrar Sesion' />
-								</td>
-							</tr>								
-											<input type='hidden' name='cerrar' value=1 />
-					</form>	
-							");
-	
-			} 
 	
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

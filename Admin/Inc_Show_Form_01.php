@@ -1,15 +1,21 @@
 <?php
 
-if(isset($_POST['oculto'])){
-    $defaults = $_POST;
-    }
+    if(isset($_POST['ocultoc'])){
+        $defaults = $_POST;
+        $_SESSION['Orden'] = @$_POST['Orden'];
+        }
     elseif(isset($_POST['todo'])){
         $defaults = $_POST;
-        } else {
-                $defaults = array (	'Nombre' => '',
-                                    'Apellidos' => '',
-                                    'Orden' => isset($ordenar));
-                                                        }
+        $_SESSION['Orden'] = $_POST['Orden'];
+    } 
+    elseif ((isset($_GET['page'])) || (isset($_POST['page']))) {
+        @$defaults['Orden'] = $_SESSION['Orden'];
+    }
+    else {  $defaults = array (	'Nombre' => '',
+                                'Apellidos' => '',
+                                'Orden' => '`id` ASC');
+            $_SESSION['Orden'] = '`id` ASC';
+                         }
 
 if ($errors){
     print("	<table align='center'>
@@ -29,40 +35,33 @@ if ($errors){
             </table>");
                 }
     
-$ordenar = array (	'`id` ASC' => 'id Ascendente',
-                    '`id` DESC' => 'id Descendente',
-                    '`Nombre` ASC' => 'Nombre Ascendente',
-                    '`Nombre` DESC' => 'Nombre Descendente',
-                    '`Apellidos` ASC' => 'Apellidos Ascenedente',
-                    '`Apellidos` DESC' => 'Apellidos Descendente',
-                    '`Email` ASC' => 'Dirección de Email Ascendente',
-                    '`Email` DESC' => 'Dirección de Email Descendente',
-                    '`Tlf1` ASC' => 'Teléfono 1 Ascendente',
-                    '`Tlf1` DESC' => 'Teléfono 1 Descendente',
-                    '`Tlf2` ASC' => 'Teléfono 2 Ascendente',
-                    '`Tlf2` DESC' => 'Teléfono 2 Descendente',
-                                                            );
+$ordenar = array (	'`id` ASC' => 'ID Ascen',
+                    '`id` DESC' => 'ID Descen',
+                    '`Nombre` ASC' => 'Nombre Ascen',
+                    '`Nombre` DESC' => 'Nombre Descen',
+                    '`Apellidos` ASC' => 'Apellido Ascen',
+                    '`Apellidos` DESC' => 'Apellido Descen',
+                    '`Email` ASC' => 'Email Ascen',
+                    '`Email` DESC' => 'Email Descen',);
 
 if (($_SESSION['Nivel'] == 'admin')){ 
 
-print(" <table align='center' style=\"border:0px;margin-top:4px\">
+print(" <table align='center' style=\"margin-top:12px\">
             <tr>
-                <th colspan=3 width=100%>
-                        ".$titulo."
-                </th>
+                <th colspan=3 class='BorderInf'>".$titulo."</th>
             </tr>
             
     <form name='form_tabla' method='post' action='$_SERVER[PHP_SELF]'>
                     
             <tr>
-                <td align='right'>
-                    <input type='submit' value='USER CONSULTA' />
-                    <input type='hidden' name='oculto' value=1 />
+                <td style='text-align:right !important;'>
+                    <input type='submit' value='FILTRO' class='botonazul' />
+                    <input type='hidden' name='ocultoc' value=1 />
                 </td>
-                <td>	
-                    Nombre:
+                <td style='text-align:right !important;'>	
+                    NOMBRE
                 </td>
-                <td>
+                <td style='text-align:left !important;'>
         <input type='text' name='Nombre' size=20 maxlenth=10 value='".@$defaults['Nombre']."' />
                 </td>
             </tr>
@@ -70,10 +69,10 @@ print(" <table align='center' style=\"border:0px;margin-top:4px\">
             <tr>
                 <td>
                 </td>
-                <td>	
-                    Apellido:
+                <td style='text-align:right !important;'>	
+                    APELLIDO
                 </td>
-                <td>
+                <td style='text-align:left !important;'>
 <input type='text' name='Apellidos' size=20 maxlenth=10 value='".@$defaults['Apellidos']."' />
                 </td>
             </tr>
@@ -81,12 +80,12 @@ print(" <table align='center' style=\"border:0px;margin-top:4px\">
             
     <form name='todo' method='post' action='$_SERVER[PHP_SELF]' >
             <tr>
-                <td align='right'>
-                    <input type='submit' value='USER TODOS' />
+                <td style='text-align:right;'>
+                    <input type='submit' value='".$boton."' class='botonazul' />
                     <input type='hidden' name='todo' value=1 />
                 </td>
-                <td>	
-                    Ordenar Por:
+                <td style='text-align:right !important;'>	
+                    ORDEN
                 </td>
                 <td>
                     <select name='Orden'>");

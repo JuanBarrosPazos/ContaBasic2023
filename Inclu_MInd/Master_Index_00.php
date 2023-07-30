@@ -190,7 +190,7 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
   	</li>
   
 <!-- FIN MENU ADMINISTRADORES -->
-
+ 
   	<li style='text-align:left'>
   				<form name='cerrar' action='Admin/mcgexit.php' method='post'>
 						<input type='submit' value='CLOSE SESION' />

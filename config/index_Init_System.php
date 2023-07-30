@@ -387,8 +387,8 @@ function process_form(){
 
 	/************	PASAMOS LOS PARAMETROS A .LOG	*****************/
 	
-	$datein = date('Y-m-d/H:i:s');
-	$logdate = date('Y_m_d');
+	$datein = date('Y-m-d H:i:s');
+	$logdate = date('Y-m-d');
 	$logtext = "\n - CONFIG INIT ".$datein.".\n * ".$db_name.". \n * ".$db_host.". \n * ".$db_user.". \n * ".$db_pass."\n".$dbconecterror.$data0.$table1.$table5.$table6."\n";
 	$filename = "config/logs/".$logdate."_CONFIG_INIT.log";
 	$log = fopen($filename, 'ab+');
@@ -1040,8 +1040,8 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	
 global $data0;
 global $cfone;
-$datein = date('Y-m-d/H:i:s');
-$logdate = date('Y_m_d');
+$datein = date('Y-m-d H:i:s');
+$logdate = date('Y-m-d');
 $logtext = $cfone."\n - CONFIG INIT ".$datein.".\n * ".$db_name.". \n * ".$db_host.". \n * ".$db_user.". \n * ".$db_pass."\n".$dbconecterror.$data0.$table1.$table2.$table3.$table4.$table5.$table6.$table7.$table8.$table9.$table10.$table11.$table12.$table13.$table14.$table15.$table16.$table17.$table18.$table19.$table20.$table21.$table22."\n";
 $filename = "config/logs/".$logdate."_CONFIG_INIT.log";
 $log = fopen($filename, 'ab+');
@@ -1140,7 +1140,7 @@ function ayear(){
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function show_form($errors=''){
+function show_form($errors=[]){
 	
 	/* Se pasan los valores por defecto y se devuelven los que ha escrito el usuario. */
 	

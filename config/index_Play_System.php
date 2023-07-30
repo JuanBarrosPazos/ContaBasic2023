@@ -1,11 +1,12 @@
 <?php
 session_start();
  
-	//require '../Inclu/error_hidden.php';
+	require 'Inclu/error_hidden.php';
 	require 'Inclu/Inclu_Menu_00.php';
 
 	require 'Conections/conection.php';
 	require 'Conections/conect.php';
+	require 'Inclu/my_bbdd_clave.php';
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -13,8 +14,11 @@ session_start();
 
 	if ((isset($_POST['Usuario'])) && (isset($_POST['Password']))){
 
+	global $table_name;
+	$table_name = "`".$_SESSION['clave']."admin`";
+
 	global $db;
-	$sql =  "SELECT * FROM `admin` WHERE `Usuario` = '$_POST[Usuario]' AND `Password` = '$_POST[Password]'";
+	$sql =  "SELECT * FROM $table_name WHERE `Usuario` = '$_POST[Usuario]' AND `Password` = '$_POST[Password]'";
  	
 	$q = mysqli_query($db, $sql);
 	$row = mysqli_fetch_assoc($q);
@@ -246,12 +250,11 @@ function tgastos(){
 
 function inserbalg(){
 	
-	global $db;	
-	global $db_name;
+	global $db;		global $db_name;
 
 	$dy = date('Y');
-	$vname7 = "cbj_balanceg";
-	$vname7 = "`".$vname7."`";
+
+	$vname7 = "`".$_SESSION['clave']."abalanceg`";
 	$vname7 = strtolower($vname7);	
 					
 $balanceg2 = "INSERT INTO `$db_name`.$vname7 (`year`, `mes`, `iva`, `sub`, `ret`, `tot`) VALUES
@@ -289,12 +292,11 @@ $balanceg2 = "INSERT INTO `$db_name`.$vname7 (`year`, `mes`, `iva`, `sub`, `ret`
 
 function inserbali(){
 	
-	global $db;	
-	global $db_name;
+	global $db; 	global $db_name;
 
 	$dy = date('Y');
-	$vname8 = "cbj_balancei";
-	$vname8 = "`".$vname8."`";
+
+	$vname8 = "`".$_SESSION['clave']."balancei`";
 	$vname8 = strtolower($vname8);	
 					
 $balancei2 = "INSERT INTO `$db_name`.$vname8 (`year`, `mes`, `iva`, `sub`, `ret`, `tot`) VALUES
@@ -336,8 +338,8 @@ function inserbald(){
 	global $db_name;
 
 	$dy = date('Y');
-	$vname9 = "cbj_balanced";
-	$vname9 = "`".$vname9."`";
+
+	$vname9 = "`".$_SESSION['clave']."balanced`";
 	$vname9 = strtolower($vname9);	
 					
 $balanced2 = "INSERT INTO `$db_name`.$vname9 (`year`, `mes`, `iva`, `sub`, `ret`, `tot`) VALUES
@@ -375,20 +377,15 @@ $balanced2 = "INSERT INTO `$db_name`.$vname9 (`year`, `mes`, `iva`, `sub`, `ret`
 				 ////////////////////				  ///////////////////
 	
 function newstatus(){
-		global $db;	
-		global $db_name;
-		global $vname10;
-			$vname10 = "cbj_status";
-			$vname10 = "`".$vname10."`";
-		global $year;
-			$year = date('Y')/*+1*/;
-		global $ycod;
-			//$ycod = substr(trim($year),-2,2);
-			$ycod = date('y');
-		global $stat;
-			$stat = 'open';
-		global $hidden;
-			$hidden = 'no';
+		global $db;	 		global $db_name;
+	
+		global $vname10; 	$vname10 = "`".$_SESSION['clave']."status`";
+		global $year; 		$year = date('Y')/*+1*/;
+		global $ycod;		$ycod = date('y');
+		//$ycod = substr(trim($year),-2,2);
+			
+		global $stat; 		$stat = 'open';
+		global $hidden; 	$hidden = 'no';
 			
 	$sqla9 = "INSERT INTO `$db_name`.$vname10 (`year`, `ycod`, `stat`, `hidden`) VALUES ('$year', '$ycod', '$stat', '$hidden')";
 				
@@ -400,9 +397,8 @@ function newstatus(){
 					global $dat9;
 					$dat9 = "\tNO CREADA TABLA ".$vname10.". ".mysqli_error($db).".\n";
 					}
-
 	
-	}
+	} // FIN function newstatus()
 					
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -465,9 +461,8 @@ function status_close(){
 	$stdate = date('Y');
 	$stdate = trim($stdate);
 			
-	global $t1;
-	$t1 = "cbj_status";
-	$t1 = "`".$t1."`";
+	global $t1; 	$t1 = "`".$_SESSION['clave']."status`";
+
 	$sqls =  "SELECT * FROM $t1  WHERE $t1.`stat` = 'open' AND $t1.`year` < '$stdate' ORDER BY `year` DESC ";
 	$qs = mysqli_query($db, $sqls);				
 	$qsn = mysqli_num_rows($qs);
@@ -511,10 +506,8 @@ function status_close(){
 
 function admin_entrada(){
 
-	global $db;
-	global $db_name;
-	global $userid;
-	global $uservisita;
+	global $db; 		global $db_name;
+	global $userid; 	global $uservisita;
 
 	global $dir;
 	if ($_SESSION['Nivel'] == 'admin'){ 
@@ -523,9 +516,12 @@ function admin_entrada(){
 	
 	$uservisita = $_SESSION['visitadmin'];
 	$total = $uservisita + 1;
-	$datein = date('Y-m-d/H:i:s');
+	$datein = date('Y-m-d H:i:s');
 
-	$sqladin = "UPDATE `$db_name`.`admin` SET `lastin` = '$datein', `visitadmin` = '$total' WHERE `admin`.`id` = '$userid' LIMIT 1 ";
+	global $table_name;
+	$table_name = "`".$_SESSION['clave']."admin`";
+
+	$sqladin = "UPDATE `$db_name`.$table_name SET `lastin` = '$datein', `visitadmin` = '$total' WHERE $table_name.`id` = '$userid' LIMIT 1 ";
 		
 	if(mysqli_query($db, $sqladin)){
 			// print("* ");
@@ -538,7 +534,7 @@ function admin_entrada(){
 					
 global $datos;
 $logdocu = $_SESSION['ref'];
-$logdate = date('Y_m_d');
+$logdate = date('Y-m-d');
 $logtext = "\n** INICIO SESION => .".$datein.".\n\t User Ref: ".$_SESSION['ref'].".\n\t User Name: ".$_SESSION['Nombre']." ".$_SESSION['Apellidos']."\n \n".$datos;
 $filename = $dir."/".$logdate."_".$logdocu.".log";
 $log = fopen($filename, 'ab+');
@@ -553,12 +549,13 @@ fclose($log);
 
 function show_visit(){
 
-	global $db;
-	global $db_name;
-	global $rowv;
-	global $sumavisit;
+	global $db; 	global $db_name;
+	global $rowv; 	global $sumavisit;
 	
-	$sqlv =  "SELECT * FROM `visitasadmin`";
+	global $table_name;
+	$table_name = "`".$_SESSION['clave']."visitasadmin`";
+
+	$sqlv =  "SELECT * FROM $table_name";
 	$qv = mysqli_query($db, $sqlv);
 	
 	$rowv = mysqli_fetch_assoc($qv);
@@ -633,13 +630,13 @@ function show_visit(){
 
 function suma_visit(){
 
-	global $db;
-	global $db_name;
-	global $rowv;
-	global $sumavisit;
+	global $db; 	global $db_name;
+	global $rowv; 	global $sumavisit;
 	
-
-	$sqlv =  "SELECT * FROM `visitasadmin`";
+	global $table_name;
+	$table_name = "`".$_SESSION['clave']."visitasadmin`";
+	//echo $table_name;
+	$sqlv =  "SELECT * FROM $table_name";
 	$qv = mysqli_query($db, $sqlv);
 	$rowv = mysqli_fetch_assoc($qv);
 	
@@ -647,12 +644,11 @@ function suma_visit(){
 	
 	$tot = $rowv['admin'];
 
-	global $sumavisit;
-	$sumavisit = $tot + 1;
+	global $sumavisit; 	$sumavisit = $tot + 1;
 
 	$idv = 69;
 	
-	$sqlv = "UPDATE `$db_name`.`visitasadmin` SET `admin` = '$sumavisit' WHERE `visitasadmin`.`idv` = '$idv' LIMIT 1 ";
+	$sqlv = "UPDATE `$db_name`.$table_name SET `admin` = '$sumavisit' WHERE $table_name.`idv` = '$idv' LIMIT 1 ";
 
 	if(mysqli_query($db, $sqlv)){
 		/**/	print(" </br>");
@@ -674,13 +670,13 @@ function suma_visit(){
 
 function suma_acces(){
 
-	global $db;
-	global $db_name;
-	global $rowa;
-	global $sumaacces;
+	global $db; 	global $db_name;
+	global $rowa; 	global $sumaacces;
 	
+	global $table_name;
+	$table_name = "`".$_SESSION['clave']."visitasadmin`";
 
-	$sqla =  "SELECT * FROM `visitasadmin`";
+	$sqla =  "SELECT * FROM $table_name";
 	$qa = mysqli_query($db, $sqla);
 	$rowa = mysqli_fetch_assoc($qa);
 	
@@ -693,7 +689,7 @@ function suma_acces(){
 
 	$idv = 69;
 	
-	$sqla = "UPDATE `$db_name`.`visitasadmin` SET `acceso` = '$sumaacces' WHERE `visitasadmin`.`idv` = '$idv' LIMIT 1 ";
+	$sqla = "UPDATE `$db_name`.$table_name SET `acceso` = '$sumaacces' WHERE $table_name.`idv` = '$idv' LIMIT 1 ";
 
 	if(mysqli_query($db, $sqla)){ print ('</br>');
 													} 
@@ -715,13 +711,13 @@ function suma_acces(){
 
 function suma_denegado(){
 
-	global $db;
-	global $db_name;
-	global $rowd;
-	global $sumadeneg;
+	global $db; 	global $db_name;
+	global $rowd; 	global $sumadeneg;
 	
+	global $table_name;
+	$table_name = "`".$_SESSION['clave']."visitasadmin`";
 
-	$sqld =  "SELECT * FROM `visitasadmin`";
+	$sqld =  "SELECT * FROM $table_name";
 	$qd = mysqli_query($db, $sqld);
 	$rowd = mysqli_fetch_assoc($qd);
 	
@@ -734,7 +730,7 @@ function suma_denegado(){
 
 	$idd = 69;
 	
-	$sqld = "UPDATE `$db_name`.`visitasadmin` SET `deneg` = '$sumadeneg' WHERE `visitasadmin`.`idv` = '$idd' LIMIT 1 ";
+	$sqld = "UPDATE `$db_name`.$table_name SET `deneg` = '$sumadeneg' WHERE $table_name.`idv` = '$idd' LIMIT 1 ";
 
 	if(mysqli_query($db, $sqld)){
 		/**/	print("	</br>");
@@ -824,7 +820,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function show_balance($errors=''){
+function show_balance($errors=[]){
 	
 	if(isset($_POST['show_formcl'])){
 		$defaults = $_POST;
@@ -943,18 +939,12 @@ print("<table align='center' width='auto' style=\"border: none;\"><tr><td>");
 	
 			////////////////////		**********  		////////////////////
 
-	global $db;
-	global $db_name;
+	global $db; 	global $db_name;
+	global $dyt1;	$dyt1 = date('Y');
+	global $dm1; 	$dm1 = 'TRI';
+	global $sent; 	$sent = "LIKE '%".$dm1."%'";
 	
-	global $dyt1;
-	//$dyt1 = '';
-	$dyt1 = date('Y');
-	$dm1 = 'TRI';
-	global $sent;
-	$sent = "LIKE '%".$dm1."%'";
-	
-	$vname = "cbj_balancei";
-	$vname = "`".$vname."`";
+	global $vname; 	$vname = "`".$_SESSION['clave']."balancei`";
 
 $sqli =  "SELECT * FROM $vname WHERE `year` = '$dyt1' AND `mes` $sent ORDER BY `id` ASC ";
 $qbi = mysqli_query($db, $sqli);
@@ -1158,8 +1148,8 @@ else{
 
 			////////////////////		***********  		////////////////////
 
-	$vname = "cbj_balanceg";
-	$vname = "`".$vname."`";
+	global $vname;
+	$vname = "`".$_SESSION['clave']."balanceg`";
 
 $sqlb =  "SELECT * FROM $vname WHERE `year` = '$dyt1' AND `mes` $sent ORDER BY `id` ASC ";
 $qb = mysqli_query($db, $sqlb);
@@ -1362,11 +1352,9 @@ else{
 			} /* Fin de primer else . */
 		
 			////////////////////		**********  		////////////////////
-
+		
 	global $vnamed;
-
-	$vnamed = "cbj_balanced";
-	$vnamed = "`".$vnamed."`";
+	$vnamed = "`".$_SESSION['clave']."balanced`";
 
 $sqld =  "SELECT * FROM $vnamed WHERE `year` = '$dyt1' AND `mes` $sent ORDER BY `id` ASC ";
 $qbd = mysqli_query($db, $sqld);
@@ -1578,7 +1566,7 @@ print("</td></tr></table>");
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function show_form($errors=''){
+function show_form($errors=[]){
 	
 	if(isset($_POST['oculto'])){
 		$defaults = $_POST;
@@ -1667,19 +1655,6 @@ function show_form($errors=''){
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 	
-	function desconexion(){
-
-			print("<form name='cerrar' action='Admin/mcgexit.php' method='post'>
-							<tr>
-								<td valign='bottom' align='right' colspan='8'>
-											<input type='submit' value='Cerrar Sesion' />
-								</td>
-							</tr>								
-											<input type='hidden' name='cerrar' value=1 />
-					</form>	
-							");
-	
-			} 
 			
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

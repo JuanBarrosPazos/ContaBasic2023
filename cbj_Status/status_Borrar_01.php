@@ -154,7 +154,7 @@ function info(){
 	$text = "\n- STATUS BORRAR 1: ".$ActionTime.".\n\t Filtro => ".$nombre.".";
 	
 	$logdocu = $_SESSION['ref'];
-	$logdate = date('Y_m_d');
+	$logdate = date('Y-m-d');
 	$logtext = $text."\n";
 	$filename = $dir."/".$logdate."_".$logdocu.".log";
 	$log = fopen($filename, 'ab+');
@@ -165,19 +165,7 @@ function info(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	function desconexion(){
 
-			print("<form name='cerrar' action='mcgexit.php' method='post'>
-							<tr>
-								<td valign='bottom' align='right' colspan='8'>
-											<input type='submit' value='Cerrar Sesion' />
-								</td>
-							</tr>								
-											<input type='hidden' name='cerrar' value=1 />
-					</form>	
-							");
-	
-			} 
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

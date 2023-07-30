@@ -25,7 +25,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-function show_form($errors=''){
+function show_form($errors=[]){
 
 	if(isset($_POST['show_formcl'])){
 		$defaults = $_POST;
@@ -1171,7 +1171,7 @@ function info(){
 	$text = "\n- BALANCE CONSULTA ".$ActionTime.$filtro."\n\t* ".$titulo1.".\n\tORDENADA X\n\t".implode(", ",$coordenadax)."\n\tDATOS INGRESOS\n\t".implode(", ",$datai)."\n\tDATOS GASTOS\n\t".implode(", ",$datag)."\n\tDATOS DIFERENCIALES\n\t".implode(", ",$datad);
 
 	$logdocu = $_SESSION['ref'];
-	$logdate = date('Y_m_d');
+	$logdate = date('Y-m-d');
 	$logtext = $text."\n";
 	$filename = $dir."/".$logdate."_".$logdocu.".log";
 	$log = fopen($filename, 'ab+');
@@ -1182,19 +1182,6 @@ function info(){
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	function desconexion(){
-
-			print("<form name='cerrar' action='mcgexit.php' method='post'>
-							<tr>
-								<td valign='bottom' align='right' colspan='8'>
-											<input type='submit' value='Cerrar Sesion' />
-								</td>
-							</tr>								
-											<input type='hidden' name='cerrar' value=1 />
-					</form>	
-							");
-	
-			} 
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
