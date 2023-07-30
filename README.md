@@ -1,8 +1,9 @@
 
-## Conta_Basic_New V23.1.1 
+## PROYECTO INICIAL 2016/05/01
 ----
 
-- Conta_Basic_New V23.1.1 
-    - 2023/07/30
-    - INTEGRACIÓN DE LA APLICACIÓN ANTIGUA.
+### 2023/07/30 VERSIÓN Conta_Basic_New V23.1.1
+
+- INTEGRACIÓN DE LA APLICACIÓN ANTIGUA.
+    
 ----
