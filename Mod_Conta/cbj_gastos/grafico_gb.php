@@ -7,7 +7,7 @@ session_start();
 	require_once ('../cbj_Balances/jpgraph/src/jpgraph_bar.php');
 
 	require '../../Mod_Admin/Inclu/error_hidden.php';
-	require '../../Mod_Admin/Conections/my_bbdd_clave.php';
+	require '../../Mod_Admin/Inclu/my_bbdd_clave.php';
 	require '../../Mod_Admin/Conections/conection.php';
 	require '../../Mod_Admin/Conections/conect.php';
 

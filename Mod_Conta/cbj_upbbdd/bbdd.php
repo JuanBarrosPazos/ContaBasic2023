@@ -3,7 +3,7 @@ session_start();
 
 	require '../../Mod_Admin/Inclu/error_hidden.php';
 	require '../Inclu/Admin_Inclu_01b.php';
-	require '../../Mod_Admin/Conections/my_bbdd_clave.php';
+	require '../../Mod_Admin/Inclu/my_bbdd_clave.php';
 	require '../../Mod_Admin/Conections/conection.php';
 	require '../../Mod_Admin/Conections/conect.php';
 
@@ -95,7 +95,10 @@ function ver_todo(){
 	
 	function master_index(){
 		
-				require '../Inclu_Mind/Master_Index_bbdd.php';
+		global $rutaIndex;		$rutaIndex = "../";
+		require '../Inclu_MInd/MasterIndexVar.php';
+		global $rutaUpBbdd;	$rutaUpBbdd = "";
+		require '../Inclu_MInd/MasterIndex.php'; 
 		
 				} /* Fin funcion master_index.*/
 

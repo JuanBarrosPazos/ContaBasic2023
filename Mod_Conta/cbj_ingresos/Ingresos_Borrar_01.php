@@ -3,7 +3,7 @@ session_start();
 
 	require '../../Mod_Admin/Inclu/error_hidden.php';
 	require '../Inclu/Admin_Inclu_01b.php';
-	require '../../Mod_Admin/Conections/my_bbdd_clave.php';
+	require '../../Mod_Admin/Inclu/my_bbdd_clave.php';
 	require '../../Mod_Admin/Conections/conection.php';
 	require '../../Mod_Admin/Conections/conect.php';
 
@@ -1002,7 +1002,10 @@ else{
 	
 	function master_index(){
 		
-				require '../Inclu_MInd/Master_Index_Ingresos.php';
+		global $rutaIndex;		$rutaIndex = "../";
+		require '../Inclu_MInd/MasterIndexVar.php';
+		global $rutaIngresos;	$rutaIngresos = "";
+		require '../Inclu_MInd/MasterIndex.php'; 
 		
 				} 
 

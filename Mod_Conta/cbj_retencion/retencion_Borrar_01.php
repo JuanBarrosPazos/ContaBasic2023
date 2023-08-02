@@ -3,7 +3,7 @@ session_start();
 
 	require '../../Mod_Admin/Inclu/error_hidden.php';
 	require '../Inclu/Admin_Inclu_01b.php';
-	require '../../Mod_Admin/Conections/my_bbdd_clave.php';
+	require '../../Mod_Admin/Inclu/my_bbdd_clave.php';
 	require '../../Mod_Admin/Conections/conection.php';
 	require '../../Mod_Admin/Conections/conect.php';
 
@@ -110,7 +110,10 @@ if($rowb['ret'] != 0.00){
 	
 	function master_index(){
 		
-				require '../Inclu_MInd/Master_Index_retencion.php';
+		global $rutaIndex;		$rutaIndex = "../";
+		require '../Inclu_MInd/MasterIndexVar.php';
+		global $rutaRetencion;	$rutaRetencion = "";
+		require '../Inclu_MInd/MasterIndex.php'; 
 		
 				} 
 

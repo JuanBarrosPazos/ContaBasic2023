@@ -91,7 +91,6 @@
 					</a>
 				</li>
 			</ul>
-			
 		</li>
 	
 		<li>
@@ -113,8 +112,10 @@
 		</li>
 	
 		<li>
-			<a href='#'>
-				<i class='ic ico20'></i><span>CATEGORIA 5</span></a>
+			<a href='".$rutaindex."../Mod_Conta/index.php'>
+				<i class='ic ico20'></i><span>CONTA BASIC</span>
+			</a>
+			<!--
 			<ul class='nav-flyout'>
 				<li>
 					<a href='#' ".$topcat5.">
@@ -127,8 +128,8 @@
 					</a>
 				</li>
 			</ul>
-		</li>
-		");
+			-->
+		</li>");
 	}else{	print("
 		<li>
 			<a href='#'>

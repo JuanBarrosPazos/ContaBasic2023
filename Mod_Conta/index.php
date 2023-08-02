@@ -1225,7 +1225,10 @@ print("</td></tr></table>");
 	
 	function master_index(){
 
-		require 'Inclu_MInd/Master_Index_00.php';
+		global $rutaIndex;		$rutaIndex = "";
+		require 'Inclu_MInd/MasterIndexVar.php';
+		
+		require 'Inclu_MInd/MasterIndex.php'; 
 		
 				} 
 
