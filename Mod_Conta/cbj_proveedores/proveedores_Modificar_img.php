@@ -15,7 +15,7 @@ session_start();
 
 		if ($_SESSION['Nivel'] == 'admin'){
 
- 		print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".</br>");
+ 		//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".</br>");
 				
 							if ($_POST['oculto2']){
 								show_form();

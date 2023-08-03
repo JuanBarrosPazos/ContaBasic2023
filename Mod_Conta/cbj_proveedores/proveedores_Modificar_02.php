@@ -13,29 +13,25 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
- 			print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
-			master_index();
+		//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
+		master_index();
 
-			if ($_POST['oculto2']){
-					show_form();
-					info_01();
+		if (isset($_POST['oculto2'])){
+				show_form();
+				info_01();
+		} elseif($_POST['modifica']){
+				if($form_errors = validate_form()){
+						show_form($form_errors);
+				} else { process_form();
+						info_02();
 								}
-						elseif($_POST['modifica']){
-								
-							if($form_errors = validate_form()){
-								show_form($form_errors);
-									} else {
-										process_form();
-										info_02();
-												}
-							} else {
-										show_form();
-										unset($_SESSION['dudas']);
-										unset($_SESSION['dniold']);
-									}
-				} else { require '../Inclu/table_permisos.php'; } 
+		} else { show_form();
+				unset($_SESSION['dudas']);
+				unset($_SESSION['dniold']);
+					}
+	} else { require '../Inclu/table_permisos.php'; } 
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -69,7 +65,7 @@ function process_form(){
 																	$rf2 = trim($rf2);
 																			}
 
-	global $rf; 		$rf = $rf1.$rf2.$_POST['dni'].$_POST['ldni'];
+	global $rf; 		$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
 	$rf = trim($rf);
 			
 	global $vname; 			$vname = "`".$_SESSION['clave']."proveedores`";
@@ -109,7 +105,7 @@ function process_form(){
 	$factnif = $_POST['dni'].$_POST['ldni'];
 	$factnif = trim($factnif);
 
-	if (($rf == $rowdni['ref'])||($_POST['ref'] == $rf)){
+	if (($rf == $rowdni['ref'])||(@$_POST['ref'] == $rf)){
 		
 	$sql = "UPDATE `$db_name`.$vname SET `rsocial` = '$_POST[rsocial]', `Email` = '$_POST[Email]', `Direccion` = '$_POST[Direccion]', `Tlf1` = '$_POST[Tlf1]', `Tlf2` = '$_POST[Tlf2]' WHERE $vname.`id` = '$_POST[id]' LIMIT 1 ";
 			
@@ -202,92 +198,50 @@ $sg6 = "UPDATE `$db_name`.$gastos6 SET `refprovee` = '$rf', `factnif` = '$factni
 						HA MODIFICADO EL PROVEEDOR DE GASTOS.
 					</th>
 				</tr>
-								
 				<tr>
-					<td width=150px>
-						RAZON SOCIAL
-					</td>
-					<td width=200px>"
-						.$_POST['rsocial'].
-					"</td>
+					<td width=150px> RAZON SOCIAL</td>
+					<td width=200px>".$_POST['rsocial']."</td>
 					<td rowspan='5' align='center' width='100px'>
 	<img src='../cbj_Docs/img_proveedores/".$dudas."' height='120px' width='90px' />
 					</td>
 				</tr>
-				
 				<tr>
-					<td>
-						DOCUMENTO
-					</td>
-					<td>"
-						.$_POST['doc'].
-					"</td>
+					<td>DOCUMENTO</td>
+					<td>".$_POST['doc']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						NUMERO
-					</td>
-					<td>"
-						.$_POST['dni'].
-					"</td>
+					<td>NUMERO</td>
+					<td>".$_POST['dni']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						CONTROL
-					</td>
-					<td>"
-						.$_POST['ldni'].
-					"</td>
+					<td>CONTROL</td>
+					<td>".$_POST['ldni']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						MAIL
-					</td>
-					<td colspan='2'>"
-						.$_POST['Email'].
-					"</td>
+					<td>MAIL</td>
+					<td colspan='2'>".$_POST['Email']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						REFERENCIA
-					</td>
-					<td>"
-						.$rf.
-					"</td>
+					<td>REFERENCIA</td>
+					<td>".$rf."</td>
 				</tr>
-				
 				<tr>
-				
-					<td>
-						PAIS
-					</td>
-					<td colspan='2'>"
-						.$_POST['Direccion'].
-					"</td>
+					<td>PAIS</td>
+					<td colspan='2'>".$_POST['Direccion']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						TELEFONO 1
-					</td>
-					<td colspan='2'>"
-						.$_POST['Tlf1'].
-					"</td>
+					<td>TELEFONO 1</td>
+					<td colspan='2'>".$_POST['Tlf1']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						TELEFONO 2
-					</td>
-					<td colspan='2'>"
-						.$_POST['Tlf2'].
-					"</td>
+					<td>TELEFONO 2</td>
+					<td colspan='2'>".$_POST['Tlf2']."</td>
 				</tr>
-								
+				<tr>
+					<td colspan='3' align='center'>
+						<a href='proveedores_Modificar_01.php'>VOLVER PROVEEDORES MODIFICAR</a>
+					</td>
+				</tr>
 			</table>" );
 			
 			
@@ -310,7 +264,7 @@ $sg6 = "UPDATE `$db_name`.$gastos6 SET `refprovee` = '$rf', `factnif` = '$factni
 
 function show_form($errors=[]){
 	
-	if($_POST['oculto2']){
+	if(isset($_POST['oculto2'])){
 		
 	$_SESSION['dniold'] = $_POST['dni'];
 	$_SESSION['refold'] = $_POST['ref'];
@@ -336,7 +290,7 @@ function show_form($errors=[]){
 				$defaults = array ( 'id' => $_POST['id'],
 									'rsocial' => $_POST['rsocial'],
 									'myimg' => $_POST['myimg'],	
-									'ref' => $_POST['ref'],
+									'ref' => @$_POST['ref'],
 									'doc' => $_POST['doc'],
 									'dni' => $_POST['dni'],
 									'ldni' => $_POST['ldni'],
@@ -349,13 +303,15 @@ function show_form($errors=[]){
 		else{$defaults = $_POST;}
 		
 	if ($errors){
-		print("	<div width='90%' style='float:left'>
+		print("	<div style='margin: auto; width: fit-content;'>
 					<table align='left' style='border:none'>
-					<th style='text-align:left'>
-					<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-					</th>
-					<tr>
-					<td style='text-align:left'>");
+						<tr>
+							<th style='text-align:left'>
+								<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
+							</th>
+						</tr>
+						<tr>
+							<td style='text-align:left'>");
 			
 		for($a=0; $c=count($errors), $a<$c; $a++){
 			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
@@ -387,6 +343,7 @@ function show_form($errors=[]){
 						'NIFute' => 'NIF Uniones Temporales de Empresas',
 						'NIFotnd' => 'NIF Otros Tipos no Definidos',
 						'NIFepenr' => 'NIF Establecimientos Permanentes Entidades no Residentes',
+						'UNDEFINE' => 'Sin Validación Definida...',
 										);
 	
 if (preg_match('/^(\w{1})/',$_POST['rsocial'],$ref1)){	$rf1 = $ref1[1];
@@ -396,139 +353,108 @@ if (preg_match('/^(\w{1})*(\s\w{1})/',$_POST['rsocial'],$ref2)){	$rf2 = $ref2[2]
 																$rf2 = trim($rf2);
 																						}
 global $rf;
-$rf = $rf1.$rf2.$_POST['dni'].$_POST['ldni'];
+$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
 $rf = trim($rf);
 
-	print("
-			<table align='center' style=\"margin-top:10px\">
+	print("<table align='center' style=\"margin-top:10px\">
 				<tr>
-					<th colspan=2 class='BorderInf'>
-
-							DATOS DEL NUEVO PROVEEDOR
-					</th>
+					<th colspan=2 class='BorderInf'>DATOS DEL NUEVO PROVEEDOR</th>
 				</tr>
-				
-<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'  enctype='multipart/form-data'>
-						
+	<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'  enctype='multipart/form-data'>
 			<input type='hidden' name='id' value='".$defaults['id']."' />
 			<input type='hidden' name='myimg' value='".$defaults['myimg']."' />
 				<tr>
 					<td width=180px>	
-						<font color='#FF0000'>*</font>
-						REFERENCIA
+						<font color='#FF0000'>*</font>REFERENCIA
 					</td>
-					<td width=360px>
-									".$rf."
-					</td>
+					<td width=360px>".$rf."</td>
 				</tr>
-					
 				<tr>
 					<td width=180px>	
-						<font color='#FF0000'>*</font>
-						RAZON SOCIAL
+						<font color='#FF0000'>*</font>RAZON SOCIAL
 					</td>
 					<td width=360px>
 		<input type='text' name='rsocial' size=30 maxlength=30 value='".$defaults['rsocial']."' />
 					</td>
 				</tr>
-					
 				<tr>
 					<td>
-						<font color='#FF0000'>*</font>
-						DOCUMENTO
+						<font color='#FF0000'>*</font>DOCUMENTO
 					</td>
 					<td>
-					
 			<select name='doc'>");
-
 				foreach($doctype as $option => $label){
-					
 					print ("<option value='".$option."' ");
-					
-					if($option == $defaults['doc']){
-															print ("selected = 'selected'");
-																								}
+					if($option == $defaults['doc']){ print ("selected = 'selected'"); }
 													print ("> $label </option>");
 												}	
 
 	print ("</select>
 					</td>
 				</tr>
-					
-
 				<tr>
 					<td>
-						<font color='#FF0000'>*</font>
-							NÚMERO
+						<font color='#FF0000'>*</font>NÚMERO
 					</td>
 					<td>
 		<input type='text' name='dni' size=12 maxlength=8 value='".$defaults['dni']."' />
 					</td>
 				</tr>
-				
 				<tr>
 					<td>
-						<font color='#FF0000'>*</font>
-							CONTROL
+						<font color='#FF0000'>*</font>CONTROL
 					</td>
 					<td>
 		<input type='text' name='ldni' size=4 maxlength=1 value='".$defaults['ldni']."' />
 					</td>
 				</tr>
-				
 				<tr>
 					<td>
-						<font color='#FF0000'>*</font>
-							MAIL
+						<font color='#FF0000'>*</font>MAIL
 					</td>
 					<td>
 		<input type='text' name='Email' size=52 maxlength=50 value='".$defaults['Email']."' />
 					</td>
 				</tr>	
-					
 				<tr>
 					<td>
-						<font color='#FF0000'>*</font>
-							DIRECCIÓN
+						<font color='#FF0000'>*</font>DIRECCIÓN
 					</td>
 					<td>
 	<input type='text' name='Direccion' size=52 maxlength=60 value='".$defaults['Direccion']."' />
 					</td>
 				</tr>
-				
 				<tr>
 				<tr>
 					<td>
-						<font color='#FF0000'>*</font>
-							TELÉFONO 1
+						<font color='#FF0000'>*</font>TELÉFONO 1
 					</td>
 					<td>
 		<input type='text' name='Tlf1' size=12 maxlength=9 value='".$defaults['Tlf1']."' />
 					</td>
 				</tr>
-				
 				<tr>
 					<tr>
 					<td>
-						<font color='#FF0000'>&nbsp;</font>
-							TELÉFONO 2
+						<font color='#FF0000'>&nbsp;</font>TELÉFONO 2
 					</td>
 					<td>
 		<input type='text' name='Tlf2' size=12 maxlength=9 value='".$defaults['Tlf2']."' />
 					</td>
 				</tr>
-				
 				<tr>
 					<td colspan='2'  align='right' valign='middle'  class='BorderSup'>
 						<input type='submit' value='MODIFICAR DATOS' />
 						<input type='hidden' name='modifica' value=1 />
 						<input type='hidden' name='v' value='g' />
 					</td>
-					
 				</tr>
-				
 		</form>														
-			
+				<tr>
+					<td colspan='2' align='center'>
+						<a href='proveedores_Modificar_01.php'>VOLVER PROVEEDORES MODIFICAR</a>
+					</td>
+				</tr>
 			</table>				
 					"); /* Fin del print */
 	
@@ -553,13 +479,12 @@ $rf = trim($rf);
 
 function info_01(){
 
-	global $db;
-	global $orden;
+	global $db; 	global $orden;
 	
-	$orden = $_POST['Orden'];
+	$orden = @$_POST['Orden'];
 		
 	$_SESSION['xid'] = $_POST['id'];
-	if ($_POST['todo']){$filtro = "\n\tFiltro => TODOS LOS PROVEEDORES ".$orden;}
+	if (isset($_POST['todo'])){$filtro = "\n\tFiltro => TODOS LOS PROVEEDORES ".$orden;}
 	else{$filtro = "\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";}
 
 	$ActionTime = date('H:i:s');

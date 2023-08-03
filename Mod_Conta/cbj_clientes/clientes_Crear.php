@@ -67,7 +67,7 @@ function process_form(){
 																			}
 	
 	global $rf;
-	$rf = $rf1.$rf2.$_POST['dni'].$_POST['ldni'];
+	$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
 	$rf = trim($rf);
 			
 	/************* CREAMOS LAS IMAGENES EN LA IMG CLIENTE DIRECTORIO ***************/
@@ -313,7 +313,7 @@ if (preg_match('/^(\w{1})*(\s\w{1})/',$_POST['rsocial'],$ref2)){	$rf2 = $ref2[2]
 																						}
 
 global $rf;
-$rf = $rf1.$rf2.$_POST['dni'].$_POST['ldni'];
+$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
 $rf = trim($rf);
 
 	print("

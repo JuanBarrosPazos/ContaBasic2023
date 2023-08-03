@@ -15,7 +15,7 @@ session_start();
 
 if ($_SESSION['Nivel'] == 'admin'){
 
- 			print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
+ 			//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
 			master_index();
 
 			if ($_POST['oculto2']){
@@ -37,97 +37,53 @@ if ($_SESSION['Nivel'] == 'admin'){
 function process_form(){
 	
 		print("<table align='center' style='margin-top:10px'>
-		
 				<tr>
-					<th colspan=3 class='BorderInf'>
-						HA BORRADO AL PROVEEDOR.
-					</th>
+					<th colspan=3 class='BorderInf'>HA BORRADO AL PROVEEDOR</th>
 				</tr>
-								
 				<tr>
-					<td>
-						RAZON SOCIAL
-					</td>
-					<td>"
-						.$_POST['rsocial'].
-					"</td>
+					<td>RAZON SOCIAL</td>
+					<td>".$_POST['rsocial']."</td>
 					<td rowspan='4'>
 <img src='../cbj_Docs/img_proveedores/".$_POST['myimg']."' height='120px' width='90px' />
 					</td>
 				</tr>
-				
 				<tr>
-					<td>
-						DOCUMENTO
-					</td>
-					<td>"
-						.$_POST['doc'].
-					"</td>
+					<td>DOCUMENTO</td>
+					<td>".$_POST['doc']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						NUMERO
-					</td>
-					<td>"
-						.$_POST['dni'].
-					"</td>
+					<td>NUMERO</td>
+					<td>".$_POST['dni']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						CONTROL
-					</td>
-					<td>"
-						.$_POST['ldni'].
-					"</td>
+					<td>CONTROL</td>
+					<td>".$_POST['ldni']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						MAIL
-					</td>
-					<td colspan='2'>"
-						.$_POST['Email'].
-					"</td>
+					<td>MAIL</td>
+					<td colspan='2'>".$_POST['Email']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						REFERENCIA
-					</td>
-					<td colspan='2'>"
-						.$_POST['ref'].
-					"</td>
+					<td>REFERENCIA</td>
+					<td colspan='2'>".$_POST['ref']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						PAIS
-					</td>
-					<td colspan='2'>"
-						.$_POST['Direccion'].
-					"</td>
+					<td>PAIS</td>
+					<td colspan='2'>".$_POST['Direccion']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						TELEFONO 1
-					</td>
-					<td>"
-						.$_POST['Tlf1'].
-					"</td>
+					<td>TELEFONO 1</td>
+					<td>".$_POST['Tlf1']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						TELEFONO 2
-					</td>
-					<td colspan='2'>"
-						.$_POST['Tlf2'].
-					"</td>
+					<td>TELEFONO 2</td>
+					<td colspan='2'>".$_POST['Tlf2']."</td>
 				</tr>
-								
+				<tr>
+					<td colspan='3' align='center'>
+						<a href='proveedores_Borrar_01.php'>VOLVER PROVEEDORES BORRAR</a>
+					</td>
+				</tr>
 			</table>" );
 
 	global $db; 		global $db_name;	
@@ -284,13 +240,14 @@ function show_form(){
 						<input type='hidden' name='borra' value=1 />
 						
 					</td>
-					
 				</tr>
-				
 		</form>														
-			
-			</table>				
-					"); /* Fin del print */
+				<tr>
+					<td colspan='3' align='center'>
+						<a href='proveedores_Borrar_01.php'>VOLVER PROVEEDORES BORRAR</a>
+					</td>
+				</tr>
+			</table>"); /* Fin del print */
 	
 	}	/* Fin show_form(); */
 

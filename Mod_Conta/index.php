@@ -386,19 +386,14 @@ function ayear(){
 
 function status_close(){
 	
-	global $db;
-	global $db_name;
+	global $db; 	global $db_name;
 			
-	global $ystatus;
-	$ystatus = date('Y')-1;
-	$ystatus = trim($ystatus);
-	global $stdate;
-	$stdate = date('Y');
-	$stdate = trim($stdate);
+	global $ystatus; 	$ystatus = date('Y')-1; 	$ystatus = trim($ystatus);
+	global $stdate; 	$stdate = date('Y'); 		$stdate = trim($stdate);
 			
-	global $t1; 	$t1 = "`".$_SESSION['clave']."status`";
+	global $t1; 		$t1 = "`".$_SESSION['clave']."status`";
 
-	$sqls =  "SELECT * FROM $t1  WHERE $t1.`stat` = 'open' AND $t1.`year` < '$stdate' ORDER BY `year` DESC ";
+	$sqls =  "SELECT * FROM $t1  WHERE $t1.`year` < '$stdate' AND $t1.`stat` = 'open' ORDER BY `year` DESC ";
 	$qs = mysqli_query($db, $sqls);				
 	$qsn = mysqli_num_rows($qs);
 	$qsr = mysqli_fetch_assoc($qs);
@@ -407,18 +402,18 @@ function status_close(){
 	global $stmes;
 	$stmes = trim(date('m'));
 			
-	if(!$qs){print("* ".mysqli_error($db)."<br/>");} 
-	elseif($qsn > 0){//print("* ENTRADAS: ".$qsn.". ");
-	}
+	if(!$qs){ print("* ".mysqli_error($db)."<br/>");
+	} elseif($qsn > 0){ print("* ENTRADAS: ".$qsn.". "); }
 
-	if(($qsr['year'] == $ystatus) && ($qsn > 0) && ($ystatus < $stdate) && ($stmes > 1)){
+	/* PASA EL ESTADO DEL EJERCICIO AUTOMATICAMENTE A CLOSE */
+	if((@$qsr['year'] == $ystatus) && ($qsn > 0) && ($ystatus < $stdate) && ($stmes > 1)){
 		$sg1st = "UPDATE `$db_name`.$t1 SET `stat` = 'close' WHERE `year` = $ystatus AND `stat` = 'open' ";
 		if(mysqli_query($db, $sg1st)){ print("* OK CLOSE EJERCICIO: ".$ystatus.".<br/>");
 		} else {print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";}
 	}
 
+	/* PASA EL ESTADO DEL EJERCICIO AUTOMATICAMENTE A OPEN */
 	if((($qsn > 1)||($qsn == 1)) && (($qsr['year']-1) < $ystatus)){
-				
 		$sqls3 =  "SELECT $t1.`year` FROM $t1  WHERE `stat` = 'open' AND `year` < '$ystatus' ORDER BY `year` DESC";
 		$qs3 = mysqli_query($db, $sqls3);				
 		$qsn3 = mysqli_num_rows($qs3);
@@ -433,7 +428,7 @@ function status_close(){
 					} else {print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";}
 			}
 					
-	}
+	} // FIN function status_close()
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -443,13 +438,14 @@ function process_form(){
 	
 	global $db;
 					
-if ($_SESSION['Nivel'] == 'admin'){	
+	if ($_SESSION['Nivel'] == 'admin'){	
 
 	//print("Wellcome: ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
 	
 		master_index();
-			
-		print("<table align='center' style=\"margin-top:-26px;margin-bottom:4px\">
+		
+		/*
+		print("<table align='center' style=\"margin-top:6px;margin-bottom:4px\">
 					<tr align='center'>
 						<td>
 							<font color='#2E939A'>
@@ -461,8 +457,9 @@ if ($_SESSION['Nivel'] == 'admin'){
 						</td>
 					</tr>
 				</table>");
+		*/
 				
-		  	show_balance();
+		show_balance();
 			
 		}	else { require 'Inclu/table_permisos.php'; }
 				

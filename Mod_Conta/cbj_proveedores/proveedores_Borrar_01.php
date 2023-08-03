@@ -159,7 +159,6 @@ function process_form(){
 								<input type='hidden' name='oculto2' value=1 />
 			</td>
 	</form>
-										
 			</tr>");
 								} /* Fin del while.*/ 
 

@@ -37,7 +37,7 @@ if (preg_match('/^(\w{1})*(\s\w{1})/',$_POST['Apellidos'],$ref4)){	$rf4 = $ref4[
 																							}
 
 	global $rf;
-	$rf = $rf1.$rf2.$rf3.$rf4.$_POST['dni'].$_POST['ldni'];
+	$rf = strtolower($rf1.$rf2.$rf3.$rf4.$_POST['dni'].$_POST['ldni']);
 	$rf = trim($rf);
 			
 	/* COMPROBAMOS SI EXISTE EL ADMINISTRADOR */

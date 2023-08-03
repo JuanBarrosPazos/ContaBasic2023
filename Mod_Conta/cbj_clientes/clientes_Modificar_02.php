@@ -13,7 +13,7 @@ session_start();
 
 if ($_SESSION['Nivel'] == 'admin'){
 
- 			print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
+ 			//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
 			master_index();
 
 			if ($_POST['oculto2']){
@@ -57,8 +57,7 @@ function validate_form(){
 
 function process_form(){
 	
-	global $db;
-	global $db_name;	
+	global $db; 	global $db_name;	
 	
 	if (preg_match('/^(\w{1})/',$_POST['rsocial'],$ref1)){	$rf1 = $ref1[1];
 															$rf1 = trim($rf1);
@@ -67,7 +66,7 @@ function process_form(){
 																	$rf2 = trim($rf2);
 																			}
 	global $rf;
-	$rf = $rf1.$rf2.$_POST['dni'].$_POST['ldni'];
+	$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
 	$rf = trim($rf);
 			
 	global $vname; 			$vname = "`".$_SESSION['clave']."clientes`";
@@ -395,7 +394,7 @@ if (preg_match('/^(\w{1})*(\s\w{1})/',$_POST['rsocial'],$ref2)){	$rf2 = $ref2[2]
 																$rf2 = trim($rf2);
 																						}
 global $rf;
-$rf = $rf1.$rf2.$_POST['dni'].$_POST['ldni'];
+$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
 $rf = trim($rf);
 
 	print("

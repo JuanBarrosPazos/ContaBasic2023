@@ -13,7 +13,7 @@ session_start();
 
 if ($_SESSION['Nivel'] == 'admin'){
 
- 					print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
+ 					//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
 				
 					master_index();
 

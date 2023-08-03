@@ -4,7 +4,7 @@
 
 /* 	VALIDAMOS EL CAMPO my_img */
 
-	if($_POST['oculto']){
+	if(isset($_POST['oculto'])){
 		
 	/*	CALCULAMOS LA REFERENCIA DE USUARIO	*/
 	
@@ -15,26 +15,19 @@
 																	$rf2 = trim($rf2);
 																			}
 	
-	global $rf;
-	$rf = $rf1.$rf2.$_POST['dni'].$_POST['ldni'];
+	global $rf;		global $rf1;	global $rf2;
+	$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
 	$rf = trim($rf);
 			
 	/////////////////
 
-	global $db;
-	global $db_name;
-	global $vname;
-	global $sqldni;
-	global $qdni;
+	global $db; 		global $db_name; 		global $vname;
+	global $sqldni; 	global $qdni;
 			
 	if($_POST['v']=='g'){
-		
-		global $vname; 		$vname = "`".$_SESSION['clave']."proveedores`";
-
+		$vname = "`".$_SESSION['clave']."proveedores`";
 	} elseif($_POST['v']=='i'){
-		
-		global $vname; 		$vname = "`".$_SESSION['clave']."clientes`";
-
+		$vname = "`".$_SESSION['clave']."clientes`";
 	}
 
 		$prove =  "SELECT * FROM `$db_name`.$vname WHERE `ref` = '$rf'";
@@ -42,8 +35,10 @@
 		$cprove = mysqli_num_rows($qprove);
 		$rowdni = mysqli_fetch_assoc($qprove);
 
-	if ($_POST['id'] == $rowdni['id']){}
-	elseif($cprove > 0){$errors [] = "EL PROVEEDOR <font color='#FF0000'> YA EXISTE ".$rf.".</font>";}
+	if(isset($_POST['id'])){
+		if ($_POST['id'] == $rowdni['id']){}
+		elseif($cprove > 0){$errors [] = "EL PROVEEDOR <font color='#FF0000'> YA EXISTE ".$rf.".</font>";}
+	} else { }
 	
 
 			///////////////////////////////////////////////////////////////////////////////////
@@ -107,10 +102,12 @@
 
 	/* VALIDAMOS EL CAMPO RAZON SOCIAL. */
 	
-	if ($_POST['id'] == $rowdni['id']){}
-	elseif($cprove > 0){$errors [] = " RAZON SOCIAL <font color='#FF0000'>YA EXISTE ".$_POST['rsocial']."</font>";}
+	if(isset($_POST['id'] )){
+		if ($_POST['id'] == @$rowdni['id']){}
+		elseif(@$cprove > 0){$errors [] = " RAZON SOCIAL <font color='#FF0000'>YA EXISTE ".$_POST['rsocial']."</font>";}
+	} else { }
 	
-		if(strlen(trim($_POST['rsocial'])) == 0){
+	if(strlen(trim($_POST['rsocial'])) == 0){
 		$errors [] = "R. SOCIAL <font color='#FF0000'>Este campo es obligatorio.</font>";
 		}
 	
@@ -127,31 +124,34 @@
 			///////////////////////////////////////////////////////////////////////////////////
 
 	/* VALIDAMOS EL CAMPO  NUMERO DNI/NIF */
+	global $db;		global $db_name;		global $vname;
+
+	if($_POST['v']=='g'){
+		$vname = "`".$_SESSION['clave']."proveedores`";
+	} elseif($_POST['v']=='i'){
+		$vname = "`".$_SESSION['clave']."clientes`";
+	}
 
 	$sqldni =  "SELECT * FROM `$db_name`.$vname WHERE $vname.`dni` = '$_POST[dni]'";
 	$qdni = mysqli_query($db, $sqldni);
 	$rowdni = mysqli_fetch_assoc($qdni);
 	$count = mysqli_num_rows($qdni);
 
-	if ($_POST['id'] == $rowdni['id']){}
-	elseif(mysqli_num_rows($qdni)!= 0){
-		
-		$errors [] = "N&uacute;mero DNI/NIF: <font color='#FF0000'>Ya Existe.</font>";
+	if(isset($_POST['id'] )){ 
+		if ($_POST['id'] == $rowdni['id']){}
+		elseif(mysqli_num_rows($qdni)!= 0){ 
+			$errors [] = "N&uacute;mero DNI/NIF: <font color='#FF0000'>Ya Existe.</font>"; 
 		}
-		
+	}
+	
 	if ($_POST['doc'] == 'DNI') {
-
 		if(strlen(trim($_POST['dni'])) == 0){
 		$errors [] = "N&uacute;mero DNI/NIF: <font color='#FF0000'>Campo Obligatorio.</font>";
-		}
-
-	elseif (!preg_match('/^[\d]+$/',$_POST['dni'])){
-		$errors [] = "N&uacute;mero DNI/NIF: <font color='#FF0000'>Sólo Números.</font>";
-		}
-
-	elseif (strlen(trim($_POST['dni'])) < 8){
-		$errors [] = "N&uacute;mero DNI/NIF: <font color='#FF0000'>Más de 7 Carácteres.</font>";
-		}
+		} elseif (!preg_match('/^[\d]+$/',$_POST['dni'])){
+			$errors [] = "N&uacute;mero DNI/NIF: <font color='#FF0000'>Sólo Números.</font>";
+		} elseif (strlen(trim($_POST['dni'])) < 8){
+			$errors [] = "N&uacute;mero DNI/NIF: <font color='#FF0000'>Más de 7 Carácteres.</font>";
+			}
 	}
 	
 	/* VALIDAMOS EL CAMPO  
@@ -380,7 +380,7 @@
 	
 					$numero = str_replace(array('X', 'Y', 'Z'), array(0, 1, 2), $numero);	
 				 
-					$modulo = $numero % 23;
+					$modulo = (int) $numero % 23;
 					$letras_validas = "TRWAGMYFPDXBNJZSQVHLCKE";
 					$letra2 = substr($letras_validas, $modulo, 1);
 		//	print ("ESTA ES LA LETRA NIE $letra2 </br>");
@@ -390,15 +390,20 @@
 
 		/* DEFINO EL ALGORITMO PARA EL CALCULO DE LA LETRA CONTROL DEL NIE/NIF ESPECIAL */
 
-			$dni3 = $_POST['dni'];
+		global $num1;	global $num2;	global $num3;	global $num4;
+		global $num5;	global $num6;	global $num7;
+
+		if(strlen(trim($_POST['dni'])) == 0){ }
+		else {	$dni3 = $_POST['dni'];
 			
-			$num1 = $dni3[1];
-			$num2 = $dni3[2];
-			$num3 = $dni3[3];
-			$num4 = $dni3[4];
-			$num5 = $dni3[5];
-			$num6 = $dni3[6];
-			$num7 = $dni3[7];
+				$num1 = $dni3[1];
+				$num2 = $dni3[2];
+				$num3 = $dni3[3];
+				$num4 = $dni3[4];
+				$num5 = $dni3[5];
+				$num6 = $dni3[6];
+				$num7 = $dni3[7];
+			}
 			
 			$sumaa = $num2 + $num4 + $num6 ;
 			// print ("LA SUMA A: $num2 + $num4 + $num6 = $sumaa </br>");
@@ -441,9 +446,9 @@
 			$sumatot = $sumaa + $sumab;
 			// print ("SUMA A $sumaa + SUMA B $sumab = SUMA TOTAL $sumatot </br>");
 			
-			$sumatotc ="$sumatot";
+			$sumatotc = $sumatot;
 			
-			if ($sumatotc[1] == 0) {	$sumacont = 0;
+			if (@$sumatotc[1] == 0) {	$sumacont = 0;
 										// print ("TOTAL SUMA CONTROL = $sumacont </br>");
 													}
 													
@@ -542,19 +547,19 @@
 	
 	/* Validamos el campo mail. */
 	
-	global $db;
-	global $sqlml;
-	global $qml;
-	global $db_name;
+	global $db; 		global $sqlml;
+	global $qml; 		global $db_name;
 
 	$sqlml =  "SELECT * FROM `$db_name`.$vname WHERE $vname.`Email` = '$_POST[Email]'";
 	$qml = mysqli_query($db, $sqlml);
 	$rowml = mysqli_fetch_assoc($qml);
 
-	if ($_POST['id'] == $rowml['id']){}
-	elseif(mysqli_num_rows($qml)!= 0){
-		$errors [] = "Mail: <font color='#FF0000'>YA EXISTE.</font>";
-		}
+	if((isset($_POST['id']))&&($_POST['Email']!="nomail@nomail.es")){
+		if ($_POST['id'] == $rowml['id']){}
+		elseif(mysqli_num_rows($qml)!= 0){
+			$errors [] = "Mail: <font color='#FF0000'>YA EXISTE.</font>";
+			}
+	} else { }
 		
 	if(strlen(trim($_POST['Email'])) == 0){
 		$errors [] = "Mail: <font color='#FF0000'>Este campo es obligatorio.</font>";
@@ -594,15 +599,17 @@
 		
 	/* Validamos el campo Tlf1 */
 	
-	$sqltlf1 =  "SELECT * FROM `$db_name`.$vname WHERE $vname.`Tlf1` = '$_POST[Tlf1]' OR $vname.`Tlf2` = '$_POST[Tlf1]' ";
+	$sqltlf1 = "SELECT * FROM `$db_name`.$vname WHERE $vname.`Tlf1` = '$_POST[Tlf1]' OR $vname.`Tlf2` = '$_POST[Tlf1]' ";
 	$qtlf1 = mysqli_query($db, $sqltlf1);
 	$rowtlf1 = mysqli_fetch_assoc($qtlf1);
 	$countlf1 = mysqli_num_rows($qtlf1);
 
-	if ($_POST['id'] == $rowtlf1['id']){}
-	elseif($countlf1 != 0){
-		$errors [] = "Teléfono 1: <font color='#FF0000'>YA EXISTE.</font>";
-		}
+	if((isset($_POST['id']))&&($_POST['Tlf1']!='000000000')){
+		if ($_POST['id'] == $rowtlf1['id']){}
+		elseif($countlf1 != 0){
+			$errors [] = "Teléfono 1: <font color='#FF0000'>YA EXISTE.</font>";
+			}
+	}
 
 	if(strlen(trim($_POST['Tlf1'])) == 0){
 		$errors [] = "Teléfono 1: <font color='#FF0000'>Este campo es obligatorio.</font>";
@@ -622,26 +629,26 @@
 	/* Validamos el campo Tlf2 */
 	
 
-	if(strlen(trim($_POST['Tlf2'])) > 0){
+	if((strlen(trim($_POST['Tlf2'])) > 0)&&($_POST['Tlf2']!='000000000')){
 
-			$sqltlf2 =  "SELECT * FROM `$db_name`.$vname WHERE $vname.`Tlf1` = '$_POST[Tlf2]' OR $vname.`Tlf2` = '$_POST[Tlf2]'";
-			$qtlf2 = mysqli_query($db, $sqltlf2);
-			$rowtlf2 = mysqli_fetch_assoc($qtlf2);
-			$countlf2 = mysqli_num_rows($qtlf2);
+	$sqltlf2 =  "SELECT * FROM `$db_name`.$vname WHERE $vname.`Tlf1` = '$_POST[Tlf2]' OR $vname.`Tlf2` = '$_POST[Tlf2]'";
+	$qtlf2 = mysqli_query($db, $sqltlf2);
+	$rowtlf2 = mysqli_fetch_assoc($qtlf2);
+	$countlf2 = mysqli_num_rows($qtlf2);
 		
-			if ($_POST['id'] == $rowtlf2['id']){}
-			elseif($countlf2 > 0){
-				$errors [] = "Teléfono 2: <font color='#FF0000'>YA EXISTE.</font>";
-				}
+	if ($_POST['id'] == $rowtlf2['id']){}
+		elseif($countlf2 > 0){
+		$errors [] = "Teléfono 2: <font color='#FF0000'>YA EXISTE.</font>";
+			}
 				
-			elseif (!preg_match('/^[\d]+$/',$_POST['Tlf2'])){
-				$errors [] = "Teléfono 2: <font color='#FF0000'>Sólo se admiten números.</font>";
-				}
+	elseif (!preg_match('/^[\d]+$/',$_POST['Tlf2'])){
+		$errors [] = "Teléfono 2: <font color='#FF0000'>Sólo se admiten números.</font>";
+			}
 		
-			elseif (strlen(trim($_POST['Tlf2'])) < 9){
-				$errors [] = "Teléfono 2: <font color='#FF0000'>No menos de nueve números</font>";
-				}
+	elseif (strlen(trim($_POST['Tlf2'])) < 9){
+		$errors [] = "Teléfono 2: <font color='#FF0000'>No menos de nueve números</font>";
+			}
 
-		}
+	}
 
 ?>

@@ -1,5 +1,7 @@
 <?php
 session_start();
+ echo $_SESSION['ref'];
+ echo $_SESSION['Usuario'];
 
 	require '../../Mod_Admin/Inclu/error_hidden.php';
 	require '../Inclu/Admin_Inclu_01b.php';
@@ -13,24 +15,21 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
-					master_index();
+		master_index();
 
-						if($_POST['oculto']){
-								if($form_errors = validate_form()){
-									show_form($form_errors);
-									unset($_SESSION['dudas']);
-
-										} else {
-											process_form();
-										 	info();
-												}
-							} else {
-										show_form();
-										unset($_SESSION['dudas']);
-									}
-				} else { require '../Inclu/table_permisos.php'; } 
+			if(isset($_POST['oculto'])){
+					if($form_errors = validate_form()){
+							show_form($form_errors);
+							unset($_SESSION['dudas']);
+					} else { process_form();
+							 info();
+								}
+			} else { show_form();
+					 unset($_SESSION['dudas']);
+						}
+	} else { require '../Inclu/table_permisos.php'; } 
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -56,9 +55,9 @@ function validate_form(){
 
 function process_form(){
 	
-	global $db;
-	global $db_name;	
-	
+	global $db; 	global $db_name;	
+	global $rf1;	global $rf2;
+
 	/*	REFERENCIA DE PROVEEDOR	*/
 	
 	if (preg_match('/^(\w{1})/',$_POST['rsocial'],$ref1)){	$rf1 = $ref1[1];
@@ -69,7 +68,7 @@ function process_form(){
 																			}
 	
 	global $rf;
-	$rf = $rf1.$rf2.$_POST['dni'].$_POST['ldni'];
+	$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
 	$rf = trim($rf);
 			
 	/************* CREAMOS LAS IMAGENES EN LA IMG PROVEEDOR DIRECTORIO ***************/
@@ -138,111 +137,62 @@ function process_form(){
 
 		print("<table align='center' style='margin-top:10px'>
 				<tr>
-					<th colspan=3 class='BorderInf'>
-						HA REGISTRADO UN NUEVO PROVEEDOR.
-					</th>
+					<th colspan=3 class='BorderInf'>HA REGISTRADO UN NUEVO PROVEEDOR</th>
 				</tr>
-								
 				<tr>
-					<td width=150px>
-						RAZON SOCIAL
-					</td>
-					<td width=200px>"
-						.$_POST['rsocial'].
-					"</td>
+					<td width=150px>RAZON SOCIAL</td>
+					<td width=200px>".$_POST['rsocial']."</td>
 					<td rowspan='5' align='center' width='100px'>
 	<img src='../cbj_Docs/img_proveedores/".$dudas."' height='120px' width='90px' />
 					</td>
 				</tr>
-				
 				<tr>
-					<td>
-						DOCUMENTO
-					</td>
-					<td>"
-						.$_POST['doc'].
-					"</td>
+					<td>DOCUMENTO</td>
+					<td>".$_POST['doc']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						NUMERO
-					</td>
-					<td>"
-						.$_POST['dni'].
-					"</td>
+					<td>NUMERO</td>
+					<td>".$_POST['dni']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						CONTROL
-					</td>
-					<td>"
-						.$_POST['ldni'].
-					"</td>
+					<td>CONTROL</td>
+					<td>".$_POST['ldni']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						MAIL
-					</td>
-					<td colspan='2'>"
-						.$_POST['Email'].
-					"</td>
+					<td>MAIL</td>
+					<td colspan='2'>".$_POST['Email']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						REFERENCIA
-					</td>
-					<td>"
-						.$rf.
-					"</td>
+					<td>REFERENCIA</td>
+					<td>".$rf."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						PAIS
-					</td>
-					<td colspan='2'>"
-						.$_POST['Direccion'].
-					"</td>
+					<td>PAIS</td>
+					<td colspan='2'>".$_POST['Direccion']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						TELEFONO 1
-					</td>
-					<td colspan='2'>"
-						.$_POST['Tlf1'].
-					"</td>
+					<td>TELEFONO 1</td>
+					<td colspan='2'>".$_POST['Tlf1']."</td>
 				</tr>
-				
-				
 				<tr>
-					<td>
-						TELEFONO 2
-					</td>
-					<td colspan='2'>"
-						.$_POST['Tlf2'].
-					"</td>
+					<td>TELEFONO 2</td>
+					<td colspan='2'>".$_POST['Tlf2']."</td>
 				</tr>
-								
+				<tr>
+					<td colspan='2' align='center'>
+						<a href='proveedores_Crear.php'>VOLVER PROVEEDORES CREAR</a>
+					</td>
+				</tr>
 			</table>" );
-			
-				} else {
-
-				print("</br>
+	} else { print("</br>
 				<font color='#FF0000'>
 			* MODIFIQUE LA ENTRADA 146: </font></br> ".mysqli_error($db))."
 				</br>";
-						show_form ();
-						global $texerror;
-						$texerror = "\n\t ".mysqli_error($db);
+				show_form ();
+				global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 					}
-					
 	
-			}	/* Final process_form(); */
+	}	/* Final process_form(); */
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -250,32 +200,33 @@ function process_form(){
 
 function show_form($errors=[]){
 	
-	if($_POST['oculto']){
+	if(isset($_POST['oculto'])){
 		$defaults = $_POST;
-		} else {
-				$defaults = array ( 'rsocial' => '',
-									'myimg' => $_POST['myimg'],	
-									'ref' => '',
-									'doc' => '',
-									'dni' => '',
-									'ldni' => '',
-									'Email' => 'Solo letras minúsculas',
-									'Direccion' => '',
-									'Tlf1' => '',
-									'Tlf2' => '');
+		} else { $defaults = array ( 'rsocial' => '',
+									 'myimg' => @$_POST['myimg'],	
+									 'ref' => '',
+									 'doc' => '',
+									 'dni' => '',
+									 'ldni' => '',
+									 'Email' => 'nomail@nomail.es',
+									 'Direccion' => '',
+									 'Tlf1' => '000000000',
+									 'Tlf2' => '');
 								   					}
 	
 	global $texerror;
 	$texerror = "ERROR EN CAMPO DEL FORMULARIO.";
 			
 	if ($errors){
-		print("	<div width='90%' style='float:left'>
+		print("	<div style='margin: auto; width: fit-content;'>
 					<table align='left' style='border:none'>
-					<th style='text-align:left'>
-					<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-					</th>
-					<tr>
-					<td style='text-align:left'>");
+						<tr>
+							<th style='text-align:left'>
+								<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
+							</th>
+						</tr>
+						<tr>
+							<td style='text-align:left'>");
 			
 		for($a=0; $c=count($errors), $a<$c; $a++){
 			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
@@ -307,16 +258,17 @@ function show_form($errors=[]){
 						'NIFute' => 'NIF Uniones Temporales de Empresas',
 						'NIFotnd' => 'NIF Otros Tipos no Definidos',
 						'NIFepenr' => 'NIF Establecimientos Permanentes Entidades no Residentes',
+						'UNDEFINE' => 'Sin Validación Definida...',
 										);
-if (preg_match('/^(\w{1})/',$_POST['rsocial'],$ref1)){	$rf1 = $ref1[1];
-														$rf1 = trim($rf1);
-																						}
-if (preg_match('/^(\w{1})*(\s\w{1})/',$_POST['rsocial'],$ref2)){	$rf2 = $ref2[2];
-																$rf2 = trim($rf2);
-																						}
+
+	global $rf1; 	global $rf2;
+if (preg_match('/^(\w{1})/',@$_POST['rsocial'],$ref1)){	$rf1 = $ref1[1];
+														$rf1 = trim($rf1); }
+if (preg_match('/^(\w{1})*(\s\w{1})/',@$_POST['rsocial'],$ref2)){ $rf2 = $ref2[2];
+																  $rf2 = trim($rf2); }
 
 global $rf;
-$rf = $rf1.$rf2.$_POST['dni'].$_POST['ldni'];
+$rf = strtolower($rf1.$rf2.@$_POST['dni'].@$_POST['ldni']);
 $rf = trim($rf);
 
 	print("
@@ -441,7 +393,7 @@ $rf = trim($rf);
 						FOTOGRAFIA
 					</td>
 					<td>
-		<input type='file' name='myimg' value='".$defaults['myimg']."' />						
+		<input type='file' name='myimg' value='".@$defaults['myimg']."' />						
 					</td>
 				</tr>
 

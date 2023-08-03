@@ -13,7 +13,7 @@ session_start();
 
 if ($_SESSION['Nivel'] == 'admin'){
 
- 			print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
+ 			//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
 			master_index();
 
 			if ($_POST['oculto2']){
@@ -42,7 +42,6 @@ function process_form(){
 						HA BORRADO AL PROVEEDOR DE INGRESOS.
 					</th>
 				</tr>
-								
 				<tr>
 					<td>
 						RAZON SOCIAL
@@ -287,7 +286,12 @@ function show_form(){
 				</tr>
 				
 		</form>														
-			
+		<tr>
+			<td colspan='3' align='center'>
+				<a href='clientes_Borrar_01.php'>VOLVER PROVEEDORES MODIFICAR</a>
+			</td>
+		</tr>
+
 			</table>				
 					"); /* Fin del print */
 	
