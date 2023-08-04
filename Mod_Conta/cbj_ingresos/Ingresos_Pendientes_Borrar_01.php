@@ -96,7 +96,7 @@ function process_form(){
 	
 	global $vname; 		$vname = "`".$_SESSION['clave']."ingresos_pendientes`";
 
-	$sqlc =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+	$sqlc =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
  	
 	$qc = mysqli_query($db, $sqlc);
 	

@@ -102,7 +102,7 @@ function config_one_cbj(){
 			}else{	global $data6;
 					$data6 = "";}
 	*/
- 
+  
 	// PASAMOS LOS PARAMETROS A LOS LOG.
 	global $text; 
 	$text = "MOD_CONTA SUSTITUCION DE ARCHIVOS:".$data1/*.$data2*/.$data3/*.$data4*/.$data5/*.$data6*/;
@@ -127,8 +127,53 @@ function config_one_cbj(){
 	/************* CREAMOS LA TABLA VISITAS ADMIN ****************/
 	// SE CONSTRUYE DESDE MOD_ADMIN
 
-	/************** CREAMOS LA TABLA GASTOS PENDIENTES  ***************/
+	/************** CREAMOS LA TABLA PROVEEDORES ***************/
 
+	global $vname5;
+	$vname5 = "`".$_SESSION['clave']."proveedores`";
+	
+	$provee = "CREATE TABLE `$db_name`.$vname5 (
+  `id` int(4) NOT NULL auto_increment,
+  `ref` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `rsocial` varchar(30) collate utf8_spanish2_ci NOT NULL,
+  `myimg` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png ',
+  `doc` varchar(11) collate utf8_spanish2_ci NOT NULL,
+  `dni` varchar(8) collate utf8_spanish2_ci NOT NULL,
+  `ldni` varchar(1) collate utf8_spanish2_ci NOT NULL,
+  `Email` varchar(50) collate utf8_spanish2_ci NOT NULL,
+  `Direccion` varchar(60) collate utf8_spanish2_ci NOT NULL,
+  `Tlf1` int(9) NOT NULL default 000000000,
+  `Tlf2` int(9) NOT NULL default 000000000,
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `ref` (`ref`),
+  PRIMARY KEY `ref` (`ref`),
+  UNIQUE KEY `dni` (`dni`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
+		
+	if(mysqli_query($db, $provee)){
+			global $table6;
+			$table6 = "\t* OK TABLA ".$vname5."\n";
+		} else { print("* NO OK TABLA ".$vname5.". ".mysqli_error($db)."</br>");
+				 global $table6;
+				 $table6 = "\t* NO OK TABLA ".$vname5.". ".mysqli_error($db)."\n";
+			}
+
+	$vp = "INSERT INTO `$db_name`.$vname5 (`id`, `ref`, `rsocial`, `myimg`, `doc`, `dni`, `ldni`, `Email`, `Direccion`, `Tlf1`, `Tlf2`) VALUES
+(1, 'ANONIMO', 'ANONIMO', 'untitled.png', 'ANONIMO', 'ANONIMO', 'X', 'ANONIMO', 'ANONIMO', 000000000, 000000000)";
+		
+	if(mysqli_query($db, $vp)){
+			global $table7;
+			$table7 = "\t* OK INIT VALUES EN ".$vname5."\n";
+		} else { print("* NO OK INIT VALUES EN ".$vname5.". ".mysqli_error($db)."</br>");
+				 global $table7;
+				 $table7 = "\t* NO OK INIT VALUES EN ".$vname5.". ".mysqli_error($db)."\n";
+			}
+
+			/************** CREAMOS LA TABLA GASTOS PENDIENTES  ***************/
+
+	global $tablProveedores;
+	$tablProveedores = "`".$_SESSION['clave']."proveedores`";
+		
 	global $vname1b;
 	$vname1b = "`".$_SESSION['clave']."gastos_pendientes`";
 	
@@ -151,7 +196,9 @@ function config_one_cbj(){
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `id` (`id`)
+  UNIQUE KEY `id` (`id`),
+  INDEX `refprovee` (`refprovee`),
+  FOREIGN KEY (`refprovee`) REFERENCES $tablProveedores (`ref`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
 	if(mysqli_query($db, $tgb)){
@@ -161,84 +208,9 @@ function config_one_cbj(){
 			global $table4;
 			$table4 = "\t* NO OK TABLA ".$vname1b.". ".mysqli_error($db)."\n";
 		}
+			
 
-	/************** CREAMOS LA TABLA INGRESOS PENDIENTES ***************/
-
-	global $vname3b;
-	$vname3b = "`".$_SESSION['clave']."ingresos_pendientes`";
-	
-	$tib = "CREATE TABLE `$db_name`.$vname3b (
-  `id` int(4) NOT NULL auto_increment,
-  `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `refprovee` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
-  `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `factiva` int(2) NOT NULL,
-  `factivae` decimal(9,2) unsigned NOT NULL,
-  `factpvp` decimal(9,2) unsigned NOT NULL,
-  `factret` int(2) NOT NULL,
-  `factrete` decimal(9,2) unsigned NOT NULL,
-  `factpvptot` decimal(9,2) unsigned NOT NULL,
-  `coment` text collate utf8_spanish2_ci NOT NULL,
-  `myimg1` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
-  `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
-  `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
-  `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
-  PRIMARY KEY  (`id`),
-  UNIQUE KEY `id` (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
-		
-	if(mysqli_query($db, $tib)){
-			global $table5;
-			$table5 = "\t* OK TABLA ".$vname3b."\n";
-	} else {print( "* NO OK TABLA ".$vname3b.". ".mysqli_error($db)."\n");
-				global $table5;
-				$table5 = "\t* NO OK TABLA ".$vname3b.". ".mysqli_error($db)."\n";
-			}
-
-	/************** CREAMOS LA TABLA PROVEEDORES ***************/
-
-	global $vname5;
-	$vname5 = "`".$_SESSION['clave']."proveedores`";
-	
-	$provee = "CREATE TABLE `$db_name`.$vname5 (
-  `id` int(4) NOT NULL auto_increment,
-  `ref` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `rsocial` varchar(30) collate utf8_spanish2_ci NOT NULL,
-  `myimg` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png ',
-  `doc` varchar(11) collate utf8_spanish2_ci NOT NULL,
-  `dni` varchar(8) collate utf8_spanish2_ci NOT NULL,
-  `ldni` varchar(1) collate utf8_spanish2_ci NOT NULL,
-  `Email` varchar(50) collate utf8_spanish2_ci NOT NULL,
-  `Direccion` varchar(60) collate utf8_spanish2_ci NOT NULL,
-  `Tlf1`varchar(9) NOT NULL default '0',
-  `Tlf2`varchar(9) NOT NULL default '0',
-  UNIQUE KEY `id` (`id`),
-  UNIQUE KEY `ref` (`ref`),
-  UNIQUE KEY `dni` (`dni`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
-		
-	if(mysqli_query($db, $provee)){
-			global $table6;
-			$table6 = "\t* OK TABLA ".$vname5."\n";
-		} else { print("* NO OK TABLA ".$vname5.". ".mysqli_error($db)."</br>");
-				 global $table6;
-				 $table6 = "\t* NO OK TABLA ".$vname5.". ".mysqli_error($db)."\n";
-			}
-
-	$vp = "INSERT INTO `$db_name`.$vname5 (`id`, `ref`, `rsocial`, `myimg`, `doc`, `dni`, `ldni`, `Email`, `Direccion`, `Tlf1`, `Tlf2`) VALUES
-(1, 'ANONIMO', 'ANONIMO', 'untitled.png', 'ANONIMO', 'ANONIMO', 'X', 'ANONIMO', 'ANONIMO', '000000000', '000000000')";
-		
-	if(mysqli_query($db, $vp)){
-			global $table7;
-			$table7 = "\t* OK INIT VALUES EN ".$vname5."\n";
-		} else { print("* NO OK INIT VALUES EN ".$vname5.". ".mysqli_error($db)."</br>");
-				 global $table7;
-				 $table7 = "\t* NO OK INIT VALUES EN ".$vname5.". ".mysqli_error($db)."\n";
-			}
-
-	/************** CREAMOS LA TABLA clientes ***************/
+		/************** CREAMOS LA TABLA clientes ***************/
 
 	global $vname6;
 	$vname6 = "`".$_SESSION['clave']."clientes`";
@@ -253,10 +225,11 @@ function config_one_cbj(){
   `ldni` varchar(1) collate utf8_spanish2_ci NOT NULL,
   `Email` varchar(50) collate utf8_spanish2_ci NOT NULL,
   `Direccion` varchar(60) collate utf8_spanish2_ci NOT NULL,
-  `Tlf1`varchar(9) NOT NULL default '0',
-  `Tlf2`varchar(9) NOT NULL default '0',
+  `Tlf1` int(9) NOT NULL default 000000000,
+  `Tlf2`int(9) NOT NULL default 000000000,
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `ref` (`ref`),
+  PRIMARY KEY `ref` (`ref`),
   UNIQUE KEY `dni` (`dni`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
@@ -268,7 +241,7 @@ function config_one_cbj(){
 				 $table8 = "\t* NO OK TABLA ".$vname6.". ".mysqli_error($db)." \n";
 			}
 					
-	$vpi = "INSERT INTO `$db_name`.$vname6 (`id`, `ref`, `rsocial`, `myimg`, `doc`, `dni`, `ldni`, `Email`, `Direccion`, `Tlf1`, `Tlf2`) VALUES (1, 'ANONIMO', 'ANONIMO', 'untitled.png', 'ANONIMO', 'ANONIMO', 'X', 'ANONIMO', 'ANONIMO', '000000000', '000000000')";
+	$vpi = "INSERT INTO `$db_name`.$vname6 (`id`, `ref`, `rsocial`, `myimg`, `doc`, `dni`, `ldni`, `Email`, `Direccion`, `Tlf1`, `Tlf2`) VALUES (1, 'ANONIMO', 'ANONIMO', 'untitled.png', 'ANONIMO', 'ANONIMO', 'X', 'ANONIMO', 'ANONIMO', 000000000, 000000000)";
 		
 	if(mysqli_query($db, $vpi)){
 			global $table9;
@@ -276,6 +249,46 @@ function config_one_cbj(){
 		} else { print("* NO OK INIT VALUES EN ".$vname6.". ".mysqli_error($db)."</br>");
 				 global $table9;
 				 $table9 = "\t* NO OK INIT VALUES EN ".$vname6.". ".mysqli_error($db)."\n";
+			}
+
+				/************** CREAMOS LA TABLA INGRESOS PENDIENTES ***************/
+
+	global $tblClientes;
+	$tblClientes = "`".$_SESSION['clave']."clientes`";
+
+	global $vname3b;
+	$vname3b = "`".$_SESSION['clave']."ingresos_pendientes`";
+	
+	$tib = "CREATE TABLE `$db_name`.$vname3b (
+  `id` int(4) NOT NULL auto_increment,
+  `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `refcliente` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
+  `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factiva` int(2) NOT NULL,
+  `factivae` decimal(9,2) unsigned NOT NULL,
+  `factpvp` decimal(9,2) unsigned NOT NULL,
+  `factret` int(2) NOT NULL,
+  `factrete` decimal(9,2) unsigned NOT NULL,
+  `factpvptot` decimal(9,2) unsigned NOT NULL,
+  `coment` text collate utf8_spanish2_ci NOT NULL,
+  `myimg1` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `id` (`id`),
+  INDEX `refcliente` (`refcliente`),
+  FOREIGN KEY (`refcliente`) REFERENCES $tblClientes (`ref`) ON DELETE NO ACTION ON UPDATE CASCADE
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
+		
+	if(mysqli_query($db, $tib)){
+			global $table5;
+			$table5 = "\t* OK TABLA ".$vname3b."\n";
+	} else {print( "* NO OK TABLA ".$vname3b.". ".mysqli_error($db)."\n");
+				global $table5;
+				$table5 = "\t* NO OK TABLA ".$vname3b.". ".mysqli_error($db)."\n";
 			}
 
 	/************* CREAMOS LAS TABLAS BALANCES ****************/
@@ -663,6 +676,9 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 
 	/************** CREAMOS LA TABLA GASTOS  ***************/
 
+	global $tablProveedores;
+	$tablProveedores = "`".$_SESSION['clave']."proveedores`";
+
 	global $vname1;
 	$vname1 = "`".$_SESSION['clave']."gastos_".date('Y')."`";
 	
@@ -685,7 +701,9 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `id` (`id`)
+  UNIQUE KEY `id` (`id`),
+  INDEX `refprovee` (`refprovee`),
+  FOREIGN KEY (`refprovee`) REFERENCES $tablProveedores (`ref`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
 	if(mysqli_query($db, $tg)){
@@ -732,7 +750,10 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `id` (`id`)
+  UNIQUE KEY `id` (`id`),
+  INDEX `refprovee` (`refprovee`),
+  FOREIGN KEY (`refprovee`) REFERENCES $tablProveedores (`ref`) ON DELETE NO ACTION ON UPDATE CASCADE
+
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
 	if(mysqli_query($db, $tg2)){
@@ -758,6 +779,9 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	
 	/************** CREAMOS LA TABLA INGRESOS  ***************/
 
+	global $tblClientes;
+	$tblClientes = "`".$_SESSION['clave']."clientes`";
+
 	global $vname3;
 	$vname3 = "`".$_SESSION['clave']."ingresos_".date('Y')."`";
 	
@@ -765,7 +789,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `refprovee` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `refcliente` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factiva` int(2) NOT NULL,
@@ -780,7 +804,9 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `id` (`id`)
+  UNIQUE KEY `id` (`id`),
+  INDEX `refcliente` (`refcliente`),
+  FOREIGN KEY (`refcliente`) REFERENCES $tblClientes (`ref`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
 	if(mysqli_query($db, $ti)){
@@ -813,7 +839,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `refprovee` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `refcliente` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factiva` int(2) NOT NULL,
@@ -828,7 +854,9 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `id` (`id`)
+  UNIQUE KEY `id` (`id`),
+  INDEX `refcliente` (`refcliente`),
+  FOREIGN KEY (`refcliente`) REFERENCES $tblClientes (`ref`) ON DELETE NO ACTION ON UPDATE CASCADE
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
 	if(mysqli_query($db, $ti2)){

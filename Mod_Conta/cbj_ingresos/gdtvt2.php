@@ -27,7 +27,7 @@
 
 	$fil = "%".$dy."/01%";
 	//$sql01 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-	$sql01 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+	$sql01 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qb01 = mysqli_query($db, $sql01);
 
 	if($qb01){
@@ -52,7 +52,7 @@
 
 	$fil = "%".$dy."/02%";
 	//$sql02 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql02 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+$sql02 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qb02 = mysqli_query($db, $sql02);
 
 	if($qb02){
@@ -77,7 +77,7 @@ $sql02 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/03%";
 	//$sql03 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql03 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+$sql03 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qb03 = mysqli_query($db, $sql03);
 
 	if($qb03){
@@ -102,7 +102,7 @@ $sql03 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/04%";
 	//$sql04 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql04 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+$sql04 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qb04 = mysqli_query($db, $sql04);
 
 	if($qb04){
@@ -127,7 +127,7 @@ $sql04 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/05%";
 	//$sql05 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql05 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+$sql05 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qb05 = mysqli_query($db, $sql05);
 
 	if($qb05){
@@ -152,7 +152,7 @@ $sql05 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/06%";
 	//$sql06 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql06 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+$sql06 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qb06 = mysqli_query($db, $sql06);
 
 	if($qb06){
@@ -177,7 +177,7 @@ $sql06 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/07%";
 	//$sql07 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql07 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+$sql07 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qb07 = mysqli_query($db, $sql07);
 
 	if($qb07){
@@ -202,7 +202,7 @@ $sql07 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/08%";
 	//$sql08 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql08 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+$sql08 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qb08 = mysqli_query($db, $sql08);
 
 	if($qb08){
@@ -227,7 +227,7 @@ $sql08 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/09%";
 	//$sql09 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql09 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+$sql09 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qb09 = mysqli_query($db, $sql09);
 
 	if($qb09){
@@ -252,7 +252,7 @@ $sql09 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/10%";
 	//$sql10 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql10 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+$sql10 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qb10 = mysqli_query($db, $sql10);
 
 	if($qb10){
@@ -277,7 +277,7 @@ $sql10 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/11%";
 	//$sql11 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql11 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+$sql11 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qb11 = mysqli_query($db, $sql11);
 
 	if($qb11){
@@ -302,7 +302,7 @@ $sql11 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/12%";
 	//$sql12 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql12 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+$sql12 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qb12 = mysqli_query($db, $sql12);
 
 	if($qb12){

@@ -126,7 +126,7 @@ function process_form(){
 	
 	// $dnif = $_POST['dni'].$_POST['ldni'];
 
-$sg1 = "UPDATE `$db_name`.$ingresos SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos.`factnif` LIKE '$dnif' ";
+$sg1 = "UPDATE `$db_name`.$ingresos SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos.`factnif` LIKE '$dnif' ";
 
 	if(mysqli_query($db, $sg1)){ //print("* OK");
 				} else {
@@ -135,7 +135,7 @@ $sg1 = "UPDATE `$db_name`.$ingresos SET `refprovee` = '$rf', `factnif` = '$factn
 						$texerror1 = "\n\t ".mysqli_error($db);
 							}
 							
-$sg2 = "UPDATE `$db_name`.$ingresos2 SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos2.`factnif` LIKE '$dnif' ";
+$sg2 = "UPDATE `$db_name`.$ingresos2 SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos2.`factnif` LIKE '$dnif' ";
 
 	if(mysqli_query($db, $sg2)){ //print("* OK");
 				} else {
@@ -144,7 +144,7 @@ $sg2 = "UPDATE `$db_name`.$ingresos2 SET `refprovee` = '$rf', `factnif` = '$fact
 						$texerror2 = "\n\t ".mysqli_error($db);
 							}
 
-$sg3 = "UPDATE `$db_name`.$ingresos3 SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos3.`factnif` LIKE '$dnif' ";
+$sg3 = "UPDATE `$db_name`.$ingresos3 SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos3.`factnif` LIKE '$dnif' ";
 
 	if(mysqli_query($db, $sg3)){ //print("* OK");
 				} else {
@@ -153,7 +153,7 @@ $sg3 = "UPDATE `$db_name`.$ingresos3 SET `refprovee` = '$rf', `factnif` = '$fact
 						$texerror3 = "\n\t ".mysqli_error($db);
 							}
 
-$sg4 = "UPDATE `$db_name`.$ingresos4 SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos4.`factnif` LIKE '$dnif' ";
+$sg4 = "UPDATE `$db_name`.$ingresos4 SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos4.`factnif` LIKE '$dnif' ";
 
 	if(mysqli_query($db, $sg4)){ //print("* OK");
 				} else {
@@ -162,7 +162,7 @@ $sg4 = "UPDATE `$db_name`.$ingresos4 SET `refprovee` = '$rf', `factnif` = '$fact
 						$texerror4 = "\n\t ".mysqli_error($db);
 							}
 
-$sg5 = "UPDATE `$db_name`.$ingresos5 SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos5.`factnif` LIKE '$dnif' ";
+$sg5 = "UPDATE `$db_name`.$ingresos5 SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos5.`factnif` LIKE '$dnif' ";
 
 	if(mysqli_query($db, $sg5)){ //print("* OK");
 				} else {
@@ -171,7 +171,7 @@ $sg5 = "UPDATE `$db_name`.$ingresos5 SET `refprovee` = '$rf', `factnif` = '$fact
 						$texerror5 = "\n\t ".mysqli_error($db);
 							}
 							
-$sg6 = "UPDATE `$db_name`.$ingresos6 SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos6.`factnif` LIKE '$dnif' ";
+$sg6 = "UPDATE `$db_name`.$ingresos6 SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos6.`factnif` LIKE '$dnif' ";
 
 	if(mysqli_query($db, $sg6)){ //print("* OK");
 				} else {

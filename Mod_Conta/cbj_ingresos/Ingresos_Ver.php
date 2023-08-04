@@ -109,7 +109,7 @@ function process_form(){
 	
 	global $vname; 		$vname = "`".$_SESSION['clave']."ingresos_".$dyt1."`";
 
-	$sqlc =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+	$sqlc =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
  	
 	$qc = mysqli_query($db, $sqlc);
 	
@@ -386,7 +386,7 @@ else{
 	global $factnum;
 	global $vname;
 
-	$sqlg = "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+	$sqlg = "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qg = mysqli_query($db, $sqlg);
 
 	if($_SESSION['gtime']==''){$_SESSION['gtime']='';}
@@ -420,7 +420,7 @@ else{
 	
 	/////////////
 
-	$sqlgd =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+	$sqlgd =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qgd = mysqli_query($db, $sqlgd);
 
 	$fhd = fopen($ruta.'IMxD3.php','w+');
@@ -817,7 +817,7 @@ function gt2(){
 	
 	global $vname; 		$vname = "`".$_SESSION['clave']."ingresos_".$dyt1."`";
 
-$sqlc =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+$sqlc =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
  	
 	$qc = mysqli_query($db, $sqlc);
 	global $gt;
