@@ -2,7 +2,7 @@
 session_start();
 
 	require '../../Mod_Admin/Inclu/error_hidden.php';
-	require '../Inclu/Admin_Inclu_01b.php';
+	require '../Inclu/Conta_Head.php';
 	require '../../Mod_Admin/Inclu/my_bbdd_clave.php';
 	require '../../Mod_Admin/Conections/conection.php';
 	require '../../Mod_Admin/Conections/conect.php';
@@ -11,23 +11,23 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
-	master_index();
+		master_index();
 
-	require 'Inc_Logica_01.php';
-	
-} else { require '../Inclu/table_permisos.php'; }
+		require 'Inc_Logica_01.php';
+		
+	} else { require '../Inclu/table_permisos.php'; }
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function validate_form(){
+	function validate_form(){
 	
-	require 'Inc_Show_Form_01_Val.php';
+		require 'Inc_Show_Form_01_Val.php';
 
-	return $errors;
+		return $errors;
 
 		} 
 		
@@ -68,61 +68,39 @@ $sqlc =  "SELECT * FROM $vname WHERE `ref` = '$ref' OR `dni` = '$dni' OR `rsocia
 			print("<font color='#FF0000'>
 					Se ha producido un error: </font>".mysqli_error($db)."</br></br>");
 			
-		} else {
+	} else {
 			
-			if(mysqli_num_rows($qc)== 0){
-							print ("<table align='center' style=\"border:0px\">
-										<tr>
-											<td align='center'>
-												<font color='#FF0000'>
-														NINGÚN DATO SE CIÑE A ESTOS CRITERIOS.
-													</br>
-														INTENTELO CON OTROS PARÁMETROS.
-												</font>
-											</td>
-										</tr>
-									</table>");
+		if(mysqli_num_rows($qc)== 0){
+			print ("<table align='center' style=\"border:0px\">
+						<tr>
+							<td align='center'>
+								<font color='#FF0000'>
+						NINGÚN DATO SE CIÑE A ESTOS CRITERIOS.
+							</br>
+						INTENTELO CON OTROS PARÁMETROS.
+								</font>
+							</td>
+						</tr>
+					</table>");
 
-				} else { 	
-							print ("<table align='center'>
-									<tr>
-										<th colspan=6 class='BorderInf'>
-									PROVEEDORES : ".mysqli_num_rows($qc).".
-										</th>
-									</tr>
-									
-									<tr>
-										<th class='BorderInfDch'>
-											ID
-										</th>
-										
-										<th class='BorderInfDch'>
-											REFERENCIA
-										</th>
-										
-										<th class='BorderInfDch'>
-											DNI
-										</th>
-										
-										<th class='BorderInfDch'>
-											RAZON SOCIAL
-										</th>
-										
-										<th class='BorderInf'>
-											
-										</th>
-										
-										<th class='BorderInf'>
-											
-										</th>
-										
-									</tr>");
+		} else { 
+			print ("<table align='center'>
+					<tr>
+						<th colspan=6 class='BorderInf'>PROVEEDORES ".mysqli_num_rows($qc).".</th>
+					</tr>
+					<tr>
+						<th class='BorderInfDch'>ID</th>
+						<th class='BorderInfDch'>REFERENCIA</th>
+						<th class='BorderInfDch'>DNI</th>
+						<th class='BorderInfDch'>RAZON SOCIAL</th>
+						<th class='BorderInf'></th>
+						<th class='BorderInf'></th>
+					</tr>");
 			
-			while($rowc = mysqli_fetch_assoc($qc)){
+		while($rowc = mysqli_fetch_assoc($qc)){
  			
 			print (	"<tr align='center'>
-									
-<form name='ver' action='proveedores_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=550px,height=420px')\">
+<form name='ver' action='proveedores_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=550px,height=460px')\">
 
 						<td align='left' class='BorderInfDch'>
 		<input name='id' type='hidden' value='".$rowc['id']."' />".$rowc['id']."
@@ -153,19 +131,17 @@ $sqlc =  "SELECT * FROM $vname WHERE `ref` = '$ref' OR `dni` = '$dni' OR `rsocia
 		<input name='Tlf2' type='hidden' value='".$rowc['Tlf2']."' />
 						
 			<td colspan=2 align='center' class='BorderInf'>
-							<input type='submit' value='VER DETALLES' />
-							<input type='hidden' name='oculto2' value=1 />
+						<input type='submit' value='VER DETALLES' />
+						<input type='hidden' name='oculto2' value=1 />
 			</td>
-										
-	</form>
-										
+		</form>
 			</tr>");
 					
-								} /* Fin del while.*/ 
+		} /* Fin del while.*/ 
 
-						print("</table>");
+		print("</table>");
 			
-						} /* Fin segundo else anidado en if */
+				} /* Fin segundo else anidado en if */
 
 			} /* Fin de primer else . */
 		
@@ -175,12 +151,12 @@ $sqlc =  "SELECT * FROM $vname WHERE `ref` = '$ref' OR `dni` = '$dni' OR `rsocia
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function show_form($errors=[]){
+	function show_form($errors=[]){
 
-	global $titulo;
-	$titulo = "VER PROVEEDORES";
+		global $titulo;
+		$titulo = "VER PROVEEDORES";
 
-	require 'Inc_Show_Form_01.php';
+		require 'Inc_Show_Form_01.php';
 
 	}	/* Fin show_form(); */
 
@@ -197,64 +173,38 @@ function ver_todo(){
 	$sqlb =  "SELECT * FROM $vname ORDER BY $orden ";
 	$qb = mysqli_query($db, $sqlb);
 	
-if(!$qb){
-print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
+	if(!$qb){
+	print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
 			
-		} else {
-			
-			if(mysqli_num_rows($qb)== 0){
-							print ("<table align='center'>
-										<tr>
-											<td>
-												<font color='#FF0000'>
-													NO HAY DATOS
-												</font>
-											</td>
-										</tr>
-									</table>");
+	} else {
+		if(mysqli_num_rows($qb)== 0){
+				print ("<table align='center'>
+							<tr>
+								<td>
+									<font color='#FF0000'>NO HAY DATOS</font>
+								</td>
+							</tr>
+						</table>");
 									
-				} else { 	
-							
-							print ("<table align='center'>
-									<tr>
-										<th colspan=6 class='BorderInf'>
-									PROVEEDORES : ".mysqli_num_rows($qb).".
-										</th>
-									</tr>
-									
-									<tr>
-										<th class='BorderInfDch'>
-											ID
-										</th>
-										
-										<th class='BorderInfDch'>
-											REFERENCIA
-										</th>
-										
-										<th class='BorderInfDch'>
-											DNI
-										</th>
-										
-										<th class='BorderInfDch'>
-											RAZON SOCIAL
-										</th>
-										
-										<th class='BorderInf'>
-											
-										</th>
-										
-										<th class='BorderInf'>
-											
-										</th>
-										
-									</tr>");
+		} else { 
+			print ("<table align='center'>
+					<tr>
+						<th colspan=6 class='BorderInf'>PROVEEDORES ".mysqli_num_rows($qb)."</th>
+					</tr>
+					<tr>
+						<th class='BorderInfDch'>ID</th>
+						<th class='BorderInfDch'>REFERENCIA</th>
+						<th class='BorderInfDch'>DNI</th>
+						<th class='BorderInfDch'>RAZON SOCIAL</th>
+						<th class='BorderInf'></th>
+						<th class='BorderInf'></th>
+					</tr>");
 			
-			while($rowb = mysqli_fetch_assoc($qb)){
+		while($rowb = mysqli_fetch_assoc($qb)){
  			
 
-			print (	"<tr align='center'>
-									
-<form name='ver' action='proveedores_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=590px,height=420px')\">
+		print (	"<tr align='center'>
+<form name='ver' action='proveedores_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=590px,height=460px')\">
 
 						<td align='left' class='BorderInfDch'>
 		<input name='id' type='hidden' value='".$rowb['id']."' />".$rowb['id']."
@@ -275,7 +225,7 @@ print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_erro
 						
 						<td class='BorderInfDch'>
 		<input name='myimg' type='hidden' value='".$rowb['myimg']."' />
-<img src='../cbj_Docs/img_proveedores/".$rowb['myimg']."' height='40px' width='30px' />
+		<img src='../cbj_Docs/img_proveedores/".$rowb['myimg']."' height='40px' width='30px' />
 						</td>
 												
 		<input name='doc' type='hidden' value='".$rowb['doc']."' />
@@ -288,16 +238,14 @@ print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_erro
 							<input type='submit' value='VER DETALLES' />
 							<input type='hidden' name='oculto2' value=1 />
 			</td>
-										
-	</form>
-										
+		</form>
 			</tr>");
-					
-					} /* Fin del while.*/ 
-
-						print("</table>");
 			
-						} /* Fin segundo else anidado en if */
+		} /* Fin del while.*/ 
+
+		print("</table>");
+			
+				} /* Fin segundo else anidado en if */
 
 			} /* Fin de primer else . */
 		
@@ -354,12 +302,7 @@ function info(){
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	
-				   ////////////////////				   ////////////////////
-////////////////////				////////////////////				////////////////////
-				 ////////////////////				  ///////////////////
-
-	require '../Inclu/Admin_Inclu_02.php';
+	require '../Inclu/Conta_Footer.php';
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

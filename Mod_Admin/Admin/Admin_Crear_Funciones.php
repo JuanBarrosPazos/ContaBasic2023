@@ -3,9 +3,7 @@
 function validate_form(){
 	
 		/*
-		global $sqld;
-		global $qd;
-		global $rowd;
+		global $sqld; 	global $qd; 	global $rowd;
 		*/
 		
 		require '../Inclu/validate.php';	
@@ -20,8 +18,7 @@ function validate_form(){
 
 function process_form(){
 	
-	global $db;
-	global $db_name;
+	global $db; 	global $db_name;
 	
 /*	REFERENCIA DE USUARIO	*/
 global $rf1;	global $rf2;	global $rf3;	global $rf4;
@@ -58,21 +55,17 @@ if (preg_match('/^(\w{1})*(\s\w{1})/',$_POST['Apellidos'],$ref4)){	$rf4 = $ref4[
 
 	// CREA IMAGEN DE USUARIO.
 
-	global $trf;
-	$trf = $_SESSION['iniref'];
-	global $vn1;
-	$vn1 = "img_admin";
+	global $trf; 		$trf = $_SESSION['iniref'];
+	global $vn1; 		$vn1 = "img_admin";
 	global $carpetaimg;
 	$carpetaimg = "../Users/".$trf."/".$vn1;
-	global $new_name;
-	$new_name = $trf.".png";
+	global $new_name; 	$new_name = $trf.".png";
 	copy("../Images/untitled.png", $carpetaimg."/".$new_name);
 
-	global $nombre;
-	global $apellido;
-	$nombre = $_POST['Nombre'];
-	$apellido = $_POST['Apellidos'];
-	
+	global $nombre;		$nombre = $_POST['Nombre'];
+
+	global $apellido;	$apellido = $_POST['Apellidos'];
+
 	global $table_name_a;
 	$table_name_a = "`".$_SESSION['clave']."admin`";
 
@@ -131,7 +124,7 @@ if (preg_match('/^(\w{1})*(\s\w{1})/',$_POST['Apellidos'],$ref4)){	$rf4 = $ref4[
 				<font color='#FF0000'>
 			* Estos datos no son validos, modifique esta entrada: </font></br> ".mysqli_error($db))."
 				</br>";
-				show_form ();
+				show_form();
 					}
 		} // FIN FUNCTION PROCESS_FORM
 

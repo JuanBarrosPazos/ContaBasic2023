@@ -1,8 +1,8 @@
 <?php
 
 print("
-						<select name='dy'>
-							<option value=''>YEAR</option>");
+		<select name='dy'>
+			<option value=''>YEAR</option>");
 				
 	global $db;
 	global $t1; 		$t1 = "`".$_SESSION['clave']."status`";
@@ -15,7 +15,7 @@ print("
 							
 		while($rows = mysqli_fetch_assoc($qb)){
 					print ("<option value='".$rows['ycod']."' ");
-					if($rows['ycod'] == $defaults['dy']){
+					if($rows['ycod'] == @$defaults['dy']){
 									print ("selected = 'selected'");
 																		}
 									print ("> ".$rows['year']." </option>");

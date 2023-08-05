@@ -2,7 +2,7 @@
 session_start();
 
 	require '../../Mod_Admin/Inclu/error_hidden.php';
-	require '../Inclu/Admin_Inclu_popup.php';
+	require '../Inclu/Conta_Head.php';
 	require '../../Mod_Admin/Inclu/my_bbdd_clave.php';
 	require '../../Mod_Admin/Conections/conection.php';
 	require '../../Mod_Admin/Conections/conect.php';
@@ -461,7 +461,7 @@ $text = "\n- CLIENTES IMG MODIFICADA ".$ActionTime.".\n\tR. Social: ".$_POST['rs
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	require '../Inclu/Admin_Inclu_02.php';
+	require '../Inclu/Conta_Footer.php';
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

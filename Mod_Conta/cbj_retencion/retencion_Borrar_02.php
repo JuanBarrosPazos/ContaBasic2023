@@ -2,7 +2,7 @@
 session_start();
 
 	require '../../Mod_Admin/Inclu/error_hidden.php';
-	require '../Inclu/Admin_Inclu_01b.php';
+	require '../Inclu/Conta_Head.php';
 	require '../../Mod_Admin/Inclu/my_bbdd_clave.php';
 	require '../../Mod_Admin/Conections/conection.php';
 	require '../../Mod_Admin/Conections/conect.php';
@@ -223,6 +223,6 @@ $text = "\n- IMPUESTO BORRADO ".$ActionTime.".\n\t ID: ".$_SESSION['idx'].".\n\t
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-	require '../Inclu/Admin_Inclu_02.php';
+	require '../Inclu/Conta_Footer.php';
 
 ?>

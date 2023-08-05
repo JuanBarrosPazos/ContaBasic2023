@@ -2,7 +2,7 @@
 session_start();
 
 	require '../../Mod_Admin/Inclu/error_hidden.php';
-	require '../Inclu/Admin_Inclu_01b.php';
+	require '../Inclu/Conta_Head.php';
 	require '../../Mod_Admin/Inclu/my_bbdd_clave.php';
 	require '../../Mod_Admin/Conections/conection.php';
 	require '../../Mod_Admin/Conections/conect.php';
@@ -1129,6 +1129,6 @@ $text = "\n- INGRESO PENDIENTE MODIFICADO ".$ActionTime.".\n\tNº FACTURA: ".$_P
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-	require '../Inclu/Admin_Inclu_02.php';
+	require '../Inclu/Conta_Footer.php';
 
 ?>

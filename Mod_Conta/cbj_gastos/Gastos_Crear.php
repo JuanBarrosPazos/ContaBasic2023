@@ -2,7 +2,7 @@
 session_start();
 
 	require '../../Mod_Admin/Inclu/error_hidden.php';
-	require '../Inclu/Admin_Inclu_01b.php';
+	require '../Inclu/Conta_Head.php';
 	require '../../Mod_Admin/Inclu/my_bbdd_clave.php';
 	require '../../Mod_Admin/Conections/conection.php';
 	require '../../Mod_Admin/Conections/conect.php';
@@ -11,33 +11,28 @@ session_start();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
-					master_index();
+		master_index();
 
-						if($_POST['oculto']){
-							
-								if($form_errors = validate_form()){
-									show_form($form_errors);
-										} else {
-											process_form();
-											info();
-											difer1();
-											}
-							
-							} else {
-										show_form();
-								}
-				}
-					else { require '../Inclu/table_permisos.php'; } 
+		if(isset($_POST['oculto'])){
+								
+			if($form_errors = validate_form()){
+							show_form($form_errors);
+			} else { process_form();
+					 info();
+					 difer1();
+						}
+								
+		} else { show_form(); }
+		
+	} else { require '../Inclu/table_permisos.php'; } 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 function validate_form(){
 	
-	global $sqld;
-	global $qd;
-	global $rowd;
+	global $sqld; 		global $qd; 		global $rowd;
 
 	$errors = array();
 	
@@ -419,27 +414,28 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 	$factivae1 = $_POST['factivae1'];
 	$factivae2 = $_POST['factivae2'];
 	global $factivae;
-	$factivae = $factivae1.".".$factivae2;
+	$factivae = is_float($factivae1.".".$factivae2);
 
 	$factrete1 = $_POST['factrete1'];
 	$factrete2 = $_POST['factrete2'];
 	global $factrete;
-	$factrete = $factrete1.".".$factrete2;
+	$factrete = is_float($factrete1.".".$factrete2);
 
 	$factpvp1 = $_POST['factpvp1'];
 	$factpvp2 = $_POST['factpvp2'];
 	global $factpvp;
-	$factpvp = $factpvp1.".".$factpvp2;
+	$factpvp = is_float($factpvp1.".".$factpvp2);
 
 	$factpvptot1 = $_POST['factpvptot1'];
 	$factpvptot2 = $_POST['factpvptot2'];
 	global $factpvptot;
-	$factpvptot = $factpvptot1.".".$factpvptot2;
+	$factpvptot = is_float($factpvptot1.".".$factpvptot2);
 
-	$fiva = $_POST['factiva'];
+	$fiva = is_float($_POST['factiva']);
 	
 	$civae = $factpvp * ($fiva / 100);
 	$civae = number_format($civae,2,".","");
+	$civae = is_float($civae);
 	if(trim($factivae) != trim($civae)){
 		$errors [] = "IMPUESTOS € <font color='#FF0000'>Cantidad no correcta</font> ".$civae." OK";
 	}
@@ -448,12 +444,14 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 
 	$crete = $factpvp * ($fret / 100);
 	$crete = number_format($crete,2,".","");
+	$crete = is_float($crete);
 	if(trim($factrete) != trim($crete)){
 		$errors [] = "RETENCIONES € <font color='#FF0000'>Cantidad no correcta</font> ".$crete." OK";
 	}
 	
 	$cftot = ($factpvp + $civae) - $factrete;
 	$cftot = number_format($cftot,2,".","");
+	$cftot = is_float($cftot);
 	if(trim($factpvptot) != trim($cftot)){
 			$errors [] = "TOTAL € <font color='#FF0000'>Cantidad no correcta</font> ".$cftot." OK";
 	}
@@ -633,7 +631,7 @@ function process_form(){
 	$factrete1 = $_POST['factrete1'];
 	$factrete2 = $_POST['factrete2'];
 	global $factrete;
-	$factrete = $factrete1.".".$factrete2;
+	$factrete = is_float($factrete1.".".$factrete2);
 
 	$factpvp1 = $_POST['factpvp1'];
 	$factpvp2 = $_POST['factpvp2'];
@@ -649,100 +647,44 @@ function process_form(){
 
 	global $iniy; 		$iniy = substr(date('Y'),0,2);
 	
-	$tabla = "<table align='center' style='margin-top:10px' width=450px >
+	$tabla = "<table style='text-align:center; margin-top:10px; width: 450px;' >
 				<tr>
 					<th colspan=4 class='BorderInf'>
 						SE HA GRABADO EN ".strtoupper($vname)."
 					</th>
 				</tr>
-												
 				<tr>
-					<td>
-						NUMERO
-					</td>
-					<td>"
-						.$_POST['factnum'].
-					"</td>
-					<td>	
-						FECHA
-					</td>
-					<td>"
-						.$iniy.$factdate.
-					"</td>
+					<td style='whidth:180px; text-align:right;'>NUMERO</td><td>".$_POST['factnum']."</td>
+					<td>FECHA</td><td>".$iniy.$factdate."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						RAZON SOCIAL
-					</td>
-					<td>"
-						.$_POST['factnom'].
-					"</td>
-					<td>
-						NIF / CIF
-					</td>
-					<td>"
-						.$_POST['factnif'].
-					"</td>
+					<td style='text-align:right;'>RAZON SOCIAL</td><td>".$_POST['factnom']."</td>
+					<td>NIF / CIF</td><td>".$_POST['factnif']."</td>
 				</tr>
-								
 				<tr>
-					<td>
-						IMPUESTOS %
-					</td>
-					<td>"
-						.$_POST['factiva'].
-					"</td>
-					<td>
-						IMPUESTOS €
-					</td>
-					<td width=250px>"
-						.$factivae.
-					"</td>
+					<td style='text-align:right;'>IMPUESTOS %</td>
+					<td>".$_POST['factiva']."</td>
+					<td>IMPUESTOS €</td>
+					<td width=250px>".$factivae."</td>
 				</tr>
-								
 				<tr>
-					<td>
-						RETENCIONES %
-					</td>
-					<td>"
-						.$_POST['factret'].
-					"</td>
-					<td>
-						RETENCIONES €
-					</td>
-					<td width=250px>"
-						.$factivae.
-					"</td>
+					<td style='text-align:right;'>RETENCIONES %</td><td>".$_POST['factret']."</td>
+					<td>RETENCIONES €</td><td width=250px>".$factivae."</td>
 				</tr>
-								
 				<tr>
-					<td>
-						SUBTOTAL
-					</td>
-					<td>"
-						.$factpvp.
-					"</td>
-					<td>
-						TOTAL
-					</td>
-					<td>"
-						.$factpvptot.
-					"</td>
+					<td style='text-align:right;'>SUBTOTAL</td><td>".$factpvp."</td>
+					<td>TOTAL</td><td>".$factpvptot."</td>
 				</tr>
-								
 				<tr>
-					<td>
-						DESCRIPCION
-					</td>
-					<td colspan='3'>"
-						.$_POST['coment'].
-					"</td>
+					<td style='text-align:right;'>DESCRIPCION</td>
+					<td colspan='3' style='text-align:left;'>".$_POST['coment']."</td>
 				</tr>
-
-			</table>
-				
-		";	
+				<tr>
+				<td colspan='4' align='center'>
+					<a href='Gastos_Crear.php'>VOLVER GASTOS CREAR</a>
+				</td>
+				</tr>
+			</table>";	
 		
 	/************* CREAMOS LAS IMAGENES EN LA IMG PRO SECCION ***************/
 		
@@ -900,19 +842,19 @@ function process_form(){
 			
 		/////////////
 		
-		global $db;
-		global $db_name;
+	global $db; 		global $db_name;
 
+	if(strlen(trim($factrete)) == 0){
+		$factrete = 0.0;
+	} else { }
 
-$sqla = "INSERT INTO `$db_name`.$vname (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[refprovee]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$new_name1', '$new_name2', '$new_name3', '$new_name4')";
+	$sqla = "INSERT INTO `$db_name`.$vname (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[refprovee]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$new_name1', '$new_name2', '$new_name3', '$new_name4')";
 		
 		if(mysqli_query($db, $sqla)){ print($tabla); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA 876: ".mysqli_error($db));
-									show_form ();
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-					}
+		} else { print("* MODIFIQUE LA ENTRADA 846: ".mysqli_error($db));
+					show_form ();
+					global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
+				}
 			
 		/////////////
 	
@@ -1010,51 +952,52 @@ function show_form($errors=[]){
 	
 	global $db; 		global $db_name;
 	
-	global $sesionref; 		$sesionref = "`".$_SESSION['clave']."clientes`";
+	global $sesionref; 		$sesionref = "`".$_SESSION['clave']."proveedores`";
 	
-	$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveegastos]'";
-	$qx = mysqli_query($db, $sqlx);
-	$rowprovee = mysqli_fetch_assoc($qx);
-	$_rsocial = $rowprovee['rsocial'];
-	$_ref = $rowprovee['ref'];
-	$_dni = $rowprovee['dni'];
-	$_ldni = $rowprovee['ldni'];
-	global $_dnil;
-	$_dnil = $_dni.$_ldni;
-	
-	if($_POST['oculto']){
-		$defaults = $_POST;
-		} else {
-				$defaults = array (	'proveegastos' => $_POST['proveegastos'],
-									'dy' => $_POST['dy'],
-									'dm' => $_POST['dm'],
-									'dd' => $_POST['dd'],
-									'factnum' => strtoupper($_POST['factnum']),
-								//	'factdate' => $_POST['factdate'],
-								   	'refprovee' => $rowprovee['ref'],
-								   	'factnom' => $rowprovee['rsocial'],
-								   	'factnif' => $_dnil,
-								   	'factiva' => $_POST['factiva'],
-									'factivae1' => $_POST['factivae1'],	
-									'factivae2' => '00',	
-								   	'factret' => $_POST['factret'],
-									'factrete1' => $_POST['factrete1'],	
-									'factrete2' => '00',	
-									'factpvp1' => $_POST['factpvp1'],	
-									'factpvp2' => '00',	
-									'factpvptot1' => $_POST['factpvptot1'],	
-									'factpvptot2' => '00',	
-									'coment' => $_POST['coment'],	
-									'myimg1' => $_POST['myimg1'],	
-									'myimg2' => $_POST['myimg2'],	
-									'myimg3' => $_POST['myimg3'],	
-									'myimg4' => $_POST['myimg4'],	
-																	);
-							   											}
+
+		
+
+	if((isset($_POST['oculto']))||(isset($_POST['oculto1']))){
+
+			$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveegastos]'";
+			$qx = mysqli_query($db, $sqlx);
+			$rowprovee = mysqli_fetch_assoc($qx);
+
+			$defaults = $_POST;
+			$defaults['refprovee'] = $rowprovee['ref'];
+			$defaults['factnom'] = $rowprovee['rsocial'];
+			$defaults['factnif'] = $rowprovee['dni'].$rowprovee['ldni'];
+
+	} else {
+			$defaults = array (	'proveegastos' => '',
+								'dy' => '',
+								'dm' => '',
+								'dd' => '',
+								'factnum' => '',
+								'factdate' => '',
+							   	'refprovee' => '',
+							   	'factnom' => '',
+							   	'factnif' => '',
+							   	'factiva' => '',
+								'factivae1' => '',	
+								'factivae2' => '',	
+							   	'factret' => '',
+								'factrete1' => '',	
+								'factrete2' => '',	
+								'factpvp1' => '',	
+								'factpvp2' => '',	
+								'factpvptot1' => '',	
+								'factpvptot2' => '',	
+								'coment' => '',	
+								'myimg1' => '',	
+								'myimg2' => '',	
+								'myimg3' => '',	
+								'myimg4' => '');
+						}
 
 	if ($errors){
-		print("	<div width='90%' style='float:left'>
-					<table align='left' style='border:none'>
+		print("	<div>
+					<table style='width: max-content; margin: 0.4em auto 0.4em auto; border: none;'>
 					<th style='text-align:left'>
 					<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
 					</th>
@@ -1141,7 +1084,7 @@ function show_form($errors=[]){
 						<select name='proveegastos'>");
 
 	global $db;
-	global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."clientes`";
+	global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."proveedores`";
 
 	$sqlb =  "SELECT * FROM $tabla1 ORDER BY `rsocial` ASC ";
 	$qb = mysqli_query($db, $sqlb);
@@ -1167,13 +1110,12 @@ function show_form($errors=[]){
 			</tr>
 	
 		</form>	
-			
 			</table>				
 				"); 
 				
 ////////////////////
 
-	if ($_POST['oculto1'] || $_POST['oculto'] ) {
+	if ((isset($_POST['oculto1'])) || (isset($_POST['oculto']))) {
 	if (($_POST['proveegastos'] == '') && ($defaults['factnom'] == '')) { 
 						print("<table align='center' style=\"margin-top:20px;margin-bottom:20px\">
 									<tr align='center'>
@@ -1190,93 +1132,74 @@ function show_form($errors=[]){
 			<table align='center' style=\"margin-top:10px\">
 				<tr>
 					<th colspan=2 class='BorderInf'>
-
 								GRABAR GASTO					
- 
 					</th>
 				</tr>
 				
 <form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
 
-<input type='hidden' name='proveegastos' value='".$defaults['proveegastos']."' />
-<input type='hidden' name='refprovee' value='".$defaults['refprovee']."' />
+	<input type='hidden' name='proveegastos' value='".$defaults['proveegastos']."' />
 				<tr>
 					<td>
 						NUMERO
 					</td>
 					<td>
-
-<input type='text' name='factnum' size=22 maxlength=20 value='".strtoupper($defaults['factnum'])."' />
-
+	<input type='text' name='factnum' size=22 maxlength=20 value='".strtoupper(@$defaults['factnum'])."' />
 					</td>
 				</tr>
-									
 				<tr>
-					<td>						
-						FECHA
-					</td>
+					<td>FECHA</td>
 					<td>
-					
-				<div style='float:left'>
-								");
+				<div style='float:left'>");
 								
 	require '../Inclu/year_in_select_bbdd.php';
 																
 	print ("	</select>
 					</div>
-					
 					<div style='float:left'>
-
-						<select style='margin-left:12px' name='dm'>");
-
+			<select style='margin-left:12px' name='dm'>");
 				foreach($dm as $optiondm => $labeldm){
-					
 					print ("<option value='".$optiondm."' ");
 					
-					if($optiondm == $defaults['dm']){
-															print ("selected = 'selected'");
-																								}
-													print ("> $labeldm </option>");
-												}	
+				if($optiondm == @$defaults['dm']){
+									print ("selected = 'selected'");
+										}
+							print ("> $labeldm </option>");
+						}	
 																
 	print ("	</select>
 					</div>
-
 					<div style='float:left'>
-
 						<select style='margin-left:12px' name='dd'>");
 
-				foreach($dd as $optiondd => $labeldd){
-					
-					print ("<option value='".$optiondd."' ");
-					
-					if($optiondd == $defaults['dd']){
-															print ("selected = 'selected'");
-																								}
-													print ("> $labeldd </option>");
-												}	
+			foreach($dd as $optiondd => $labeldd){
+						print ("<option value='".$optiondd."' ");
+					if($optiondd == @$defaults['dd']){
+										print ("selected = 'selected'");
+											}
+							print ("> $labeldd </option>");
+						}	
 																
 	print ("	</select> 
 					</div>
-
 					</td>
 				</tr>
-									
 				<tr>
-					<td>						
-						RAZON SOCIAL
-					</td>
+					<td>RAZON SOCIAL</td>
 					<td>
-<input type='hidden' name='factnom' value='".$defaults['factnom']."' />".$defaults['factnom']."
+		<input type='hidden' name='factnom' value='".@$defaults['factnom']."' />".@$defaults['factnom']."
 					</td>
 				</tr>
-					
 				<tr>
-					<td>						
-						NIF/CIF
-					</td>
+					<td>REFERENCIA</td>
 					<td>
-<input type='hidden' name='factnif'value='".$defaults['factnif']."' />".$defaults['factnif']."
+		<input type='hidden' name='refprovee' value='".$defaults['refprovee']."' />".$defaults['refprovee']."
+					</td>
+				</tr>
+				<tr>
+					<td>NIF/CIF</td>
+					<td>
+	<input type='hidden' name='factnif'value='".@$defaults['factnif']."' />".@$defaults['factnif']."
 					</td>
 				</tr>
 					
@@ -1298,7 +1221,7 @@ function show_form($errors=[]){
 				} else {
 					while($rowimp = mysqli_fetch_assoc($qi)){
 							print ("<option value='".$rowimp['iva']."' ");
-							if($rowimp['iva'] == $defaults['factiva']){
+							if($rowimp['iva'] == @$defaults['factiva']){
 							print ("selected = 'selected'");																																													
 															}
 							print ("> ".$rowimp['name']." </option>");
@@ -1315,9 +1238,9 @@ function show_form($errors=[]){
 						IMPUESTOS €
 					</td>
 					<td>
-<input style='text-align:right' type='text' name='factivae1' size=5 maxlength=5 value='".$defaults['factivae1']."' />
+<input style='text-align:right' type='text' name='factivae1' size=5 maxlength=5 value='".@$defaults['factivae1']."' />
 ,
-<input type='text' name='factivae2' size=2 maxlength=2 value='".$defaults['factivae2']."' />
+<input type='text' name='factivae2' size=2 maxlength=2 value='".@$defaults['factivae2']."' />
 €
 					</td>
 				</tr>
@@ -1340,7 +1263,7 @@ function show_form($errors=[]){
 				} else {
 					while($rowret = mysqli_fetch_assoc($qr)){
 							print ("<option value='".$rowret['ret']."' ");
-							if($rowret['ret'] == $defaults['factret']){
+							if($rowret['ret'] == @$defaults['factret']){
 							print ("selected = 'selected'");																																													
 															}
 							print ("> ".$rowret['name']." </option>");
@@ -1357,9 +1280,9 @@ function show_form($errors=[]){
 						RETENCIONES €
 					</td>
 					<td>
-<input style='text-align:right' type='text' name='factrete1' size=5 maxlength=5 value='".$defaults['factrete1']."' />
+<input style='text-align:right' type='text' name='factrete1' size=5 maxlength=5 value='".@$defaults['factrete1']."' />
 ,
-<input type='text' name='factrete2' size=2 maxlength=2 value='".$defaults['factrete2']."' />
+<input type='text' name='factrete2' size=2 maxlength=2 value='".@$defaults['factrete2']."' />
 €
 					</td>
 				</tr>
@@ -1369,9 +1292,9 @@ function show_form($errors=[]){
 						SUBTOTAL €
 					</td>
 					<td>
-<input style='text-align:right' type='text' name='factpvp1' size=5 maxlength=5 value='".$defaults['factpvp1']."' />
+<input style='text-align:right' type='text' name='factpvp1' size=5 maxlength=5 value='".@$defaults['factpvp1']."' />
 ,
-<input type='text' name='factpvp2' size=2 maxlength=2 value='".$defaults['factpvp2']."' />
+<input type='text' name='factpvp2' size=2 maxlength=2 value='".@$defaults['factpvp2']."' />
 €
 					</td>
 				</tr>
@@ -1381,9 +1304,9 @@ function show_form($errors=[]){
 						TOTAL €
 					</td>
 					<td>
-<input style='text-align:right' type='text' name='factpvptot1' size=5 maxlength=5 value='".$defaults['factpvptot1']."' />
+<input style='text-align:right' type='text' name='factpvptot1' size=5 maxlength=5 value='".@$defaults['factpvptot1']."' />
 ,
-<input type='text' name='factpvptot2' size=2 maxlength=2 value='".$defaults['factpvptot2']."' />
+<input type='text' name='factpvptot2' size=2 maxlength=2 value='".@$defaults['factpvptot2']."' />
 €
 					</td>
 				</tr>
@@ -1394,7 +1317,7 @@ function show_form($errors=[]){
 					</td>
 					<td>
 					
-<textarea cols='35' rows='7' onkeypress='return limitac(event, 200);' onkeyup='actualizaInfoc(200)' name='coment' id='coment'>".$defaults['coment']."</textarea>
+<textarea cols='35' rows='7' onkeypress='return limitac(event, 200);' onkeyup='actualizaInfoc(200)' name='coment' id='coment'>".@$defaults['coment']."</textarea>
 	
 			</br>
 	            <div id='infoc' align='center' style='color:#0080C0;'>
@@ -1409,7 +1332,7 @@ function show_form($errors=[]){
 						PDF / FOTO 1
 					</td>
 					<td>
-		<input type='file' name='myimg1' value='".$defaults['myimg1']."' />						
+		<input type='file' name='myimg1' value='".@$defaults['myimg1']."' />						
 					</td>
 				</tr>
 
@@ -1418,7 +1341,7 @@ function show_form($errors=[]){
 						PDF / FOTO 2
 					</td>
 					<td>
-		<input type='file' name='myimg2' value='".$defaults['myimg2']."' />						
+		<input type='file' name='myimg2' value='".@$defaults['myimg2']."' />						
 					</td>
 				</tr>
 
@@ -1427,7 +1350,7 @@ function show_form($errors=[]){
 						PDF / FOTO 3
 					</td>
 					<td>
-		<input type='file' name='myimg3' value='".$defaults['myimg3']."' />						
+		<input type='file' name='myimg3' value='".@$defaults['myimg3']."' />						
 					</td>
 				</tr>
 
@@ -1436,7 +1359,7 @@ function show_form($errors=[]){
 						PDF / FOTO 4
 					</td>
 					<td>
-		<input type='file' name='myimg4' value='".$defaults['myimg4']."' />						
+		<input type='file' name='myimg4' value='".@$defaults['myimg4']."' />						
 					</td>
 				</tr>
 
@@ -1502,6 +1425,6 @@ $text = "\n- GASTO CREADO ".$ActionTime.".\n\tNº FACTURA: ".$_POST['factnum']."
 	
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-	require '../Inclu/Admin_Inclu_02.php';
+	require '../Inclu/Conta_Footer.php';
 
 ?>
