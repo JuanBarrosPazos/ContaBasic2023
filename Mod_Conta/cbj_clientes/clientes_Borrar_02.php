@@ -11,23 +11,20 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
- 			//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
-			master_index();
+		//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
+		master_index();
 
-			if ($_POST['oculto2']){
-					show_form();
-					info_01();
-								}
-						elseif($_POST['borra']){
-										process_form();
-										info_02();
-							} else {
-										show_form();
-										unset($_SESSION['dudas']);
-									}
-				} else { require '../Inclu/table_permisos.php';} 
+		if (isset($_POST['oculto2'])){
+						show_form();
+						info_01();
+		} elseif(isset($_POST['borra'])){ process_form();
+										  info_02();
+											} else { show_form();
+													 unset($_SESSION['dudas']);
+														}
+	} else { require '../Inclu/table_permisos.php';} 
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

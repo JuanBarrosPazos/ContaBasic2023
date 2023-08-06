@@ -7,7 +7,9 @@
 	if(isset($_POST['oculto'])){
 		
 	/*	CALCULAMOS LA REFERENCIA DE USUARIO	*/
-	
+
+	global $rf1;	global $rf2;
+
 	if (preg_match('/^(\w{1})/',$_POST['rsocial'],$ref1)){	$rf1 = $ref1[1];
 															$rf1 = trim($rf1);
 																			}
@@ -15,7 +17,7 @@
 																	$rf2 = trim($rf2);
 																			}
 	
-	global $rf;		global $rf1;	global $rf2;
+	global $rf;		
 	$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
 	$rf = trim($rf);
 			
@@ -36,7 +38,7 @@
 		$rowdni = mysqli_fetch_assoc($qprove);
 
 	if(isset($_POST['id'])){
-		if ($_POST['id'] == $rowdni['id']){}
+		if($_POST['id'] == @$rowdni['id']){}
 		elseif($cprove > 0){$errors [] = "EL PROVEEDOR <font color='#FF0000'> YA EXISTE ".$rf.".</font>";}
 	} else { }
 	
@@ -103,7 +105,7 @@
 	/* VALIDAMOS EL CAMPO RAZON SOCIAL. */
 	
 	if(isset($_POST['id'] )){
-		if ($_POST['id'] == @$rowdni['id']){}
+		if($_POST['id'] == @$rowdni['id']){}
 		elseif(@$cprove > 0){$errors [] = " RAZON SOCIAL <font color='#FF0000'>YA EXISTE ".$_POST['rsocial']."</font>";}
 	} else { }
 	
@@ -138,13 +140,13 @@
 	$count = mysqli_num_rows($qdni);
 
 	if(isset($_POST['id'] )){ 
-		if ($_POST['id'] == $rowdni['id']){}
+		if($_POST['id'] == @$rowdni['id']){}
 		elseif(mysqli_num_rows($qdni)!= 0){ 
 			$errors [] = "N&uacute;mero DNI/NIF: <font color='#FF0000'>Ya Existe.</font>"; 
 		}
 	}
 	
-	if ($_POST['doc'] == 'DNI') {
+	if($_POST['doc'] == 'DNI') {
 		if(strlen(trim($_POST['dni'])) == 0){
 		$errors [] = "N&uacute;mero DNI/NIF: <font color='#FF0000'>Campo Obligatorio.</font>";
 		} elseif (!preg_match('/^[\d]+$/',$_POST['dni'])){
@@ -187,135 +189,135 @@
 	
 	/* SE VALIDAN LAS LETRAS DEL CAMPO NUMERO NIE/NIF */	
 		
-	elseif ($_POST['doc'] == 'NIE') {
+	elseif($_POST['doc'] == 'NIE') {
 		
 		if (preg_match('/^[^XYZ]+$/',$_POST['dni'])){	// SOLO SE ADMINTE XYZ //
 		$errors [] = "N&uacute;mero NIE/NIF: <font color='#FF0000'>Letra Invalida Solo X,Y,Z.</font>";
 		}
 			}
 					
-	elseif ($_POST['doc'] == 'NIFespecial') {	// SOLO SE ADMINTE KLM //
+	elseif($_POST['doc'] == 'NIFespecial') {	// SOLO SE ADMINTE KLM //
 		
 		if (preg_match('/^[^KLM]+$/',$_POST['dni'])){
 	$errors [] = "N&uacute;mero NIF Especial: <font color='#FF0000'>Letra Invalida Solo K,L,M.</font>";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFsa') {	// SOLO SE ADMITE A //
+	elseif($_POST['doc'] == 'NIFsa') {	// SOLO SE ADMITE A //
 		
 		if (preg_match('/^[^A]+$/',$_POST['dni'])){
 	$errors [] = "N&uacute;mero NIF Sociedad An&oacute;nima: <font color='#FF0000'>Letra Invalida Solo A.  </font>";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFsrl') {	// SOLO SE ADMITE B //
+	elseif($_POST['doc'] == 'NIFsrl') {	// SOLO SE ADMITE B //
 		
 		if (preg_match('/^[^B]+$/',$_POST['dni'])){
 	$errors [] = "N&uacute;mero NIF Sociedad Respons Limitada: <font color='#FF0000'>Letra Invalida Solo B.</font>";
 		}
 			}
 		
-	elseif ($_POST['doc'] == 'NIFscol') {	// SOLO SE ADMITE C //
+	elseif($_POST['doc'] == 'NIFscol') {	// SOLO SE ADMITE C //
 		
 		if (preg_match('/^[^C]+$/',$_POST['dni'])){
 	$errors [] = "N&uacute;mero NIF Sociedad Colectiva: <font color='#FF0000'>Letra Invalida Solo C.</font>";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFscom') {	// SOLO SE ADMITE D //
+	elseif($_POST['doc'] == 'NIFscom') {	// SOLO SE ADMITE D //
 		
 		if (preg_match('/^[^D]+$/',$_POST['dni'])){
 	$errors [] = "N&uacute;mero NIF Sociedad Comanditaria: <font color='#FF0000'>Letra Invalida Solo D.</font>";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFcbhy') {	// SOLO SE ADMITE E //
+	elseif($_POST['doc'] == 'NIFcbhy') {	// SOLO SE ADMITE E //
 		
 		if (preg_match('/^[^E]+$/',$_POST['dni'])){
 	$errors [] = "N&uacute;mero NIF Comunidad Bienes y Herencias Yacentes: <font color='#FF0000'>Letra Invalida Solo E.</font>";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFscoop') {	// SOLO SE ADMITE F //
+	elseif($_POST['doc'] == 'NIFscoop') {	// SOLO SE ADMITE F //
 		
-		if (preg_match('/^[^F]+$/',$_POST['dni'])){
+		if(preg_match('/^[^F]+$/',$_POST['dni'])){
 	$errors [] = "N&uacute;mero NIF Sociedades Cooperativas: <font color='#FF0000'>Letra Invalida Solo F.</font>";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFasoc') {	// SOLO SE ADMITE G //
+	elseif($_POST['doc'] == 'NIFasoc') {	// SOLO SE ADMITE G //
 		
-		if (preg_match('/^[^G]+$/',$_POST['dni'])){
+		if(preg_match('/^[^G]+$/',$_POST['dni'])){
 	$errors [] = "N&uacute;mero NIF Asociaciones: <font color='#FF0000'>Letra Invalida Solo G.</font>";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFcpph') {	// SOLO SE ADMITE H //
+	elseif($_POST['doc'] == 'NIFcpph') {	// SOLO SE ADMITE H //
 		
-		if (preg_match('/^[^H]+$/',$_POST['dni'])){
+		if(preg_match('/^[^H]+$/',$_POST['dni'])){
 	$errors [] = "N&uacute;mero NIF Comunidad Propietarios Propiedad Horizontal: <font color='#FF0000'>Letra Invalida Solo H.</font>";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFsccspj') {	// SOLO SE ADMITE J //
+	elseif($_POST['doc'] == 'NIFsccspj') {	// SOLO SE ADMITE J //
 		
-		if (preg_match('/^[^J]+$/',$_POST['dni'])){
+		if(preg_match('/^[^J]+$/',$_POST['dni'])){
 	$errors [] = "N&uacute;mero NIF Sociedad Civil, con o sin Personalidad Juridica: <font color='#FF0000'>Letra Invalida Solo J.</font>";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFee') {	// SOLO SE ADMITE N //
+	elseif($_POST['doc'] == 'NIFee') {	// SOLO SE ADMITE N //
 		
 		if (preg_match('/^[^N]+$/',$_POST['dni'])){
 		$errors [] = "N&uacute;mero NIF Entidad Extranjera: <font color='#FF0000'>Letra Invalida Solo N.</font>";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFcl') {	// SOLO SE ADMITE P //
+	elseif($_POST['doc'] == 'NIFcl') {	// SOLO SE ADMITE P //
 		
 		if (preg_match('/^[^P]+$/',$_POST['dni'])){
 		$errors [] = "N&uacute;mero NIF Corporación Local: <font color='#FF0000'>Letra Invalida Solo P.</font>";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFop') {	// SOLO SE ADMITE Q //
+	elseif($_POST['doc'] == 'NIFop') {	// SOLO SE ADMITE Q //
 		
 		if (preg_match('/^[^Q]+$/',$_POST['dni'])){
 		$errors [] = "N&uacute;mero NIF Organismo Publico: <font color='#FF0000'>Letra Invalida Solo Q.</font>";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFcir') {	// SOLO SE ADMITE R //
+	elseif($_POST['doc'] == 'NIFcir') {	// SOLO SE ADMITE R //
 		
 		if (preg_match('/^[^R]+$/',$_POST['dni'])){
 		$errors [] = "N&uacute;mero NIF Congregaciones Instituciones Religiosas: <font color='#FF0000'>Letra Invalida Solo R.</font>";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFoaeca') {	// SOLO SE ADMITE S //
+	elseif($_POST['doc'] == 'NIFoaeca') {	// SOLO SE ADMITE S //
 		
 		if (preg_match('/^[^S]+$/',$_POST['dni'])){
 		$errors [] = "N&uacute;mero NIF Organos Admin Estado y Comunidades Autónomas: <font color='#FF0000'>Letra Invalida Solo S.</font>";
 		}
 			}
 		
-	elseif ($_POST['doc'] == 'NIFute') {	// SOLO SE ADMITE U //
+	elseif($_POST['doc'] == 'NIFute') {	// SOLO SE ADMITE U //
 		
-		if (preg_match('/^[^U]+$/',$_POST['dni'])){
+		if(preg_match('/^[^U]+$/',$_POST['dni'])){
 		$errors [] = "N&uacute;mero NIF Unión Temporal de Empresas: <font color='#FF0000'>Letra Invalida Solo U.</font>";
 		}
 			}
 		
-	elseif ($_POST['doc'] == 'NIFotnd') {	// SOLO SE ADMITE V //
+	elseif($_POST['doc'] == 'NIFotnd') {	// SOLO SE ADMITE V //
 		
-		if (preg_match('/^[^V]+$/',$_POST['dni'])){
+		if(preg_match('/^[^V]+$/',$_POST['dni'])){
 		$errors [] = "N&uacute;mero NIF Otros Tipos no Definidos: <font color='#FF0000'>Letra Invalida Solo V.</font>";
 		}
 			}
 		
-	elseif ($_POST['doc'] == 'NIFepenr') {	// SOLO SE ADMITE W //
+	elseif($_POST['doc'] == 'NIFepenr') {	// SOLO SE ADMITE W //
 		
-		if (preg_match('/^[^W]+$/',$_POST['dni'])){
+		if(preg_match('/^[^W]+$/',$_POST['dni'])){
 		$errors [] = "N&uacute;mero NIF Establecimientos Permanentes Entidades no Residentes: <font color='#FF0000'>Letra Invalida Solo W.</font>";
 		}
 			}
@@ -340,21 +342,21 @@
 			/* FIN DEL ALGORITMO DE DEFINICION DEL LA LETRA CONTROL DEL DNI */
 	
 	
-	if ($_POST['doc'] == 'DNI') {
+	if($_POST['doc'] == 'DNI') {
 		
 		if(strlen(trim($_POST['ldni'])) == 0){
 		$errors [] = "Letra DNI: <font color='#FF0000'>Campo obligatorio.</font>";
 		}
 
-	elseif (!preg_match('/^[^0-9@#$&%<>:"·\(\)=¿?!¡\[\]\{\};,:\.\*]+$/',$_POST['ldni'])){
+	elseif(!preg_match('/^[^0-9@#$&%<>:"·\(\)=¿?!¡\[\]\{\};,:\.\*]+$/',$_POST['ldni'])){
 		$errors [] = "Letra Control DNI: <font color='#FF0000'>Solo texto</font>";
 		}
 
-	elseif (!preg_match('/^[^a-z]+$/',$_POST['ldni'])){
+	elseif(!preg_match('/^[^a-z]+$/',$_POST['ldni'])){
 		$errors [] = "Letra Control DNI: <font color='#FF0000'>Solo mayusculas</font>";
 		}
 
-	elseif (trim($_POST['ldni'] != $letra)){
+	elseif(trim($_POST['ldni'] != $letra)){
 	$errors [] = "Letra Control DNI: <font color='#FF0000'>Letra no correcta. $letra is ok.</font>";
 		}
 	}
@@ -495,7 +497,7 @@
 		
 		/* CONDICIONAL PARA VALIDAR LA LETRA CONTROL DEL NIE/NIF NORMAL*/
 		
-	elseif ($_POST['doc'] == 'NIE') {
+	elseif($_POST['doc'] == 'NIE') {
 		
 		if (trim($_POST['ldni'] != $letra2)){
 	$errors [] = "Letra Control NIE Extranjeros: <font color='#FF0000'>Letra no correcta.</font>";
@@ -555,7 +557,7 @@
 	$rowml = mysqli_fetch_assoc($qml);
 
 	if((isset($_POST['id']))&&($_POST['Email']!="nomail@nomail.es")){
-		if ($_POST['id'] == $rowml['id']){}
+		if($_POST['id'] == @$rowml['id']){}
 		elseif(mysqli_num_rows($qml)!= 0){
 			$errors [] = "Mail: <font color='#FF0000'>YA EXISTE.</font>";
 			}
@@ -577,7 +579,7 @@
 		$errors [] = "Mail: <font color='#FF0000'>Esta dirección no es válida.</font>";
 		}
 		
-/* if(trim($_POST['id'] == $rowd['id'])&&(!strcasecmp($_POST['Email'] , $rowd['Email']))){}
+/* if(trim($_POST['id'] == @$rowd['id'])&&(!strcasecmp($_POST['Email'] , $rowd['Email']))){}
 			elseif(!strcasecmp($_POST['Email'] , $rowd['Email'])){
 				$errors [] = "Mail: <font color='#FF0000'>No se puede registrar con este Mail.</font>";
 				}	
@@ -605,7 +607,7 @@
 	$countlf1 = mysqli_num_rows($qtlf1);
 
 	if((isset($_POST['id']))&&($_POST['Tlf1']!='000000000')){
-		if ($_POST['id'] == $rowtlf1['id']){}
+		if($_POST['id'] == @$rowtlf1['id']){}
 		elseif($countlf1 != 0){
 			$errors [] = "Teléfono 1: <font color='#FF0000'>YA EXISTE.</font>";
 			}
@@ -636,7 +638,7 @@
 	$rowtlf2 = mysqli_fetch_assoc($qtlf2);
 	$countlf2 = mysqli_num_rows($qtlf2);
 		
-	if ($_POST['id'] == $rowtlf2['id']){}
+	if($_POST['id'] == @$rowtlf2['id']){}
 		elseif($countlf2 > 0){
 		$errors [] = "Teléfono 2: <font color='#FF0000'>YA EXISTE.</font>";
 			}

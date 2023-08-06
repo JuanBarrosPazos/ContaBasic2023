@@ -121,15 +121,15 @@ if($rowb['ret'] != 0.00){
 
 function info(){
 
-	global $db;
-	global $rowout;
-	global $nombre;
-	global $apellido;
+	global $db; 		global $rowout;
+	global $nombre; 	global $apellido;
+	
 	global $orden;
-	
-	$orden = $_POST['Orden'];
-	
-	if ($_POST['todo']){$nombre = "TODOS LOS RETENCION ".$orden;};	
+	if(isset($_POST['Orden'])){
+		$orden = $_POST['Orden'];
+	}else{ $orden = '`id` ASC'; }
+
+	if($_POST['todo']){$nombre = "TODOS LOS RETENCION ".$orden;};	
 
 	$ActionTime = date('H:i:s');
 

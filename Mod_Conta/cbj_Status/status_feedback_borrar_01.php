@@ -140,12 +140,14 @@ function ver_todo(){
 function info(){
 
 	global $db;
-	global $nombre;
-	
-	$orden = $_POST['Orden'];
-	
-	$nombre = "FEEDBACK TODOS LOS EJERCICIOS";	
 
+	global $nombre;		$nombre = "FEEDBACK TODOS LOS EJERCICIOS";
+	
+		global $orden;
+		if(isset($_POST['Orden'])){
+			$orden = $_POST['Orden'];
+		}else{ $orden = '`id` ASC'; }
+	
 	$ActionTime = date('H:i:s');
 
 	global $dir;

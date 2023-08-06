@@ -11,24 +11,21 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
-					master_index();
+		master_index();
 
-						if($_POST['oculto']){
-								if($form_errors = validate_form()){
-									show_form($form_errors);
-									unset($_SESSION['dudas']);
-
-										} else {
-											process_form();
-										 	info();
-																	}
-							} else {
-										show_form();
-										unset($_SESSION['dudas']);
-									}
-				} else { require '../Inclu/table_permisos.php'; } 
+		if(isset($_POST['oculto'])){
+			if($form_errors = validate_form()){
+					show_form($form_errors);
+					unset($_SESSION['dudas']);
+			} else { process_form();
+					info();
+						}
+		} else { show_form();
+				 unset($_SESSION['dudas']);
+					}
+	} else { require '../Inclu/table_permisos.php'; } 
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -250,20 +247,20 @@ function process_form(){
 
 function show_form($errors=[]){
 	
-	if($_POST['oculto']){
+	if(isset($_POST['oculto'])){
 		$defaults = $_POST;
-		} else {
-				$defaults = array ( 'rsocial' => '',
-									'myimg' => $_POST['myimg'],	
-									'ref' => '',
-									'doc' => '',
-									'dni' => '',
-									'ldni' => '',
-									'Email' => 'Solo letras minúsculas',
-									'Direccion' => '',
-									'Tlf1' => '',
-									'Tlf2' => '');
-								   					}
+	} else {
+			$defaults = array ( 'rsocial' => '',
+								'myimg' => $_POST['myimg'],	
+								'ref' => '',
+								'doc' => '',
+								'dni' => '',
+								'ldni' => '',
+								'Email' => 'Solo letras minúsculas',
+								'Direccion' => '',
+								'Tlf1' => '',
+								'Tlf2' => '');
+							   					}
 	
 	if ($errors){
 		print("	<div width='90%' style='float:left'>

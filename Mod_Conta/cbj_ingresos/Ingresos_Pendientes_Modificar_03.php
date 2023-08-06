@@ -11,29 +11,25 @@ session_start();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
-				
-					master_index();
+		master_index();
 
-						if($_POST['oculto2']){	info_01();
-												show_form();}
-						elseif($_POST['oculto']){
+		if(isset($_POST['oculto2'])){ info_01();
+									  show_form();
+		} elseif(isset($_POST['oculto'])){
+					// SI NO HA COBRADO LA FACTURA.
+					if(strlen($_POST['xl']) == 0){
+						print("* HA DE MARCAR LA CASILLA DE CONFIRMACIÓN.");
+						show_form();
+					} elseif(strlen($_POST['xl']) != 0){
+						//print("* SI SELECCIONADO");
+						process_form_2();
+						difer1();
+							}
+		} else {show_form(); }
 							
-								// SI NO HA COBRADO LA FACTURA.
-								if(strlen($_POST['xl']) == 0){
-									print("* HA DE MARCAR LA CASILLA DE CONFIRMACIÓN.");
-									show_form();
-									}
-								elseif(strlen($_POST['xl']) != 0){
-									//print("* SI SELECCIONADO");
-									process_form_2();
-									difer1();
-									}
-									
-							} else {show_form();}
-							
-				}else { require '../Inclu/table_permisos.php';} 
+	}else { require '../Inclu/table_permisos.php';} 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -156,22 +152,18 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 function process_form_2(){
 	
-	global $db;
-	global $db_name;
+	global $db; 		global $db_name;
+	global $vname; 		global $dyt1; 		global $dynew;
 	
-	global $vname;
-	global $dyt1;
-	global $dynew;
-	
-	if ($_POST['dy'] == ''){ $dy1 = '';
+	if($_POST['dy'] == ''){ $dy1 = '';
 							 $dynew = date('y');
 							 $dyt1 = date('Y');} else { $dy1 = $_POST['dy'];
 														$dynew = $_POST['dy'];
 														$dyt1 = "20".$_POST['dy'];
 																		}
-	if ($_POST['dm'] == ''){ $dm1 = '';} else { $dm1 = $_POST['dm'];
+	if($_POST['dm'] == ''){ $dm1 = '';} else { $dm1 = $_POST['dm'];
 												$dm1 = "/".$dm1."/";}
-	if ($_POST['dd'] == ''){ $dd1 = '';} else { $dd1 = $_POST['dd'];
+	if($_POST['dd'] == ''){ $dd1 = '';} else { $dd1 = $_POST['dd'];
 												$dd1 = $dd1;}
 
 	global $factdate;
@@ -446,7 +438,7 @@ function show_form($errors=[]){
 	
 	$_SESSION['idx'] = $_POST['id'];
 
-	if($_POST['oculto2']){
+	if(isset($_POST['oculto2'])){
 		
 		$datex = $_POST['factdate'];
 		$dyx = substr($_POST['factdate'],0,2);
@@ -539,12 +531,12 @@ function show_form($errors=[]){
 									'factpvp2' => $factpvp2,	
 									'factpvptot1' => $factpvptot1,	
 									'factpvptot2' => $factpvptot2,	
-									'coment' => $_POST['coment'],	
-																	);
-								   											}
-	elseif($_POST['oculto']){
+									'coment' => $_POST['coment']);
+								}
+
+	elseif(isset($_POST['oculto'])){
 		$defaults = $_POST;
-		} elseif($_POST['oculto1']) {
+	} elseif(isset($_POST['oculto1'])) {
 				$defaults = array (	'id' => $_SESSION['idx'],
 									'proveedores' => $_POST['proveedores'],
 								   	'refprovee' => $_POST['refprovee'],
@@ -667,7 +659,7 @@ function show_form($errors=[]){
 			</tr>
 				"); 
 			
-	if ($_POST['proveedores'] != '') {
+	if($_POST['proveedores'] != '') {
 
 	print("
 <form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>

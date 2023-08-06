@@ -11,24 +11,19 @@ session_start();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
-					master_index();
+		master_index();
 
-						if($_POST['oculto']){
-							
-								if($form_errors = validate_form()){
-									show_form($form_errors);
-										} else {
-											process_form();
-											info();
-											}
-							
-							} else {
-										show_form();
+		if(isset($_POST['oculto'])){
+					if($form_errors = validate_form()){
+							show_form($form_errors);
+					} else { process_form();
+							 info();
 								}
-				}
-					else { require '../Inclu/table_permisos.php'; } 
+		} else { show_form(); }
+	
+	} else { require '../Inclu/table_permisos.php'; } 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -459,7 +454,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas o números si
 ////////////////////
 	
 
-if ($_POST['dy'] != ''){
+	if($_POST['dy'] != ''){
 	
 	global $db; 		global $db_name;
 
@@ -511,19 +506,17 @@ if ($_POST['dy'] != ''){
 
 function process_form(){
 	
-	global $db;
-	global $db_name;	
-	global $dyt1;
-	global $dm1;
+	global $db; 		global $db_name;	
+	global $dyt1; 		global $dm1;
 	
-	if ($_POST['dy'] == ''){ $dy1 = '';
+	if($_POST['dy'] == ''){ $dy1 = '';
 							 $dyt1 = date('Y');	} else {$dy1 = $_POST['dy'];
 														$dy1 = $dy1;
 														$dyt1 = "20".$_POST['dy'];
 																		}
-	if ($_POST['dm'] == ''){ $dm1 = '';} else {$dm1 = $_POST['dm'];
+	if($_POST['dm'] == ''){ $dm1 = '';} else {$dm1 = $_POST['dm'];
 												$dm1 = "/".$dm1."/";}
-	if ($_POST['dd'] == ''){ $dd1 = '';} else {$dd1 = $_POST['dd'];
+	if($_POST['dd'] == ''){ $dd1 = '';} else {$dd1 = $_POST['dd'];
 												$dd1 = $dd1;}
 
 	global $factdate;
@@ -836,35 +829,33 @@ function show_form($errors=[]){
 	global $_dnil;
 	$_dnil = $_dni.$_ldni;
 	
-	if($_POST['oculto']){
+	if(isset($_POST['oculto'])){
 		$defaults = $_POST;
-		} else {
-				$defaults = array (	'proveedores' => $_POST['proveedores'],
-									'dy' => $_POST['dy'],
-									'dm' => $_POST['dm'],
-									'dd' => $_POST['dd'],
-									'factnum' => strtoupper($_POST['factnum']),
+	} else { $defaults = array ('proveedores' => $_POST['proveedores'],
+								'dy' => $_POST['dy'],
+								'dm' => $_POST['dm'],
+								'dd' => $_POST['dd'],
+								'factnum' => strtoupper($_POST['factnum']),
 								//	'factdate' => $_POST['factdate'],
-								   	'refprovee' => $rowprovee['ref'],
-								   	'factnom' => $rowprovee['rsocial'],
-								   	'factnif' => $_dnil,
-								   	'factiva' => $_POST['factiva'],
-									'factivae1' => $_POST['factivae1'],	
-									'factivae2' => '00',	
-								   	'factret' => $_POST['factret'],
-									'factrete1' => $_POST['factrete1'],	
-									'factrete2' => '00',	
-									'factpvp1' => $_POST['factpvp1'],	
-									'factpvp2' => '00',	
-									'factpvptot1' => $_POST['factpvptot1'],	
-									'factpvptot2' => '00',	
-									'coment' => $_POST['coment'],	
-									'myimg1' => $_POST['myimg1'],	
-									'myimg2' => $_POST['myimg2'],	
-									'myimg3' => $_POST['myimg3'],	
-									'myimg4' => $_POST['myimg4'],	
-																	);
-							   											}
+								'refprovee' => $rowprovee['ref'],
+								'factnom' => $rowprovee['rsocial'],
+								'factnif' => $_dnil,
+								'factiva' => $_POST['factiva'],
+								'factivae1' => $_POST['factivae1'],	
+								'factivae2' => '00',	
+								'factret' => $_POST['factret'],
+								'factrete1' => $_POST['factrete1'],	
+								'factrete2' => '00',	
+								'factpvp1' => $_POST['factpvp1'],	
+								'factpvp2' => '00',	
+								'factpvptot1' => $_POST['factpvptot1'],	
+								'factpvptot2' => '00',	
+								'coment' => $_POST['coment'],	
+								'myimg1' => $_POST['myimg1'],	
+								'myimg2' => $_POST['myimg2'],	
+								'myimg3' => $_POST['myimg3'],	
+								'myimg4' => $_POST['myimg4']);
+						}
 
 	if ($errors){
 		print("	<div width='90%' style='float:left'>
@@ -988,7 +979,7 @@ function show_form($errors=[]){
 				
 ////////////////////
 
-	if ($_POST['oculto1'] || $_POST['oculto'] ) {
+	if((isset($_POST['oculto1'])) || (isset($_POST['oculto'])) ) {
 	if (($_POST['proveedores'] == '') && ($defaults['factnom'] == '')) { 
 						print("<table align='center' style=\"margin-top:20px;margin-bottom:20px\">
 									<tr align='center'>
@@ -1000,7 +991,7 @@ function show_form($errors=[]){
 									</tr>
 								</table>");
 												}	
-	if ($_POST['proveedores'] != '') {
+	if($_POST['proveedores'] != '') {
 	print("
 			<table align='center' style=\"margin-top:10px\">
 				<tr>

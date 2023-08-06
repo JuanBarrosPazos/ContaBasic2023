@@ -180,7 +180,8 @@ function process_form(){
 				</tr>
 				<tr>
 					<td colspan='3' align='center'>
-						<a href='proveedores_Crear.php'>VOLVER PROVEEDORES CREAR</a>
+						<a href='proveedores_Crear.php' class='botonverde' >CREAR NUEVO PROVEEDORCREAR</a>
+						<a href='proveedores_Ver.php' class='botonverde' >INICIO PROVEEDORES</a>
 					</td>
 				</tr>
 			</table>" );
@@ -191,7 +192,7 @@ function process_form(){
 				global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 			}
 	
-	}	/* Final process_form(); */
+	} /* Final process_form(); */
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -348,12 +349,17 @@ function show_form($errors=[]){
 				</tr>
 				<tr>
 					<td colspan='2'  align='right' valign='middle'  class='BorderSup'>
-						<input type='submit' value='REGISTRAR ESTOS DATOS' />
+						<input type='submit' value='REGISTRAR ESTOS DATOS' class='botonazul'  />
 						<input type='hidden' name='oculto' value=1 />
 						<input type='hidden' name='v' value='g' />
+			</form>														
 					</td>
 				</tr>
-		</form>														
+				<tr>
+					<td colspan='3' align='center'>
+						<a href='proveedores_Ver.php' class='botonverde'>INICIO PROVEEDORES</a>
+					</td>
+				</tr>
 			</table>"); /* Fin del print */
 	
 	}	/* Fin show_form(); */

@@ -196,9 +196,10 @@ function config_one_cbj(){
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `id` (`id`)/*,
   INDEX `refprovee` (`refprovee`),
   FOREIGN KEY (`refprovee`) REFERENCES $tablProveedores (`ref`) ON DELETE NO ACTION ON UPDATE CASCADE
+  */
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
 	if(mysqli_query($db, $tgb)){
@@ -278,9 +279,10 @@ function config_one_cbj(){
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `id` (`id`)/*,
   INDEX `refcliente` (`refcliente`),
   FOREIGN KEY (`refcliente`) REFERENCES $tblClientes (`ref`) ON DELETE NO ACTION ON UPDATE CASCADE
+  */
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
 	if(mysqli_query($db, $tib)){
@@ -701,9 +703,10 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `id` (`id`)/*,
   INDEX `refprovee` (`refprovee`),
   FOREIGN KEY (`refprovee`) REFERENCES $tablProveedores (`ref`) ON DELETE NO ACTION ON UPDATE CASCADE
+  */
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
 	if(mysqli_query($db, $tg)){
@@ -750,10 +753,10 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `id` (`id`)/*,
   INDEX `refprovee` (`refprovee`),
   FOREIGN KEY (`refprovee`) REFERENCES $tablProveedores (`ref`) ON DELETE NO ACTION ON UPDATE CASCADE
-
+	*/
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
 	if(mysqli_query($db, $tg2)){
@@ -804,9 +807,10 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `id` (`id`)/*,
   INDEX `refcliente` (`refcliente`),
   FOREIGN KEY (`refcliente`) REFERENCES $tblClientes (`ref`) ON DELETE NO ACTION ON UPDATE CASCADE
+  */
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
 	if(mysqli_query($db, $ti)){
@@ -854,9 +858,10 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   PRIMARY KEY  (`id`),
-  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `id` (`id`)/*,
   INDEX `refcliente` (`refcliente`),
   FOREIGN KEY (`refcliente`) REFERENCES $tblClientes (`ref`) ON DELETE NO ACTION ON UPDATE CASCADE
+  */
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
 	if(mysqli_query($db, $ti2)){

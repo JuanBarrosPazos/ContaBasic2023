@@ -11,24 +11,19 @@ session_start();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
-					master_index();
+		master_index();
 
-						if($_POST['oculto']){
-							
-								if($form_errors = validate_form()){
-									show_form($form_errors);
-										} else {
-											process_form();
-											info();
-											}
-							
-							} else {
-										show_form();
-								}
-				}
-					else { require '../Inclu/table_permisos.php'; } 
+		if(isset($_POST['oculto'])){
+				if($form_errors = validate_form()){
+						show_form($form_errors);
+				} else { process_form();
+						 info();
+							}
+		} else { show_form(); }
+
+	} else { require '../Inclu/table_permisos.php'; } 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -459,7 +454,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas o números si
 ////////////////////
 	
 
-if ($_POST['dy'] != ''){
+	if($_POST['dy'] != ''){
 	
 	global $db; 		global $db_name;
 
@@ -511,19 +506,17 @@ if ($_POST['dy'] != ''){
 
 function process_form(){
 	
-	global $db;
-	global $db_name;	
-	global $dyt1;
-	global $dm1;
+	global $db; 	global $db_name;	
+	global $dyt1; 	global $dm1;
 	
-	if ($_POST['dy'] == ''){ $dy1 = '';
+	if($_POST['dy'] == ''){ $dy1 = '';
 							 $dyt1 = date('Y');	} else {$dy1 = $_POST['dy'];
 														$dy1 = $dy1;
 														$dyt1 = "20".$_POST['dy'];
 																		}
-	if ($_POST['dm'] == ''){ $dm1 = '';} else {$dm1 = $_POST['dm'];
+	if($_POST['dm'] == ''){ $dm1 = '';} else {$dm1 = $_POST['dm'];
 												$dm1 = "/".$dm1."/";}
-	if ($_POST['dd'] == ''){ $dd1 = '';} else {$dd1 = $_POST['dd'];
+	if($_POST['dd'] == ''){ $dd1 = '';} else {$dd1 = $_POST['dd'];
 												$dd1 = $dd1;}
 
 	global $factdate;
@@ -555,98 +548,33 @@ function process_form(){
 	
 	$tabla = "<table align='center' style='margin-top:10px' width=450px>
 				<tr>
-					<th colspan=4 class='BorderInf'>
-						SE HA GRABADO EN ".strtoupper($vname)."
-					</th>
+					<th colspan=4 class='BorderInf'>SE HA GRABADO EN ".strtoupper($vname)."</th>
 				</tr>
-												
 				<tr>
-					<td>
-						NUMERO
-					</td>
-					<td>"
-						.$_POST['factnum'].
-					"</td>
-					<td>	
-						FECHA
-					</td>
-					<td>"
-						.$iniy.$factdate.
-					"</td>
+					<td>NUMERO</td><td>".$_POST['factnum']."</td>
+					<td>FECHA</td><td>".$iniy.$factdate."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						RAZON SOCIAL
-					</td>
-					<td>"
-						.$_POST['factnom'].
-					"</td>
-					<td>
-						NIF / CIF
-					</td>
-					<td>"
-						.$_POST['factnif'].
-					"</td>
+					<td>RAZON SOCIAL</td><td>".$_POST['factnom']."</td>
+					<td>NIF/CIF</td><td>".$_POST['factnif']."</td>
 				</tr>
-								
 				<tr>
-					<td>
-						IMP %
-					</td>
-					<td>"
-						.$_POST['factiva'].
-					"</td>
-					<td>
-						IMP €
-					</td>
-					<td width=250px>"
-						.$factivae.
-					"</td>
+					<td>IMP %</td>
+					<td>".$_POST['factiva']."</td>
+					<td>IMP €</td><td width=250px>".$factivae."</td>
 				</tr>
-								
 				<tr>
-					<td>
-						RETENCIONES %
-					</td>
-					<td>"
-						.$_POST['factret'].
-					"</td>
-					<td>
-						RETENCIONES €
-					</td>
-					<td width=250px>"
-						.$factivae.
-					"</td>
+					<td>RETENCIONES %</td><td>".$_POST['factret']."</td>
+					<td>RETENCIONES €</td><td width=250px>".$factivae."</td>
 				</tr>
-								
 				<tr>
-					<td>
-						SUBTOTAL
-					</td>
-					<td>"
-						.$factpvp.
-					"</td>
-					<td>
-						TOTAL
-					</td>
-					<td>"
-						.$factpvptot.
-					"</td>
+					<td>SUBTOTAL</td><td>".$factpvp."</td>
+					<td>TOTAL</td><td>".$factpvptot."</td>
 				</tr>
-								
 				<tr>
-					<td>
-						DESCRIPCION
-					</td>
-					<td colspan='3'>"
-						.$_POST['coment'].
-					"</td>
+					<td>DESCRIPCION</td><td colspan='3'>".$_POST['coment']."</td>
 				</tr>
-
-			</table>
-				
-		";	
+			</table>";	
 		
 	/************* CREAMOS LAS IMAGENES EN LA IMG PRO SECCION ***************/
 
@@ -837,7 +765,7 @@ function show_form($errors=[]){
 	global $_dnil;
 	$_dnil = $_dni.$_ldni;
 	
-	if($_POST['oculto']){
+	if(isset($_POST['oculto'])){
 		$defaults = $_POST;
 		} else {
 				$defaults = array (	'proveedores' => $_POST['proveedores'],
@@ -989,8 +917,8 @@ function show_form($errors=[]){
 				
 ////////////////////
 
-	if ($_POST['oculto1'] || $_POST['oculto'] ) {
-	if (($_POST['proveedores'] == '') && ($defaults['factnom'] == '')) { 
+	if(isset($_POST['oculto1']) || isset($_POST['oculto'])) {
+	if(($_POST['proveedores'] == '') && ($defaults['factnom'] == '')) { 
 						print("<table align='center' style=\"margin-top:20px;margin-bottom:20px\">
 									<tr align='center'>
 										<td>
@@ -1001,7 +929,7 @@ function show_form($errors=[]){
 									</tr>
 								</table>");
 												}	
-	if ($_POST['proveedores'] != '') {
+	if($_POST['proveedores'] != '') {
 	print("
 			<table align='center' style=\"margin-top:10px\">
 				<tr>

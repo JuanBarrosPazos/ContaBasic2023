@@ -13,38 +13,35 @@ session_start();
 
 if ($_SESSION['Nivel'] == 'admin'){
 
-				
-					master_index();
+	master_index();
 
-						if($_POST['oculto2']){	info_01();
-												show_form();}
-						elseif($_POST['oculto']){							
-								if($form_errors = validate_form()){
-									show_form($form_errors);
-										} else {
-											process_form();
-											info_02();
-											difer1();
-	if(($_SESSION['yold'] != $_SESSION['ynew'])||($_SESSION['mold'] != $_SESSION['mnew'])){
+	if(isset($_POST['oculto2'])){	info_01();
+							show_form();
+	} elseif(isset($_POST['oculto'])){							
+			if($form_errors = validate_form()){
+					show_form($form_errors);
+			} else { process_form();
+					 info_02();
+					 difer1();
+				if(($_SESSION['yold'] != $_SESSION['ynew'])||($_SESSION['mold'] != $_SESSION['mnew'])){
 																	difer2();
-																				}
-											}
-							
-							} else {show_form();}
-				} else { require '../Inclu/table_permisos.php'; } 
+																}
+					}
+			} else {show_form();}
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+	} else { require '../Inclu/table_permisos.php'; } 
 
-function validate_form(){
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
+
+	function validate_form(){
 	
-	global $sqld;
-	global $qd;
-	global $rowd;
+		global $sqld;
+		global $qd;
+		global $rowd;
 
-	$errors = array();
-	
-
-		///////////////////////////////////////////////////////////////////////////////////
+		$errors = array();
 	
 	if(strlen(trim($_POST['factnum'])) == 0){
 		$errors [] = "FACTURA NUMERO <font color='#FF0000'>Campo obligatorio.</font>";
@@ -63,10 +60,10 @@ function validate_form(){
 		}
 
 	elseif (!preg_match('/^[A-Z,0-9_\s]+$/',$_POST['factnum'])){
-$errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin acentos o _.</font>";
+		$errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin acentos o _.</font>";
 		}
 
-/*
+	/*
 	
 	if(strlen(trim($_POST['factdate'])) == 0){
 		$errors [] = "FECHA <font color='#FF0000'>Campo obligatorio.</font>";
@@ -82,7 +79,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 	elseif (!preg_match('/^[a-zA-Z,0-9\s]+$/',$_POST['factdate'])){
 		$errors [] = "FECHA <font color='#FF0000'>Solo letras o números sin acentos.</font>";
 		}
-*/
+	*/
 
 	 /*VALIDAMOS EL CAMPO factnom */
 	
@@ -132,9 +129,9 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 			$errors [] = "IMPUESTOS € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
 			}
 		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factivae1'])){
-			$errors [] = "IMPUESTOS € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
+		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factivae1'])){
+				$errors [] = "IMPUESTOS € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
+				}
 			
 		elseif (!preg_match('/^[0-9]+$/',$_POST['factivae1'])){
 			$errors [] = "IMPUESTOS € <font color='#FF0000'>SOLO NUMEROS</font>";
@@ -144,18 +141,18 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 			$errors [] = "IMPUESTOS € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
 			}
 		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factivae2'])){
-			$errors [] = "IMPUESTOS € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
+		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factivae2'])){
+				$errors [] = "IMPUESTOS € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
+				}
 			
 		elseif (!preg_match('/^[0-9]+$/',$_POST['factivae2'])){
 			$errors [] = "IMPUESTOS € <font color='#FF0000'>SOLO NUMEROS</font>";
 			}
 	/* Validamos el campo factret.*/ 
 	
-	if($_POST['factret'] == ''){
-		$errors [] = "RETENCIONES: <font color='#FF0000'>SELECCIONE EL TIPO DE IVA</font>";
-		}
+		if($_POST['factret'] == ''){
+			$errors [] = "RETENCIONES: <font color='#FF0000'>SELECCIONE EL TIPO DE IVA</font>";
+			}
 					
 	/* VALIDAMOS EL CAMPO factrete */
 	
@@ -163,7 +160,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 			$errors [] = "RETENCIONES € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
 			}
 		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factrete1'])){
+		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factrete1'])){
 			$errors [] = "RETENCIONES € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
 			}
 			
@@ -175,7 +172,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 			$errors [] = "RETENCIONES € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
 			}
 		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factrete2'])){
+		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factrete2'])){
 			$errors [] = "RETENCIONES € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
 			}
 			
@@ -215,7 +212,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 			$errors [] = "TOTAL € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
 			}
 		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factpvptot1'])){
+		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factpvptot1'])){
 			$errors [] = "TOTAL € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
 			}
 			
@@ -227,7 +224,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 			$errors [] = "TOTAL € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
 			}
 		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factpvptot2'])){
+		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factpvptot2'])){
 			$errors [] = "TOTAL € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
 			}
 			
@@ -559,20 +556,18 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 
 function process_form(){
 	
-	global $db;
-	global $db_name;	
-	global $dyt1;
-	global $dynew;
+	global $db; 		global $db_name;	
+	global $dyt1; 		global $dynew;
 	
-	if ($_POST['dy'] == ''){ $dy1 = '';
+	if($_POST['dy'] == ''){ $dy1 = '';
 							 $dynew = date('y');
 							 $dyt1 = date('Y');} else { $dy1 = $_POST['dy'];
 														$dynew = $_POST['dy'];
 														$dyt1 = "20".$_POST['dy'];
 																		}
-	if ($_POST['dm'] == ''){ $dm1 = '';} else { $dm1 = $_POST['dm'];
+	if($_POST['dm'] == ''){ $dm1 = '';} else { $dm1 = $_POST['dm'];
 												$dm1 = "/".$dm1."/";}
-	if ($_POST['dd'] == ''){ $dd1 = '';} else { $dd1 = $_POST['dd'];
+	if($_POST['dd'] == ''){ $dd1 = '';} else { $dd1 = $_POST['dd'];
 												$dd1 = $dd1;}
 
 	global $factdate;
@@ -1448,7 +1443,7 @@ function show_form($errors=[]){
 
 	$_SESSION['idx'] = $_POST['id'];
 
-	if($_POST['oculto2']){
+	if(isset($_POST['oculto2'])){
 		
 		$datex = $_POST['factdate'];
 		$dyx = substr($_POST['factdate'],0,2);
@@ -1540,12 +1535,12 @@ function show_form($errors=[]){
 									'factpvp2' => $factpvp2,	
 									'factpvptot1' => $factpvptot1,	
 									'factpvptot2' => $factpvptot2,	
-									'coment' => $_POST['coment'],	
-																	);
-								   											}
-	elseif($_POST['oculto']){
+									'coment' => $_POST['coment']);
+							}
+
+	elseif(isset($_POST['oculto'])){
 		$defaults = $_POST;
-		} elseif($_POST['oculto1']) {
+		} elseif(isset($_POST['oculto1'])) {
 				$defaults = array (	'id' => $_SESSION['idx'],
 									'proveegastos' => $_POST['proveegastos'],
 								   	'refprovee' => $_POST['refprovee'],
@@ -1715,7 +1710,7 @@ function show_form($errors=[]){
 		</form>	
 				"); 
 			
-	if ($_POST['proveegastos'] != ''){
+	if($_POST['proveegastos'] != ''){
 
 	print("
 <form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>

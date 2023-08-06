@@ -11,29 +11,25 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
- 			//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
-			master_index();
+ 		//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
+		master_index();
 
-			if ($_POST['oculto2']){
-					show_form();
-					info_01();
-								}
-						elseif($_POST['modifica']){
-								
+		if(isset($_POST['oculto2'])){
+								show_form();
+								info_01();
+		} elseif(isset($_POST['modifica'])){
 							if($form_errors = validate_form()){
 								show_form($form_errors);
-									} else {
-										process_form();
-										info_02();
-												}
-							} else {
-										show_form();
-										unset($_SESSION['dudas']);
-										unset($_SESSION['dniold']);
-									}
-				} else { require '../Inclu/table_permisos.php'; } 
+							} else { process_form();
+									 info_02();
+										}
+		} else { show_form();
+				 unset($_SESSION['dudas']);
+				 unset($_SESSION['dniold']);
+					}
+	} else { require '../Inclu/table_permisos.php'; } 
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -308,7 +304,7 @@ $sg6 = "UPDATE `$db_name`.$ingresos6 SET `refcliente` = '$rf', `factnif` = '$fac
 
 function show_form($errors=[]){
 	
-	if($_POST['oculto2']){
+	if(isset($_POST['oculto2'])){
 		
 	$_SESSION['dniold'] = $_POST['dni'];
 	$_SESSION['refold'] = $_POST['ref'];
@@ -328,21 +324,21 @@ function show_form($errors=[]){
 									'Tlf2' => $_POST['Tlf2']);
 								   								}
 																
-		elseif($_POST['modifica']){
-			global $img2;
-			$img2 = 'untitled.png';
-				$defaults = array ( 'id' => $_POST['id'],
-									'rsocial' => $_POST['rsocial'],
-									'myimg' => $_POST['myimg'],	
-									'ref' => $_POST['ref'],
-									'doc' => $_POST['doc'],
-									'dni' => $_POST['dni'],
-									'ldni' => $_POST['ldni'],
-									'Email' => $_POST['Email'],
-									'Direccion' => $_POST['Direccion'],
-									'Tlf1' => $_POST['Tlf1'],
-									'Tlf2' => $_POST['Tlf2']);
-																}
+	elseif(isset($_POST['modifica'])){
+		
+			global $img2; 	$img2 = 'untitled.png';
+			$defaults = array ( 'id' => $_POST['id'],
+								'rsocial' => $_POST['rsocial'],
+								'myimg' => $_POST['myimg'],	
+								'ref' => $_POST['ref'],
+								'doc' => $_POST['doc'],
+								'dni' => $_POST['dni'],
+								'ldni' => $_POST['ldni'],
+								'Email' => $_POST['Email'],
+								'Direccion' => $_POST['Direccion'],
+								'Tlf1' => $_POST['Tlf1'],
+								'Tlf2' => $_POST['Tlf2']);
+															}
 	
 		else{$defaults = $_POST;}
 		
@@ -551,13 +547,15 @@ $rf = trim($rf);
 
 function info_01(){
 
-	global $db;
-	global $orden;
+	global $db; 		global $orden;
 	
-	$orden = $_POST['Orden'];
-		
+	global $orden;
+	if(isset($_POST['Orden'])){
+		$orden = $_POST['Orden'];
+	}else{ $orden = '`id` ASC'; }
+	
 	$_SESSION['xid'] = $_POST['id'];
-	if ($_POST['todo']){$filtro = "\n\tFiltro => TODOS LOS CLIENTES ".$orden;}
+	if(isset($_POST['todo'])){$filtro = "\n\tFiltro => TODOS LOS CLIENTES ".$orden;}
 	else{$filtro = "\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";}
 
 	$ActionTime = date('H:i:s');

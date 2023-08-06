@@ -13,12 +13,13 @@ session_start();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 				
-		if($_POST['grafico']){	a();
-								process_form();
-								info();				} 
-				} else { require '../Inclu/table_permisos.php'; }
+		if(isset($_POST['grafico'])){	a();
+										process_form();
+										info();				
+											} 
+	} else { require '../Inclu/table_permisos.php'; }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 

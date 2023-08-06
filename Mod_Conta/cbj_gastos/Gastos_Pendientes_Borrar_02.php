@@ -11,41 +11,38 @@ session_start();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
- 					//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
+ 		//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
 				
-					master_index();
+		master_index();
 
-					if($_POST['oculto2']){	info_01();
-											show_form();}
-					elseif($_POST['oculto']){	process_form();
-												info_02();
-							
-							} else {
-										show_form();
-								}
-				}
-					else { require '../Inclu/table_permisos.php'; } 
+		if(isset($_POST['oculto2'])){	
+								info_01();
+								show_form();
+		} elseif(isset($_POST['oculto'])){	
+								process_form();
+								info_02();
+		} else { show_form(); }
+	
+	} else { require '../Inclu/table_permisos.php'; } 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
 function process_form(){
 	
-	global $db;
-	global $db_name;	
+	global $db; 	global $db_name;	
 	
-	global $vname;
-	global $dyt1;
+	global $vname; 	global $dyt1;
 	
-	if ($_POST['dy'] == ''){ $dy1 = '';
+	if($_POST['dy'] == ''){ $dy1 = '';
 							 $dyt1 = date('Y');	} else {$dy1 = $_POST['dy'];
 														$dy1 = $dy1;
 														$dyt1 = "20".$_POST['dy'];
 																		}
-	if ($_POST['dm'] == ''){ $dm1 = '';} else {$dm1 = $_POST['dm'];
+	if($_POST['dm'] == ''){ $dm1 = '';} else {$dm1 = $_POST['dm'];
 												$dm1 = "/".$dm1."/";}
-	if ($_POST['dd'] == ''){ $dd1 = '';} else {$dd1 = $_POST['dd'];
+	if($_POST['dd'] == ''){ $dd1 = '';} else {$dd1 = $_POST['dd'];
 												$dd1 = $dd1;}
 
 	global $factdate;
@@ -231,7 +228,7 @@ function show_form(){
 
 	$_SESSION['idx'] = $_POST['id'];
 
-	if($_POST['oculto2']){
+	if(isset($_POST['oculto2'])){
 		
 		$datex = $_POST['factdate'];
 		$dyx = substr($_POST['factdate'],0,2);

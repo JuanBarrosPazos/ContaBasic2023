@@ -11,27 +11,26 @@ session_start();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
-				
-					master_index();
+		master_index();
 
-						if($_POST['oculto2']){	info_01();
-												show_form();}
-						elseif($_POST['oculto']){							
-								if($form_errors = validate_form()){
-									show_form($form_errors);
-										} else {
-											process_form();
-											info_02();
-											difer1();
-	if(($_SESSION['yold'] != $_SESSION['ynew'])||($_SESSION['mold'] != $_SESSION['mnew'])){
-																	difer2();
-																				}
-											}
+		if(isset($_POST['oculto2'])){	info_01();
+										show_form();
+		} elseif(isset($_POST['oculto'])){							
+					if($form_errors = validate_form()){
+							show_form($form_errors);
+					} else { process_form();
+							 info_02();
+							 difer1();
+						if(($_SESSION['yold'] != $_SESSION['ynew'])||($_SESSION['mold'] != $_SESSION['mnew'])){ 
+								difer2(); 
+								}
+							}
 							
-							} else {show_form();}
-				} else { require '../Inclu/table_permisos.php'; } 
+		} else { show_form(); }
+
+	} else { require '../Inclu/table_permisos.php'; } 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -557,20 +556,18 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 
 function process_form(){
 	
-	global $db;
-	global $db_name;	
-	global $dyt1;
-	global $dynew;
+	global $db; 		global $db_name;	
+	global $dyt1; 		global $dynew;
 	
-	if ($_POST['dy'] == ''){ $dy1 = '';
+	if($_POST['dy'] == ''){ $dy1 = '';
 							 $dynew = date('y');
 							 $dyt1 = date('Y');} else { $dy1 = $_POST['dy'];
 														$dynew = $_POST['dy'];
 														$dyt1 = "20".$_POST['dy'];
 																		}
-	if ($_POST['dm'] == ''){ $dm1 = '';} else { $dm1 = $_POST['dm'];
+	if($_POST['dm'] == ''){ $dm1 = '';} else { $dm1 = $_POST['dm'];
 												$dm1 = "/".$dm1."/";}
-	if ($_POST['dd'] == ''){ $dd1 = '';} else { $dd1 = $_POST['dd'];
+	if($_POST['dd'] == ''){ $dd1 = '';} else { $dd1 = $_POST['dd'];
 												$dd1 = $dd1;}
 
 	global $factdate;
@@ -1450,7 +1447,7 @@ function show_form($errors=[]){
 
 	$_SESSION['idx'] = $_POST['id'];
 
-	if($_POST['oculto2']){
+	if(isset($_POST['oculto2'])){
 		
 		$datex = $_POST['factdate'];
 		$dyx = substr($_POST['factdate'],0,2);
@@ -1542,12 +1539,11 @@ function show_form($errors=[]){
 									'factpvp2' => $factpvp2,	
 									'factpvptot1' => $factpvptot1,	
 									'factpvptot2' => $factpvptot2,	
-									'coment' => $_POST['coment'],	
-																	);
-								   											}
-	elseif($_POST['oculto']){
-		$defaults = $_POST;
-		} elseif($_POST['oculto1']) {
+									'coment' => $_POST['coment']);
+
+	} elseif(isset($_POST['oculto'])){
+					$defaults = $_POST;
+	} elseif(isset($_POST['oculto1'])) {
 				$defaults = array (	'id' => $_SESSION['idx'],
 									'proveeingresos' => $_POST['proveeingresos'],
 								   	'refprovee' => $_POST['refprovee'],
@@ -1569,9 +1565,8 @@ function show_form($errors=[]){
 									'factpvp2' => $_POST['factpvp2'],	
 									'factpvptot1' => $_POST['factpvptot1'],	
 									'factpvptot2' => $_POST['factpvptot2'],	
-									'coment' => $_POST['coment'],	
-																	);
-							   											}
+									'coment' => $_POST['coment']);
+							}
 
 	if ($errors){
 		print("	<div width='90%' style='float:left'>
@@ -1717,7 +1712,7 @@ function show_form($errors=[]){
 		</form>	
 				"); 
 			
-	if ($_POST['proveeingresos'] != ''){
+	if($_POST['proveeingresos'] != ''){
 
 	print("
 <form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>

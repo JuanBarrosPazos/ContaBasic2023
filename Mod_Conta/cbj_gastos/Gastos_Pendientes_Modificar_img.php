@@ -9,29 +9,20 @@ session_start();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 				
-	global $nombre;
-	global $apellido;
-	
-	$nombre = $_POST['Nombre'];
-	$apellido = $_POST['Apellidos'];
+		global $nombre;		$nombre = $_POST['Nombre'];
+		global $apellido;	$apellido = $_POST['Apellidos'];
 							
-			if($_POST['oculto2']){
-									process_form();
-								} 
-								
-			elseif(($_POST['mimg1'])||($_POST['mimg2'])||($_POST['mimg3'])||($_POST['mimg4'])){
-									process_form();
-								} 
-
-			elseif($_POST['imagenmodif']){
-									process_form();
-								} 
-			elseif($_POST['cero']){
-									process_form();
-								} 
-				} else { require '../Inclu/table_permisos.php';}
+		if(isset($_POST['oculto2'])){ process_form();
+		
+		} elseif((isset($_POST['mimg1']))||(isset($_POST['mimg2']))||(isset($_POST['mimg3']))||(isset($_POST['mimg4']))){ process_form();
+		
+		} elseif(isset($_POST['imagenmodif'])){ process_form();
+		
+		} elseif(isset($_POST['cero'])){ process_form(); } 
+	
+	} else { require '../Inclu/table_permisos.php';}
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -188,24 +179,23 @@ function modifica_form(){
 
 function process_form(){
 	
-	global $db;
-	global $db_name;
+	global $db; 		global $db_name;
 
-	if($_POST['oculto2']){
+	if(isset($_POST['oculto2'])){
 		
-/*
-				unset($_SESSION['myimg']);	
-				unset($_SESSION['myimg1']);
-				unset($_SESSION['myimg2']);
-				unset($_SESSION['myimg3']);
-				unset($_SESSION['myimg4']);	
-				unset($_SESSION['miseccion']);	
-				unset($_SESSION['miid']);	
-				unset($_SESSION['mivalor']);	
-				unset($_SESSION['minombre']);	
-				unset($_SESSION['miref']);	
-				unset($_SESSION['midyt1']);	
-*/
+	/*
+		unset($_SESSION['myimg']);	
+		unset($_SESSION['myimg1']);
+		unset($_SESSION['myimg2']);
+		unset($_SESSION['myimg3']);
+		unset($_SESSION['myimg4']);	
+		unset($_SESSION['miseccion']);	
+		unset($_SESSION['miid']);	
+		unset($_SESSION['mivalor']);	
+		unset($_SESSION['minombre']);	
+		unset($_SESSION['miref']);	
+		unset($_SESSION['midyt1']);	
+	*/
 				
 	$_SESSION['miseccion'] = $_SESSION['ref'];
 	$_SESSION['miid'] = $_POST['id'];
@@ -394,35 +384,28 @@ $printimg =	"<div id='foto1A' class='img2'>
 				<img src='".$ruta.$myimg4."' /> 
 			</div>";
 			
-	if(($_POST['mimg1'])||($_POST['mimg2'])||($_POST['mimg3'])||($_POST['mimg4'])){
-					global $style;
-					$style = 'margin-top:60px';
+	if((isset($_POST['mimg1']))||(isset($_POST['mimg2']))||(isset($_POST['mimg3']))||(isset($_POST['mimg4']))){
+					global $style; 		$style = 'margin-top:60px';
 					show_form();
-	} elseif($_POST['imagenmodif']){
-					if($form_errors = validate_form()){
-										global $style;
-										$style = 'margin-top:60px';
-										show_form($form_errors);
-											} else {modifica_form();
-													show_form();
-													info();
-																				}
-	}
-	elseif($_POST['cero']){	global $style;
-							$style = 'margin-top:408px';
-							print($printimg);
+	} elseif(isset($_POST['imagenmodif'])){
+			if($form_errors = validate_form()){
+						global $style; 		$style = 'margin-top:60px';
+						show_form($form_errors);
+			} else { modifica_form();
+					 show_form();
+					 info();
+						}
+	} elseif(isset($_POST['cero'])){ 	global $style; 		$style = 'margin-top:408px';
+										print($printimg);
 							
-	} 
-	else {	global $style;
-			$style = 'margin-top:408px';
-			print($printimg);
-								}
-	print("	
-			<tr>
+	} else {	global $style; 		$style = 'margin-top:408px';
+				print($printimg);
+					}
+	print("tr>
 				<div>
 					<td colspan=4 align='center' class='BorderSup'>
 	<form name='closewindow' action='$_SERVER[PHP_SELF]'  onsubmit=\"window.close()\">
-						<input type='submit' value='CERRAR VENTANA' />
+						<input type='submit' value='CERRAR VENTANA' class='botonverde' />
 						<input type='hidden' name='oculto2' value=1 />
 	</form>
 				</div>
@@ -447,48 +430,44 @@ function show_form($errors=[]){
 	
 	global $db; 	
 		
-	global $ruta;
-	$ruta = "../cbj_Docs/docgastos_pendientes/";
+	global $ruta; 		$ruta = "../cbj_Docs/docgastos_pendientes/";
 	$_SESSION['ruta'] = $ruta;
 
-	if($_POST['mimg1']){$_SESSION['myimg'] = $_SESSION['myimg1'];
-						$_SESSION['imgcamp'] = "myimg1";}
-	if($_POST['mimg2']){$_SESSION['myimg'] = $_SESSION['myimg2'];
-						$_SESSION['imgcamp'] = "myimg2";}
-	if($_POST['mimg3']){$_SESSION['myimg'] = $_SESSION['myimg3'];
-						$_SESSION['imgcamp'] = "myimg3";}
-	if($_POST['mimg4']){$_SESSION['myimg'] = $_SESSION['myimg4'];
-						$_SESSION['imgcamp'] = "myimg4";}
+	if(isset($_POST['mimg1'])){	$_SESSION['myimg'] = $_SESSION['myimg1'];
+								$_SESSION['imgcamp'] = "myimg1";}
+	if(isset($_POST['mimg2'])){ $_SESSION['myimg'] = $_SESSION['myimg2'];
+								$_SESSION['imgcamp'] = "myimg2";}
+	if(isset($_POST['mimg3'])){ $_SESSION['myimg'] = $_SESSION['myimg3'];
+								$_SESSION['imgcamp'] = "myimg3";}
+	if(isset($_POST['mimg4'])){	$_SESSION['myimg'] = $_SESSION['myimg4'];
+								$_SESSION['imgcamp'] = "myimg4";}
 
-	if($_POST['oculto2']){
+	if(isset($_POST['oculto2'])){
 				$defaults = array ( 'seccion' => '',
 									'id' => '',
 									'valor' => '',
 									'nombre' => '',
-									'ref' => '',																														
-									'myimg' => '',
-													);
+									'ref' => '',										
+									'myimg' => '');
 								   						}
 								   
-	elseif(($_POST['mimg1'])||($_POST['mimg2'])||($_POST['mimg3'])||($_POST['mimg4'])){
+	elseif((isset($_POST['mimg1']))||(isset($_POST['mimg2']))||(isset($_POST['mimg3']))||(isset($_POST['mimg4']))){
 				$defaults = array ( 'seccion' => $_SESSION['miseccion'],
 									'id' => $_SESSION['miid'],
 									'valor' => $_SESSION['mivalor'],
 									'nombre' => $_SESSION['minombre'],
-									'ref' => $_SESSION['miref'],																														
-									'myimg' => $_SESSION['myimg'],
-													);
-														}
+									'ref' => $_SESSION['miref'],									
+									'myimg' => $_SESSION['myimg']);
+								}
 
-	elseif($_POST['imagenmodif']){
+	elseif(isset($_POST['imagenmodif'])){
 				$defaults = array ( 'seccion' => $_SESSION['miseccion'],
 									'id' => $_SESSION['miid'],
 									'valor' => $_SESSION['mivalor'],
 									'nombre' => $_SESSION['minombre'],
-									'ref' => $_SESSION['miref'],																														
-									'myimg' => $_SESSION['myimg'],
-													);
-														}
+									'ref' => $_SESSION['miref'],									
+									'myimg' => $_SESSION['myimg']);
+								}
 
 	if ($errors){
 		print("	<div width='90%' style='float:left'>

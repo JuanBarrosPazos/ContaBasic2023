@@ -11,27 +11,21 @@ session_start();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
-					master_index();
+		master_index();
 
-			if ($_POST['oculto2']){	show_form();
-									info_01();
-					}
-						elseif($_POST['oculto']){
-							
-								if($form_errors = validate_form()){
-									show_form($form_errors);
-										} else {
-											process_form();
-											info_02();
-											}
-							
-							} else {
-										show_form();
+		if (isset($_POST['oculto2'])){	show_form();
+										info_01();
+		} elseif(isset($_POST['oculto'])){
+					if($form_errors = validate_form()){
+							show_form($form_errors);
+					} else { process_form();
+							 info_02();
 								}
-				}
-					else { require '../Inclu/table_permisos.php'; } 
+		} else { show_form(); }
+	
+	} else { require '../Inclu/table_permisos.php'; } 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -71,7 +65,7 @@ function validate_form(){
 
 ////////////////
 
-	elseif($_POST['oculto']){
+	elseif(isset($_POST['oculto'])){
 
 		global $db; 		global $db_name;
 	
@@ -159,28 +153,23 @@ function process_form(){
 
 function show_form($errors=[]){
 	
-	global $db;
-	global $db_name;
+	global $db; 		global $db_name;
 	
-	if($_POST['oculto2']){$_SESSION['idx'] = $_POST['id'];
+	if(isset($_POST['oculto2'])){$_SESSION['idx'] = $_POST['id'];
 	
-							$ret = strlen(trim($_POST['ret']));
-							$ret = $ret - 3;
-							$retx = $_POST['ret'];
-							$ret1 = substr($_POST['ret'],0,$ret);
-							$ret2 = substr($_POST['ret'],-2,2);
+			$ret = strlen(trim($_POST['ret']));
+			$ret = $ret - 3;
+			$retx = $_POST['ret'];
+			$ret1 = substr($_POST['ret'],0,$ret);
+			$ret2 = substr($_POST['ret'],-2,2);
 
-							$defaults = array (	'ret1' => $ret1,	
-												'ret2' => $ret2,	
-															);
-						}
-	elseif($_POST['oculto']){
+			$defaults = array (	'ret1' => $ret1,	
+								'ret2' => $ret2);
+	} elseif(isset($_POST['oculto'])){
 		$defaults = $_POST;
-		} else {
-				$defaults = array (	'ret1' => $_POST['ret1'],	
-									'ret2' => $_POST['ret2'],	
-													);
-							   		}
+	} else { $defaults = array ( 'ret1' => $_POST['ret1'],	
+								 'ret2' => $_POST['ret2']);
+						}
 
 	if ($errors){
 		print("	<div width='90%' style='float:left'>

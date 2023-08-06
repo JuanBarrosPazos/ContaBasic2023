@@ -122,15 +122,15 @@ if($rowb['iva'] != 0.00){
 
 function info(){
 
-	global $db;
-	global $rowout;
-	global $nombre;
-	global $apellido;
+	global $db; 		global $rowout;
+	global $nombre; 	global $apellido;
+	
 	global $orden;
-	
-	$orden = $_POST['Orden'];
-	
-	if ($_POST['todo']){$nombre = "TODOS LOS IMPUESTOS ".$orden;};	
+	if(isset($_POST['Orden'])){
+		$orden = $_POST['Orden'];
+	}else{ $orden = '`id` ASC'; }
+
+	if(isset($_POST['todo'])){$nombre = "TODOS LOS IMPUESTOS ".$orden;};	
 
 	$ActionTime = date('H:i:s');
 

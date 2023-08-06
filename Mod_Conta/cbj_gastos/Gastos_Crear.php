@@ -459,7 +459,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 ////////////////////
 	
 
-if ($_POST['dy'] != ''){
+	if($_POST['dy'] != ''){
 	
 	global $db; 	global $db_name;
 
@@ -605,19 +605,17 @@ if ($_POST['dy'] != ''){
 
 function process_form(){
 	
-	global $db;
-	global $db_name;	
-	global $dyt1;
-	global $dm1;
+	global $db; 		global $db_name;	
+	global $dyt1; 		global $dm1;
 
-	if ($_POST['dy'] == ''){ $dy1 = '';
+	if($_POST['dy'] == ''){ $dy1 = '';
 							 $dyt1 = date('Y');	} else {$dy1 = $_POST['dy'];
 														$dy1 = $dy1;
 														$dyt1 = "20".$_POST['dy'];
 																		}
-	if ($_POST['dm'] == ''){ $dm1 = '';} else {$dm1 = $_POST['dm'];
+	if($_POST['dm'] == ''){ $dm1 = '';} else {$dm1 = $_POST['dm'];
 												$dm1 = "/".$dm1."/";}
-	if ($_POST['dd'] == ''){ $dd1 = '';} else {$dd1 = $_POST['dd'];
+	if($_POST['dd'] == ''){ $dd1 = '';} else {$dd1 = $_POST['dd'];
 												$dd1 = $dd1;}
 
 	global $factdate;
@@ -646,7 +644,7 @@ function process_form(){
 	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
 
 	global $iniy; 		$iniy = substr(date('Y'),0,2);
-	
+	 
 	$tabla = "<table style='text-align:center; margin-top:10px; width: 450px;' >
 				<tr>
 					<th colspan=4 class='BorderInf'>
@@ -858,31 +856,29 @@ function process_form(){
 			
 		/////////////
 	
-	global $dyx;
-	$dyx = "20".$_POST['dy'];
-	global $dmx;
-	$dmx = "M".$_POST['dm'];
+	global $dyx; 	$dyx = "20".$_POST['dy'];
+	global $dmx; 	$dmx = "M".$_POST['dm'];
 /*
 	if(($dmx != 10)||($dmx != 11)||($dmx != 12)){
 	$dmx = substr($_POST['dm'],-1);
 		}
 */
-	global $vnamebalg;
+	global $vnamebalg; 		$vnamebalg = "`".$_SESSION['clave']."balanceg`";
 	global $vnamebali; 		$vnamebali = "`".$_SESSION['clave']."balancei`";
-	$sqlbali =  "SELECT * FROM `$db_name`.$vnamebali WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
-	$qbali = mysqli_query($db, $sqlbali);
-	$countbali = mysqli_num_rows($qbali);
-	$rowbali = mysqli_fetch_assoc($qbali);
+	$sqlbalg =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
+	$qbalg = mysqli_query($db, $sqlbalg);
+	$countbali = mysqli_num_rows($qbalg);
+	$rowbalg = mysqli_fetch_assoc($qbalg);
 	
-	$sumamesiva = $rowbali['iva'] + $factivae;	
-	$sumamespvp = $rowbali['sub'] + $factpvp;	
-	$sumamesret = $rowbali['ret'] + $factrete;	
-	$sumamestot = $rowbali['tot'] + $factpvptot;	
+	$sumamesiva = $rowbalg['iva'] + $factivae;	
+	$sumamespvp = $rowbalg['sub'] + $factpvp;	
+	$sumamesret = $rowbalg['ret'] + $factrete;	
+	$sumamestot = $rowbalg['tot'] + $factpvptot;	
 
 	//print("* ".$dyt1." ".$dm1.".</br>");
 	//print("* ".$sumamesiva." ".$sumamespvp." ".$sumamestot.".</br>");
 
-	$sqlbi = "UPDATE `$db_name`.$vnamebali  SET `iva` = '$sumamesiva', `sub` = '$sumamespvp', `ret` = '$sumamesret', `tot` =  '$sumamestot' WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
+	$sqlbi = "UPDATE `$db_name`.$vnamebalg  SET `iva` = '$sumamesiva', `sub` = '$sumamespvp', `ret` = '$sumamesret', `tot` =  '$sumamestot' WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
 		
 		if(mysqli_query($db, $sqlbi)){ //print("**"); 
 					} else {
@@ -893,19 +889,19 @@ function process_form(){
 
 		/////////////
 	
-	$sqlbali2 =  "SELECT * FROM `$db_name`.$vnamebali WHERE `year` = '$dyx' AND `mes` = 'ANU' ";
-	$qbali2 = mysqli_query($db, $sqlbali2);
-	$countbali2 = mysqli_num_rows($qbali2);
-	$rowbali2 = mysqli_fetch_assoc($qbali2);
+	$sqlbalg2 =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = 'ANU' ";
+	$qbalg2 = mysqli_query($db, $sqlbalg2);
+	$countbalg2 = mysqli_num_rows($qbalg2);
+	$rowbalg2 = mysqli_fetch_assoc($qbalg2);
 
-	$sumayeariva = $rowbali2['iva'] + $factivae;	
-	$sumayearpvp = $rowbali2['sub'] + $factpvp;	
-	$sumayearret = $rowbali2['ret'] + $factrete;	
-	$sumayeartot = $rowbali2['tot'] + $factpvptot;	
+	$sumayeariva = $rowbalg2['iva'] + $factivae;	
+	$sumayearpvp = $rowbalg2['sub'] + $factpvp;	
+	$sumayearret = $rowbalg2['ret'] + $factrete;	
+	$sumayeartot = $rowbalg2['tot'] + $factpvptot;	
 
 	//print("* ".$sumayeariva." ".$sumayearpvp." ".$sumayeartot.".</br>");
 
-	$sqlbg2 = "UPDATE `$db_name`.$vnamebali  SET `iva` = '$sumayeariva', `sub` = '$sumayearpvp', `ret` = '$sumayearret', `tot` =  '$sumayeartot' WHERE `year` = '$dyx' AND `mes` = 'ANU' ";
+	$sqlbg2 = "UPDATE `$db_name`.$vnamebalg  SET `iva` = '$sumayeariva', `sub` = '$sumayearpvp', `ret` = '$sumayearret', `tot` =  '$sumayeartot' WHERE `year` = '$dyx' AND `mes` = 'ANU' ";
 		
 		if(mysqli_query($db, $sqlbg2)){ //print("**"); 
 					} else {
@@ -922,19 +918,19 @@ function process_form(){
 	elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
 	elseif(($dmx == "10")||($dmx == "11")||($dmx == "12")){$mes = "TRI4";}
 	
-	$sqlbali3 =  "SELECT * FROM `$db_name`.$vnamebali WHERE `year` = '$dyx' AND `mes` = '$mes' ";
-	$qbali3 = mysqli_query($db, $sqlbali3);
-	$countbali3 = mysqli_num_rows($qbali3);
-	$rowbali3 = mysqli_fetch_assoc($qbali3);
+	$sqlbalg3 =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = '$mes' ";
+	$qbalg3 = mysqli_query($db, $sqlbalg3);
+	$countbalg3 = mysqli_num_rows($qbalg3);
+	$rowbalg3 = mysqli_fetch_assoc($qbalg3);
 
-	$sumatriiva = $rowbali3['iva'] + $factivae;	
-	$sumatripvp = $rowbali3['sub'] + $factpvp;	
-	$sumatriret = $rowbali3['ret'] + $factrete;	
-	$sumatritot = $rowbali3['tot'] + $factpvptot;	
+	$sumatriiva = $rowbalg3['iva'] + $factivae;	
+	$sumatripvp = $rowbalg3['sub'] + $factpvp;	
+	$sumatriret = $rowbalg3['ret'] + $factrete;	
+	$sumatritot = $rowbalg3['tot'] + $factpvptot;	
 
 	//print("* ".$sumatriiva." ".$sumatripvp." ".$sumatritot.".</br>");
 
-	$sqlbg3 = "UPDATE `$db_name`.$vnamebali  SET `iva` = '$sumatriiva', `sub` = '$sumatripvp',`ret` = '$sumatriret', `tot` =  '$sumatritot' WHERE `year` = '$dyx' AND `mes` = '$mes' ";
+	$sqlbg3 = "UPDATE `$db_name`.$vnamebalg  SET `iva` = '$sumatriiva', `sub` = '$sumatripvp',`ret` = '$sumatriret', `tot` =  '$sumatritot' WHERE `year` = '$dyx' AND `mes` = '$mes' ";
 		
 		if(mysqli_query($db, $sqlbg3)){ //print("**"); 
 					} else {
@@ -1127,7 +1123,7 @@ function show_form($errors=[]){
 									</tr>
 								</table>");
 												}	
-	if ($_POST['proveegastos'] != '') {
+	if($_POST['proveegastos'] != '') {
 	print("
 			<table align='center' style=\"margin-top:10px\">
 				<tr>

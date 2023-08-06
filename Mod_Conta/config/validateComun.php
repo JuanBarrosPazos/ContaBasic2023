@@ -56,17 +56,17 @@
 		$errors [] = "NUMERO DNI/NIF: YA EXISTE";
 		}
 		
-	elseif ($_POST['doc'] == 'DNI') {
+	elseif($_POST['doc'] == 'DNI') {
 
 		if(strlen(trim($_POST['dni'])) == 0){
 		$errors [] = "NUMERO DNI/NIF: CAMPO OBLIGATORIO";
 		}
 
-	elseif (!preg_match('/^[\d]+$/',$_POST['dni'])){
+	elseif(!preg_match('/^[\d]+$/',$_POST['dni'])){
 		$errors [] = "NUMERO DNI/NIF: SOLO NUMEROS";
 		}
 
-	elseif (strlen(trim($_POST['dni'])) < 8){
+	elseif(strlen(trim($_POST['dni'])) < 8){
 		$errors [] = "NUMERO DNI/NIF: MAS DE 7 CARACTERES";
 		}
 
@@ -105,135 +105,135 @@
 	
 	/* SE VALIDAN LAS LETRAS DEL CAMPO NUMERO NIE/NIF */	
 		
-	elseif ($_POST['doc'] == 'NIE') {
+	elseif($_POST['doc'] == 'NIE') {
 		
 		if (preg_match('/^[^XYZ]+$/',$_POST['dni'])){	// SOLO SE ADMINTE XYZ //
 		$errors [] = "NUMERO NIE/NIF: LETRA INVALIDA SOLO X,Y,Z.";
 		}
 			}
 					
-	elseif ($_POST['doc'] == 'NIFespecial') {	// SOLO SE ADMINTE KLM //
+	elseif($_POST['doc'] == 'NIFespecial') {	// SOLO SE ADMINTE KLM //
 		
-		if (preg_match('/^[^KLM]+$/',$_POST['dni'])){
+		if(preg_match('/^[^KLM]+$/',$_POST['dni'])){
 	$errors [] = "NUMERO NIF ESPECIAL LETRA INVALIDA SOLO K,L,M.";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFsa') {	// SOLO SE ADMITE A //
+	elseif($_POST['doc'] == 'NIFsa') {	// SOLO SE ADMITE A //
 		
-		if (preg_match('/^[^A]+$/',$_POST['dni'])){
+		if(preg_match('/^[^A]+$/',$_POST['dni'])){
 	$errors [] = "NUMERO NIF SOCIEDAD ANONIMA: LETRA INVALIDA SOLO A.  ";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFsrl') {	// SOLO SE ADMITE B //
+	elseif($_POST['doc'] == 'NIFsrl') {	// SOLO SE ADMITE B //
 		
-		if (preg_match('/^[^B]+$/',$_POST['dni'])){
+		if(preg_match('/^[^B]+$/',$_POST['dni'])){
 	$errors [] = "NUMERO NIF SOCIEDAD RESPONSABILIDAD LIMITADA: LETRA INVALIDA SOLO B.";
 		}
 			}
 		
-	elseif ($_POST['doc'] == 'NIFscol') {	// SOLO SE ADMITE C //
+	elseif($_POST['doc'] == 'NIFscol') {	// SOLO SE ADMITE C //
 		
 		if (preg_match('/^[^C]+$/',$_POST['dni'])){
 	$errors [] = "NUMERO NIF SOCIEDAD COLECTIVA: LETRA INVALIDA SOLO C.";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFscom') {	// SOLO SE ADMITE D //
+	elseif($_POST['doc'] == 'NIFscom') {	// SOLO SE ADMITE D //
 		
-		if (preg_match('/^[^D]+$/',$_POST['dni'])){
+		if(preg_match('/^[^D]+$/',$_POST['dni'])){
 	$errors [] = "NUMERO NIF SOCIEDAD COMANDITARIA: LETRA INVALIDA SOLO D.";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFcbhy') {	// SOLO SE ADMITE E //
+	elseif($_POST['doc'] == 'NIFcbhy') {	// SOLO SE ADMITE E //
 		
-		if (preg_match('/^[^E]+$/',$_POST['dni'])){
+		if(preg_match('/^[^E]+$/',$_POST['dni'])){
 	$errors [] = "NUMERO NIF COMUNIDAD BIENES Y HERENCIAS YACENTES: LETRA INVALIDA SOLO E.";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFscoop') {	// SOLO SE ADMITE F //
+	elseif($_POST['doc'] == 'NIFscoop') {	// SOLO SE ADMITE F //
 		
-		if (preg_match('/^[^F]+$/',$_POST['dni'])){
+		if(preg_match('/^[^F]+$/',$_POST['dni'])){
 	$errors [] = "NUMERO NIF SOCIEDAD COOPERATIVA: LETRA INVALIDA SOLO F.";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFasoc') {	// SOLO SE ADMITE G //
+	elseif($_POST['doc'] == 'NIFasoc') {	// SOLO SE ADMITE G //
 		
-		if (preg_match('/^[^G]+$/',$_POST['dni'])){
+		if(preg_match('/^[^G]+$/',$_POST['dni'])){
 	$errors [] = "NUMERO NIF ASOCIACIONES: LETRA INVALIDA SOLO G.";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFcpph') {	// SOLO SE ADMITE H //
+	elseif($_POST['doc'] == 'NIFcpph') {	// SOLO SE ADMITE H //
 		
 		if (preg_match('/^[^H]+$/',$_POST['dni'])){
 	$errors [] = "NUMERO NIF COMUNIDAD PROPIETARIOS PROPIEDAD HORIZONTAL: LETRA INVALIDA SOLO H.";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFsccspj') {	// SOLO SE ADMITE J //
+	elseif($_POST['doc'] == 'NIFsccspj') {	// SOLO SE ADMITE J //
 		
-		if (preg_match('/^[^J]+$/',$_POST['dni'])){
+		if(preg_match('/^[^J]+$/',$_POST['dni'])){
 	$errors [] = "NUMERO NIF SOCIEDAD CIVIL CON O SIN PERSONALIDAD JURIDICA: LETRA INVALIDA SOLO J.";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFee') {	// SOLO SE ADMITE N //
+	elseif($_POST['doc'] == 'NIFee') {	// SOLO SE ADMITE N //
 		
-		if (preg_match('/^[^N]+$/',$_POST['dni'])){
+		if(preg_match('/^[^N]+$/',$_POST['dni'])){
 		$errors [] = "NUMERO NIF ENTIDAD EXTRANJERA: LETRA INVALIDA SOLO N.";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFcl') {	// SOLO SE ADMITE P //
+	elseif($_POST['doc'] == 'NIFcl') {	// SOLO SE ADMITE P //
 		
-		if (preg_match('/^[^P]+$/',$_POST['dni'])){
+		if(preg_match('/^[^P]+$/',$_POST['dni'])){
 		$errors [] = "NUMERO NIF CORPORACION LOCAL: LETRA INVALIDA SOLO P.";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFop') {	// SOLO SE ADMITE Q //
+	elseif($_POST['doc'] == 'NIFop') {	// SOLO SE ADMITE Q //
 		
-		if (preg_match('/^[^Q]+$/',$_POST['dni'])){
+		if(preg_match('/^[^Q]+$/',$_POST['dni'])){
 		$errors [] = "NUMERO NIF ORGANISMO PUBLICO: LETRA INVALIDA SOLO Q.";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFcir') {	// SOLO SE ADMITE R //
+	elseif($_POST['doc'] == 'NIFcir') {	// SOLO SE ADMITE R //
 		
-		if (preg_match('/^[^R]+$/',$_POST['dni'])){
+		if(preg_match('/^[^R]+$/',$_POST['dni'])){
 		$errors [] = "NUMERO NIF CONGRAGACIONES INSTITUCIONES RELIGIOSAS: LETRA INVALIDA SOLO R.";
 		}
 			}
 			
-	elseif ($_POST['doc'] == 'NIFoaeca') {	// SOLO SE ADMITE S //
+	elseif($_POST['doc'] == 'NIFoaeca') {	// SOLO SE ADMITE S //
 		
-		if (preg_match('/^[^S]+$/',$_POST['dni'])){
+		if(preg_match('/^[^S]+$/',$_POST['dni'])){
 		$errors [] = "NUMERO NIF ORGANISMOS ADMIN ESTADO Y COMUNIDADES AUTONOMAS: LETRA INVALIDA SOLO S.";
 		}
 			}
 		
-	elseif ($_POST['doc'] == 'NIFute') {	// SOLO SE ADMITE U //
+	elseif($_POST['doc'] == 'NIFute') {	// SOLO SE ADMITE U //
 		
-		if (preg_match('/^[^U]+$/',$_POST['dni'])){
+		if(preg_match('/^[^U]+$/',$_POST['dni'])){
 		$errors [] = "NUMERO NIF UNION TEMPORAL DE EMPRESAS: LETRA INVALIDA SOLO U.";
 		}
 			}
 		
-	elseif ($_POST['doc'] == 'NIFotnd') {	// SOLO SE ADMITE V //
+	elseif($_POST['doc'] == 'NIFotnd') {	// SOLO SE ADMITE V //
 		
 		if (preg_match('/^[^V]+$/',$_POST['dni'])){
 		$errors [] = "NUMERO NIF OTROS TIPOS NO DEFINIDOS: LETRA INVALIDA SOLO V.";
 		}
 			}
 		
-	elseif ($_POST['doc'] == 'NIFepenr') {	// SOLO SE ADMITE W //
+	elseif($_POST['doc'] == 'NIFepenr') {	// SOLO SE ADMITE W //
 		
-		if (preg_match('/^[^W]+$/',$_POST['dni'])){
+		if(preg_match('/^[^W]+$/',$_POST['dni'])){
 		$errors [] = "NUMERO NIF ESTABLECIMIENTOS PERMANENTES ENTIDADES NO RESIDENTES: LETRA INVALIDA SOLO W.";
 		}
 			}
@@ -255,7 +255,7 @@
 	
 			/* FIN DEL ALGORITMO DE DEFINICION DEL LA LETRA CONTROL DEL DNI */
 	
-	if ($_POST['doc'] == 'DNI') {
+	if($_POST['doc'] == 'DNI') {
 		
 		if(strlen(trim($_POST['ldni'])) == 0){
 		$errors [] = "LETRA DNI: CAMPO OBLIGATORIO";
@@ -408,7 +408,7 @@
 		
 		/* CONDICIONAL PARA VALIDAR LA LETRA CONTROL DEL NIE/NIF NORMAL*/
 		
-	elseif ($_POST['doc'] == 'NIE') {
+	elseif($_POST['doc'] == 'NIE') {
 		
 		if (trim($_POST['ldni'] != $letra2)){
 	$errors [] = "LETRA CONTROL NIE EXTRANJEROS: LETRA NO CORRECTA";

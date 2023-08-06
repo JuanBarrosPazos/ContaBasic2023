@@ -310,3 +310,32 @@ a:hover  img {
 	top: 235px;
 }
 
+/* INICIO BOTONES */
+.botonverde {
+	background-color: #90faf5;
+}
+.botonnaranja {
+	background-color: #fdc97a;
+}
+.botonrojo {
+	background-color: #ff4d4d;
+}
+.botonazul {
+	background-color: #dd92fd;
+}
+
+.botonverde, .botonnaranja, .botonrojo, .botonazul, select {
+	cursor: pointer;
+	border: none;
+	vertical-align: text-bottom;
+	margin: 2px;
+	padding: 5px 5px 3px 5px !important;
+	border-radius: 4px;
+	font-weight: bold;
+	color: #343434 !important;
+}
+.botonverde:hover, .botonnaranja:hover, .botonrojo:hover, .botonazul:hover {
+	background-color: #f8b147;
+}
+/* FIN BOTONES */
+

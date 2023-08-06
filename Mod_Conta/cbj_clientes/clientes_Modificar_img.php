@@ -13,26 +13,19 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-		if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
  		//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".</br>");
 				
-							if ($_POST['oculto2']){
-								show_form();
-								}
-							elseif($_POST['imagenmodif']){
-								
-									if($form_errors = validate_form()){
+		if (isset($_POST['oculto2'])){ show_form();
+		} elseif(isset($_POST['imagenmodif'])){
+				if($form_errors = validate_form()){
 										show_form($form_errors);
-											} else {
-												process_form();
-												info();
-												}
-								
-								} else {
-											show_form();
-										}
-		} else { require '../Inclu/table_permisos.php'; }
+				} else { process_form();
+						 info();
+							}
+		} else { show_form(); }
+	} else { require '../Inclu/table_permisos.php'; }
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -240,7 +233,7 @@ function process_form(){
 				<tr>
 					<td colspan=3 align='right' class='BorderSup'>
 	<form name='closewindow' action='$_SERVER[PHP_SELF]'  onsubmit=\"window.close()\">
-											<input type='submit' value='CERRAR VENTANA' />
+											<input type='submit' value='CERRAR VENTANA' class='botonverde' />
 											<input type='hidden' name='oculto2' value=1 />
 			</form>
 					</td>
@@ -272,43 +265,41 @@ function process_form(){
 
 function show_form($errors=[]){
 	
-global $dt;
-global $db; 	
+	global $dt; 	global $db; 	
 	
 	$_SESSION['myimgx'] = $_POST['myimg'];
 	$_SESSION['refx'] = $_POST['ref'];
 	$_SESSION['idx'] = $_POST['id'];
 	$_SESSION['dniold'] = $_POST['dni'];
 
-	global $sesionref;
-	$sesionref = $_SESSION['ref'];
+	global $sesionref; 	$sesionref = $_SESSION['ref'];
 
-	if($_POST['oculto2']){
-				$defaults = array ( 'rsocial' => $_POST['rsocial'],
-									'myimg' => $_POST['myimg'],	
-									'ref' => $_POST['ref'],
-									'doc' => $_POST['doc'],
-									'dni' => $_POST['dni'],
-									'ldni' => $_POST['ldni'],
-									'Email' => $_POST['Email'],
-									'Direccion' => $_POST['Direccion'],
-									'Tlf1' => $_POST['Tlf1'],
-									'Tlf2' => $_POST['Tlf2']);
-								   								}
+	if(isset($_POST['oculto2'])){
+			$defaults = array ( 'rsocial' => $_POST['rsocial'],
+								'myimg' => $_POST['myimg'],	
+								'ref' => $_POST['ref'],
+								'doc' => $_POST['doc'],
+								'dni' => $_POST['dni'],
+								'ldni' => $_POST['ldni'],
+								'Email' => $_POST['Email'],
+								'Direccion' => $_POST['Direccion'],
+								'Tlf1' => $_POST['Tlf1'],
+								'Tlf2' => $_POST['Tlf2']);
+							   								}
 								   
-		elseif($_POST['imagenmodif']){
-				global $img2;
-				$defaults = array ( 'rsocial' => $_POST['rsocial'],
-									'myimg' => $_POST['myimg'],	
-									'ref' => $_POST['ref'],
-									'doc' => $_POST['doc'],
-									'dni' => $_POST['dni'],
-									'ldni' => $_POST['ldni'],
-									'Email' => $_POST['Email'],
-									'Direccion' => $_POST['Direccion'],
-									'Tlf1' => $_POST['Tlf1'],
-									'Tlf2' => $_POST['Tlf2']);
-								   								}
+	elseif(isset($_POST['imagenmodif'])){
+			global $img2;
+			$defaults = array ( 'rsocial' => $_POST['rsocial'],
+								'myimg' => $_POST['myimg'],	
+								'ref' => $_POST['ref'],
+								'doc' => $_POST['doc'],
+								'dni' => $_POST['dni'],
+								'ldni' => $_POST['ldni'],
+								'Email' => $_POST['Email'],
+								'Direccion' => $_POST['Direccion'],
+								'Tlf1' => $_POST['Tlf1'],
+								'Tlf2' => $_POST['Tlf2']);
+							   								}
 	
 	if ($errors){
 		print("	<div width='90%' style='float:left'>
@@ -400,7 +391,7 @@ global $db;
 					</td>
 					<td align='right' class='BorderSup'>
 	<form name='closewindow' action='$_SERVER[PHP_SELF]'  onsubmit=\"window.close()\">
-											<input type='submit' value='CERRAR VENTANA' />
+											<input type='submit' value='CERRAR VENTANA' class='botonverde' />
 											<input type='hidden' name='oculto2' value=1 />
 			</form>
 					</td>

@@ -171,7 +171,7 @@ function process_form(){
 						<tr>
 							<td colspan=3 align='right' class='BorderSup'>
 					<form name='closewindow' action='$_SERVER[PHP_SELF]'  onsubmit=\"window.close()\">
-							<input type='submit' value='CERRAR VENTANA' />
+							<input type='submit' value='CERRAR VENTANA' class='botonverde' />
 							<input type='hidden' name='oculto2' value=1 />
 					</form>
 							</td>
@@ -209,7 +209,7 @@ function show_form($errors=[]){
 			$_SESSION['refx'] = $_POST['ref'];
 			$_SESSION['idx'] = $_POST['id'];
 			$_SESSION['dniold'] = $_POST['dni'];
-			echo $_SESSION['OldImg']."--**--<br>";
+			//echo $_SESSION['OldImg']."--**--<br>";
 
 			$defaults = array ( 'id' => $_POST['id'],
 								'rsocial' => $_POST['rsocial'],
@@ -227,9 +227,9 @@ function show_form($errors=[]){
 				global $OldImg;
 			if(!isset($_POST['myimg'])){ 
 				$OldImg = $_SESSION['myimgx'];
-				echo $OldImg."1**--**<br>";
+				//echo $OldImg."1**--**<br>";
 			}else{ $OldImg = $_POST['myimg']; 
-				echo $OldImg."2**--**<br>";
+				//echo $OldImg."2**--**<br>";
 			}
 			
 			$defaults = array ( 'id' => $_POST['id'],
@@ -310,7 +310,7 @@ function show_form($errors=[]){
 					<td class='BorderSup'></td>
 					<td align='right' class='BorderSup'>
 		<form name='closewindow' action='$_SERVER[PHP_SELF]'  onsubmit=\"window.close()\">
-							<input type='submit' value='CERRAR VENTANA' />
+							<input type='submit' value='CERRAR VENTANA' class='botonverde' />
 							<input type='hidden' name='oculto2' value=1 />
 			</form>
 					</td>

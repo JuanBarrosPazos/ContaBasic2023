@@ -21,7 +21,7 @@ session_start();
 		if (isset($_POST['oculto2'])){
 				show_form();
 				info_01();
-		} elseif($_POST['modifica']){
+		} elseif(isset($_POST['modifica'])){
 				if($form_errors = validate_form()){
 						show_form($form_errors);
 				} else { process_form();
@@ -54,7 +54,7 @@ session_start();
 function process_form(){
 	
 	global $db; 		global $db_name;	
-	
+	global $rf1;		global $rf2;
 	if (preg_match('/^(\w{1})/',$_POST['rsocial'],$ref1)){	$rf1 = $ref1[1];
 															$rf1 = trim($rf1);
 																			}
@@ -66,14 +66,6 @@ function process_form(){
 	$rf = trim($rf);
 			
 	global $vname; 			$vname = "`".$_SESSION['clave']."proveedores`";
-	/* TENDRÍA QUE SER MODIFICACION AUTOMATICA CON LA CLAVE FORANEA
-	global $gastos; 		$gastos = "`".$_SESSION['clave']."gastos_".date('Y')."`";
-	global $gastos2; 		$gastos2 = "`".$_SESSION['clave']."gastos_".(date('Y')-1)."`";
-	global $gastos3; 		$gastos3 = "`".$_SESSION['clave']."gastos_".(date('Y')-2)."`";
-	global $gastos4; 		$gastos4 = "`".$_SESSION['clave']."gastos_".(date('Y')-3)."`";
-	global $gastos5; 		$gastos5 = "`".$_SESSION['clave']."gastos_".(date('Y')-4)."`";
-	global $gastos6; 		$gastos6 = "`".$_SESSION['clave']."gastos_pendientes`";
-	*/
 
 	$sqldni =  "SELECT * FROM `$db_name`.$vname WHERE $vname.`dni` = '$_POST[dni]'";
 	$qdni = mysqli_query($db, $sqldni);
@@ -104,14 +96,14 @@ function process_form(){
 	$factnif = $_POST['dni'].$_POST['ldni'];
 	$factnif = trim($factnif);
 
-	if (($rf == $rowdni['ref'])||(@$_POST['ref'] == $rf)){
+	if (($rf == @$rowdni['ref'])||(@$_POST['ref'] == $rf)){
 
-	global $tlf2;
-	if(strlen(trim($_POST['Tlf2'])) == 0){
-		$tlf2 = 0;
-	} else { $tlf2 = $_POST['Tlf2']; }
+		global $tlf2;
+		if(strlen(trim($_POST['Tlf2'])) == 0){
+			$tlf2 = 0;
+		} else { $tlf2 = $_POST['Tlf2']; }
 		
-	$sql = "UPDATE `$db_name`.$vname SET `rsocial` = '$_POST[rsocial]', `Email` = '$_POST[Email]', `Direccion` = '$_POST[Direccion]', `Tlf1` = '$_POST[Tlf1]', `Tlf2` = '$tlf2' WHERE $vname.`id` = '$_POST[id]' LIMIT 1 ";
+		$sql = "UPDATE `$db_name`.$vname SET `rsocial` = '$_POST[rsocial]', `Email` = '$_POST[Email]', `Direccion` = '$_POST[Direccion]', `Tlf1` = '$_POST[Tlf1]', `Tlf2` = '$tlf2' WHERE $vname.`id` = '$_POST[id]' LIMIT 1 ";
 			
 	}else{
 		
@@ -132,66 +124,43 @@ function process_form(){
 
 		$sql = "UPDATE `$db_name`.$vname SET  `ref`= '$rf', `rsocial` = '$_POST[rsocial]', `myimg` = '$new_name', `doc` = '$_POST[doc]', `dni` = '$_POST[dni]', `ldni` = '$_POST[ldni]', `Email` = '$_POST[Email]', `Direccion` = '$_POST[Direccion]', `Tlf1` = '$_POST[Tlf1]', `Tlf2` = '$tlf2' WHERE $vname.`id` = '$_POST[id]' LIMIT 1 ";
 	
-		// $dnif = $_POST['dni'].$_POST['ldni'];
-
-		/* TENDRÍA QUE SER MODIFICACION AUTOMATICA CON LA CLAVE FORANEA
-
-		$sg1 = "UPDATE `$db_name`.$gastos SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $gastos.`factnif` LIKE '$dnif' ";
-
-		if(mysqli_query($db, $sg1)){ //print("* OK");
-					} else {
-					print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
-							global $texerror1;
-							$texerror1 = "\n\t ".mysqli_error($db);
-								}
-								
-		$sg2 = "UPDATE `$db_name`.$gastos2 SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $gastos2.`factnif` LIKE '$dnif' ";
-
-		if(mysqli_query($db, $sg2)){ //print("* OK");
-					} else {
-					print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
-							global $texerror2;
-							$texerror2 = "\n\t ".mysqli_error($db);
-								}
-
-		$sg3 = "UPDATE `$db_name`.$gastos3 SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $gastos3.`factnif` LIKE '$dnif' ";
-
-		if(mysqli_query($db, $sg3)){ //print("* OK");
-					} else {
-					//print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
-							global $texerror3;
-							$texerror3 = "\n\t ".mysqli_error($db);
-								}
-
-		$sg4 = "UPDATE `$db_name`.$gastos4 SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $gastos4.`factnif` LIKE '$dnif' ";
-
-		if(mysqli_query($db, $sg4)){ //print("* OK");
-					} else {
-					//print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
-							global $texerror4;
-							$texerror4 = "\n\t ".mysqli_error($db);
-								}
-
-		$sg5 = "UPDATE `$db_name`.$gastos5 SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $gastos5.`factnif` LIKE '$dnif' ";
-
-		if(mysqli_query($db, $sg5)){ //print("* OK");
-					} else {
-					//print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
-							global $texerror5;
-							$texerror5 = "\n\t ".mysqli_error($db);
-								}
-
-		$sg6 = "UPDATE `$db_name`.$gastos6 SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $gastos6.`factnif` LIKE '$dnif' ";
-
-		if(mysqli_query($db, $sg6)){ //print("* OK");
-					} else {
-					//print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
-							global $texerror6;
-							$texerror6 = "\n\t ".mysqli_error($db);
-								}
-			*/
-		}
+			/* ACTUALIZA EN CASACADA LAS TABLAS GASTOS CON EL NUEVO NIF, RAZON SOCIAL */
+			global $tableName; 			$tableName = "`".$_SESSION['clave']."status`";
+			$a = "SELECT MIN(year) FROM `$db_name`.$tableName ";
+			$ra = mysqli_query($db, $a);
+			$ym = mysqli_fetch_row($ra);
+			global $yearMin;	$yearMin = $ym[0];		//echo $yearMin;
+			global $yearHoy; 	$yearHoy = date('Y'); 	//echo $yearHoy;
+		
+			while($yearMin<=$yearHoy){
+		
+				//echo "* AÑO: ".$yearMin.".<br>";
+				global $tName; 	$tName =  "`".$_SESSION['clave']."gastos_".$yearMin."`";
+				$sg6 = "UPDATE `$db_name`.$tName SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $tName.`factnif` LIKE '$dnif' ";
 	
+				if(mysqli_query($db, $sg6)){ //print("* OK");
+				} else { //print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
+						 global $texerror1;
+						 $texerror1 = "\n\t ".mysqli_error($db);
+							}
+
+				$yearMin++;
+
+			} // FIN WHILE
+
+			global $tableGastPend; 		$tableGastPend = "`".$_SESSION['clave']."gastos_pendientes`";
+			$sg6 = "UPDATE `$db_name`.$tableGastPend SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $tableGastPend.`factnif` LIKE '$dnif' ";
+	
+			if(mysqli_query($db, $sg6)){ //print("* OK");
+			} else { //print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
+					 global $texerror6;
+					 $texerror6 = "\n\t ".mysqli_error($db);
+						}
+
+			/* FIN ACTUALIZA EN CASACADA LAS TABLAS GASTOS CON EL NUEVO NIF, RAZON SOCIAL */
+	
+		} // FIN ELSE
+
 	if(mysqli_query($db, $sql)){
 		
 	//	$fil = "%".$rf."%";
@@ -205,7 +174,7 @@ function process_form(){
 		print("<table align='center' style='margin-top:10px'>
 				<tr>
 					<th colspan=3 class='BorderInf'>
-						HA MODIFICADO EL PROVEEDOR DE GASTOS.
+						HA MODIFICADO EL PROVEEDOR
 					</th>
 				</tr>
 				<tr>
@@ -241,7 +210,7 @@ function process_form(){
 				</tr>
 				<tr>
 					<td colspan='3' align='center'>
-						<a href='proveedores_Modificar_01.php'>VOLVER PROVEEDORES MODIFICAR</a>
+						<a href='proveedores_Ver.php' class='botonverde'>INICIO PROVEEDORES</a>
 					</td>
 				</tr>
 			</table>" );
@@ -279,7 +248,7 @@ function show_form($errors=[]){
 						'Tlf1' => $_POST['Tlf1'],
 						'Tlf2' => $_POST['Tlf2']);
 
-	} elseif($_POST['modifica']){
+	} elseif(isset($_POST['modifica'])){
 			global $img2;
 			$img2 = 'untitled.png';
 
@@ -341,6 +310,8 @@ function show_form($errors=[]){
 						'UNDEFINE' => 'Sin Validación Definida...',
 										);
 	
+	global $rf1;	global $rf2;
+
 	if (preg_match('/^(\w{1})/',$_POST['rsocial'],$ref1)){	$rf1 = $ref1[1];
 															$rf1 = trim($rf1);
 																							}
@@ -353,7 +324,7 @@ function show_form($errors=[]){
 
 	print("<table align='center' style=\"margin-top:10px\">
 				<tr>
-					<th colspan=2 class='BorderInf'>DATOS DEL NUEVO PROVEEDOR</th>
+					<th colspan=2 class='BorderInf'>NUEVOS DATOS DEL PROVEEDOR</th>
 				</tr>
 	<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'  enctype='multipart/form-data'>
 			<input type='hidden' name='id' value='".$defaults['id']."' />
@@ -438,8 +409,8 @@ function show_form($errors=[]){
 					</td>
 				</tr>
 				<tr>
-					<td colspan='2'  align='right' valign='middle'  class='BorderSup'>
-						<input type='submit' value='MODIFICAR DATOS' />
+					<td colspan='2'  align='right' valign='middle'>
+						<input type='submit' value='MODIFICAR DATOS' class='botonazul' />
 						<input type='hidden' name='modifica' value=1 />
 						<input type='hidden' name='v' value='g' />
 					</td>
@@ -447,7 +418,7 @@ function show_form($errors=[]){
 		</form>														
 				<tr>
 					<td colspan='2' align='center'>
-						<a href='proveedores_Modificar_01.php'>VOLVER PROVEEDORES MODIFICAR</a>
+						<a href='proveedores_Ver.php' class='botonverde'>INICIO PROVEEDORES</a>
 					</td>
 				</tr>
 			</table>				

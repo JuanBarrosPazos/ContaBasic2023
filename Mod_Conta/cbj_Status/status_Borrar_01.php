@@ -136,12 +136,15 @@ function ver_todo(){
 
 function info(){
 
-	global $db;
-	global $nombre;
+	global $db; 		
 	
-	$orden = $_POST['Orden'];
+	global $nombre;		$nombre = "STATUS BORRAR EJERCICIOS";	
+
 	
-	$nombre = "STATUS BORRAR EJERCICIOS";	
+	global $orden;
+	if(isset($_POST['Orden'])){
+		$orden = $_POST['Orden'];
+	}else{ $orden = '`id` ASC'; }
 
 	$ActionTime = date('H:i:s');
 

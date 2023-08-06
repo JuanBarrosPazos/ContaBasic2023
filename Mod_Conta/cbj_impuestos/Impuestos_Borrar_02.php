@@ -11,20 +11,17 @@ session_start();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
-					master_index();
+		master_index();
 
-			if ($_POST['oculto2']){	show_form();
-									info_01();
-					}
-					elseif($_POST['oculto']){	process_form();
-												info_02();
-							} else {
-										show_form();
-								}
-				}
-					else { require '../Inclu/table_permisos.php'; } 
+		if (isset($_POST['oculto2'])){	show_form();
+										info_01();
+		} elseif(isset($_POST['oculto'])){	process_form();
+											info_02();
+		} else { show_form(); }
+
+	} else { require '../Inclu/table_permisos.php'; } 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -88,28 +85,25 @@ function process_form(){
 
 function show_form($errors=[]){
 	
-	global $db;
-	global $db_name;
+	global $db; 	global $db_name;
 	
-	if($_POST['oculto2']){$_SESSION['idx'] = $_POST['id'];
+	if(isset($_POST['oculto2'])){
+		$_SESSION['idx'] = $_POST['id'];
 	
-							$iva = strlen(trim($_POST['iva']));
-							$iva = $iva - 3;
-							$ivax = $_POST['iva'];
-							$iva1 = substr($_POST['iva'],0,$iva);
-							$iva2 = substr($_POST['iva'],-2,2);
+		$iva = strlen(trim($_POST['iva']));
+		$iva = $iva - 3;
+		$ivax = $_POST['iva'];
+		$iva1 = substr($_POST['iva'],0,$iva);
+		$iva2 = substr($_POST['iva'],-2,2);
 
-							$defaults = array (	'iva1' => $iva1,	
-												'iva2' => $iva2,	
-															);
+		$defaults = array (	'iva1' => $iva1,	
+							'iva2' => $iva2);
 						}
-	elseif($_POST['oculto']){
+	elseif(isset($_POST['oculto'])){
 		$defaults = $_POST;
-		} else {
-				$defaults = array (	'iva1' => $_POST['iva1'],	
-									'iva2' => $_POST['iva2'],	
-													);
-							   		}
+	} else { $defaults = array ( 'iva1' => $_POST['iva1'],	
+								 'iva2' => $_POST['iva2']);
+						}
 								
 ////////////////////
 

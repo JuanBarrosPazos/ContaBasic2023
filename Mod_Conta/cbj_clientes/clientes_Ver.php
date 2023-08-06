@@ -47,25 +47,27 @@ function process_form(){
 	
 	show_form();
 	
-	if ($_POST['rsocial'] == ''){$rso = 'ññ';}
+	if($_POST['rsocial'] == ''){$rso = 'ññ';}
 	else{$rso = "%".$_POST['rsocial']."%";}
 	global $rsocial;
 	$rsocial = $_POST['rsocial'];
 	
-	if ($_POST['dni'] == ''){$dni = 'ññ';}
+	if($_POST['dni'] == ''){$dni = 'ññ';}
 	else{$dni = $_POST['dni'];}
 	global $dnie;
 	$dnie = $_POST['dni'];
 	
-	if ($_POST['ref'] == ''){$ref = 'ññ';}
+	if($_POST['ref'] == ''){$ref = 'ññ';}
 	else{$ref = $_POST['ref'];}
 	global $refer;
 	$refer = $_POST['ref'];
 	
-	$orden = $_POST['Orden'];
-		
-	global $vname;
-	$vname = "`".$_SESSION['clave']."clientes`";
+	global $orden;
+	if(isset($_POST['Orden'])){
+		$orden = $_POST['Orden'];
+	}else{ $orden = '`id` ASC'; }
+	
+	global $vname; 		$vname = "`".$_SESSION['clave']."clientes`";
 
 	$sqlc =  "SELECT * FROM $vname WHERE `ref` = '$ref' OR `dni` = '$dni' OR `rsocial` LIKE '$rso' ORDER BY $orden ";
  	
@@ -199,9 +201,13 @@ function ver_todo(){
 		
 	global $db;
 
-	global $vname;
-	$vname = "`".$_SESSION['clave']."clientes`";
-	$orden = $_POST['Orden'];
+	global $vname; 		$vname = "`".$_SESSION['clave']."clientes`";
+
+	global $orden;
+	if(isset($_POST['Orden'])){
+		$orden = $_POST['Orden'];
+	}else{ $orden = '`id` ASC'; }
+
 	$sqlb =  "SELECT * FROM $vname ORDER BY $orden ";
 	$qb = mysqli_query($db, $sqlb);
 	
@@ -330,11 +336,13 @@ print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_erro
 function info(){
 
 	global $db;
+	
 	global $orden;
-	
-	$orden = $_POST['Orden'];
-	
-	if ($_POST['todo']){$filtro = "\n\tFiltro => TODOS LOS CLIENTES ".$orden;}
+	if(isset($_POST['Orden'])){
+		$orden = $_POST['Orden'];
+	}else{ $orden = '`id` ASC'; }
+
+	if(isset($_POST['todo'])){$filtro = "\n\tFiltro => TODOS LOS CLIENTES ".$orden;}
 	else{$filtro = "\n\tFiltros: \n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".";}
 
 	$ActionTime = date('H:i:s');

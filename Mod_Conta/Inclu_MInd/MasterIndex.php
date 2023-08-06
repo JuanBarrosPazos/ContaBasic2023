@@ -26,13 +26,8 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
  
 <!-- MENU GASTOS PROVEEDORES -->
 
-  	<li><a href='#' class='MenuBarItemSubmenu'>PROVEEDORES</a>
-		<ul>
-			<li><a href='".$rutaProveedores."proveedores_Ver.php'>PROVEE. CONSULTAR</a></li>  
-			<li><a href='".$rutaProveedores."proveedores_Crear.php'>PROVEE. CREAR</a></li> 
-			<li><a href='".$rutaProveedores."proveedores_Modificar_01.php'>PROVEE. MODIFICAR</a></li>
-			<li><a href='".$rutaProveedores."proveedores_Borrar_01.php'>PROVEE. BORRAR</a></li>
-		</ul>
+  	<li>
+		<a href='".$rutaProveedores."proveedores_Ver.php'>PROVEEDORES</a>
   	</li>
 
 <!-- Fin MENU GASTOS PROVEEDORES -->

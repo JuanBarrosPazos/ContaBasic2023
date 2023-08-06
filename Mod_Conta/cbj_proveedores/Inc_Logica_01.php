@@ -11,6 +11,7 @@
 			} else {process_form();
 					info();
 						}
-	}else { show_form();}
+	}else { show_form();
+			ver_todo();}
 
 ?>

@@ -11,24 +11,19 @@ session_start();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
-					master_index();
+		master_index();
 
-						if($_POST['oculto']){
-							
-								if($form_errors = validate_form()){
-									show_form($form_errors);
-										} else {
-											process_form();
-											info();
-											}
-							
-							} else {
-										show_form();
+		if(isset($_POST['oculto'])){
+					if($form_errors = validate_form()){
+							show_form($form_errors);
+					} else { process_form();
+							 info();
 								}
-				}
-					else { require '../Inclu/table_permisos.php'; } 
+		} else { show_form(); }
+	
+	} else { require '../Inclu/table_permisos.php'; } 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -68,7 +63,7 @@ function validate_form(){
 		
 ////////////////
 
-	elseif($_POST['oculto']){
+	elseif(isset($_POST['oculto'])){
 		
 	global $db; 		global $db_name;
 		
@@ -436,12 +431,10 @@ fclose($log);
 
 function show_form($errors=[]){
 	
-	if($_POST['oculto']){
+	if(isset($_POST['oculto'])){
 						$defaults = $_POST;
-		} else {
-				$defaults = array (	'year' => $_POST['year'],	
-													);
-							   		}
+	} else {$defaults = array (	'year' => $_POST['year']);
+						}
 
 	if ($errors){
 		print("	<div width='90%' style='float:left'>

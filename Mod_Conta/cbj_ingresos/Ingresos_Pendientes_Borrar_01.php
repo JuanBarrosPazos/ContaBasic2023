@@ -9,32 +9,22 @@ session_start();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
-					master_index();
+		master_index();
 
-								if($_POST['todo']){
-										show_form();							
-										ver_todo();
-										info();
-										}
+		if(isset($_POST['todo'])){ 	show_form();							
+									ver_todo();
+									info();
+		} elseif(isset($_POST['show_formcl'])){
+					if($form_errors = validate_form()){
+							show_form($form_errors);
+					} else { process_form();
+							 info();
+								}
+		} else { show_form(); }
 								
-								elseif($_POST['show_formcl']){
-									
-										if($form_errors = validate_form()){
-											show_form($form_errors);
-
-												} else {
-													process_form();
-													info();
-													}
-									}
-									
-								else {
-										show_form();
-										}
-								
-				} else { require '../Inclu/table_permisos.php'; }
+	} else { require '../Inclu/table_permisos.php'; }
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -55,18 +45,17 @@ function validate_form(){
 function process_form(){
 	
 	global $db;
-	
 	show_form();
 
 	global $dyt1;
 	
-	if ($_POST['dy'] == ''){ $dy1 = '';
+	if($_POST['dy'] == ''){ $dy1 = '';
 							 $dyt1 = date('Y');	} else {	$dy1 = $_POST['dy'];
 															$dyt1 = "20".$_POST['dy'];
 																	}
-	if ($_POST['dm'] == ''){ $dm1 = '';} else {	$dm1 = "/".$_POST['dm']."/";
+	if($_POST['dm'] == ''){ $dm1 = '';} else {	$dm1 = "/".$_POST['dm']."/";
 																	}
-	if ($_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];
+	if($_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];
 																	}
 	global $fil;
 	$fil = $dy1."%".$dm1."%".$dd1."%";
@@ -75,22 +64,26 @@ function process_form(){
 													global $fil;
 													$fil = "%".$dy1."/%".$dm1."%/".$dd1."%";
 																					}
-	$orden = $_POST['Orden'];
+
+		global $orden;
+		if(isset($_POST['Orden'])){
+			$orden = $_POST['Orden'];
+		}else{ $orden = '`id` ASC'; }
 	
 	// RAZON SOCIAL
-	if ($_POST['factnom'] == ''){$fnom = 'ññ';}
+	if($_POST['factnom'] == ''){$fnom = 'ññ';}
 	else{$fnom = $_POST['factnom'];}
 	global $factnom;
 	$factnom = $_POST['factnom'];
 	
 	// NIF
-	if ($_POST['factnif'] == ''){$fnif = 'ññ';}
+	if($_POST['factnif'] == ''){$fnif = 'ññ';}
 	else{$fnif = $_POST['factnif'];}
 	global $factnif;
 	$factnif = $_POST['factnif'];
 	
 	// FACTURA Nº
-	if ($_POST['factnum'] == ''){$fnum = 'ññ';}
+	if($_POST['factnum'] == ''){$fnum = 'ññ';}
 	else{$fnum = $_POST['factnum'];}
 	global $factnum; 		$factnum = $_POST['factnum'];
 	
@@ -378,18 +371,16 @@ else{
 
 function show_form($errors=[]){
 	
-	if($_POST['show_formcl']){
-		$defaults = $_POST;
-		}
-	elseif($_POST['todo']){
-		$defaults = $_POST;
-		} else {
-				$defaults = array ('factnom' => '',
-								   'factnif' => '',
-								   'factnum' => '',
-								   'Orden' => isset($ordenar),
-								   						);
-														}
+	if(isset($_POST['show_formcl'])){
+			$defaults = $_POST;
+	} elseif(isset($_POST['todo'])){
+			$defaults = $_POST;
+	} else {
+			$defaults = array ('factnom' => '',
+								'factnif' => '',
+								'factnum' => '',
+								'Orden' => isset($ordenar));
+							}
 
 	$dm = array (	'' => 'MES TODOS',
 					'01' => 'ENERO',
@@ -700,20 +691,22 @@ function show_form($errors=[]){
 
 function ver_todo(){
 		
-	global $db;
-	global $db_name;
+	global $db; 		global $db_name;
 
-	$orden = $_POST['Orden'];
+	global $orden;
+	if(isset($_POST['Orden'])){
+		$orden = $_POST['Orden'];
+	}else{ $orden = '`id` ASC'; }
 
 	global $dyt1;
 	
-	if ($_POST['dy'] == ''){ $dy1 = '';
+	if($_POST['dy'] == ''){ $dy1 = '';
 							 $dyt1 = date('Y');	} else {	$dy1 = $_POST['dy'];
 															$dyt1 = "20".$_POST['dy'];
 																	}
-	if ($_POST['dm'] == ''){ $dm1 = '';} else {	$dm1 = "/".$_POST['dm']."/";
+	if($_POST['dm'] == ''){ $dm1 = '';} else {	$dm1 = "/".$_POST['dm']."/";
 																	}
-	if ($_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];
+	if($_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];
 																	}
 	global $fil;
 	$fil = $dy1."%".$dm1."%".$dd1."%";
@@ -1021,11 +1014,13 @@ function info(){
 	if($_POST['dy'] == ''){ $dy = date('Y');} else{$dy = "20".$_POST['dy'];}
 	
 	global $db;
+	
 	global $orden;
-	
-	$orden = $_POST['Orden'];
-	
-	if ($_POST['todo']){$filtro = "\n\tFiltro => TODOS LOS INGRESOS. ".$orden."\n\tDATE: ".$dy."/".$dm."/".$dd.".";}
+	if(isset($_POST['Orden'])){
+		$orden = $_POST['Orden'];
+	}else{ $orden = '`id` ASC'; }
+
+	if(isset($_POST['todo'])){$filtro = "\n\tFiltro => TODOS LOS INGRESOS. ".$orden."\n\tDATE: ".$dy."/".$dm."/".$dd.".";}
 	else{$filtro = "\n\tFiltro => \n\tDATE: ".$dy."/".$dm."/".$dd.".\n\tR. Social: ".$_POST['factnom'].".\n\tDNI: ".$_POST['factnif'].".\n\tNº FACTURA: ".$_POST['factnum'].".";}
 
 	$ActionTime = date('H:i:s');

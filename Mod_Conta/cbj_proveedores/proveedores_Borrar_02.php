@@ -13,22 +13,20 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
- 			//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
-			master_index();
+		//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
+		master_index();
 
-			if ($_POST['oculto2']){
-					show_form();
-					info_01();
-								}
-						elseif($_POST['borra']){
-										process_form();
-										info_02();
-							} else {
-										show_form();
-									}
-				} else { require '../Inclu/table_permisos.php'; } 
+		if (isset($_POST['oculto2'])){
+								show_form();
+								info_01();
+		} elseif(isset($_POST['borra'])){
+							process_form();
+							info_02();
+			} else { show_form(); }
+
+	} else { require '../Inclu/table_permisos.php'; } 
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -81,7 +79,7 @@ function process_form(){
 				</tr>
 				<tr>
 					<td colspan='3' align='center'>
-						<a href='proveedores_Borrar_01.php'>VOLVER PROVEEDORES BORRAR</a>
+						<a href='proveedores_Ver.php' class='botonverde'>INICIO PROVEEDORES</a>
 					</td>
 				</tr>
 			</table>" );
@@ -235,8 +233,8 @@ function show_form(){
 				</tr>
 				
 				<tr>
-					<td colspan='3'  align='right' valign='middle'  class='BorderSup'>
-						<input type='submit' value='BORRAR DATOS' />
+					<td colspan='3'  align='right' valign='middle' >
+						<input type='submit' value='BORRAR DATOS' class='botonrojo' />
 						<input type='hidden' name='borra' value=1 />
 						
 					</td>
@@ -244,7 +242,7 @@ function show_form(){
 		</form>														
 				<tr>
 					<td colspan='3' align='center'>
-						<a href='proveedores_Borrar_01.php'>VOLVER PROVEEDORES BORRAR</a>
+						<a href='proveedores_Ver.php' class='botonverde'>INICIO PROVEEDORES</a>
 					</td>
 				</tr>
 			</table>"); /* Fin del print */

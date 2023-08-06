@@ -17,11 +17,10 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 	master_index();
 
-	if($_POST['todo']){ show_form();							
-						ver_todo();
-						info();
-						}
-	else {show_form();}
+	if(isset($_POST['todo'])){ show_form();							
+								ver_todo();
+								info();
+	} else {show_form();}
 								
 } else { require '../Inclu/table_permisos.php'; }
 
@@ -145,9 +144,8 @@ function show_form($errors=[]){
 
 	////////
 				
-if($_POST['todo']){
+	if(isset($_POST['todo'])){
 		
-
 	if(($_POST['dy'] == '')||($_POST['dm'] == '')||($_POST['dm'] == "TRI0")){
 
 		print(" <tr>
@@ -208,23 +206,27 @@ function ver_todo(){
 	unset ($_SESSION['G_M_D']);
 */
 
-	global $db;
-	global $db_name;
-	$orden = $_POST['Orden'];
+	global $db; 	global $db_name;
+
+	global $orden;
+	if(isset($_POST['Orden'])){
+		$orden = $_POST['Orden'];
+	}else{ $orden = '`id` ASC'; }
+
 	global $dyt1;
 	
 	if (($_POST['dy'] == '') && ($_POST['dm'] == '')){$dy1 = date('Y');
 													  $dyt1 = date('Y');
 													  $_SESSION['gyear'] = 'XXX';
 	}else{
-		if ($_POST['dy'] == ''){ $dy1 = '';
+		if($_POST['dy'] == ''){ $dy1 = '';
 								 $dyt1 = '';
 								 $_SESSION['gyear'] = 'XXX';
 								} else {$dy1 = $_POST['dy'];
 										$dyt1 = "20".$_POST['dy'];
 										$_SESSION['gyear'] = $_POST['dy'];
 											}
-		if ($_POST['dm'] == ''){ $dmx = '';} else {	$dmx = "/".$_POST['dm']."/";
+		if($_POST['dm'] == ''){ $dmx = '';} else {	$dmx = "/".$_POST['dm']."/";
 														}
 	
 }
@@ -916,7 +918,7 @@ print("</td></tr></table>");
 		///////////////////////////////////////
 
 /*
-	if ($_POST['dy'] == ''){$_SESSION['gyear'] = 'XXX';}
+	if($_POST['dy'] == ''){$_SESSION['gyear'] = 'XXX';}
 	else $_SESSION['gyear'] = $_POST['dy'];
 		
 	if($_POST['dm'] == ''){	$_SESSION['gtime'] = 'M';}
@@ -1111,9 +1113,12 @@ function info(){
 	if($_POST['dy'] == ''){ $dy = "TODOS LOS AÑOS";} else{$dy = "20".$_POST['dy'];}
 	
 	global $db;
-	global $orden;
-	$orden = $_POST['Orden'];
 	
+	global $orden;
+	if(isset($_POST['Orden'])){
+		$orden = $_POST['Orden'];
+	}else{ $orden = '`id` ASC'; }
+
 	require 'gr_01.php';
 	
 	global $titulo1;

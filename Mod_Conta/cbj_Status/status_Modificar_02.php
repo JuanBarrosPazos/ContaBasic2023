@@ -9,21 +9,17 @@ session_start();
 
 ///////////////////////////////////////////////////////////////////////////////////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
-					master_index();
+		master_index();
 
-			if ($_POST['oculto2']){	show_form();
-									info_01();
-					}
-						elseif($_POST['oculto']){
-											process_form();
+		if(isset($_POST['oculto2'])){ show_form();
+									  info_01();
+		} elseif(isset($_POST['oculto'])){ 	process_form();
 											info_02();
-							} else {
-										show_form();
-								}
-				}
-					else { require '../Inclu/table_permisos.php'; } 
+		} else { show_form(); }
+	
+	} else { require '../Inclu/table_permisos.php'; } 
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -187,26 +183,22 @@ function ver_todo(){
 
 function show_form(){
 	
-	global $db;
-	global $db_name;
+	global $db; 		global $db_name;
 	
-	if($_POST['oculto2']){	$defaults = array (	'id' => $_POST['id'],
-												'year' => $_POST['year'],	
-												'ycod' => $_POST['ycod'],	
-												'stat' => $_POST['stat'],
-												'hidden' => $_POST['hidden'],
-															);
-						}
-	elseif($_POST['oculto']){
-		$defaults = $_POST;
-		} else {
+	if(isset($_POST['oculto2'])){	
 				$defaults = array (	'id' => $_POST['id'],
 									'year' => $_POST['year'],	
 									'ycod' => $_POST['ycod'],	
 									'stat' => $_POST['stat'],
-									'hidden' => $_POST['hidden'],	
-													);
-							   		}
+									'hidden' => $_POST['hidden']);
+	} elseif(isset($_POST['oculto'])){
+			$defaults = $_POST;
+	} else { $defaults = array ( 'id' => $_POST['id'],
+								 'year' => $_POST['year'],	
+								 'ycod' => $_POST['ycod'],	
+								 'stat' => $_POST['stat'],
+								 'hidden' => $_POST['hidden']);
+							}
 
 	$stat = array (	'open' => 'STATE OPEN',
 					'close' => 'STATE CLOSE',

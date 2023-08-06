@@ -11,20 +11,15 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-if ($_SESSION['Nivel'] == 'admin'){
+	if ($_SESSION['Nivel'] == 'admin'){
 
-				
-	global $nombre;
-	global $apellido;
-	
-	$nombre = isset($_POST['Nombre']);
-	$apellido = isset($_POST['Apellidos']);
-							
-							if($_POST['oculto2']){	process_form();
-													info();
-								} 
-				}
-					else { require '../Inclu/table_permisos.php'; }
+		global $nombre;		$nombre = isset($_POST['Nombre']);
+		global $apellido;	$apellido = isset($_POST['Apellidos']);
+								
+		if(isset($_POST['oculto2'])){ process_form();
+									info();
+											} 
+	} else { require '../Inclu/table_permisos.php'; }
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -138,7 +133,7 @@ function process_form(){
 				<tr>
 					<td colspan=3 align='right' class='BorderSup'>
 	<form name='closewindow' action='$_SERVER[PHP_SELF]'  onsubmit=\"window.close()\">
-											<input type='submit' value='CERRAR VENTANA' />
+											<input type='submit' value='CERRAR VENTANA' class='botonverde' />
 											<input type='hidden' name='oculto2' value=1 />
 			</form>
 					</td>
