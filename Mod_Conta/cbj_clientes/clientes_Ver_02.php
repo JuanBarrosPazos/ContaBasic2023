@@ -11,14 +11,15 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	if ($_SESSION['Nivel'] == 'admin'){
+if ($_SESSION['Nivel'] == 'admin'){
 
-		global $nombre;		$nombre = isset($_POST['Nombre']);
-		global $apellido;	$apellido = isset($_POST['Apellidos']);
-								
-		if(isset($_POST['oculto2'])){ process_form();
+	global $nombre;		$nombre = isset($_POST['Nombre']);
+	global $apellido;	$apellido = isset($_POST['Apellidos']);
+							
+	if(isset($_POST['oculto2'])){	process_form();
 									info();
-											} 
+										}
+								
 	} else { require '../Inclu/table_permisos.php'; }
 
 				   ////////////////////				   ////////////////////
@@ -29,121 +30,56 @@ function process_form(){
 	
 	global $db;
 	
-	global $nombre;
-	global $apellido;
-	$nombre = isset($_POST['Nombre']);
-	$apellido = isset($_POST['Apellidos']);
-	global $sesionref;
-	$sesionref = $_SESSION['ref'];
+	global $nombre;			$nombre = isset($_POST['Nombre']);
+	global $apellido; 		$apellido = isset($_POST['Apellidos']);
+	global $sesionref; 		$sesionref = $_SESSION['ref'];
 	$sesionref = strtolower($sesionref);
 	
 	print("<table align='center' width=490px>
 				<tr>
-					<th colspan=3  class='BorderInf'>
-						DATOS DEL CLIENTE
-					</th>
+					<th colspan=3  class='BorderInf'>DATOS DEL PROVEEDOR</th>
 				</tr>
-				
 				<tr>
-					<td width=140px>
-						ID
-					</td>
-					<td>"
-						.$_POST['id'].
-					"</td>
+					<td width=140px>ID</td><td>".$_POST['id']."</td>
 					<td rowspan='5' align='center' width='180px'>
-<img src='../cbj_Docs/img_clientes/".$_POST['myimg']."' height='120px' width='90px' />
+		<img src='../cbj_Docs/img_clientes/".$_POST['myimg']."' height='120px' width='90px' />
 					</td>
 				</tr>
-				
 				<tr>
-					<td>
-						REFERENCIA
-					</td>
-					<td>"
-						.$_POST['ref'].
-					"</td>
+					<td>REFERENCIA</td><td>".$_POST['ref']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						RAZON SOCIAL
-					</td>
-					<td>"
-						.$_POST['rsocial'].
-						
-					"</td>
+					<td>RAZON SOCIAL</td><td>".$_POST['rsocial']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						Tipo Documento:
-					</td>
-					<td>"
-						.$_POST['doc'].
-					"</td>
+					<td>Tipo Documento:</td><td>".$_POST['doc']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						N&uacute;mero:
-					</td>
-					<td>"
-						.$_POST['dni']." ".$_POST['ldni'].
-					"</td>
+					<td>N&uacute;mero:</td><td>".$_POST['dni']." ".$_POST['ldni']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						MAIL
-					</td>
-					<td colspan='2'>"
-						.$_POST['Email'].
-					"</td>
+					<td>MAIL</td><td colspan='2'>".$_POST['Email']."</td>
 				</tr>
-				
 				<tr>
-				
-					<td>
-						Direcci&oacute;n:
-					</td>
-					<td colspan='2'>"
-						.$_POST['Direccion'].
-					"</td>
+					<td>Direcci&oacute;n:</td><td colspan='2'>".$_POST['Direccion']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						Tel&eacute;fono 1:
-					</td>
-					<td colspan='2'>"
-						.$_POST['Tlf1'].
-					"</td>
+					<td>Tel&eacute;fono 1:</td><td colspan='2'>".$_POST['Tlf1']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						Tel&eacute;fono 2:
-					</td>
-					<td colspan='2'>"
-						.$_POST['Tlf2'].
-					"</td>
+					<td>Tel&eacute;fono 2:</td><td colspan='2'>".$_POST['Tlf2']."</td>
 				</tr>
-				
 				<tr>
 					<td colspan=3 align='right' class='BorderSup'>
-	<form name='closewindow' action='$_SERVER[PHP_SELF]'  onsubmit=\"window.close()\">
-											<input type='submit' value='CERRAR VENTANA' class='botonverde' />
-											<input type='hidden' name='oculto2' value=1 />
-			</form>
+						<form name='closewindow' action='$_SERVER[PHP_SELF]'  onsubmit=\"window.close()\">
+							<input type='submit' value='CERRAR VENTANA' class='botonverde' />
+							<input type='hidden' name='oculto2' value=1 />
+						</form>
 					</td>
 				</tr>
-								
-			</table>	
-						");
+			</table>");
 
-
-			}
+	} // FIN process_form()
 			
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -173,11 +109,6 @@ function info(){
 
 	}
 
-				   ////////////////////				   ////////////////////
-////////////////////				////////////////////				////////////////////
-				 ////////////////////				  ///////////////////
-	
-	
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////

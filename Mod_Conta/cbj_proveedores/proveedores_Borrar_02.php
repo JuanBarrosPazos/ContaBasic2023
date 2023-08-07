@@ -20,6 +20,7 @@ session_start();
 
 		if (isset($_POST['oculto2'])){
 								show_form();
+								DelTemp();
 								info_01();
 		} elseif(isset($_POST['borra'])){
 							process_form();
@@ -42,40 +43,32 @@ function process_form(){
 					<td>RAZON SOCIAL</td>
 					<td>".$_POST['rsocial']."</td>
 					<td rowspan='4'>
-<img src='../cbj_Docs/img_proveedores/".$_POST['myimg']."' height='120px' width='90px' />
+			<img src='../cbj_Docs/img_proveedores/".$_POST['myimg']."' height='120px' width='90px' />
 					</td>
 				</tr>
 				<tr>
-					<td>DOCUMENTO</td>
-					<td>".$_POST['doc']."</td>
+					<td>DOCUMENTO</td><td>".$_POST['doc']."</td>
 				</tr>				
 				<tr>
-					<td>NUMERO</td>
-					<td>".$_POST['dni']."</td>
+					<td>NUMERO</td><td>".$_POST['dni']."</td>
 				</tr>				
 				<tr>
-					<td>CONTROL</td>
-					<td>".$_POST['ldni']."</td>
+					<td>CONTROL</td><td>".$_POST['ldni']."</td>
 				</tr>				
 				<tr>
-					<td>MAIL</td>
-					<td colspan='2'>".$_POST['Email']."</td>
+					<td>MAIL</td><td colspan='2'>".$_POST['Email']."</td>
 				</tr>
 				<tr>
-					<td>REFERENCIA</td>
-					<td colspan='2'>".$_POST['ref']."</td>
+					<td>REFERENCIA</td><td colspan='2'>".$_POST['ref']."</td>
 				</tr>
 				<tr>
-					<td>PAIS</td>
-					<td colspan='2'>".$_POST['Direccion']."</td>
+					<td>PAIS</td><td colspan='2'>".$_POST['Direccion']."</td>
 				</tr>
 				<tr>
-					<td>TELEFONO 1</td>
-					<td>".$_POST['Tlf1']."</td>
+					<td>TELEFONO 1</td><td>".$_POST['Tlf1']."</td>
 				</tr>
 				<tr>
-					<td>TELEFONO 2</td>
-					<td colspan='2'>".$_POST['Tlf2']."</td>
+					<td>TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
 				</tr>
 				<tr>
 					<td colspan='3' align='center'>
@@ -85,25 +78,54 @@ function process_form(){
 			</table>" );
 
 	global $db; 		global $db_name;	
-	
 	global $vname; 		$vname = "`".$_SESSION['clave']."proveedores`";
-
 	$sql = "DELETE FROM `$db_name`.$vname WHERE $vname.`id` = '$_POST[id]' LIMIT 1 ";
 	
 	if(mysqli_query($db, $sql)){
-		
+
+		$filename = "../cbj_Docs/img_proveedores/".$_POST['myimg'];							
+		$tempfilename = "../cbj_Docs/temp/".$_POST['myimg'];							
+		copy($filename, $tempfilename);
+
 		$destination_file = "../cbj_Docs/img_proveedores/".$_POST['myimg'];
 		if( file_exists($destination_file)){unlink($destination_file);}
 		
-		} else {	print("</br>
-					<font color='#FF0000'>
-					* MODIFIQUE LA ENTRADA 157: </font></br> ".mysqli_error($db))."
-					</br>";
+		} else { print("</br><font color='#FF0000'>
+					* MODIFIQUE LA ENTRADA 157: </font></br> ".mysqli_error($db))."</br>";
 						show_form ();
-						global $texerror;
-						$texerror = "\n\t ".mysqli_error($db);
+						global $texerror; 		$texerror = "\n\t ".mysqli_error($db);
 					}
-			}
+	} // FIN function process_form()
+
+	function DelTemp(){
+
+		//$delTempImg = "../cbj_Docs/temp/".$_POST['myimg'];
+		//if( file_exists($delTempImg)){unlink($delTempImg);}
+
+		global $ruta; 	$ruta ="../cbj_Docs/temp/";
+		//print("RUTA: ".$ruta.".</br>");
+		global $rutag; 	$rutag = "../cbj_Docs/temp/{*}";
+		//print("RUTA G: ".$rutag.".</br>");
+		$directorio = opendir($ruta);
+		global $num; 	$num=count(glob($rutag,GLOB_BRACE));
+
+		if($num > 0){
+
+			$DirTemp = "../cbj_Docs/temp";
+			if(file_exists($DirTemp)){ 
+					$dir1 = $DirTemp."/";
+					$handle1 = opendir($dir1);
+					// BORRA LOS ARCHIVOS DENTRO DEL DIRECTORIO
+					while ($file1 = readdir($handle1)){
+						if (is_file($dir1.$file1)){unlink($dir1.$file1);}
+									}
+						//rmdir ($DirTemp); // BORRA EL DIRECTORIO
+			} else {}
+			
+		}else{ }
+	
+	} // FIN function DelTemp()
+
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -116,127 +138,77 @@ function show_form(){
 	print("
 			<table align='center' style=\"margin-top:10px\">
 				<tr>
-					<th colspan=3 class='BorderInf'>
-
-							BORRARÁ EL PROVEEDOR
-					</th>
+					<th colspan=3 class='BorderInf'>BORRARÁ EL PROVEEDOR</th>
 				</tr>
-				
-<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
-						
+		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
 				<tr>
-					<td>	
-						<font color='#FF0000'>*</font>
-						ID
-					</td>
+					<td><font color='#FF0000'>*</font>ID</td>
 					<td>
-<input type='hidden' name='id' value='".$_POST['id']."' />".$_POST['id']."
+			<input type='hidden' name='id' value='".$_POST['id']."' />".$_POST['id']."
 					</td>
 					<td rowspan='4' align='center'>
-<input type='hidden' name='myimg' value='".$_POST['myimg']."' />
-<img src='../cbj_Docs/img_proveedores/".$_POST['myimg']."' height='120px' width='90px' />
+			<input type='hidden' name='myimg' value='".$_POST['myimg']."' />
+			<img src='../cbj_Docs/img_proveedores/".$_POST['myimg']."' height='120px' width='90px' />
 					</td>
 				</tr>
-					
 				<tr>
-					<td>	
-						<font color='#FF0000'>*</font>
-						REFERENCIA
-					</td>
+					<td><font color='#FF0000'>*</font>REFERENCIA</td>
 					<td>
-<input type='hidden' name='ref' value='".$_POST['ref']."' />".$_POST['ref']."
+			<input type='hidden' name='ref' value='".$_POST['ref']."' />".$_POST['ref']."
 					</td>
 				</tr>
-					
 				<tr>
-					<td>	
-						<font color='#FF0000'>*</font>
-						RAZON SOCIAL
-					</td>
+					<td><font color='#FF0000'>*</font>RAZON SOCIAL</td>
 					<td>
-<input type='hidden' name='rsocial' value='".$_POST['rsocial']."' />".$_POST['rsocial']."
+			<input type='hidden' name='rsocial' value='".$_POST['rsocial']."' />".$_POST['rsocial']."
 					</td>
 				</tr>
-					
 				<tr>
+					<td><font color='#FF0000'>*</font>DOCUMENTO</td>
 					<td>
-						<font color='#FF0000'>*</font>
-						DOCUMENTO
-					</td>
-					<td>
-					
-<input type='hidden' name='doc' value='".$_POST['doc']."' />".$_POST['doc']."
-
+			<input type='hidden' name='doc' value='".$_POST['doc']."' />".$_POST['doc']."
 					</td>
 				</tr>
-
 				<tr>
-					<td>
-						<font color='#FF0000'>*</font>
-							NÚMERO
-					</td>
+					<td><font color='#FF0000'>*</font>NÚMERO</td>
 					<td colspan=2>
-<input type='hidden' name='dni' value='".$_POST['dni']."' />".$_POST['dni']."
+			<input type='hidden' name='dni' value='".$_POST['dni']."' />".$_POST['dni']."
 					</td>
 				</tr>
-				
 				<tr>
-					<td>
-						<font color='#FF0000'>*</font>
-							CONTROL
-					</td>
+					<td><font color='#FF0000'>*</font>CONTROL</td>
 					<td colspan=2>
-<input type='hidden' name='ldni' value='".$_POST['ldni']."' />".$_POST['ldni']."
+			<input type='hidden' name='ldni' value='".$_POST['ldni']."' />".$_POST['ldni']."
 					</td>
 				</tr>
-				
 				<tr>
-					<td>
-						<font color='#FF0000'>*</font>
-							MAIL
-					</td>
+					<td><font color='#FF0000'>*</font>MAIL</td>
 					<td colspan=2>
-<input type='hidden'' name='Email' value='".$_POST['Email']."' />".$_POST['Email']."
+			<input type='hidden'' name='Email' value='".$_POST['Email']."' />".$_POST['Email']."
 					</td>
 				</tr>	
-					
 				<tr>
-					<td>
-						<font color='#FF0000'>*</font>
-							DIRECCIÓN
-					</td>
+					<td><font color='#FF0000'>*</font>DIRECCIÓN</td>
 					<td colspan=2>
-<input type='hidden' name='Direccion' value='".$_POST['Direccion']."' />".$_POST['Direccion']."
+			<input type='hidden' name='Direccion' value='".$_POST['Direccion']."' />".$_POST['Direccion']."
 					</td>
 				</tr>
-				
 				<tr>
-				<tr>
-					<td>
-						<font color='#FF0000'>*</font>
-							TELÉFONO 1
-					</td>
+					<td><font color='#FF0000'>*</font>TELÉFONO 1</td>
 					<td colspan=2>
-<input type='hidden' name='Tlf1' value='".$_POST['Tlf1']."' />".$_POST['Tlf1']."
+			<input type='hidden' name='Tlf1' value='".$_POST['Tlf1']."' />".$_POST['Tlf1']."
 					</td>
 				</tr>
-				
 				<tr>
-					<tr>
-					<td>
-						<font color='#FF0000'>*</font>
-							TELEÉFONO 2
-					</td colspan=2>
-					<td>
-<input type='hidden' name='Tlf2' value='".$_POST['Tlf2']."' />".$_POST['Tlf2']."
+					<td><font color='#FF0000'>*</font>TELEÉFONO 2</td>
+					<td colspan=2>
+			<input type='hidden' name='Tlf2' value='".$_POST['Tlf2']."' />".$_POST['Tlf2']."
 					</td>
 				</tr>
-				
 				<tr>
 					<td colspan='3'  align='right' valign='middle' >
 						<input type='submit' value='BORRAR DATOS' class='botonrojo' />
 						<input type='hidden' name='borra' value=1 />
-						
 					</td>
 				</tr>
 		</form>														
@@ -279,7 +251,7 @@ function info_01(){
 				}
 
 	global $text;
-	$text = "\n- PROVEEDORES GASTO ELIMINAR SELECCIONADO ".$ActionTime.".\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";			
+	$text = "\n- PROVEEDOR ELIMINAR SELECCIONADO ".$ActionTime.".\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";			
 
 	global $texerror;
 	$logdocu = $_SESSION['ref'];
@@ -309,7 +281,7 @@ function info_02(){
 				}
 
 	global $text;
-	$text = "\n- PROVEEDORES GASTO ELIMINADO ".$ActionTime.".\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";			
+	$text = "\n- PROVEEDOR ELIMINADO ".$ActionTime.".\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";			
 
 	global $texerror;
 	$logdocu = $_SESSION['ref'];

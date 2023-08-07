@@ -34,13 +34,8 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
 	
 <!-- MENU INGRESOS PROVEEDORES -->
 
-  	<li><a href='#' class='MenuBarItemSubmenu'>CLIENTES</a>
-		<ul>
-			<li><a href='".$rutaClientes."clientes_Ver.php'>CLIENTE CONSULTAR</a></li>  
-			<li><a href='".$rutaClientes."clientes_Crear.php'>CLIENTE CREAR</a></li> 
-			<li><a href='".$rutaClientes."clientes_Modificar_01.php'>CLIENTE MODIFICAR</a></li>
-			<li><a href='".$rutaClientes."clientes_Borrar_01.php'>CLIENTE BORRAR</a></li>
-		</ul>
+  	<li>
+		<a href='".$rutaClientes."clientes_Ver.php' >CLIENTES</a>
  	</li>
 
 <!-- Fin MENU INGRESOS PROVEEDORES-->

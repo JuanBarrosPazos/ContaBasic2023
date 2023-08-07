@@ -7,27 +7,29 @@ session_start();
 	require '../../Mod_Admin/Conections/conection.php';
 	require '../../Mod_Admin/Conections/conect.php';
 
+	require '../Inclu/sqld_query_fetch_assoc.php';
+
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
 	if ($_SESSION['Nivel'] == 'admin'){
 
- 		//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
+		//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
 		master_index();
 
-		if(isset($_POST['oculto2'])){
-								show_form();
-								info_01();
+		if (isset($_POST['oculto2'])){
+				show_form();
+				info_01();
 		} elseif(isset($_POST['modifica'])){
-							if($form_errors = validate_form()){
-								show_form($form_errors);
-							} else { process_form();
-									 info_02();
-										}
+				if($form_errors = validate_form()){
+						show_form($form_errors);
+				} else { process_form();
+						info_02();
+								}
 		} else { show_form();
-				 unset($_SESSION['dudas']);
-				 unset($_SESSION['dniold']);
+				unset($_SESSION['dudas']);
+				unset($_SESSION['dniold']);
 					}
 	} else { require '../Inclu/table_permisos.php'; } 
 
@@ -35,15 +37,13 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function validate_form(){
+	function validate_form(){
 	
-		global $sqld;
-		global $qd;
-		global $rowd;
+		global $sqld; 		global $qd; 		global $rowd;
 	
-		require '../Inclu/validate_provee.php';	
+		require 'validate.php';	
 		
-			return $errors;
+		return $errors;
 
 		} 
 
@@ -53,25 +53,19 @@ function validate_form(){
 
 function process_form(){
 	
-	global $db; 	global $db_name;	
-	
+	global $db; 		global $db_name;	
+	global $rf1;		global $rf2;
 	if (preg_match('/^(\w{1})/',$_POST['rsocial'],$ref1)){	$rf1 = $ref1[1];
 															$rf1 = trim($rf1);
 																			}
 	if (preg_match('/^(\w{1})*(\s\w{1})/',$_POST['rsocial'],$ref2)){$rf2 = $ref2[2];
 																	$rf2 = trim($rf2);
 																			}
-	global $rf;
-	$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
+
+	global $rf; 		$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
 	$rf = trim($rf);
 			
 	global $vname; 			$vname = "`".$_SESSION['clave']."clientes`";
-	global $ingresos; 		$ingresos = "`".$_SESSION['clave']."ingresos_".date('Y')."`";
-	global $ingresos2; 		$ingresos2 = "`".$_SESSION['clave']."ingresos_".(date('Y')-1)."`";
-	global $ingresos3; 		$ingresos3 = "`".$_SESSION['clave']."ingresos_".(date('Y')-2)."`";
-	global $ingresos4; 		$ingresos4 = "`".$_SESSION['clave']."ingresos_".(date('Y')-3)."`";
-	global $ingresos5; 		$ingresos5 = "`".$_SESSION['clave']."ingresos_".(date('Y')-4)."`";
-	global $ingresos6; 		$ingresos6 = "`".$_SESSION['clave']."ingresos_pendientes`";
 
 	$sqldni =  "SELECT * FROM `$db_name`.$vname WHERE $vname.`dni` = '$_POST[dni]'";
 	$qdni = mysqli_query($db, $sqldni);
@@ -102,82 +96,71 @@ function process_form(){
 	$factnif = $_POST['dni'].$_POST['ldni'];
 	$factnif = trim($factnif);
 
-	if (($rf == $rowdni['ref'])||($_POST['ref'] == $rf)){
+	if (($rf == @$rowdni['ref'])||(@$_POST['ref'] == $rf)){
+
+		global $tlf2;
+		if(strlen(trim($_POST['Tlf2'])) == 0){
+			$tlf2 = 0;
+		} else { $tlf2 = $_POST['Tlf2']; }
 		
-	$sql = "UPDATE `$db_name`.$vname SET `rsocial` = '$_POST[rsocial]', `Email` = '$_POST[Email]', `Direccion` = '$_POST[Direccion]', `Tlf1` = '$_POST[Tlf1]', `Tlf2` = '$_POST[Tlf2]' WHERE $vname.`id` = '$_POST[id]' LIMIT 1 ";
+		$sql = "UPDATE `$db_name`.$vname SET `rsocial` = '$_POST[rsocial]', `Email` = '$_POST[Email]', `Direccion` = '$_POST[Direccion]', `Tlf1` = '$_POST[Tlf1]', `Tlf2` = '$tlf2' WHERE $vname.`id` = '$_POST[id]' LIMIT 1 ";
 			
-		}else{
+	}else{
 		
-	 if( file_exists("../cbj_Docs/img_clientes/".$_SESSION['myimgold']) ){
-		$dt = date('is');
-		$destination_file = "../cbj_Docs/img_clientes/".$_SESSION['myimgold'];
-		$extension = substr($_SESSION['myimgold'],-3);
-		global $new_name;
-		$new_name = $rf."_".$dt.".".$extension;
-		$rename_filename = "../cbj_Docs/img_clientes/".$new_name;	
-		rename($destination_file, $rename_filename);
-		}
+		if( file_exists("../cbj_Docs/img_clientes/".$_SESSION['myimgold']) ){
+			$dt = date('is');
+			$destination_file = "../cbj_Docs/img_clientes/".$_SESSION['myimgold'];
+			$extension = substr($_SESSION['myimgold'],-3);
+			global $new_name;
+			$new_name = $rf."_".$dt.".".$extension;
+			$rename_filename = "../cbj_Docs/img_clientes/".$new_name;	
+			rename($destination_file, $rename_filename);
+			}
 
-	$sql = "UPDATE `$db_name`.$vname SET  `ref`= '$rf', `rsocial` = '$_POST[rsocial]', `myimg` = '$new_name', `doc` = '$_POST[doc]', `dni` = '$_POST[dni]', `ldni` = '$_POST[ldni]', `Email` = '$_POST[Email]', `Direccion` = '$_POST[Direccion]', `Tlf1` = '$_POST[Tlf1]', `Tlf2` = '$_POST[Tlf2]' WHERE $vname.`id` = '$_POST[id]' LIMIT 1 ";
+		global $tlf2;
+		if(strlen(trim($_POST['Tlf2'])) == 0){
+			$tlf2 = 0;
+		} else { $tlf2 = $_POST['Tlf2']; }
+
+		$sql = "UPDATE `$db_name`.$vname SET  `ref`= '$rf', `rsocial` = '$_POST[rsocial]', `myimg` = '$new_name', `doc` = '$_POST[doc]', `dni` = '$_POST[dni]', `ldni` = '$_POST[ldni]', `Email` = '$_POST[Email]', `Direccion` = '$_POST[Direccion]', `Tlf1` = '$_POST[Tlf1]', `Tlf2` = '$tlf2' WHERE $vname.`id` = '$_POST[id]' LIMIT 1 ";
 	
-	// $dnif = $_POST['dni'].$_POST['ldni'];
-
-$sg1 = "UPDATE `$db_name`.$ingresos SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos.`factnif` LIKE '$dnif' ";
-
-	if(mysqli_query($db, $sg1)){ //print("* OK");
-				} else {
-				print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
-						global $texerror1;
-						$texerror1 = "\n\t ".mysqli_error($db);
-							}
-							
-$sg2 = "UPDATE `$db_name`.$ingresos2 SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos2.`factnif` LIKE '$dnif' ";
-
-	if(mysqli_query($db, $sg2)){ //print("* OK");
-				} else {
-				print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
-						global $texerror2;
-						$texerror2 = "\n\t ".mysqli_error($db);
-							}
-
-$sg3 = "UPDATE `$db_name`.$ingresos3 SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos3.`factnif` LIKE '$dnif' ";
-
-	if(mysqli_query($db, $sg3)){ //print("* OK");
-				} else {
-				//print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
-						global $texerror3;
-						$texerror3 = "\n\t ".mysqli_error($db);
-							}
-
-$sg4 = "UPDATE `$db_name`.$ingresos4 SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos4.`factnif` LIKE '$dnif' ";
-
-	if(mysqli_query($db, $sg4)){ //print("* OK");
-				} else {
-				//print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
-						global $texerror4;
-						$texerror4 = "\n\t ".mysqli_error($db);
-							}
-
-$sg5 = "UPDATE `$db_name`.$ingresos5 SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos5.`factnif` LIKE '$dnif' ";
-
-	if(mysqli_query($db, $sg5)){ //print("* OK");
-				} else {
-				//print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
-						global $texerror5;
-						$texerror5 = "\n\t ".mysqli_error($db);
-							}
-							
-$sg6 = "UPDATE `$db_name`.$ingresos6 SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $ingresos6.`factnif` LIKE '$dnif' ";
-
-	if(mysqli_query($db, $sg6)){ //print("* OK");
-				} else {
-				//print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
-						global $texerror6;
-						$texerror6 = "\n\t ".mysqli_error($db);
-							}
-							
-	}
+			/* ACTUALIZA EN CASACADA LAS TABLAS INGRESOS CON EL NUEVO NIF, RAZON SOCIAL */
+			global $tableName; 			$tableName = "`".$_SESSION['clave']."status`";
+			$a = "SELECT MIN(year) FROM `$db_name`.$tableName ";
+			$ra = mysqli_query($db, $a);
+			$ym = mysqli_fetch_row($ra);
+			global $yearMin;	$yearMin = $ym[0];		//echo $yearMin;
+			global $yearHoy; 	$yearHoy = date('Y'); 	//echo $yearHoy;
+		 
+			while($yearMin<=$yearHoy){
+		
+				//echo "* AÑO: ".$yearMin.".<br>";
+				global $tName; 	$tName =  "`".$_SESSION['clave']."ingresos_".$yearMin."`";
+				$sg6 = "UPDATE `$db_name`.$tName SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $tName.`factnif` LIKE '$dnif' ";
 	
+				if(mysqli_query($db, $sg6)){ //print("* OK");
+				} else { //print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
+						 global $texerror1;
+						 $texerror1 = "\n\t ".mysqli_error($db);
+							}
+
+				$yearMin++;
+
+			} // FIN WHILE
+
+			global $tableGastPend; 		$tableGastPend = "`".$_SESSION['clave']."ingresos_pendientes`";
+			$sg6 = "UPDATE `$db_name`.$tableGastPend SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $tableGastPend.`factnif` LIKE '$dnif' ";
+	
+			if(mysqli_query($db, $sg6)){ //print("* OK");
+			} else { //print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
+					 global $texerror6;
+					 $texerror6 = "\n\t ".mysqli_error($db);
+						}
+
+			/* FIN ACTUALIZA EN CASACADA LAS TABLAS INGRESOS CON EL NUEVO NIF, RAZON SOCIAL */
+	
+		} // FIN ELSE
+
 	if(mysqli_query($db, $sql)){
 		
 	//	$fil = "%".$rf."%";
@@ -185,118 +168,60 @@ $sg6 = "UPDATE `$db_name`.$ingresos6 SET `refcliente` = '$rf', `factnif` = '$fac
 		$qpimg = mysqli_query($db, $pimg);
 		$rowpimg = mysqli_fetch_assoc($qpimg);
 		$_SESSION['dudas'] = $rowpimg['myimg'];
-		global $dudas;
-		$dudas = $_SESSION['dudas'];
-		$dudas = trim($dudas);
+		global $dudas; 		$dudas = $_SESSION['dudas']; 	$dudas = trim($dudas);
 	//	print("** ".$rowpimg['myimg']);
 
 		print("<table align='center' style='margin-top:10px'>
 				<tr>
 					<th colspan=3 class='BorderInf'>
-						HA MODIFICADO UN PROVEEDOR INGRESOS.
+						HA MODIFICADO EL CLIENTE
 					</th>
 				</tr>
-								
 				<tr>
-					<td width=150px>
-						RAZON SOCIAL
-					</td>
-					<td width=200px>"
-						.$_POST['rsocial'].
-					"</td>
+					<td width=150px> RAZON SOCIAL</td>
+					<td width=200px>".$_POST['rsocial']."</td>
 					<td rowspan='5' align='center' width='100px'>
 	<img src='../cbj_Docs/img_clientes/".$dudas."' height='120px' width='90px' />
 					</td>
 				</tr>
-				
 				<tr>
-					<td>
-						DOCUMENTO
-					</td>
-					<td>"
-						.$_POST['doc'].
-					"</td>
+					<td>DOCUMENTO</td><td>".$_POST['doc']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						NUMERO
-					</td>
-					<td>"
-						.$_POST['dni'].
-					"</td>
+					<td>NUMERO</td><td>".$_POST['dni']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						CONTROL
-					</td>
-					<td>"
-						.$_POST['ldni'].
-					"</td>
+					<td>CONTROL</td><td>".$_POST['ldni']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						MAIL
-					</td>
-					<td colspan='2'>"
-						.$_POST['Email'].
-					"</td>
+					<td>MAIL</td><td colspan='2'>".$_POST['Email']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						REFERENCIA
-					</td>
-					<td>"
-						.$rf.
-					"</td>
+					<td>REFERENCIA</td><td>".$rf."</td>
 				</tr>
-				
 				<tr>
-				
-					<td>
-						PAIS
-					</td>
-					<td colspan='2'>"
-						.$_POST['Direccion'].
-					"</td>
+					<td>PAIS</td><td colspan='2'>".$_POST['Direccion']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						TELEFONO 1
-					</td>
-					<td colspan='2'>"
-						.$_POST['Tlf1'].
-					"</td>
+					<td>TELEFONO 1</td><td colspan='2'>".$_POST['Tlf1']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						TELEFONO 2
-					</td>
-					<td colspan='2'>"
-						.$_POST['Tlf2'].
-					"</td>
+					<td>TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
 				</tr>
-								
+				<tr>
+					<td colspan='3' align='center'>
+						<a href='clientes_Ver.php' class='botonverde'>INICIO CLIENTES</a>
+					</td>
+				</tr>
 			</table>" );
 			
-			
-				} else {
-
-				print("</br>
-				<font color='#FF0000'>
-			* MODIFIQUE LA ENTRADA 223: </font></br> ".mysqli_error($db))."
-				</br>";
-						show_form ();
-						global $texerror;
-						$texerror = $texerror1.$texerror2.$texerror3.$texerror4."\n";
-					}
+		} else { print("</br><font color='#FF0000'>* ERROR L. 114/133: </font></br> ".mysqli_error($db))."</br>";
+					show_form ();
+					//global $texerror;
+					//$texerror = $texerror1.$texerror2.$texerror3.$texerror4."\n";
+				}
 	
-			}
+	} // FIN function process_form()
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -311,45 +236,46 @@ function show_form($errors=[]){
 	$_SESSION['ldniold'] = $_POST['ldni'];
 	$_SESSION['myimgold'] = $_POST['myimg'];
 	
-				$defaults = array ( 'id' => $_POST['id'],
-									'rsocial' => $_POST['rsocial'],
-									'myimg' => $_POST['myimg'],	
-									'ref' => $_POST['ref'],
-									'doc' => $_POST['doc'],
-									'dni' => $_POST['dni'],
-									'ldni' => $_POST['ldni'],
-									'Email' => $_POST['Email'],
-									'Direccion' => $_POST['Direccion'],
-									'Tlf1' => $_POST['Tlf1'],
-									'Tlf2' => $_POST['Tlf2']);
-								   								}
-																
-	elseif(isset($_POST['modifica'])){
-		
-			global $img2; 	$img2 = 'untitled.png';
-			$defaults = array ( 'id' => $_POST['id'],
-								'rsocial' => $_POST['rsocial'],
-								'myimg' => $_POST['myimg'],	
-								'ref' => $_POST['ref'],
-								'doc' => $_POST['doc'],
-								'dni' => $_POST['dni'],
-								'ldni' => $_POST['ldni'],
-								'Email' => $_POST['Email'],
-								'Direccion' => $_POST['Direccion'],
-								'Tlf1' => $_POST['Tlf1'],
-								'Tlf2' => $_POST['Tlf2']);
-															}
-	
-		else{$defaults = $_POST;}
+	$defaults = array ( 'id' => $_POST['id'],
+						'rsocial' => $_POST['rsocial'],
+						'myimg' => $_POST['myimg'],	
+						'ref' => $_POST['ref'],
+						'doc' => $_POST['doc'],
+						'dni' => $_POST['dni'],
+						'ldni' => $_POST['ldni'],
+						'Email' => $_POST['Email'],
+						'Direccion' => $_POST['Direccion'],
+						'Tlf1' => $_POST['Tlf1'],
+						'Tlf2' => $_POST['Tlf2']);
+
+	} elseif(isset($_POST['modifica'])){
+			global $img2;
+			$img2 = 'untitled.png';
+
+		$defaults = array ( 'id' => $_POST['id'],
+							'rsocial' => $_POST['rsocial'],
+							'myimg' => $_POST['myimg'],	
+							'ref' => @$_POST['ref'],
+							'doc' => $_POST['doc'],
+							'dni' => $_POST['dni'],
+							'ldni' => $_POST['ldni'],
+							'Email' => $_POST['Email'],
+							'Direccion' => $_POST['Direccion'],
+							'Tlf1' => $_POST['Tlf1'],
+							'Tlf2' => $_POST['Tlf2']);
+
+	} else { $defaults = $_POST; }
 		
 	if ($errors){
-		print("	<div width='90%' style='float:left'>
+		print("	<div style='margin: auto; width: fit-content;'>
 					<table align='left' style='border:none'>
-					<th style='text-align:left'>
-					<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-					</th>
-					<tr>
-					<td style='text-align:left'>");
+						<tr>
+							<th style='text-align:left'>
+								<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
+							</th>
+						</tr>
+						<tr>
+							<td style='text-align:left'>");
 			
 		for($a=0; $c=count($errors), $a<$c; $a++){
 			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
@@ -381,148 +307,120 @@ function show_form($errors=[]){
 						'NIFute' => 'NIF Uniones Temporales de Empresas',
 						'NIFotnd' => 'NIF Otros Tipos no Definidos',
 						'NIFepenr' => 'NIF Establecimientos Permanentes Entidades no Residentes',
+						'UNDEFINE' => 'Sin Validación Definida...',
 										);
 	
-if (preg_match('/^(\w{1})/',$_POST['rsocial'],$ref1)){	$rf1 = $ref1[1];
-														$rf1 = trim($rf1);
-																						}
-if (preg_match('/^(\w{1})*(\s\w{1})/',$_POST['rsocial'],$ref2)){	$rf2 = $ref2[2];
-																$rf2 = trim($rf2);
-																						}
-global $rf;
-$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
-$rf = trim($rf);
+	global $rf1;	global $rf2;
 
-	print("
-			<table align='center' style=\"margin-top:10px\">
+	if (preg_match('/^(\w{1})/',$_POST['rsocial'],$ref1)){	$rf1 = $ref1[1];
+															$rf1 = trim($rf1);
+																							}
+	if (preg_match('/^(\w{1})*(\s\w{1})/',$_POST['rsocial'],$ref2)){	$rf2 = $ref2[2];
+																	$rf2 = trim($rf2);
+																							}
+	global $rf;
+	$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
+	$rf = trim($rf);
+
+	print("<table align='center' style=\"margin-top:10px\">
 				<tr>
-					<th colspan=2 class='BorderInf'>
-
-							DATOS DEL NUEVO PROVEEDOR
-					</th>
+					<th colspan=2 class='BorderInf'>NUEVOS DATOS DEL CLIENTE</th>
 				</tr>
-				
-<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'  enctype='multipart/form-data'>
-						
+	<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'  enctype='multipart/form-data'>
 			<input type='hidden' name='id' value='".$defaults['id']."' />
 			<input type='hidden' name='myimg' value='".$defaults['myimg']."' />
 				<tr>
 					<td width=180px>	
-						<font color='#FF0000'>*</font>
-						REFERENCIA
+						<font color='#FF0000'>*</font>REFERENCIA
 					</td>
-					<td width=360px>
-									".$rf."
-					</td>
+					<td width=360px>".$rf."</td>
 				</tr>
-					
 				<tr>
 					<td width=180px>	
-						<font color='#FF0000'>*</font>
-						RAZON SOCIAL
+						<font color='#FF0000'>*</font>RAZON SOCIAL
 					</td>
 					<td width=360px>
 		<input type='text' name='rsocial' size=30 maxlength=30 value='".$defaults['rsocial']."' />
 					</td>
 				</tr>
-					
 				<tr>
 					<td>
-						<font color='#FF0000'>*</font>
-						DOCUMENTO
+						<font color='#FF0000'>*</font>DOCUMENTO
 					</td>
 					<td>
-					
 			<select name='doc'>");
-
 				foreach($doctype as $option => $label){
-					
 					print ("<option value='".$option."' ");
-					
-					if($option == $defaults['doc']){
-															print ("selected = 'selected'");
-																								}
+					if($option == $defaults['doc']){ print ("selected = 'selected'"); }
 													print ("> $label </option>");
 												}	
 
-	print ("</select>
+		print ("</select>
 					</td>
 				</tr>
-					
-
 				<tr>
 					<td>
-						<font color='#FF0000'>*</font>
-							NÚMERO
+						<font color='#FF0000'>*</font>NÚMERO
 					</td>
 					<td>
 		<input type='text' name='dni' size=12 maxlength=8 value='".$defaults['dni']."' />
 					</td>
 				</tr>
-				
 				<tr>
 					<td>
-						<font color='#FF0000'>*</font>
-							CONTROL
+						<font color='#FF0000'>*</font>CONTROL
 					</td>
 					<td>
 		<input type='text' name='ldni' size=4 maxlength=1 value='".$defaults['ldni']."' />
 					</td>
 				</tr>
-				
 				<tr>
 					<td>
-						<font color='#FF0000'>*</font>
-							MAIL
+						<font color='#FF0000'>*</font>MAIL
 					</td>
 					<td>
 		<input type='text' name='Email' size=52 maxlength=50 value='".$defaults['Email']."' />
 					</td>
 				</tr>	
-					
 				<tr>
 					<td>
-						<font color='#FF0000'>*</font>
-							DIRECCIÓN
+						<font color='#FF0000'>*</font>DIRECCIÓN
 					</td>
 					<td>
 	<input type='text' name='Direccion' size=52 maxlength=60 value='".$defaults['Direccion']."' />
 					</td>
 				</tr>
-				
 				<tr>
 				<tr>
 					<td>
-						<font color='#FF0000'>*</font>
-							TELÉFONO 1
+						<font color='#FF0000'>*</font>TELÉFONO 1
 					</td>
 					<td>
 		<input type='text' name='Tlf1' size=12 maxlength=9 value='".$defaults['Tlf1']."' />
 					</td>
 				</tr>
-				
 				<tr>
 					<tr>
 					<td>
-						<font color='#FF0000'>&nbsp;</font>
-							TELEÉFONO 2
+						<font color='#FF0000'>&nbsp;</font>TELÉFONO 2
 					</td>
 					<td>
 		<input type='text' name='Tlf2' size=12 maxlength=9 value='".$defaults['Tlf2']."' />
 					</td>
 				</tr>
-				
 				<tr>
-					<td colspan='2'  align='right' valign='middle'  class='BorderSup'>
-						<input type='submit' value='MODIFICAR DATOS' />
+					<td colspan='2'  align='right' valign='middle'>
+						<input type='submit' value='MODIFICAR DATOS' class='botonazul' />
 						<input type='hidden' name='modifica' value=1 />
 						<input type='hidden' name='v' value='i' />
 					</td>
-					
 				</tr>
-				
 		</form>														
-			
+				<tr>
+					<td colspan='2' align='center'>
+						<a href='clientes_Ver.php' class='botonverde'>INICIO CLIENTES</a>
+					</td>
+				</tr>
 			</table>				
 					"); /* Fin del print */
 	
@@ -547,15 +445,12 @@ $rf = trim($rf);
 
 function info_01(){
 
-	global $db; 		global $orden;
+	global $db; 	global $orden;
 	
-	global $orden;
-	if(isset($_POST['Orden'])){
-		$orden = $_POST['Orden'];
-	}else{ $orden = '`id` ASC'; }
-	
+	$orden = @$_POST['Orden'];
+		
 	$_SESSION['xid'] = $_POST['id'];
-	if(isset($_POST['todo'])){$filtro = "\n\tFiltro => TODOS LOS CLIENTES ".$orden;}
+	if (isset($_POST['todo'])){$filtro = "\n\tFiltro => TODOS LOS CLIENTES ".$orden;}
 	else{$filtro = "\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";}
 
 	$ActionTime = date('H:i:s');
@@ -584,8 +479,7 @@ function info_01(){
 
 function info_02(){
 
-	global $db;
-	global $rf;
+	global $db; 	global $rf;
 
 	$ActionTime = date('H:i:s');
 	
@@ -594,10 +488,10 @@ function info_02(){
 				$dir = "../cbj_Docs/log";
 				}
 
-	global $text;
-	$text = "\n- CLIENTES MODIFICADO ".$ActionTime.".\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$rf.".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";			
-	
 	global $texerror;
+	global $text;
+	$text = "\n- CLIENTES GASTO MODIFICADO ".$ActionTime.".\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$rf.".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";			
+
 	$logdocu = $_SESSION['ref'];
 	$logdate = date('Y-m-d');
 	$logtext = $text.$texerror."\n";
@@ -608,11 +502,6 @@ function info_02(){
 
 	}
 
-				   ////////////////////				   ////////////////////
-////////////////////				////////////////////				////////////////////
-				 ////////////////////				  ///////////////////
-	
-	
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////

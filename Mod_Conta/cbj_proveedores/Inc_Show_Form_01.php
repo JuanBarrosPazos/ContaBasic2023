@@ -83,7 +83,7 @@
 	<form name='todo' method='post' action='$_SERVER[PHP_SELF]' >
 			<tr>
 				<td colspan=2 align='right' class='BorderInf BorderSup'>
-					<input type='submit' value='VER TODOS' class='botonazul' />
+					<input type='submit' value='PROVEEDORES VER TODOS' class='botonazul' />
 					<input type='hidden' name='todo' value=1 />
 				</td>
 				<td colspan=2 class='BorderInf BorderSup'>
@@ -100,7 +100,7 @@
 					<tr>
 						<th class='BorderInf BorderSup' colspan=4 width=100% >
 						<a href='proveedores_Crear.php' class='botonverde'>CREAR NUEVO PROVEEDOR</a>
-						<a href='proveedores_Ver.php' class='botonazul'>REFRESCAR VER TODOS</a>
+						<a href='proveedores_Ver.php' class='botonazul'>REFRESCAR VISTA</a>
 
 						</th>
 					</tr>

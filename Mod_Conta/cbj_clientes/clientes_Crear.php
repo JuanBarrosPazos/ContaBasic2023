@@ -1,11 +1,16 @@
 <?php
 session_start();
 
+	//echo $_SESSION['ref'];
+	//echo $_SESSION['Usuario'];
+
 	require '../../Mod_Admin/Inclu/error_hidden.php';
 	require '../Inclu/Conta_Head.php';
 	require '../../Mod_Admin/Inclu/my_bbdd_clave.php';
 	require '../../Mod_Admin/Conections/conection.php';
 	require '../../Mod_Admin/Conections/conect.php';
+
+	require '../Inclu/sqld_query_fetch_assoc.php';
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -16,12 +21,12 @@ session_start();
 		master_index();
 
 		if(isset($_POST['oculto'])){
-			if($form_errors = validate_form()){
-					show_form($form_errors);
-					unset($_SESSION['dudas']);
-			} else { process_form();
-					info();
-						}
+				if($form_errors = validate_form()){
+							show_form($form_errors);
+							unset($_SESSION['dudas']);
+				} else { process_form();
+						 info();
+							}
 		} else { show_form();
 				 unset($_SESSION['dudas']);
 					}
@@ -31,19 +36,16 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function validate_form(){
+	function validate_form(){
 	
-		global $db;
-		global $db_name;
-		global $sqld;
-		global $qd;
-		global $rowd;
+		global $db; 		global $db_name; 		global $sqld; 		
+		global $qd; 		global $rowd;
 	
-		require '../Inclu/validate_provee.php';	
+		require 'validate.php';	
 		
-			return $errors;
+		return $errors;
 
-		} 
+	} 
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -51,10 +53,10 @@ function validate_form(){
 
 function process_form(){
 	
-	global $db;
-	global $db_name;	
-	
-	/*	REFERENCIA DE CLIENTE	*/
+	global $db; 	global $db_name;	
+	global $rf1;	global $rf2;
+
+	/*	REFERENCIA DE PROVEEDOR	*/
 	
 	if (preg_match('/^(\w{1})/',$_POST['rsocial'],$ref1)){	$rf1 = $ref1[1];
 															$rf1 = trim($rf1);
@@ -67,20 +69,40 @@ function process_form(){
 	$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
 	$rf = trim($rf);
 			
-	/************* CREAMOS LAS IMAGENES EN LA IMG CLIENTE DIRECTORIO ***************/
+	/************* CREAMOS LAS IMAGENES EN LA IMG PROVEEDOR DIRECTORIO ***************/
 
-	global $tabla1;
-	$sesionref = $_SESSION['ref'];
+	global $tabla1; 		$sesionref = $_SESSION['ref'];
 
+	global $new_name;
 	if($_FILES['myimg']['size'] == 0){
+		$nombre = 'untitled.png';
+		$new_name = $rf.".png";
+	}else{		 
+		$extension = substr($_FILES['myimg']['name'],-3);
+		// print($extension);
+		// $extension = end(explode('.', $_FILES['myimg']['name']) );
+		$new_name = $rf.".".$extension;
+	}																		
+
+	global $vname; 		$vname = "`".$_SESSION['clave']."clientes`";
+
+	global $tlf2;
+	if(strlen(trim($_POST['Tlf2'])) == 0){
+		$tlf2 = 0;
+	} else { $tlf2 = $_POST['Tlf2']; }
+
+	$sql = "INSERT INTO `$db_name`.$vname (`ref`, `rsocial`, `myimg`, `doc`, `dni`, `ldni`, `Email`, `Direccion`, `Tlf1`, `Tlf2`) VALUES ('$rf', '$_POST[rsocial]', '$new_name', '$_POST[doc]', '$_POST[dni]', '$_POST[ldni]', '$_POST[Email]', '$_POST[Direccion]', '$_POST[Tlf1]', '$tlf2')";
+		
+	if(mysqli_query($db, $sql)){
+		
+		if($_FILES['myimg']['size'] == 0){
 			$nombre = 'untitled.png';
 			global $new_name;
-			$new_name = $rf.".png";
+			//$new_name = $rf.".png";
 			$rename_filename = "../cbj_Docs/img_clientes/".$new_name;							
 			copy("../cbj_Docs/img_clientes/untitled.png", $rename_filename);
-												}
-												
-	else{	$safe_filename = trim(str_replace('/', '', $_FILES['myimg']['name']));
+
+	}else{	$safe_filename = trim(str_replace('/', '', $_FILES['myimg']['name']));
 			$safe_filename = trim(str_replace('..', '', $safe_filename));
 
 		 	$nombre = $_FILES['myimg']['name'];
@@ -91,155 +113,86 @@ function process_form(){
 			global $destination_file;
 			$destination_file = "../cbj_Docs/img_clientes/".$safe_filename;
 
-	 if( file_exists( "../cbj_Docs/img_clientes/".$nombre) ){
-			unlink("../cbj_Docs/img_clientes/".$nombre);
-		//	print("* El archivo ".$nombre." ya existe, seleccione otra imagen.</br>");
-												}
-			
-	elseif (move_uploaded_file($_FILES['myimg']['tmp_name'], $destination_file)){
-			
-			// Renombrar el archivo:
-			$extension = substr($_FILES['myimg']['name'],-3);
-			// print($extension);
-			// $extension = end(explode('.', $_FILES['myimg']['name']) );
-			global $new_name;
-			$new_name = $rf.".".$extension;
-			$rename_filename = "../cbj_Docs/img_clientes/".$new_name;								
-			rename($destination_file, $rename_filename);
+			if(file_exists( "../cbj_Docs/img_clientes/".$nombre) ){
+					unlink("../cbj_Docs/img_clientes/".$nombre);
+				//	print("* El archivo ".$nombre." ya existe, seleccione otra imagen.</br>");
 
-			// print("El archivo se ha guardado en: ".$destination_file);
+			}elseif (move_uploaded_file($_FILES['myimg']['tmp_name'], $destination_file)){
+					
+					// Renombrar el archivo:
+					$extension = substr($_FILES['myimg']['name'],-3);
+					// print($extension);
+					// $extension = end(explode('.', $_FILES['myimg']['name']) );
+					global $new_name;
+					//$new_name = $rf.".".$extension;
+					$rename_filename = "../cbj_Docs/img_clientes/".$new_name;								
+					rename($destination_file, $rename_filename);
+
+					// print("El archivo se ha guardado en: ".$destination_file);
+			
+			}else { print("NO SE HA PODIDO GUARDAR EN ../cbj_Docs/img_clientes/".$new_name);}
+		
+		} // FIN ELSE
 	
-			}
-			
-	else {print("NO SE HA PODIDO GUARDAR EN ../cbj_Docs/img_clientes/".$new_name);}
-		
-		}
-		
-	global $vname;
-	$vname = "`".$_SESSION['clave']."clientes`";
-
-	$sql = "INSERT INTO `$db_name`.$vname (`ref`, `rsocial`, `myimg`, `doc`, `dni`, `ldni`, `Email`, `Direccion`, `Tlf1`, `Tlf2`) VALUES ('$rf', '$_POST[rsocial]', '$new_name', '$_POST[doc]', '$_POST[dni]', '$_POST[ldni]', '$_POST[Email]', '$_POST[Direccion]', '$_POST[Tlf1]', '$_POST[Tlf2]')";
-		
-	if(mysqli_query($db, $sql)){
-		
 	//	$fil = "%".$rf."%";
 		$pimg =  "SELECT * FROM `$db_name`.$vname WHERE `ref` = '$rf' ";
 		$qpimg = mysqli_query($db, $pimg);
 		$rowpimg = mysqli_fetch_assoc($qpimg);
 		$_SESSION['dudas'] = $rowpimg['myimg'];
-		global $dudas;
-		$dudas = $_SESSION['dudas'];
-		$dudas = trim($dudas);
+		global $dudas; 		$dudas = $_SESSION['dudas']; 	$dudas = trim($dudas);
 	//	print("** ".$rowpimg['myimg']);
 
 		print("<table align='center' style='margin-top:10px'>
 				<tr>
-					<th colspan=3 class='BorderInf'>
-						HA REGISTRADO UN NUEVO CLIENTE INGRESOS.
-					</th>
+					<th colspan=3 class='BorderInf'>HA REGISTRADO UN NUEVO PROVEEDOR</th>
 				</tr>
-								
 				<tr>
-					<td width=150px>
-						RAZON SOCIAL
-					</td>
-					<td width=200px>"
-						.$_POST['rsocial'].
-					"</td>
+					<td width=150px>RAZON SOCIAL</td>
+					<td width=200px>".$_POST['rsocial']."</td>
 					<td rowspan='5' align='center' width='100px'>
 	<img src='../cbj_Docs/img_clientes/".$dudas."' height='120px' width='90px' />
 					</td>
 				</tr>
-				
 				<tr>
-					<td>
-						DOCUMENTO
-					</td>
-					<td>"
-						.$_POST['doc'].
-					"</td>
+					<td>DOCUMENTO</td><td>".$_POST['doc']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						NUMERO
-					</td>
-					<td>"
-						.$_POST['dni'].
-					"</td>
+					<td>NUMERO</td><td>".$_POST['dni']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						CONTROL
-					</td>
-					<td>"
-						.$_POST['ldni'].
-					"</td>
+					<td>CONTROL</td><td>".$_POST['ldni']."</td>
 				</tr>				
-				
 				<tr>
-					<td>
-						MAIL
-					</td>
-					<td colspan='2'>"
-						.$_POST['Email'].
-					"</td>
+					<td>MAIL</td><td colspan='2'>".$_POST['Email']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						REFERENCIA
-					</td>
-					<td>"
-						.$rf.
-					"</td>
+					<td>REFERENCIA</td><td>".$rf."</td>
 				</tr>
-				
 				<tr>
-				
-					<td>
-						PAIS
-					</td>
-					<td colspan='2'>"
-						.$_POST['Direccion'].
-					"</td>
+					<td>PAIS</td>
+					<td colspan='2'>".$_POST['Direccion']."</td>
 				</tr>
-				
 				<tr>
-					<td>
-						TELEFONO 1
-					</td>
-					<td colspan='2'>"
-						.$_POST['Tlf1'].
-					"</td>
+					<td>TELEFONO 1</td><td colspan='2'>".$_POST['Tlf1']."</td>
 				</tr>
-				
-				
 				<tr>
-					<td>
-						TELEFONO 2
-					</td>
-					<td colspan='2'>"
-						.$_POST['Tlf2'].
-					"</td>
+					<td>TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
 				</tr>
-								
+				<tr>
+					<td colspan='3' align='center'>
+						<a href='clientes_Crear.php' class='botonverde' >CREAR NUEVO CLIENTE</a>
+						<a href='clientes_Ver.php' class='botonverde' >INICIO CLIENTES</a>
+					</td>
+				</tr>
 			</table>" );
-			
-				} else {
-
-				print("</br>
-				<font color='#FF0000'>
-			* MODIFIQUE LA ENTRADA 146: </font></br> ".mysqli_error($db))."
-				</br>";
-						show_form ();
-						global $texerror;
-						$texerror = "\n\t ".mysqli_error($db);
-					}
-					
+	} else { 
+		print("</br><font color='#FF0000'>
+				* MODIFIQUE LA ENTRADA 146: </font></br> ".mysqli_error($db))."</br>";
+				show_form ();
+				global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
+			}
 	
-			}	/* Final process_form(); */
+	} /* Final process_form(); */
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -249,41 +202,48 @@ function show_form($errors=[]){
 	
 	if(isset($_POST['oculto'])){
 		$defaults = $_POST;
-	} else {
-			$defaults = array ( 'rsocial' => '',
-								'myimg' => $_POST['myimg'],	
+		} else { 
+			$defaults = array ( 'id' => '',
+								'rsocial' => '',
+								'myimg' => @$_POST['myimg'],	
 								'ref' => '',
 								'doc' => '',
 								'dni' => '',
 								'ldni' => '',
-								'Email' => 'Solo letras minúsculas',
+								'Email' => 'nomail@nomail.es',
 								'Direccion' => '',
 								'Tlf1' => '',
 								'Tlf2' => '');
-							   					}
+							}
 	
+	global $texerror;
+	$texerror = "ERROR EN CAMPO DEL FORMULARIO.";
+			
 	if ($errors){
-		print("	<div width='90%' style='float:left'>
+		print("	<div style='margin: auto; width: fit-content;'>
 					<table align='left' style='border:none'>
-					<th style='text-align:left'>
-					<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-					</th>
-					<tr>
-					<td style='text-align:left'>");
+						<tr>
+							<th style='text-align:left'>
+								<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
+							</th>
+						</tr>
+						<tr>
+							<td style='text-align:left'>");
 			
 		for($a=0; $c=count($errors), $a<$c; $a++){
-			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
+				print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
 			}
 		print("</td>
 				</tr>
 				</table>
 				</div>
 				<div style='clear:both'></div>");
-		}
+		} // FIN ERRORS
 	
 	$doctype = array (	'DNI' => 'DNI/NIF Espa&ntilde;oles',
 						'NIE' => 'NIE/NIF Extranjeros',
 						'NIFespecial' => 'NIF Persona F&iacute;sica Especial',
+						/*
 						'NIFsa' => 'NIF Sociedad An&oacute;nima',
 						'NIFsrl' => 'NIF Sociedad Responsabilidad Limitada',
 						'NIFscol' => 'NIF Sociedad Colectiva',
@@ -301,159 +261,107 @@ function show_form($errors=[]){
 						'NIFute' => 'NIF Uniones Temporales de Empresas',
 						'NIFotnd' => 'NIF Otros Tipos no Definidos',
 						'NIFepenr' => 'NIF Establecimientos Permanentes Entidades no Residentes',
-										);
-if (preg_match('/^(\w{1})/',$_POST['rsocial'],$ref1)){	$rf1 = $ref1[1];
-														$rf1 = trim($rf1);
-																						}
-if (preg_match('/^(\w{1})*(\s\w{1})/',$_POST['rsocial'],$ref2)){	$rf2 = $ref2[2];
-																$rf2 = trim($rf2);
-																						}
+						*/
+						'UNDEFINE' => 'Sin Validación Definida...');
 
-global $rf;
-$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
-$rf = trim($rf);
+	global $rf1; 	global $rf2;
+	if (preg_match('/^(\w{1})/',@$_POST['rsocial'],$ref1)){	$rf1 = $ref1[1];
+															$rf1 = trim($rf1); }
+	if (preg_match('/^(\w{1})*(\s\w{1})/',@$_POST['rsocial'],$ref2)){ $rf2 = $ref2[2];
+																	$rf2 = trim($rf2); }
 
-	print("
-			<table align='center' style=\"margin-top:10px\">
+	global $rf;
+	$rf = strtolower($rf1.$rf2.@$_POST['dni'].@$_POST['ldni']);
+	$rf = trim($rf);
+
+	print("<table align='center' style=\"margin-top:10px\">
 				<tr>
 					<th colspan=2 class='BorderInf'>
-
-							DATOS DEL NUEVO CLIENTE INGRESOS
+							DATOS DEL NUEVO PROVEEDOR
 					</th>
 				</tr>
-				
-<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'  enctype='multipart/form-data'>
-						
+	<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'  enctype='multipart/form-data'>
 				<tr>
-					<td width=180px>	
-						<font color='#FF0000'>*</font>
-						REFERENCIA
-					</td>
-					<td width=360px>
-									SE GENERARÁ UNA REFERENCIA AUTOMÁTICA.
-					</td>
+					<td style='width:120px; text-align:right;'>REFERENCIA<font color='#FF0000'> *</font></td>
+					<td>SE GENERARÁ UNA REFERENCIA AUTOMÁTICA</td>
 				</tr>
-					
 				<tr>
-					<td width=180px>	
-						<font color='#FF0000'>*</font>
-						RAZON SOCIAL
-					</td>
-					<td width=360px>
-		<input type='text' name='rsocial' size=30 maxlength=30 value='".$defaults['rsocial']."' />
-					</td>
-				</tr>
-					
-				<tr>
-					<td>
-						<font color='#FF0000'>*</font>
-						DOCUMENTO
+					<td style='text-align:right;'>RAZON SOCIAL<font color='#FF0000'> *</font>
 					</td>
 					<td>
-					
+		<input type='text' name='rsocial' size=30 maxlength=30 pattern='[a-zA-Z0-9\s]{3,30}' placeholder='RAZON SOCIAL' value='".$defaults['rsocial']."' required />
+					</td>
+				</tr>
+				<tr>
+					<td style='text-align:right;'>DOCUMENTO<font color='#FF0000'> *</font></td>
+					<td>
 			<select name='doc'>");
-
 				foreach($doctype as $option => $label){
-					
 					print ("<option value='".$option."' ");
-					
-					if($option == $defaults['doc']){
-															print ("selected = 'selected'");
-																								}
-													print ("> $label </option>");
-												}	
-						
+					if($option == $defaults['doc']){ 
+							print ("selected = 'selected'");
+													}
+										print ("> $label </option>");
+								}	
 	print ("</select>
 					</td>
 				</tr>
-					
-
 				<tr>
+					<td style='text-align:right;'>NÚMERO<font color='#FF0000'> *</font></td>
 					<td>
-						<font color='#FF0000'>*</font>
-							NÚMERO
-					</td>
-					<td>
-		<input type='text' name='dni' size=12 maxlength=8 value='".$defaults['dni']."' />
+		<input type='text' name='dni' size=12 maxlength=8 pattern='[0-9A-Z]{8,8}' placeholder='NUM. DOC.'  value='".$defaults['dni']."' required />
 					</td>
 				</tr>
-				
 				<tr>
+					<td style='text-align:right;'>CONTROL<font color='#FF0000'> *</font></td>
 					<td>
-						<font color='#FF0000'>*</font>
-							CONTROL
-					</td>
-					<td>
-		<input type='text' name='ldni' size=4 maxlength=1 value='".$defaults['ldni']."' />
+		<input type='text' name='ldni' size=4 maxlength=1  pattern='[0-9A-Z]{1,1}' value='".$defaults['ldni']."' required />
 					</td>
 				</tr>
-				
 				<tr>
+					<td style='text-align:right;'>MAIL<font color='#FF0000'> *</font></td>
 					<td>
-						<font color='#FF0000'>*</font>
-							MAIL
-					</td>
-					<td>
-		<input type='text' name='Email' size=52 maxlength=50 value='".$defaults['Email']."' />
+		<input type='mail' name='Email' size=52 maxlength=50 placeholder='MI EMAIL EN MINUSCULAS' value='".$defaults['Email']."' required />
 					</td>
 				</tr>	
-					
 				<tr>
+					<td style='text-align:right;'>DIRECCIÓN<font color='#FF0000'> *</font></td>
 					<td>
-						<font color='#FF0000'>*</font>
-							DIRECCIÓN
-					</td>
-					<td>
-	<input type='text' name='Direccion' size=52 maxlength=60 value='".$defaults['Direccion']."' />
+	<input type='text' name='Direccion' size=52 maxlength=60 placeholder='MI DIRECCION' value='".$defaults['Direccion']."' required />
 					</td>
 				</tr>
-				
 				<tr>
-				<tr>
+					<td style='text-align:right;'>TELÉFONO 1<font color='#FF0000'> *</font></td>
 					<td>
-						<font color='#FF0000'>*</font>
-							TELÉFONO 1
-					</td>
-					<td>
-		<input type='text' name='Tlf1' size=12 maxlength=9 value='".$defaults['Tlf1']."' />
+		<input type='text' name='Tlf1' size=12 maxlength=9 pattern='[0-9]{9,9}' placeholder='000000000' value='".$defaults['Tlf1']."' required />
 					</td>
 				</tr>
-				
 				<tr>
-					<tr>
+					<td style='text-align:right;'>TELEÉFONO 2&nbsp;&nbsp;</td>
 					<td>
-						<font color='#FF0000'>&nbsp;</font>
-							TELEÉFONO 2
-					</td>
-					<td>
-		<input type='text' name='Tlf2' size=12 maxlength=9 value='".$defaults['Tlf2']."' />
+		<input type='text'  name='Tlf2' size=12 maxlength=9 pattern='[0-9]{9,9}' placeholder='TELEFONO 2' value='".$defaults['Tlf2']."' />
 					</td>
 				</tr>
-				
 				<tr>
+					<td style='text-align:right;'>FOTOGRAFIA<font color='#FF0000'>&nbsp;&nbsp;</font></td>
 					<td>
-						<font color='#FF0000'>&nbsp;</font>
-						FOTOGRAFIA
-					</td>
-					<td>
-		<input type='file' name='myimg' value='".$defaults['myimg']."' />						
+		<input type='file' name='myimg' value='".@$defaults['myimg']."' />						
 					</td>
 				</tr>
-
 				<tr>
 					<td colspan='2'  align='right' valign='middle'  class='BorderSup'>
-						<input type='submit' value='REGISTRAR ESTOS DATOS' />
+						<input type='submit' value='REGISTRAR ESTOS DATOS' class='botonazul'  />
 						<input type='hidden' name='oculto' value=1 />
 						<input type='hidden' name='v' value='i' />
-						
+			</form>														
 					</td>
-					
 				</tr>
-				
-		</form>														
-			
-			</table>				
-					"); /* Fin del print */
+				<tr>
+					<td colspan='3' align='center'>
+						<a href='clientes_Ver.php' class='botonverde'>INICIO CLIENTES</a>
+					</td>
+				</tr>
+			</table>"); /* Fin del print */
 	
 	}	/* Fin show_form(); */
 
@@ -476,8 +384,7 @@ $rf = trim($rf);
 
 function info(){
 
-	global $db;
-	global $rf;
+	global $db; 	global $rf;
 
 	$ActionTime = date('H:i:s');
 	
@@ -486,9 +393,9 @@ function info(){
 				$dir = "../cbj_Docs/log";
 				}
 
-global $text;
-$text = "\n- CLIENTES CREAR ".$ActionTime.".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$rf.".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";
-
+	global $text;
+	$text = "\n- CLIENTES CREAR ".$ActionTime.".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$rf.".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";
+	
 	global $texerror;
 	$logdocu = $_SESSION['ref'];
 	$logdate = date('Y-m-d');

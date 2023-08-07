@@ -180,7 +180,7 @@ function process_form(){
 				</tr>
 				<tr>
 					<td colspan='3' align='center'>
-						<a href='proveedores_Crear.php' class='botonverde' >CREAR NUEVO PROVEEDORCREAR</a>
+						<a href='proveedores_Crear.php' class='botonverde' >CREAR NUEVO PROVEEDOR</a>
 						<a href='proveedores_Ver.php' class='botonverde' >INICIO PROVEEDORES</a>
 					</td>
 				</tr>
