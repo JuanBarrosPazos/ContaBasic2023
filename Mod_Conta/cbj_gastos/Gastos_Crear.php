@@ -30,459 +30,15 @@ session_start();
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-function validate_form(){
+	function validate_form(){
 	
-	global $sqld; 		global $qd; 		global $rowd;
-
-	$errors = array();
-	
-		if($_FILES['myimg1']['size'] == 0){}
-		else{
-			
-	$limite = 500 * 1024;
-	
-	$ext_permitidas = array('jpg','JPG','gif','GIF','png','PNG','pdf','PDF','bmp','BMP');
-	
-	$extension1 = substr($_FILES['myimg1']['name'],-3);
-	// print($extension1);
-	// $extension1 = end(explode('.', $_FILES['myimg1']['name']) );
-
-	$ext_correcta1 = in_array($extension1, $ext_permitidas);
-
-	// $tipo_correcto1 = preg_match('/^image\/(gif|png|jpg|bmp)$/', $_FILES['myimg1']['type']);
-
-	if(!$ext_correcta1){
-			$errors [] = "La extension no esta admitida: ".$_FILES['myimg1']['name'];
-			}
-/*	
-		elseif(!$tipo_correcto1){
-			$errors [] = "Este tipo de archivo no esta admitido: ".$_FILES['myimg1']['name'];
-			}
-*/	
-	
-	elseif ($_FILES['myimg1']['size'] > $limite){
-	$tamanho1 = $_FILES['myimg1']['size'] / 1024;
-	$errors [] = "El archivo".$_FILES['myimg1']['name']." es mayor de 500 KBytes. ".$tamanho1." KB";
-			}
+		$errors = array();
 		
-			elseif ($_FILES['myimg1']['error'] == UPLOAD_ERR_PARTIAL){
-				$errors [] = "La carga del archivo se ha interrumpido.";
-				}
-				
-				elseif ($_FILES['myimg1']['error'] == UPLOAD_ERR_NO_FILE){
-					$errors [] = "Es archivo no se ha cargado.";
-					}
-		}
-		
-//////////////
+		require 'validate.php';
 
-		if($_FILES['myimg2']['size'] == 0){}
-		else{
-		 
-		$limite = 500 * 1024;
-		$ext_permitidas = array('jpg','JPG','gif','GIF','png','PNG','pdf','PDF','bmp','BMP');
-		
-		$extension2 = substr($_FILES['myimg2']['name'],-3);
-		// print($extension2);
-		// $extensio2n = end(explode('.', $_FILES['myimg2']['name']) );
-		$ext_correcta2 = in_array($extension2, $ext_permitidas);
+		return $errors;
 
-	// $tipo_correcto2 = preg_match('/^image\/(gif|png|jpg|bmp)$/', $_FILES['myimg2']['type']);
-
-		if(!$ext_correcta2){
-			$errors [] = "La extension no esta admitida: ".$_FILES['myimg2']['name'];
-			}
-/*
-		elseif(!$tipo_correcto2){
-			$errors [] = "Este tipo de archivo no esta admitido: ".$_FILES['myimg2']['name'];
-			}
-*/
-	elseif ($_FILES['myimg2']['size'] > $limite){
-	$tamanho2 = $_FILES['myimg2']['size'] / 1024;
-	$errors [] = "El archivo".$_FILES['myimg2']['name']." es mayor de 500 KBytes. ".$tamanho2." KB";
-			}
-		
-			elseif ($_FILES['myimg2']['error'] == UPLOAD_ERR_PARTIAL){
-				$errors [] = "La carga del archivo se ha interrumpido.";
-				}
-				
-				elseif ($_FILES['myimg2']['error'] == UPLOAD_ERR_NO_FILE){
-					$errors [] = "Es archivo no se ha cargado.";
-					}
-		}
-
-//////////////
-
-		if($_FILES['myimg3']['size'] == 0){}
-		else{
-		 
-		$limite = 500 * 1024;
-		$ext_permitidas = array('jpg','JPG','gif','GIF','png','PNG','pdf','PDF','bmp','BMP');
-		
-		$extension3 = substr($_FILES['myimg3']['name'],-3);
-		// print($extension3);
-		// $extension3 = end(explode('.', $_FILES['myimg3']['name']) );
-		$ext_correcta3 = in_array($extension3, $ext_permitidas);
-
-	// $tipo_correcto3 = preg_match('/^image\/(gif|png|jpg|bmp)$/', $_FILES['myimg3']['type']);
-
-		 
-		if(!$ext_correcta3){
-			$errors [] = "La extension no esta admitida: ".$_FILES['myimg3']['name'];
-			}
-/*
-		elseif(!$tipo_correcto3){
-			$errors [] = "Este tipo de archivo no esta admitido: ".$_FILES['myimg3']['name'];
-			}
-*/
-	elseif ($_FILES['myimg3']['size'] > $limite){
-	$tamanho3 = $_FILES['myimg3']['size'] / 1024;
-	$errors [] = "El archivo".$_FILES['myimg3']['name']." es mayor de 500 KBytes. ".$tamanho3." KB";
-			}
-		
-			elseif ($_FILES['myimg3']['error'] == UPLOAD_ERR_PARTIAL){
-				$errors [] = "La carga del archivo se ha interrumpido.";
-				}
-				
-				elseif ($_FILES['myimg3']['error'] == UPLOAD_ERR_NO_FILE){
-					$errors [] = "Es archivo no se ha cargado.";
-					}
-		}
-
-//////////////
-
-		if($_FILES['myimg4']['size'] == 0){}
-		else{
-		 
-		$limite = 500 * 1024;
-		$ext_permitidas = array('jpg','JPG','gif','GIF','png','PNG','pdf','PDF','bmp','BMP');
-		
-		$extension4 = substr($_FILES['myimg4']['name'],-3);
-		// print($extension4);
-		// $extension4 = end(explode('.', $_FILES['myimg4']['name']) );
-		$ext_correcta4 = in_array($extension4, $ext_permitidas);
-
-	// $tipo_correcto4 = preg_match('/^image\/(gif|png|jpg|bmp)$/', $_FILES['myimg4']['type']);
-
-		if(!$ext_correcta4){
-			$errors [] = "La extension no esta admitida: ".$_FILES['myimg4']['name'];
-			}
-/*
-		elseif(!$tipo_correcto4){
-			$errors [] = "Este tipo de archivo no esta admitido: ".$_FILES['myimg4']['name'];
-			}
-*/
-	elseif ($_FILES['myimg4']['size'] > $limite){
-	$tamanho4 = $_FILES['myimg4']['size'] / 1024;
-	$errors [] = "El archivo".$_FILES['myimg4']['name']." es mayor de 500 KBytes. ".$tamanho4." KB";
-			}
-		
-			elseif ($_FILES['myimg4']['error'] == UPLOAD_ERR_PARTIAL){
-				$errors [] = "La carga del archivo se ha interrumpido.";
-				}
-				
-				elseif ($_FILES['myimg4']['error'] == UPLOAD_ERR_NO_FILE){
-					$errors [] = "Es archivo no se ha cargado.";
-					}
-		}
-
-		///////////////////////////////////////////////////////////////////////////////////
-	
-	if(strlen(trim($_POST['factnum'])) == 0){
-		$errors [] = "FACTURA NUMERO <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-	
-	elseif (strlen(trim($_POST['factnum'])) < 5){
-		$errors [] = "FACTURA NUMERO <font color='#FF0000'>Más de 4 carácteres.</font>";
-		}
-		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\.\*\']+$/',$_POST['factnum'])){
-		$errors [] = "FACTURA NUMERO <font color='#FF0000'>Caracteres no válidos.</font>";
-		}
-		
-	elseif (!preg_match('/^[a-zA-Z,0-9_\s]+$/',$_POST['factnum'])){
-		$errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo letras o números sin acentos.</font>";
-		}
-
-	elseif (!preg_match('/^[A-Z,0-9_\s]+$/',$_POST['factnum'])){
-$errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin acentos 0 _.</font>";
-		}
-
-/*
-	
-	if(strlen(trim($_POST['factdate'])) == 0){
-		$errors [] = "FECHA <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-	
-	elseif (strlen(trim($_POST['factdate'])) < 5){
-		$errors [] = "FECHA <font color='#FF0000'>Más de 4 carácteres.</font>";
-		}
-		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\.\*\']+$/',$_POST['factdate'])){
-		$errors [] = "FECHA <font color='#FF0000'>Caracteres no válidos.</font>";
-		}
-	elseif (!preg_match('/^[a-zA-Z,0-9\s]+$/',$_POST['factdate'])){
-		$errors [] = "FECHA <font color='#FF0000'>Solo letras o números sin acentos.</font>";
-		}
-*/
-
-	 /*VALIDAMOS EL CAMPO factnom */
-	
-	if(strlen(trim($_POST['factnom'])) == 0){
-		$errors [] = "RAZON SOCIAL <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-	
-	elseif (strlen(trim($_POST['factnom'])) < 4){
-		$errors [] = "RAZON SOCIAL <font color='#FF0000'>Más de 3 carácteres.</font>";
-		}
-		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\.\*\']+$/',$_POST['factnom'])){
-		$errors [] = "RAZON SOCIAL <font color='#FF0000'>Caracteres no válidos.</font>";
-		}
-		
-	elseif (!preg_match('/^[a-zA-Z,0-9_\s]+$/',$_POST['factnom'])){
-		$errors [] = "RAZON SOCIAL <font color='#FF0000'>Solo letras, números sin acentos o _.</font>";
-		}
-
-	 /*VALIDAMOS EL CAMPO factnif */
-	
-	if(strlen(trim($_POST['factnif'])) == 0){
-		$errors [] = "NIF/CIF <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-	
-	elseif (strlen(trim($_POST['factnif'])) < 5){
-		$errors [] = "NIF/CIF <font color='#FF0000'>Más de 4 carácteres.</font>";
-		}
-		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\.\*\']+$/',$_POST['factnif'])){
-		$errors [] = "NIF/CIF <font color='#FF0000'>Caracteres no válidos.</font>";
-		}
-		
-	elseif (!preg_match('/^[A-Z,a-z,0-9\s]+$/',$_POST['factnif'])){
-		$errors [] = "NIF/CIF <font color='#FF0000'>Solo mayusculas o números sin acentos.</font>";
-		}
-
-	/* Validamos el campo factiva.*/ 
-	
-	if($_POST['factiva'] == ''){
-		$errors [] = "IMPUESTOS: <font color='#FF0000'>SELECCIONE EL TIPO DE IVA</font>";
-		}
-					
-	/* VALIDAMOS EL CAMPO factivae */
-	
-		if(strlen(trim($_POST['factivae1'])) == 0){
-			$errors [] = "IMPUESTOS € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factivae1'])){
-			$errors [] = "IMPUESTOS € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factivae1'])){
-			$errors [] = "IMPUESTOS € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-		if(strlen(trim($_POST['factivae2'])) == 0){
-			$errors [] = "IMPUESTOS € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factivae2'])){
-			$errors [] = "IMPUESTOS € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factivae2'])){
-			$errors [] = "IMPUESTOS € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-	/* Validamos el campo factret.*/ 
-	
-	if($_POST['factret'] == ''){
-		$errors [] = "RETENCIONES: <font color='#FF0000'>SELECCIONE EL TIPO DE IVA</font>";
-		}
-					
-	/* VALIDAMOS EL CAMPO factrete */
-	
-		if(strlen(trim($_POST['factrete1'])) == 0){
-			$errors [] = "RETENCIONES € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factrete1'])){
-			$errors [] = "RETENCIONES € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factrete1'])){
-			$errors [] = "RETENCIONES € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-		if(strlen(trim($_POST['factrete2'])) == 0){
-			$errors [] = "RETENCIONES € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factrete2'])){
-			$errors [] = "RETENCIONES € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factrete2'])){
-			$errors [] = "IMPUESTOS € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-	/* VALIDAMOS EL CAMPO factpvp */
-	
-		if(strlen(trim($_POST['factpvp1'])) == 0){
-			$errors [] = "SUBTOTAL € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factpvp1'])){
-			$errors [] = "SUBTOTAL € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factpvp1'])){
-			$errors [] = "SUBTOTAL € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-		if(strlen(trim($_POST['factpvp2'])) == 0){
-			$errors [] = "SUBTOTAL € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factpvp2'])){
-			$errors [] = "SUBTOTAL € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factpvp2'])){
-			$errors [] = "SUBTOTAL € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-	/* VALIDAMOS EL CAMPO factpvptot */
-	
-		if(strlen(trim($_POST['factpvptot1'])) == 0){
-			$errors [] = "TOTAL € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factpvptot1'])){
-			$errors [] = "TOTAL € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factpvptot1'])){
-			$errors [] = "TOTAL € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-		if(strlen(trim($_POST['factpvptot2'])) == 0){
-			$errors [] = "TOTAL € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factpvptot2'])){
-			$errors [] = "TOTAL € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factpvptot2'])){
-			$errors [] = "TOTAL € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-	 /*VALIDAMOS EL CAMPO coment. */
-		
-	if(strlen(trim($_POST['coment'])) == 0){
-		$errors [] = "DESCRIPCIÓN <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-	
-	elseif (strlen(trim($_POST['coment'])) < 10){
-		$errors [] = "DESCRIPCIÓN <font color='#FF0000'>Más de 10 carácteres.</font>";
-		}
-		
-	elseif (strlen(trim($_POST['coment'])) > 19){
-
-	if (!preg_match('/^[a-z A-Z 0-9 \s ,.;:\'-() áéíóúñ € \/]+$/',$_POST['coment'])){
-		$errors [] = "DESCRIPCIÓN  <font color='#FF0000'>A escrito caracteres no permitidos. { } [ ] ¿ ? < > ¡ ! @ # ...</font>";
-		}
-	}
-
-	 /*VALIDAMOS EL CAMPO dy & dm & dd */
-		
-	if(trim($_POST['dy']) == ''){
-		$errors [] = "YEAR <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-	
-	if(trim($_POST['dm']) == ''){
-		$errors [] = "MONTH <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-	
-	if(trim($_POST['dd']) == ''){
-		$errors [] = "DAY <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-
-////////////////
-
-	$factivae1 = $_POST['factivae1'];
-	$factivae2 = $_POST['factivae2'];
-	global $factivae;
-	$factivae = is_float($factivae1.".".$factivae2);
-
-	$factrete1 = $_POST['factrete1'];
-	$factrete2 = $_POST['factrete2'];
-	global $factrete;
-	$factrete = is_float($factrete1.".".$factrete2);
-
-	$factpvp1 = $_POST['factpvp1'];
-	$factpvp2 = $_POST['factpvp2'];
-	global $factpvp;
-	$factpvp = is_float($factpvp1.".".$factpvp2);
-
-	$factpvptot1 = $_POST['factpvptot1'];
-	$factpvptot2 = $_POST['factpvptot2'];
-	global $factpvptot;
-	$factpvptot = is_float($factpvptot1.".".$factpvptot2);
-
-	$fiva = is_float($_POST['factiva']);
-	
-	$civae = $factpvp * ($fiva / 100);
-	$civae = number_format($civae,2,".","");
-	$civae = is_float($civae);
-	if(trim($factivae) != trim($civae)){
-		$errors [] = "IMPUESTOS € <font color='#FF0000'>Cantidad no correcta</font> ".$civae." OK";
-	}
-	
-	$fret = $_POST['factret'];
-
-	$crete = $factpvp * ($fret / 100);
-	$crete = number_format($crete,2,".","");
-	$crete = is_float($crete);
-	if(trim($factrete) != trim($crete)){
-		$errors [] = "RETENCIONES € <font color='#FF0000'>Cantidad no correcta</font> ".$crete." OK";
-	}
-	
-	$cftot = ($factpvp + $civae) - $factrete;
-	$cftot = number_format($cftot,2,".","");
-	$cftot = is_float($cftot);
-	if(trim($factpvptot) != trim($cftot)){
-			$errors [] = "TOTAL € <font color='#FF0000'>Cantidad no correcta</font> ".$cftot." OK";
-	}
-	
-////////////////////
-	
-
-	if($_POST['dy'] != ''){
-	
-	global $db; 	global $db_name;
-
-	$dyt1 = "20".$_POST['dy'];
-																
-	global $vname;
-	$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
-	
-	$sqlx =  "SELECT * FROM `$db_name`.$vname WHERE `factnum` = '$_POST[factnum]'";
-	$qx = mysqli_query($db, $sqlx);
-	$countx = mysqli_num_rows($qx);
-	$rowsx = mysqli_fetch_assoc($qx);
-	
-	global $exist;	
-	if($countx > 0){$errors [] = "<font color='#FF0000'>YA EXISTE LA FACTURA</font>";
-					}
-}
-
-////////////////////
-
-	return $errors;
-
-		} 
+	} 
 		
 //////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -521,9 +77,13 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 	$rowbali = mysqli_fetch_assoc($qbali);
 	
 	$sumamesiva = $rowbali['iva'] - $rowbalg['iva'];
+		$sumamesiva = number_format($sumamesiva,2,".","");	
 	$sumamespvp = $rowbali['sub'] - $rowbalg['sub'];
+		$sumamespvp = number_format($sumamespvp,2,".","");	
 	$sumamesret = $rowbali['ret'] - $rowbalg['ret'];
+		$sumamesret = number_format($sumamesret,2,".","");	
 	$sumamestot = $rowbali['tot'] - $rowbalg['tot'];
+		$sumamestot = number_format($sumamestot,2,".","");	
 
 	//	print("* ".$dyt1." ".$dm1.".</br>");
 	//	print("* ".$sumamesiva." ".$sumamespvp." ".$sumamestot.".</br>");
@@ -531,8 +91,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 	$sqlbg = "UPDATE `$db_name`.$vnamebald  SET `iva` = '$sumamesiva', `sub` = '$sumamespvp', `ret` =  '$sumamesret', `tot` =  '$sumamestot' WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
 		
 		if(mysqli_query($db, $sqlbg)){ //print("**"); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA 519: ".mysqli_error($db));
+		} else { print("* MODIFIQUE LA ENTRADA 87: ".mysqli_error($db));
 									global $texerror;
 									$texerror = "\n\t ".mysqli_error($db);
 							}
@@ -549,10 +108,14 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 	$countbali2 = mysqli_num_rows($qbali2);
 	$rowbali2 = mysqli_fetch_assoc($qbali2);
 	
-	$sumayeariva2 = $rowbali2['iva'] - $rowbalg2['iva'];	
-	$sumayearpvp2 = $rowbali2['sub'] - $rowbalg2['sub'];	
+	$sumayeariva2 = $rowbali2['iva'] - $rowbalg2['iva'];
+		$sumayeariva2 = number_format($sumayeariva2,2,".","");	
+	$sumayearpvp2 = $rowbali2['sub'] - $rowbalg2['sub'];
+		$sumayearpvp2 = number_format($sumayearpvp2,2,".","");	
 	$sumayearret2 = $rowbali2['ret'] - $rowbalg2['ret'];	
+		$sumayearret2 = number_format($sumayearret2,2,".","");	
 	$sumayeartot2 = $rowbali2['tot'] - $rowbalg2['tot'];	
+		$sumayeartot2 = number_format($sumayeartot2,2,".","");	
 
 	//	print("* ".$sumayeariva." ".$sumayearpvp." ".$sumayeartot.".</br>");
 
@@ -560,7 +123,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 		
 		if(mysqli_query($db, $sqlbg2)){ //print("**"); 
 					} else {
-							print("* MODIFIQUE LA ENTRADA 546: ".mysqli_error($db));
+							print("* MODIFIQUE LA ENTRADA 118: ".mysqli_error($db));
 									global $texerror;
 									$texerror = "\n\t ".mysqli_error($db);
 							}
@@ -584,9 +147,13 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 	$rowbali3 = mysqli_fetch_assoc($qbali3);
 	
 	$sumatriiva3 = $rowbali3['iva'] - $rowbalg3['iva'];
+		$sumatriiva3 = number_format($sumatriiva3,2,".","");	
 	$sumatripvp3 = $rowbali3['sub'] - $rowbalg3['sub'];
+		$sumatripvp3 = number_format($sumatripvp3,2,".","");	
 	$sumatriret3 = $rowbali3['ret'] - $rowbalg3['ret'];
+		$sumatriret3 = number_format($sumatriret3,2,".","");	
 	$sumatritot3 = $rowbali3['tot'] - $rowbalg3['tot'];
+		$sumatritot3 = number_format($sumatritot3,2,".","");	
 
 	//	print("* ".$sumatriiva." ".$sumatripvp." ".$sumatritot.".</br>");
 
@@ -594,7 +161,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 		
 		if(mysqli_query($db, $sqlbg3)){ //print("**"); 
 					} else {
-							print("* MODIFIQUE LA ENTRADA 579: ".mysqli_error($db));
+							print("* MODIFIQUE LA ENTRADA 156: ".mysqli_error($db));
 									global $texerror;
 									$texerror = "\n\t ".mysqli_error($db);
 							}
@@ -629,7 +196,7 @@ function process_form(){
 	$factrete1 = $_POST['factrete1'];
 	$factrete2 = $_POST['factrete2'];
 	global $factrete;
-	$factrete = is_float($factrete1.".".$factrete2);
+	$factrete = $factrete1.".".$factrete2;
 
 	$factpvp1 = $_POST['factpvp1'];
 	$factpvp2 = $_POST['factpvp2'];
@@ -645,33 +212,41 @@ function process_form(){
 
 	global $iniy; 		$iniy = substr(date('Y'),0,2);
 	 
-	$tabla = "<table style='text-align:center; margin-top:10px; width: 450px;' >
+	$tabla = "<table style='text-align:center; margin-top:10px;' >
 				<tr>
 					<th colspan=4 class='BorderInf'>
 						SE HA GRABADO EN ".strtoupper($vname)."
 					</th>
 				</tr>
 				<tr>
-					<td style='whidth:180px; text-align:right;'>NUMERO</td><td>".$_POST['factnum']."</td>
-					<td>FECHA</td><td>".$iniy.$factdate."</td>
+					<td style='whidth:220px; text-align:right;'>NUMERO</td>
+					<td style='whidth:220px;>".$_POST['factnum']."</td>
+					<td style='whidth:220px;>FECHA</td>
+					<td>".$iniy.$factdate."</td>
 				</tr>
 				<tr>
-					<td style='text-align:right;'>RAZON SOCIAL</td><td>".$_POST['factnom']."</td>
-					<td>NIF / CIF</td><td>".$_POST['factnif']."</td>
+					<td style='text-align:right;'>RAZON SOCIAL</td>
+					<td>".$_POST['factnom']."</td>
+					<td>NIF / CIF</td>
+					<td>".$_POST['factnif']."</td>
 				</tr>
 				<tr>
 					<td style='text-align:right;'>IMPUESTOS %</td>
 					<td>".$_POST['factiva']."</td>
 					<td>IMPUESTOS €</td>
-					<td width=250px>".$factivae."</td>
+					<td>".$factivae."</td>
 				</tr>
 				<tr>
-					<td style='text-align:right;'>RETENCIONES %</td><td>".$_POST['factret']."</td>
-					<td>RETENCIONES €</td><td width=250px>".$factivae."</td>
+					<td style='text-align:right;'>RETENCIONES %</td>
+					<td>".$_POST['factret']."</td>
+					<td>RETENCIONES €</td>
+					<td>".$factivae."</td>
 				</tr>
 				<tr>
-					<td style='text-align:right;'>SUBTOTAL</td><td>".$factpvp."</td>
-					<td>TOTAL</td><td>".$factpvptot."</td>
+					<td style='text-align:right;'>SUBTOTAL</td>
+					<td>".$factpvp."</td>
+					<td>TOTAL</td>
+					<td>".$factpvptot."</td>
 				</tr>
 				<tr>
 					<td style='text-align:right;'>DESCRIPCION</td>
@@ -850,7 +425,7 @@ function process_form(){
 		
 		if(mysqli_query($db, $sqla)){ print($tabla); 
 		} else { print("* MODIFIQUE LA ENTRADA 846: ".mysqli_error($db));
-					show_form ();
+					show_form();
 					global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 				}
 			
@@ -871,9 +446,13 @@ function process_form(){
 	$rowbalg = mysqli_fetch_assoc($qbalg);
 	
 	$sumamesiva = $rowbalg['iva'] + $factivae;	
+		$sumamesiva = number_format($sumamesiva,2,".","");	
 	$sumamespvp = $rowbalg['sub'] + $factpvp;	
+		$sumamespvp = number_format($sumamespvp,2,".","");	
 	$sumamesret = $rowbalg['ret'] + $factrete;	
+		$sumamesret = number_format($sumamesret,2,".","");	
 	$sumamestot = $rowbalg['tot'] + $factpvptot;	
+		$sumamestot = number_format($sumamestot,2,".","");	
 
 	//print("* ".$dyt1." ".$dm1.".</br>");
 	//print("* ".$sumamesiva." ".$sumamespvp." ".$sumamestot.".</br>");
@@ -895,9 +474,13 @@ function process_form(){
 	$rowbalg2 = mysqli_fetch_assoc($qbalg2);
 
 	$sumayeariva = $rowbalg2['iva'] + $factivae;	
+		$sumayeariva = number_format($sumayeariva,2,".","");	
 	$sumayearpvp = $rowbalg2['sub'] + $factpvp;	
+		$sumayearpvp = number_format($sumayearpvp,2,".","");	
 	$sumayearret = $rowbalg2['ret'] + $factrete;	
+		$sumayearret = number_format($sumayearret,2,".","");	
 	$sumayeartot = $rowbalg2['tot'] + $factpvptot;	
+		$sumayeartot = number_format($sumayeartot,2,".","");	
 
 	//print("* ".$sumayeariva." ".$sumayearpvp." ".$sumayeartot.".</br>");
 
@@ -924,9 +507,13 @@ function process_form(){
 	$rowbalg3 = mysqli_fetch_assoc($qbalg3);
 
 	$sumatriiva = $rowbalg3['iva'] + $factivae;	
+		$sumatriiva = number_format($sumatriiva,2,".","");	
 	$sumatripvp = $rowbalg3['sub'] + $factpvp;	
+		$sumatripvp = number_format($sumatripvp,2,".","");	
 	$sumatriret = $rowbalg3['ret'] + $factrete;	
+		$sumatriret = number_format($sumatriret,2,".","");	
 	$sumatritot = $rowbalg3['tot'] + $factpvptot;	
+		$sumatritot = number_format($sumatritot,2,".","");	
 
 	//print("* ".$sumatriiva." ".$sumatripvp." ".$sumatritot.".</br>");
 
@@ -944,28 +531,44 @@ function process_form(){
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-function show_form($errors=[]){
+	function show_form($errors=[]){
 	
-	global $db; 		global $db_name;
-	
-	global $sesionref; 		$sesionref = "`".$_SESSION['clave']."proveedores`";
-	
-
+		global $db; 		global $db_name;
 		
+		global $sesionref; 		$sesionref = "`".$_SESSION['clave']."proveedores`";
 
-	if((isset($_POST['oculto']))||(isset($_POST['oculto1']))){
-
+		if(isset($_POST['proveegastos'])){
 			$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveegastos]'";
 			$qx = mysqli_query($db, $sqlx);
 			$rowprovee = mysqli_fetch_assoc($qx);
 
+			$qx = mysqli_query($db, $sqlx);
+			$rowprovee = mysqli_fetch_assoc($qx);
+			$_rsocial = $rowprovee['rsocial'];
+			$_ref = $rowprovee['ref'];
+			$_dni = $rowprovee['dni'];
+			$_ldni = $rowprovee['ldni'];
+			global $_dnil;
+			$_dnil = $_dni.$_ldni;
+		}
+	
+		/*
+		if((isset($_POST['oculto']))||(isset($_POST['oculto1']))){
+
 			$defaults = $_POST;
+			$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveegastos]'";
+			$qx = mysqli_query($db, $sqlx);
+			$rowprovee = mysqli_fetch_assoc($qx);
+			$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveegastos]'";
+			$qx = mysqli_query($db, $sqlx);
+			$rowprovee = mysqli_fetch_assoc($qx);
+
 			$defaults['refprovee'] = $rowprovee['ref'];
 			$defaults['factnom'] = $rowprovee['rsocial'];
 			$defaults['factnif'] = $rowprovee['dni'].$rowprovee['ldni'];
 
-	} else {
-			$defaults = array (	'proveegastos' => '',
+		} else {
+				$defaults = array (	'proveegastos' => '',
 								'dy' => '',
 								'dm' => '',
 								'dd' => '',
@@ -990,6 +593,66 @@ function show_form($errors=[]){
 								'myimg3' => '',	
 								'myimg4' => '');
 						}
+		*/
+
+		if(isset($_POST['oculto'])){
+				 //$defaults = $_POST;
+				 $defaults = array ( 'proveegastos' => $_POST['proveegastos'],
+									 'dy' => $_POST['dy'],
+									 'dm' => $_POST['dm'],
+									 'dd' => $_POST['dd'],
+									 'factnum' => strtoupper($_POST['factnum']),
+								     // 'factdate' => $_POST['factdate'],
+								   	 'refprovee' => $rowprovee['ref'],
+								   	 'factnom' => $rowprovee['rsocial'],
+								   	 'factnif' => $_dnil,
+								   	 'factiva' => $_POST['factiva'],
+									 'factivae1' => $_POST['factivae1'],	
+									 'factivae2' => $_POST['factivae2'],	
+								   	 'factret' => $_POST['factret'],
+									 'factrete1' => $_POST['factrete1'],	
+									 'factrete2' => $_POST['factrete2'],	
+									 'factpvp1' => $_POST['factpvp1'],	
+									 'factpvp2' => $_POST['factpvp2'],	
+									 'factpvptot1' => $_POST['factpvptot1'],	
+									 'factpvptot2' => $_POST['factpvptot2'],	
+									 'coment' => $_POST['coment'],	
+									 'myimg1' => @$_POST['myimg1'],	
+									 'myimg2' => @$_POST['myimg2'],	
+									 'myimg3' => @$_POST['myimg3'],	
+									 'myimg4' => @$_POST['myimg4']);
+
+		} elseif(isset($_POST['oculto1'])) {
+				$defaults = array ( 'proveegastos' => $_POST['proveegastos'],
+								   	 'refprovee' => $rowprovee['ref'],
+								   	 'factnom' => $rowprovee['rsocial'],
+								   	 'factnif' => $_dnil);
+
+		} else { $defaults = array ( 'proveegastos' => @$_POST['proveegastos'],
+									 'dy' => @$_POST['dy'],
+									 'dm' => @$_POST['dm'],
+									 'dd' => @$_POST['dd'],
+									 'factnum' => strtoupper(@$_POST['factnum']),
+								     // 'factdate' => $_POST['factdate'],
+								   	 'refprovee' => @$rowprovee['ref'],
+								   	 'factnom' => @$rowprovee['rsocial'],
+								   	 'factnif' => @$_dnil,
+								   	 'factiva' => @$_POST['factiva'],
+									 'factivae1' => @$_POST['factivae1'],	
+									 'factivae2' => '00',	
+								   	 'factret' => @$_POST['factret'],
+									 'factrete1' => @$_POST['factrete1'],	
+									 'factrete2' => '00',	
+									 'factpvp1' => @$_POST['factpvp1'],	
+									 'factpvp2' => '00',	
+									 'factpvptot1' => @$_POST['factpvptot1'],	
+									 'factpvptot2' => '00',	
+									 'coment' => @$_POST['coment'],	
+									 'myimg1' => @$_POST['myimg1'],	
+									 'myimg2' => @$_POST['myimg2'],	
+									 'myimg3' => @$_POST['myimg3'],	
+									 'myimg4' => @$_POST['myimg4']);
+							   	}
 
 	if ($errors){
 		print("	<div>
@@ -1066,13 +729,13 @@ function show_form($errors=[]){
 			<form name='form_tabla' method='post' action='$_SERVER[PHP_SELF]'>
 				<tr>
 					<td colspan='4' align='center'>
-							SELECCIONE UN CLIENTE
+							SELECCIONE UN PROVEEDOR
 					</td>
 				</tr>		
 				<tr>
 					<td>
 					<div style='float:left'>
-						<input type='submit' value='SELECCIONE CLIENTE' />
+						<input type='submit' value='SELECCIONE PROVEEDOR' />
 						<input type='hidden' name='oculto1' value=1 />
 					</div>
 					<div style='float:left'>
@@ -1100,47 +763,37 @@ function show_form($errors=[]){
 
 	}  
 
-	print ("	</select>
+	print ("</select>
 					</div>
 				</td>
 			</tr>
-	
 		</form>	
-			</table>				
-				"); 
+			</table>"); 
 				
 ////////////////////
 
 	if ((isset($_POST['oculto1'])) || (isset($_POST['oculto']))) {
 	if (($_POST['proveegastos'] == '') && ($defaults['factnom'] == '')) { 
-						print("<table align='center' style=\"margin-top:20px;margin-bottom:20px\">
-									<tr align='center'>
-										<td>
-											<font color='red'>
-										SELECCIONE UN CLIENTE
-											</font>
-										</td>
-									</tr>
-								</table>");
-												}	
-	if($_POST['proveegastos'] != '') {
-	print("
-			<table align='center' style=\"margin-top:10px\">
-				<tr>
-					<th colspan=2 class='BorderInf'>
-								GRABAR GASTO					
-					</th>
-				</tr>
-				
-<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
+			print("<table align='center' style=\"margin-top:20px;margin-bottom:20px\">
+						<tr align='center'>
+							<td>
+								<font color='red'>SELECCIONE UN PROVEEDOR</font>
+							</td>
+						</tr>
+					</table>");
+				}
 
-	<input type='hidden' name='proveegastos' value='".$defaults['proveegastos']."' />
+	if($_POST['proveegastos'] != '') {
+	print("<table align='center' style=\"margin-top:10px\">
 				<tr>
+					<th colspan=2 class='BorderInf'>GRABAR GASTO</th>
+				</tr>
+		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
+			<input type='hidden' name='proveegastos' value='".$defaults['proveegastos']."' />
+				<tr>
+					<td>NUMERO</td>
 					<td>
-						NUMERO
-					</td>
-					<td>
-	<input type='text' name='factnum' size=22 maxlength=20 value='".strtoupper(@$defaults['factnum'])."' />
+			<input type='text' name='factnum' size=22 maxlength=20 value='".strtoupper(@$defaults['factnum'])."' />
 					</td>
 				</tr>
 				<tr>
@@ -1148,26 +801,24 @@ function show_form($errors=[]){
 					<td>
 				<div style='float:left'>");
 								
-	require '../Inclu/year_in_select_bbdd.php';
+		require '../Inclu/year_in_select_bbdd.php';
 																
-	print ("	</select>
+		print ("</select>
 					</div>
 					<div style='float:left'>
-			<select style='margin-left:12px' name='dm'>");
-				foreach($dm as $optiondm => $labeldm){
-					print ("<option value='".$optiondm."' ");
-					
-				if($optiondm == @$defaults['dm']){
-									print ("selected = 'selected'");
-										}
-							print ("> $labeldm </option>");
-						}	
+				<select style='margin-left:12px' name='dm'>");
+					foreach($dm as $optiondm => $labeldm){
+						print ("<option value='".$optiondm."' ");
+					if($optiondm == @$defaults['dm']){
+										print ("selected = 'selected'");
+											}
+								print ("> $labeldm </option>");
+							}	
 																
-	print ("	</select>
+		print ("</select>
 					</div>
 					<div style='float:left'>
 						<select style='margin-left:12px' name='dd'>");
-
 			foreach($dd as $optiondd => $labeldd){
 						print ("<option value='".$optiondd."' ");
 					if($optiondd == @$defaults['dd']){
@@ -1175,8 +826,7 @@ function show_form($errors=[]){
 											}
 							print ("> $labeldd </option>");
 						}	
-																
-	print ("	</select> 
+		print ("</select> 
 					</div>
 					</td>
 				</tr>
@@ -1198,28 +848,24 @@ function show_form($errors=[]){
 	<input type='hidden' name='factnif'value='".@$defaults['factnif']."' />".@$defaults['factnif']."
 					</td>
 				</tr>
-					
 				<tr>
-					<td>						
-						IMPUESTOS %
-					</td>
+					<td>IMPUESTOS %</td>
 					<td>
-					
 			<div style='float:left'>
 				<select name='factiva'>");
 
-	global $db;
-	global $vname; 		$vname = "`".$_SESSION['clave']."impuestos`";
-	$sqli =  "SELECT * FROM $vname ORDER BY `iva` ASC ";
-	$qi = mysqli_query($db, $sqli);
+		global $db;
+		global $vname; 		$vname = "`".$_SESSION['clave']."impuestos`";
+		$sqli =  "SELECT * FROM $vname ORDER BY `iva` ASC ";
+		$qi = mysqli_query($db, $sqli);
 
 			if(!$qi){	print("* ".mysqli_error($db)."</br>");
 				} else {
 					while($rowimp = mysqli_fetch_assoc($qi)){
 							print ("<option value='".$rowimp['iva']."' ");
 							if($rowimp['iva'] == @$defaults['factiva']){
-							print ("selected = 'selected'");																																													
-															}
+							print ("selected = 'selected'");
+									}
 							print ("> ".$rowimp['name']." </option>");
 							}
 						} 
@@ -1228,40 +874,31 @@ function show_form($errors=[]){
 						</div>
 					</td>
 				</tr>
-
 				<tr>
-					<td>						
-						IMPUESTOS €
-					</td>
+					<td>IMPUESTOS €</td>
 					<td>
-<input style='text-align:right' type='text' name='factivae1' size=5 maxlength=5 value='".@$defaults['factivae1']."' />
-,
-<input type='text' name='factivae2' size=2 maxlength=2 value='".@$defaults['factivae2']."' />
-€
+			<input style='text-align:right' type='text' name='factivae1' size=5 maxlength=5 value='".@$defaults['factivae1']."' />,
+			<input type='text' name='factivae2' size=2 maxlength=2 value='".@$defaults['factivae2']."' />€
 					</td>
 				</tr>
-					
 				<tr>
-					<td>						
-						RETENCIONES %
-					</td>
+					<td>RETENCIONES %</td>
 					<td>
-					
 			<div style='float:left'>
 				<select name='factret'>");
 
-	global $db;
-	global $vnamer; 	$vnamer = "`".$_SESSION['clave']."retencion`";
-	$sqlr =  "SELECT * FROM $vnamer ORDER BY `ret` ASC ";
-	$qr = mysqli_query($db, $sqlr);
+		global $db;
+		global $vnamer; 	$vnamer = "`".$_SESSION['clave']."retencion`";
+		$sqlr =  "SELECT * FROM $vnamer ORDER BY `ret` ASC ";
+		$qr = mysqli_query($db, $sqlr);
 
 			if(!$qr){	print("* ".mysqli_error($db)."</br>");
 				} else {
 					while($rowret = mysqli_fetch_assoc($qr)){
 							print ("<option value='".$rowret['ret']."' ");
 							if($rowret['ret'] == @$defaults['factret']){
-							print ("selected = 'selected'");																																													
-															}
+							print ("selected = 'selected'");
+								}
 							print ("> ".$rowret['name']." </option>");
 							}
 						} 
@@ -1270,110 +907,73 @@ function show_form($errors=[]){
 						</div>
 					</td>
 				</tr>
-
 				<tr>
-					<td>						
-						RETENCIONES €
-					</td>
+					<td>RETENCIONES €</td>
 					<td>
-<input style='text-align:right' type='text' name='factrete1' size=5 maxlength=5 value='".@$defaults['factrete1']."' />
-,
-<input type='text' name='factrete2' size=2 maxlength=2 value='".@$defaults['factrete2']."' />
-€
+			<input style='text-align:right' type='text' name='factrete1' size=5 maxlength=5 value='".@$defaults['factrete1']."' />,
+			<input type='text' name='factrete2' size=2 maxlength=2 value='".@$defaults['factrete2']."' />€
 					</td>
 				</tr>
-					
 				<tr>
-					<td>						
-						SUBTOTAL €
-					</td>
+					<td>SUBTOTAL €</td>
 					<td>
-<input style='text-align:right' type='text' name='factpvp1' size=5 maxlength=5 value='".@$defaults['factpvp1']."' />
-,
-<input type='text' name='factpvp2' size=2 maxlength=2 value='".@$defaults['factpvp2']."' />
-€
+			<input style='text-align:right' type='text' name='factpvp1' size=5 maxlength=5 value='".@$defaults['factpvp1']."' />,
+			<input type='text' name='factpvp2' size=2 maxlength=2 value='".@$defaults['factpvp2']."' />€
 					</td>
 				</tr>
-					
 				<tr>
-					<td>						
-						TOTAL €
-					</td>
+					<td>TOTAL €</td>
 					<td>
-<input style='text-align:right' type='text' name='factpvptot1' size=5 maxlength=5 value='".@$defaults['factpvptot1']."' />
-,
-<input type='text' name='factpvptot2' size=2 maxlength=2 value='".@$defaults['factpvptot2']."' />
-€
+			<input style='text-align:right' type='text' name='factpvptot1' size=5 maxlength=5 value='".@$defaults['factpvptot1']."' />,
+			<input type='text' name='factpvptot2' size=2 maxlength=2 value='".@$defaults['factpvptot2']."' />€
 					</td>
 				</tr>
-					
 				<tr>
+					<td>DESCRIPCIÓN</td>
 					<td>
-						DESCRIPCIÓN
-					</td>
-					<td>
-					
-<textarea cols='35' rows='7' onkeypress='return limitac(event, 200);' onkeyup='actualizaInfoc(200)' name='coment' id='coment'>".@$defaults['coment']."</textarea>
-	
+			<textarea cols='35' rows='7' onkeypress='return limitac(event, 200);' onkeyup='actualizaInfoc(200)' name='coment' id='coment'>".@$defaults['coment']."</textarea>
 			</br>
 	            <div id='infoc' align='center' style='color:#0080C0;'>
         					Maximum 200 characters            
 				</div>
-
 					</td>
 				</tr>
-								
 				<tr>
-					<td>
-						PDF / FOTO 1
-					</td>
+					<td>PDF / FOTO 1</td>
 					<td>
 		<input type='file' name='myimg1' value='".@$defaults['myimg1']."' />						
 					</td>
 				</tr>
-
 				<tr>
-					<td>
-						PDF / FOTO 2
-					</td>
+					<td>PDF / FOTO 2</td>
 					<td>
 		<input type='file' name='myimg2' value='".@$defaults['myimg2']."' />						
 					</td>
 				</tr>
-
 				<tr>
-					<td>
-						PDF / FOTO 3
-					</td>
+					<td>PDF / FOTO 3</td>
 					<td>
 		<input type='file' name='myimg3' value='".@$defaults['myimg3']."' />						
 					</td>
 				</tr>
-
 				<tr>
-					<td>
-						PDF / FOTO 4
-					</td>
+					<td>PDF / FOTO 4</td>
 					<td>
 		<input type='file' name='myimg4' value='".@$defaults['myimg4']."' />						
 					</td>
 				</tr>
-
 				<tr>
 					<td colspan='2' align='right' valign='middle'  class='BorderSup'>
 						<input type='submit' value='GRABAR GASTO' />
 						<input type='hidden' name='oculto' value=1 />
 					</td>
 				</tr>
-				
 		</form>														
-			
-			</table>				
-						"); 
+			</table>"); 
 			}
 		}
-	
-	}	
+
+	} // FIN function show_form()
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 

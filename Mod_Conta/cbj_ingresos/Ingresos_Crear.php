@@ -901,7 +901,7 @@ $sqla = "INSERT INTO `$db_name`.$vname (`factnum`, `factdate`, `refcliente`, `fa
 		if(mysqli_query($db, $sqla)){ print($tabla); 
 					} else {
 							print("* MODIFIQUE LA ENTRADA 876: ".mysqli_error($db));
-									show_form ();
+									show_form();
 									global $texerror;
 									$texerror = "\n\t ".mysqli_error($db);
 					}
@@ -997,25 +997,25 @@ $sqla = "INSERT INTO `$db_name`.$vname (`factnum`, `factdate`, `refcliente`, `fa
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-function show_form($errors=[]){
-	
-	global $db; 		global $db_name;
-	
-	global $sesionref; 		$sesionref = "`".$_SESSION['clave']."clientes`";
-	
-	$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveeingresos]'";
-	$qx = mysqli_query($db, $sqlx);
-	$rowprovee = mysqli_fetch_assoc($qx);
-	$_rsocial = $rowprovee['rsocial'];
-	$_ref = $rowprovee['ref'];
-	$_dni = $rowprovee['dni'];
-	$_ldni = $rowprovee['ldni'];
-	global $_dnil;
-	$_dnil = $_dni.$_ldni;
-	
-	if(isset($_POST['oculto'])){
-		$defaults = $_POST;
-	} else {
+	function show_form($errors=[]){
+		
+		global $db; 		global $db_name;
+		
+		global $sesionref; 		$sesionref = "`".$_SESSION['clave']."clientes`";
+		
+		$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveeingresos]'";
+		$qx = mysqli_query($db, $sqlx);
+		$rowprovee = mysqli_fetch_assoc($qx);
+		$_rsocial = $rowprovee['rsocial'];
+		$_ref = $rowprovee['ref'];
+		$_dni = $rowprovee['dni'];
+		$_ldni = $rowprovee['ldni'];
+		global $_dnil;
+		$_dnil = $_dni.$_ldni;
+		
+		if(isset($_POST['oculto'])){
+			$defaults = $_POST;
+		} else {
 				$defaults = array (	'proveeingresos' => $_POST['proveeingresos'],
 									'dy' => $_POST['dy'],
 									'dm' => $_POST['dm'],
