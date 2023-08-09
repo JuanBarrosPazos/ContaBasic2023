@@ -1,7 +1,13 @@
 
 ## PROYECTO INICIAL 2016/05/01
 ----
-### 2023/08/08 VERSIÓN Conta_Basic_New V23.2.9
+### TAREAS PENDIENTES
+
+- Ojo a $_SESSION['time'] = ???? NO SE DEFINE UN VALOR
+- 
+
+----
+### 2023/08/09 VERSIÓN Conta_Basic_New V23.2.10
 
 - AJUSTES GENERALES DEL CODIGO EN MOD_CONTA
 - 

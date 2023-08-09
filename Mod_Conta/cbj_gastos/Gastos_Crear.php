@@ -9,7 +9,9 @@ session_start();
 
 	require '../Inclu/sqld_query_fetch_assoc.php';
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 	if ($_SESSION['Nivel'] == 'admin'){
 
@@ -28,7 +30,9 @@ session_start();
 		
 	} else { require '../Inclu/table_permisos.php'; } 
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 	function validate_form(){
 	
@@ -40,19 +44,18 @@ session_start();
 
 	} 
 		
-//////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 	function difer1(){
 
-	global $db;
-	global $db_name;
+	global $db; 		global $db_name;
 	
 	$_SESSION['diferyear'] = $_POST['dy'];
 	
-	global $dyx;
-	$dyx = "20".$_POST['dy'];
-	global $dmx;
-	$dmx = "M".$_POST['dm'];
+	global $dyx; 		$dyx = "20".$_POST['dy'];
+	global $dmx; 		$dmx = "M".$_POST['dm'];
 /*
 	if(($dmx != 10)||($dmx != 11)||($dmx != 12)){
 	$dmx = substr($_POST['dm'],-1);
@@ -166,9 +169,11 @@ session_start();
 									$texerror = "\n\t ".mysqli_error($db);
 							}
 			
-		}
+	} // FIN function difer1()
 		
-//////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 function process_form(){
 	
@@ -527,9 +532,11 @@ function process_form(){
 							}
 			
 	
-	}	
+	} // FIN function process_form()	
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 	function show_form($errors=[]){
 	
@@ -552,49 +559,6 @@ function process_form(){
 			$_dnil = $_dni.$_ldni;
 		}
 	
-		/*
-		if((isset($_POST['oculto']))||(isset($_POST['oculto1']))){
-
-			$defaults = $_POST;
-			$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveegastos]'";
-			$qx = mysqli_query($db, $sqlx);
-			$rowprovee = mysqli_fetch_assoc($qx);
-			$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveegastos]'";
-			$qx = mysqli_query($db, $sqlx);
-			$rowprovee = mysqli_fetch_assoc($qx);
-
-			$defaults['refprovee'] = $rowprovee['ref'];
-			$defaults['factnom'] = $rowprovee['rsocial'];
-			$defaults['factnif'] = $rowprovee['dni'].$rowprovee['ldni'];
-
-		} else {
-				$defaults = array (	'proveegastos' => '',
-								'dy' => '',
-								'dm' => '',
-								'dd' => '',
-								'factnum' => '',
-								'factdate' => '',
-							   	'refprovee' => '',
-							   	'factnom' => '',
-							   	'factnif' => '',
-							   	'factiva' => '',
-								'factivae1' => '',	
-								'factivae2' => '',	
-							   	'factret' => '',
-								'factrete1' => '',	
-								'factrete2' => '',	
-								'factpvp1' => '',	
-								'factpvp2' => '',	
-								'factpvptot1' => '',	
-								'factpvptot2' => '',	
-								'coment' => '',	
-								'myimg1' => '',	
-								'myimg2' => '',	
-								'myimg3' => '',	
-								'myimg4' => '');
-						}
-		*/
-
 		if(isset($_POST['oculto'])){
 				 //$defaults = $_POST;
 				 $defaults = array ( 'proveegastos' => $_POST['proveegastos'],
@@ -623,10 +587,11 @@ function process_form(){
 									 'myimg4' => @$_POST['myimg4']);
 
 		} elseif(isset($_POST['oculto1'])) {
+				$defaults = $_POST;
 				$defaults = array ( 'proveegastos' => $_POST['proveegastos'],
-								   	 'refprovee' => $rowprovee['ref'],
-								   	 'factnom' => $rowprovee['rsocial'],
-								   	 'factnif' => $_dnil);
+								   	'refprovee' => $rowprovee['ref'],
+								   	'factnom' => $rowprovee['rsocial'],
+								   	'factnif' => $_dnil);
 
 		} else { $defaults = array ( 'proveegastos' => @$_POST['proveegastos'],
 									 'dy' => @$_POST['dy'],
@@ -657,9 +622,9 @@ function process_form(){
 	if ($errors){
 		print("	<div>
 					<table style='width: max-content; margin: 0.4em auto 0.4em auto; border: none;'>
-					<th style='text-align:left'>
-					<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-					</th>
+						<th style='text-align:left'>
+							<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
+						</th>
 					<tr>
 					<td style='text-align:left'>");
 			
@@ -673,60 +638,23 @@ function process_form(){
 				<div style='clear:both'></div>");
 		}
 
-	$dm = array (	'' => 'MONTH',
-					'01' => 'ENERO',
-					'02' => 'FEBRERO',
-					'03' => 'MARZO',
-					'04' => 'ABRIL',
-					'05' => 'MAYO',
-					'06' => 'JUNIO',
-					'07' => 'JULIO',
-					'08' => 'AGOSTO',
-					'09' => 'SEPTIEMBRE',
-					'10' => 'OCTUBRE',
-					'11' => 'NOVIEMBRE',
-					'12' => 'OCTUBRE',
-									);
+	$dm = array ( '' => 'MONTH', '01' => 'ENERO', '02' => 'FEBRERO',
+				  '03' => 'MARZO', '04' => 'ABRIL', '05' => 'MAYO',
+				  '06' => 'JUNIO', '07' => 'JULIO', '08' => 'AGOSTO',
+				  '09' => 'SEPTIEMBRE', '10' => 'OCTUBRE', '11' => 'NOVIEMBRE',
+				  '12' => 'OCTUBRE');
 	
-	$dd = array (	'' => 'DAY',
-					'01' => '01',
-					'02' => '02',
-					'03' => '03',
-					'04' => '04',
-					'05' => '05',
-					'06' => '06',
-					'07' => '07',
-					'08' => '08',
-					'09' => '09',
-					'10' => '10',
-					'11' => '11',
-					'12' => '12',
-					'13' => '13',
-					'14' => '14',
-					'15' => '15',
-					'16' => '16',
-					'17' => '17',
-					'18' => '18',
-					'19' => '19',
-					'20' => '20',
-					'21' => '21',
-					'22' => '22',
-					'23' => '23',
-					'24' => '24',
-					'25' => '25',
-					'26' => '26',
-					'27' => '27',
-					'28' => '28',
-					'29' => '29',
-					'30' => '30',
-					'31' => '31',
-									);
+	$dd = array ( '' => 'DAY', '01' => '01', '02' => '02', '03' => '03',
+				  '04' => '04', '05' => '05', '06' => '06', '07' => '07',
+				  '08' => '08', '09' => '09', '10' => '10', '11' => '11',
+				  '12' => '12', '13' => '13', '14' => '14', '15' => '15',
+				  '16' => '16', '17' => '17', '18' => '18', '19' => '19',
+				  '20' => '20', '21' => '21', '22' => '22', '23' => '23',
+				  '24' => '24', '25' => '25', '26' => '26', '27' => '27',
+				  '28' => '28', '29' => '29', '30' => '30', '31' => '31');
 										
-
-		print("
-			<table align='center' style=\"border:0px;margin-top:4px\" width='auto'>
-				
-			<form name='form_tabla' method='post' action='$_SERVER[PHP_SELF]'>
+		print("<table align='center' style=\"border:0px;margin-top:4px\" width='auto'>
+					<form name='form_tabla' method='post' action='$_SERVER[PHP_SELF]'>
 				<tr>
 					<td colspan='4' align='center'>
 							SELECCIONE UN PROVEEDOR
@@ -739,7 +667,6 @@ function process_form(){
 						<input type='hidden' name='oculto1' value=1 />
 					</div>
 					<div style='float:left'>
-
 						<select name='proveegastos'>");
 
 	global $db;
@@ -750,27 +677,23 @@ function process_form(){
 	if(!$qb){
 			print("* ".mysqli_error($db)."</br>");
 	} else {
-					
 		while($rows = mysqli_fetch_assoc($qb)){
-					
-					print ("<option value='".$rows['ref']."' ");
-					
+			print ("<option value='".$rows['ref']."' ");
 					if($rows['ref'] == $defaults['proveegastos']){
-															print ("selected = 'selected'");
-																								}
-													print ("> ".$rows['rsocial']." </option>");
-		}
+								print ("selected = 'selected'");
+										}
+								print ("> ".$rows['rsocial']." </option>");
+						}
+		}  
 
-	}  
-
-	print ("</select>
-					</div>
-				</td>
-			</tr>
-		</form>	
-			</table>"); 
+		print ("</select>
+						</div>
+					</td>
+				</tr>
+			</form>	
+				</table>"); 
 				
-////////////////////
+	////////////////////
 
 	if ((isset($_POST['oculto1'])) || (isset($_POST['oculto']))) {
 	if (($_POST['proveegastos'] == '') && ($defaults['factnom'] == '')) { 
@@ -825,7 +748,8 @@ function process_form(){
 										print ("selected = 'selected'");
 											}
 							print ("> $labeldd </option>");
-						}	
+						}
+							
 		print ("</select> 
 					</div>
 					</td>
@@ -845,7 +769,7 @@ function process_form(){
 				<tr>
 					<td>NIF/CIF</td>
 					<td>
-	<input type='hidden' name='factnif'value='".@$defaults['factnif']."' />".@$defaults['factnif']."
+		<input type='hidden' name='factnif'value='".@$defaults['factnif']."' />".@$defaults['factnif']."
 					</td>
 				</tr>
 				<tr>
@@ -860,7 +784,7 @@ function process_form(){
 		$qi = mysqli_query($db, $sqli);
 
 			if(!$qi){	print("* ".mysqli_error($db)."</br>");
-				} else {
+			} else {
 					while($rowimp = mysqli_fetch_assoc($qi)){
 							print ("<option value='".$rowimp['iva']."' ");
 							if($rowimp['iva'] == @$defaults['factiva']){
@@ -975,26 +899,24 @@ function process_form(){
 
 	} // FIN function show_form()
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function info(){
+	function info(){
 
-	global $db;
-	global $factdate;
-	global $factivae;
-	global $factpvp;
-	global $factpvptot;
-	global $factrete;
-	
-	$ActionTime = date('H:i:s');
+		global $factdate; 			global $factpvp;
+		global $factpvptot; 		global $factrete;
+		
+		$ActionTime = date('H:i:s');
 
-	global $dir;
-	if ($_SESSION['Nivel'] == 'admin'){ 
-				$dir = "../cbj_Docs/log";
-				}
-	
-global $text;
-$text = "\n- GASTO CREADO ".$ActionTime.".\n\tNº FACTURA: ".$_POST['factnum'].".\n\tDATE FACTURA: ".$factdate.".\n\tRAZON SOCIAL: ".$_POST['factnom'].".\n\tNIF: ".$_POST['factnif'].".\n\tTIPO IVA %: ".$_POST['factiva'].".\n\tTIPO RETEN %: ".$_POST['factret'].".\n\tRETEN €: ".$factrete.".\n\tNETO €: ".$factpvp.".\n\tTOTAL €: ".$factpvptot;
+		global $dir;
+		if ($_SESSION['Nivel'] == 'admin'){ 
+					$dir = "../cbj_Docs/log";
+					}
+		
+		global $text;
+		$text = "\n- GASTO CREADO ".$ActionTime.".\n\tNº FACTURA: ".$_POST['factnum'].".\n\tDATE FACTURA: ".$factdate.".\n\tRAZON SOCIAL: ".$_POST['factnom'].".\n\tNIF: ".$_POST['factnif'].".\n\tTIPO IVA %: ".$_POST['factiva'].".\n\tTIPO RETEN %: ".$_POST['factret'].".\n\tRETEN €: ".$factrete.".\n\tNETO €: ".$factpvp.".\n\tTOTAL €: ".$factpvptot;
 
 		$logdocu = $_SESSION['ref'];
 		$logdate = date('Y-m-d');
@@ -1006,7 +928,9 @@ $text = "\n- GASTO CREADO ".$ActionTime.".\n\tNº FACTURA: ".$_POST['factnum']."
 
 	}
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 	
 	function master_index(){
 		
@@ -1017,10 +941,15 @@ $text = "\n- GASTO CREADO ".$ActionTime.".\n\tNº FACTURA: ".$_POST['factnum']."
 		
 				} /* Fin funcion master_index.*/
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-	
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 	require '../Inclu/Conta_Footer.php';
+
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
+
 
 ?>
