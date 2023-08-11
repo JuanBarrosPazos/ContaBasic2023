@@ -429,16 +429,15 @@ session_start();
 
 	function process_form(){
 		
-		global $db;
-						
 		if ($_SESSION['Nivel'] == 'admin'){	
 
 		//print("Wellcome: ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".");
-		
+			
 			master_index();
+
 			show_balance();
-				
-			}	else { require 'Inclu/table_permisos.php'; }
+			
+		}	else { require 'Inclu/table_permisos.php'; }
 					
 	}	
 
@@ -446,15 +445,13 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function show_balance($errors=[]){
+	function show_balance($errors=[]){
 	
-	global $ordenar;
-	if(isset($_POST['show_formcl'])){
-		$defaults = $_POST;
-	} elseif(isset($_POST['todo'])){
-		$defaults = $_POST;
-	} else { 
-			$defaults = array ('id' => '',
+		global $ordenar;
+		if(isset($_POST['filtroBal'])){
+			$defaults = $_POST;
+		} else { 
+			$defaults = array ( 'id' => '',
 								'year' => '',
 								'mes' => '',
 								'tot' => '',
@@ -462,524 +459,96 @@ function show_balance($errors=[]){
 							}
 
 			$dm = array ( '' => 'MES TODOS',
-						'M01' => 'ENERO', 'M02' => 'FEBRERO', 'M03' => 'MARZO',
-						'M04' => 'ABRIL', 'M05' => 'MAYO', 'M06' => 'JUNIO',
-						'M07' => 'JULIO', 'M08' => 'AGOSTO', 'M09' => 'SEPTIEMBRE',
-						'M10' => 'OCTUBRE', 'M11' => 'NOVIEMBRE', 'M12' => 'DICIEMBRE',
-						'TRI0' => 'TRIMESTRAL', 'TRI1' => 'TRIMESTRE 1', 'TRI2' => 'TRIMESTRE 2',
-						'TRI3' => 'TRIMESTRE 3', 'TRI4' => 'TRIMESTRE 4', 'ANU' => 'ANUAL');
+						  'M01' => 'ENERO', 'M02' => 'FEBRERO', 'M03' => 'MARZO',
+						  'M04' => 'ABRIL', 'M05' => 'MAYO', 'M06' => 'JUNIO',
+						  'M07' => 'JULIO', 'M08' => 'AGOSTO', 'M09' => 'SEPTIEMBRE',
+						  'M10' => 'OCTUBRE', 'M11' => 'NOVIEMBRE', 'M12' => 'DICIEMBRE',
+						  'TRI0' => 'TRIMESTRAL', 'TRI1' => 'TRIMESTRE 1', 'TRI2' => 'TRIMESTRE 2',
+						  'TRI3' => 'TRIMESTRE 3', 'TRI4' => 'TRIMESTRE 4', 'ANU' => 'ANUAL');
 
 			$ordenar = array ('`id` ASC' => 'id Asc',
-							'`id` DESC' => 'id Desc',
-							'`year` ASC' => 'YEAR Asc',
-							'`year` DESC' => 'YEAR Desc',
-							'`mes` ASC' => 'MES Asc',
-							'`mes` DESC' => 'MES Desc',
-							'`tot` ASC' => 'TOTAL Asc',
-							'`tot` DESC' => 'TOTAL Desc');
+							  '`id` DESC' => 'id Desc',
+							  '`year` ASC' => 'YEAR Asc',
+							  '`year` DESC' => 'YEAR Desc',
+							  '`mes` ASC' => 'MES Asc',
+							  '`mes` DESC' => 'MES Desc',
+							  '`tot` ASC' => 'TOTAL Asc',
+							  '`tot` DESC' => 'TOTAL Desc');
 	
-	if ($errors){
-		print("<table align='center'>
-				<tr>
-					<th style='text-align:center'>
-						<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-					</th>
-				</tr>
-				<tr>
-					<td style='text-align:left'>");
+		if ($errors){
+			print("<table align='center'>
+					<tr>
+						<th style='text-align:center'>
+							<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
+						</th>
+					</tr>
+					<tr>
+						<td style='text-align:left'>");
 			
-		for($a=0; $c=count($errors), $a<$c; $a++){
-			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
-			}
-		print("</td>
-				</tr>
-				</table>>");
+			for($a=0; $c=count($errors), $a<$c; $a++){
+				print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
+				}
+			print("</td>
+					</tr>
+					</table>>");
 		}
 		
-print("<table align='center' width='auto' style=\"border: none;\"><tr><td>");
-	
-	print("<table align='center' style=\"border:0px;margin-top:4px\">
-				<tr>
-					<th colspan=2>BALANCE CONTABLE TRIMESTRAL</th>
-				</tr>
-		<form name='todo' method='post' action='cbj_Balances/Balances.php' >
-				<tr>
-					<td align='center' class='BorderSup'>
-						<input type='submit' value='FILTRO BALANCES' />
-						<input type='hidden' name='todo' value=1 />
-					</td>
-					<td class='BorderSup'>	
+		print("<table align='center' width='auto' style=\"border: none;\"><tr><td>");
+		
+		print("<table align='center' style=\"border:0px;margin-top:4px\">
+					<tr>
+						<th colspan=2>BALANCE CONTABLE TRIMESTRAL</th>
+					</tr>
+			<form name='filtroBal' method='post' action='$_SERVER[PHP_SELF]' >
+					<tr>
+						<td align='center' class='BorderSup'>
+							<input type='submit' value='FILTRO BALANCES' />
+							<input type='hidden' name='filtroBal' value=1 />
+						</td>
+						<td class='BorderSup'>	
+						<div style='float:left'>
+							<select name='Orden'>");
+							
+		foreach($ordenar as $option => $label){
+				print ("<option value='".$option."' ");
+					if($option == $defaults['Orden']){print ("selected = 'selected'");}
+													print ("> $label </option>");
+												}	
+		print ("</select>
+					</div><div style='float:left'>");
+									
+			require 'Inclu/year_select_bbdd.php';
+										
+		print ("</select>
+					</div>
 					<div style='float:left'>
-						<select name='Orden'>");
-						
-	foreach($ordenar as $option => $label){
-			print ("<option value='".$option."' ");
-				if($option == $defaults['Orden']){print ("selected = 'selected'");}
-												  print ("> $label </option>");
-											}	
-	print ("</select>
-				</div><div style='float:left'>");
-								
-		require 'Inclu/year_select_bbdd.php';
-									
-	print ("</select>
-				</div>
-				<div style='float:left'>
-					<select name='dm'>");
+						<select name='dm'>");
 
-	foreach($dm as $optiondm => $labeldm){
-				print ("<option value='".$optiondm."' ");
-					if($optiondm == @$defaults['dm']){
-									print ("selected = 'selected'");}
-									print ("> $labeldm </option>");
-					}	
+		foreach($dm as $optiondm => $labeldm){
+					print ("<option value='".$optiondm."' ");
+						if($optiondm == @$defaults['dm']){
+										print ("selected = 'selected'");}
+										print ("> $labeldm </option>");
+						}	
 																
-	print ("</select>
-				</div>
-				</form>											
-			</td>
-		</tr>
-	</table>"); /* Fin del print */
-	
-			////////////////////		**********  		////////////////////
-
-	global $db; 	global $db_name;
-	global $dyt1;	$dyt1 = date('Y');
-	global $dm1; 	$dm1 = 'TRI';
-	global $sent; 	$sent = "LIKE '%".$dm1."%'";
-	
-	global $vname; 	$vname = "`".$_SESSION['clave']."balancei`";
-
-	$sqli =  "SELECT * FROM $vname WHERE `year` = '$dyt1' AND `mes` $sent ORDER BY `id` ASC ";
-	$qbi = mysqli_query($db, $sqli);
-	
-/////////////////////	
-/* PARA SUMAR PVPTOT */
-
-	if(!$qbi){print(mysqli_error($db).".</br>");
-	} else {
-		$qpvptot = mysqli_query($db, $sqli);
-		$rowpvptot = mysqli_num_rows($qpvptot);
-		$sumapvptoti = 0;
-			for($i=0; $i<$rowpvptot; $i++) {
-								$veri = mysqli_fetch_array($qpvptot);
-								$sumapvptoti = $sumapvptoti + $veri['tot'];
-							}
-	}
-			
-/* FIN PARA SUMAR PVPTOT */
-/////////////////////////
-
-/////////////////////	
-/* PARA SUMAR RETENCION TOT */
-
-	if(!$qbi){print(mysqli_error($db).".</br>");
-	} else {
-		$qrete = mysqli_query($db, $sqli);
-		$rowrete = mysqli_num_rows($qrete);
-		$sumaretei = 0;
-			for($i=0; $i<$rowrete; $i++){
-							$verrt = mysqli_fetch_array($qrete);
-							$sumaretei = $sumaretei + $verrt['ret'];
-						}
-		}
-			
-/* FIN PARA SUMAR RETENCION TOT */
-/////////////////////////
-
-/////////////////////	
-/* PARA SUMAR IVA */
-
-	if(!$qbi){print(mysqli_error($db).".</br>");
-	} else {
-		$qivae = mysqli_query($db, $sqli);
-		$rowivae = mysqli_num_rows($qivae);
-		$sumaivaei = 0;
-			for($i=0; $i<$rowivae; $i++) {
-						$veri = mysqli_fetch_array($qivae);
-						$sumaivaei = $sumaivaei + $veri['iva'];
-					}
-		}
-			
-/* FIN PARA SUMAR IVA */
-/////////////////////////
-
-	if(!$qbi){
-	print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
-	} else {
-		if(mysqli_num_rows($qbi) == 0){
-				print ("<table align='center'>
-							<tr>
-								<td>
-									<font color='#FF0000'>NO HAY DATOS</font>
-								</td>
-							</tr>
-						</table>");
-
-		} else { print ("<div style='clear:both'></div>
-			<div style='float:left; margin-left:0%; margin-right:auto'>
-			<table align='center'>
-			<tr>
-				<th colspan=6 class='BorderInf'>
-					BALANCE INGRESOS ".mysqli_num_rows($qbi)."R.
-				</th>
+		print ("</select>
+					</div>
+					</form>											
+				</td>
 			</tr>
-			<tr>
-				<th class='BorderInfDch'>AÑO</th>		
-				<th class='BorderInfDch'>MES</th>		
-				<th class='BorderInfDch'>IVA REPER</th>
-				<th class='BorderInfDch'>SUB TOT</th>
-				<th class='BorderInfDch'>RET REPER</th>
-				<th class='BorderInf'>TOTAL €</th>			
-			</tr>");
+		</table>"); /* Fin del print */
 
-		while($rowi = mysqli_fetch_assoc($qbi)){
 
-		global $vname; 	global $dyt1;
-		//if($rowi['tot']!= 0.00){
-		print (	"<tr align='center'>
-								
-		<form name='ver' action='Gastos_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=440px,height=670px')\">
-
-		<input name='dyt1' type='hidden' value='".$dyt1."' />
-		<input name='vname' type='hidden' value='".$vname."' />
-		<input name='id' type='hidden' value='".$rowi['id']."' />
-
-					<td class='BorderInfDch' align='right'>
-		<input name='year' type='hidden' value='".$rowi['year']."' />".$rowi['year']."
-					</td>
-
-					<td class='BorderInfDch' align='right'>
-		<input name='mes' type='hidden' value='".$rowi['mes']."' />".$rowi['mes']."
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='iva' type='hidden' value='".$rowi['iva']."' />".$rowi['iva']." €
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='sub' type='hidden' value='".$rowi['sub']."' />".$rowi['sub']." €
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='tot' type='hidden' value='".$rowi['ret']."' />".$rowi['ret']." €
-					</td>
-																		
-					<td class='BorderInf' align='right'>
-		<input name='tot' type='hidden' value='".$rowi['tot']."' />".$rowi['tot']." €
-					</td>
-		</form>
-				</tr>");
-				
-						//}
-			} /* Fin del while.*/ 
-
-		print("<tr>
-					<td colspan='6' class='BorderInf'>
-					</td>
-				</tr>
-				<tr>
-					<td colspan='2' class='BorderInfDch' align='center'>IMP REPER</td>
-					<td colspan='2' class='BorderInfDch' align='center'>RETEN REPER</td>
-					<td colspan='2' class='BorderInf' align='center'>TOT INGRESOS</td>
-				</tr>
-				<tr>
-					<td colspan='2' class='BorderInfDch' align='right'>".$sumaivaei." €</td>
-					<td colspan='2' class='BorderInfDch' align='right'>".$sumaretei." €</td>
-					<td colspan='2' class='BorderInf' align='right'>".$sumapvptoti." €</td>
-				</tr>
-			</table>
-				</div>");
-		} /* Fin segundo else anidado en if */
-
-		} /* Fin de primer else . */
-
-			////////////////////		***********  		////////////////////
-
-	global $vname; 		$vname = "`".$_SESSION['clave']."balanceg`";
-
-	$sqlb =  "SELECT * FROM $vname WHERE `year` = '$dyt1' AND `mes` $sent ORDER BY `id` ASC ";
-	$qb = mysqli_query($db, $sqlb);
-
-/////////////////////	
-/* PARA SUMAR PVPTOT */
-
-	if(!$qb){print(mysqli_error($db).".</br>");
-	} else {
-		$qpvptot = mysqli_query($db, $sqlb);
-		$rowpvptot = mysqli_num_rows($qpvptot);
-		$sumapvptotg = 0;
-			for($i=0; $i<$rowpvptot; $i++) {
-							$verg = mysqli_fetch_array($qpvptot);
-							$sumapvptotg = $sumapvptotg + $verg['tot'];
-						}
+		if(isset($_POST['filtroBal'])){
+			global $dm1;
+			if(($_POST['dm'] == '')||($_POST['dm'] == 'TRI0')){
+				require 'indexConsultaTablasTrim.php';
+			}else{
+				require 'indexConsultaTablas.php';
+			}
+		}else{
+			require 'indexConsultaTablasTrim.php';
 		}
-			
-/* FIN PARA SUMAR PVPTOT */
-/////////////////////////
-
-/////////////////////	
-/* PARA SUMAR RETENCION TOT */
-
-	if(!$qb){print(mysqli_error($db).".</br>");
-	} else {
-		$qreteg = mysqli_query($db, $sqlb);
-		$rowreteg = mysqli_num_rows($qreteg);
-		$sumareteg = 0;
-			for($i=0; $i<$rowreteg; $i++) {
-								$verrtg = mysqli_fetch_array($qreteg);
-								$sumareteg = $sumareteg + $verrtg['ret'];
-							}
-		}
-			
-/* FIN PARA SUMAR RETENCION TOT */
-/////////////////////////
-
-/////////////////////	
-/* PARA SUMAR IVA */
-
-	if(!$qb){print(mysqli_error($db).".</br>");
-	} else {
-		$qivae = mysqli_query($db, $sqlb);
-		$rowivae = mysqli_num_rows($qivae);
-		$sumaivaeg = 0;
-			for($i=0; $i<$rowivae; $i++) {
-								$verg = mysqli_fetch_array($qivae);
-								$sumaivaeg = $sumaivaeg + $verg['iva'];
-							}
-		}
-			
-/* FIN PARA SUMAR IVA */
-/////////////////////////
-
-	if(!$qb){
-			print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
-	} else {
-		if(mysqli_num_rows($qb) == 0){
-				print ("<table align='center'>
-							<tr>
-								<td><font color='#FF0000'>NO HAY DATOS</font></td>
-							</tr>
-						</table>");
-
-		} else { print ("<div style='float:left; margin-left:6px; margin-right:auto'>
-							<table align='center'>
-								<tr>
-									<th colspan='6' class='BorderInf'>
-							BALANCE GASTOS ".mysqli_num_rows($qb)."R.
-									</th>
-								</tr>
-								<tr>
-									<th class='BorderInfDch'>AÑO</th>
-									<th class='BorderInfDch'>MES</th>
-									<th class='BorderInfDch'>IVA REPER</th>
-									<th class='BorderInfDch'>SUBTOT</th>
-									<th class='BorderInfDch'>RET REPER</th>
-									<th class='BorderInf'>TOTAL €</th>	
-								</tr>");
-			
-			while($rowb = mysqli_fetch_assoc($qb)){
-
-	global $vname; 		global $dyt1;
-	//if($rowb['tot']!= 0.00){
-			print (	"<tr align='center'>
-									
-<form name='ver' action='Gastos_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=440px,height=670px')\">
-	<input name='dyt1' type='hidden' value='".$dyt1."' />
-	<input name='vname' type='hidden' value='".$vname."' />
-	<input name='id' type='hidden' value='".$rowb['id']."' />
-
-						<td class='BorderInfDch' align='right'>
-	<input name='year' type='hidden' value='".$rowb['year']."' />".$rowb['year']."
-						</td>
-	
-						<td class='BorderInfDch' align='right'>
-	<input name='mes' type='hidden' value='".$rowb['mes']."' />".$rowb['mes']."
-						</td>
-						
-						<td class='BorderInfDch' align='right'>
-	<input name='iva' type='hidden' value='".$rowb['iva']."' />".$rowb['iva']." €
-						</td>
-						
-						<td class='BorderInfDch' align='right'>
-	<input name='sub' type='hidden' value='".$rowb['sub']."' />".$rowb['sub']." €
-						</td>
-						
-						<td class='BorderInfDch' align='right'>
-	<input name='sub' type='hidden' value='".$rowb['ret']."' />".$rowb['ret']." €
-						</td>
-						
-						<td class='BorderInf' align='right'>
-	<input name='tot' type='hidden' value='".$rowb['tot']."' />".$rowb['tot']." €
-						</td>
-		</form>
-			</tr>");
-					//}
-		} /* Fin del while.*/ 
-
-		print("<tr>
-					<td colspan='6' class='BorderInf'>
-					</td>
-				</tr>
-				<tr>
-					<td colspan='2' class='BorderInfDch' align='center'>IMP SOPOR</td>
-					<td colspan='2' class='BorderInfDch' align='center'>RETEN SOPORT</td>
-					<td colspan='2' class='BorderInf' align='center'>TOTAL GASTOS</td>
-				</tr>
-				<tr>
-					<td colspan='2' class='BorderInfDch' align='right'>".$sumaivaeg." €</td>
-					<td colspan='2' class='BorderInfDch' align='right'>".$sumareteg." €</td>
-					<td colspan='2' class='BorderInf' align='right'>".$sumapvptotg." €</td>
-				</tr>
-			</table>
-		</div>");
-			} /* Fin segundo else anidado en if */
-		} /* Fin de primer else . */
-		
-			////////////////////		**********  		////////////////////
-		
-	global $vnamed; 		$vnamed = "`".$_SESSION['clave']."balanced`";
-
-	$sqld =  "SELECT * FROM $vnamed WHERE `year` = '$dyt1' AND `mes` $sent ORDER BY `id` ASC ";
-	$qbd = mysqli_query($db, $sqld);
-	
-/////////////////////	
-/* PARA SUMAR PVPTOT */
-
-	if(!$qbd){print(mysqli_error($db).".</br>");
-	} else {
-		$qpvptotd = mysqli_query($db, $sqld);
-		$rowpvptotd = mysqli_num_rows($qpvptotd);
-		$sumapvptotd = 0;
-			for($i=0; $i<$rowpvptotd; $i++) {
-								$verd = mysqli_fetch_array($qpvptotd);
-								$sumapvptotd = $sumapvptotd + $verd['tot'];
-							}
-		}
-			
-/* FIN PARA SUMAR PVPTOT */
-/////////////////////////
-
-/////////////////////	
-/* PARA SUMAR RETENCION TOT */
-
-	if(!$qbd){print(mysqli_error($db).".</br>");
-	} else {
-		$qreted = mysqli_query($db, $sqld);
-		$rowreted = mysqli_num_rows($qreted);
-		$sumareted = 0;
-			for($i=0; $i<$rowreted; $i++) {
-								$verrtd = mysqli_fetch_array($qreted);
-								$sumareted = $sumareted + $verrtd['ret'];
-							}
-		}
-			
-/* FIN PARA SUMAR RETENCION TOT */
-/////////////////////////
-
-/////////////////////	
-/* PARA SUMAR IVA */
-
-	if(!$qbd){print(mysqli_error($db).".</br>");
-	} else {
-		$qivaed = mysqli_query($db, $sqld);
-		$rowivaed = mysqli_num_rows($qivaed);
-		$sumaivaed = 0;
-			for($i=0; $i<$rowivaed; $i++) {
-								$verd = mysqli_fetch_array($qivaed);
-								$sumaivaed = $sumaivaed + $verd['iva'];
-							}
-		}
-			
-/* FIN PARA SUMAR IVA */
-/////////////////////////
-
-	if(!$qbd){
-	print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
-	} else {
-			if(mysqli_num_rows($qbd) == 0){
-				print ("<table align='center'>
-							<tr>
-								<td><font color='#FF0000'>NO HAY DATOS</font></td>
-							</tr>
-						</table>");
-
-			} else { print ("<div style='float:left; margin-left:6px; margin-right:auto'>
-								<table align='center'>
-									<tr>
-										<th colspan=6 class='BorderInf'>
-								BALANCE DIFERENCIAL ".mysqli_num_rows($qbd)."R.
-										</th>
-									</tr>
-									<tr>
-										<th class='BorderInfDch'>AÑO</th>	
-										<th class='BorderInfDch'>MES</th>	
-										<th class='BorderInfDch'>IVA DIFER</th>
-										<th class='BorderInfDch'>SUBTOT</th>
-										<th class='BorderInfDch'>RET DIFER</th>	
-										<th class='BorderInf'>TOTAL €</th>	
-									</tr>");
-			
-			while($rowd = mysqli_fetch_assoc($qbd)){
-
-	global $vnamed; 		global $dyt1;
-	//if($rowi['tot']!= 0.00){
-			print (	"<tr align='center'>
-									
-<form name='ver' action='Gastos_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=440px,height=670px')\">
-	<input name='dyt1' type='hidden' value='".$dyt1."' />
-	<input name='vname' type='hidden' value='".$vnamed."' />
-	<input name='id' type='hidden' value='".$rowd['id']."' />
-	
-						<td class='BorderInfDch' align='right'>
-	<input name='year' type='hidden' value='".$rowd['year']."' />".$rowd['year']."
-						</td>
-	
-						<td class='BorderInfDch' align='right'>
-	<input name='mes' type='hidden' value='".$rowd['mes']."' />".$rowd['mes']."
-						</td>
-						
-						<td class='BorderInfDch' align='right'>
-	<input name='iva' type='hidden' value='".$rowd['iva']."' />".$rowd['iva']." €
-						</td>
-						
-						<td class='BorderInfDch' align='right'>
-	<input name='sub' type='hidden' value='".$rowd['sub']."' />".$rowd['sub']." €
-						</td>
-						
-						<td class='BorderInfDch' align='right'>
-	<input name='sub' type='hidden' value='".$rowd['ret']."' />".$rowd['ret']." €
-						</td>
-
-						<td class='BorderInf' align='right'>
-	<input name='tot' type='hidden' value='".$rowd['tot']."' />".$rowd['tot']." €
-						</td>
-		</form>
-			</tr>");
-		//}
-	} /* Fin del while.*/ 
-
-		print("<tr>
-					<td colspan='6' class='BorderInf'></td>
-				</tr>
-				<tr>
-					<td colspan='2' class='BorderInfDch' align='center'>IMP DIFER</td>
-					<td colspan='2' class='BorderInfDch' align='center'>RETEN DIFER</td>
-					<td colspan='2' class='BorderInf' align='center'>TOT DIFER</td>
-				</tr>
-				<tr>
-					<td colspan='2' class='BorderInfDch' align='right'>".$sumaivaed." €</td>
-					<td colspan='2' class='BorderInfDch' align='right'>".$sumareted." €</td>
-					<td colspan='2' class='BorderInf' align='right'>".$sumapvptotd." €</td>
-				</tr>
-			</table>
-			</div>");
-		} /* Fin segundo else anidado en if */
-	} /* Fin de primer else . */
-
-			////////////////////		***********  		////////////////////
-
-	print("</td></tr></table>");
 
 	}	/* Fin show_balance(); */
 

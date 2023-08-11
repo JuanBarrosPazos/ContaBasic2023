@@ -339,3 +339,23 @@ a:hover  img {
 }
 /* FIN BOTONES */
 
+/* TABLAS CONSULTAS INDEX */
+
+.divTablaIndex{
+	margin:0.4em auto 0.4em auto; 
+	border: 1px solid green !important; 
+	text-align:center; 
+	width:99.9% !important;
+	
+}
+.tabla, .tablac{
+	display:inline-block; 
+	text-align:center; 
+	vertical-align: top;
+}
+.tabla{
+	margin:auto; 
+}
+.tablac{
+	margin:auto 0.4em auto 0.4em; 
+}
