@@ -542,12 +542,12 @@ session_start();
 		if(isset($_POST['filtroBal'])){
 			global $dm1;
 			if(($_POST['dm'] == '')||($_POST['dm'] == 'TRI0')){
-				require 'indexConsultaTablasTrim.php';
+				require 'IncluIndex/indexConsultaTablasTrim.php';
 			}else{
-				require 'indexConsultaTablas.php';
+				require 'IncluIndex/indexConsultaTablas.php';
 			}
 		}else{
-			require 'indexConsultaTablasTrim.php';
+			require 'IncluIndex/indexConsultaTablasTrim.php';
 		}
 
 	}	/* Fin show_balance(); */

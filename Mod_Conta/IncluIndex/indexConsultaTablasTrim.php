@@ -20,38 +20,43 @@
 	
     if($dm1 == 'TRI0'){
         $mesIni = 1;            $mesFin = 3;
+		$mesIniGri = 1;			$mesFinGri = 3;
+		$mesIniGrg = 1;			$mesFinGrg = 3;
+		$mesIniGrd = 1;			$mesFinGrd = 3;
     }
+
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 	////////////////////		***********  		////////////////////
                         /* TABLA BALANCE INGRESOS */
 	////////////////////		***********  		////////////////////
 
 	
-	global $vnamei; 	$vnamei = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+	global $vnamei; 	$vnamei = "`".$_SESSION['clave']."ingresos_".$dyt1."`";
 
-	//$sqli =  "SELECT * FROM $vname WHERE `year` = '$dyt1' AND `mes` $sent ORDER BY `id` ASC ";
-    
     global $OperSql;        $OperSql = "*";
 
     $sqli = "SELECT $OperSql FROM $vnamei";
-    //echo " * NUEVA SENTECIA TABLA INFERIOR:<br>".$sqli."<br>";
+    //echo " <br>* ".$sqli."<br>";
 	$qbi = mysqli_query($db, $sqli);
 	$counti = mysqli_num_rows($qbi);
-    //echo "Rows: ".$count."<br><br>";
+    //echo "Rows: ".$counti."<br><br>";
 
 /////////////////////	
 /* PARA SUMAR PVPTOT */	
     global $OperSql;        $OperSql = "SUM(`factpvptot`)";
 
     $sqlSumToti = "SELECT $OperSql AS 'YearSumToti' FROM $vnamei";
-    //echo $sqlSumToti."<br>";
+    //echo "- ".$sqlSumToti."<br>";
     $qrySumToti = mysqli_query($db, $sqlSumToti);
     $SumToti = mysqli_fetch_assoc($qrySumToti);
 	global $sumapvptoti;
     $sumapvptoti = $SumToti['YearSumToti'];
 	$sumapvptoti  = number_format($sumapvptoti ,2,".","");
     //if($sumapvptoti == ''){ $sumapvptoti = "0.00"; }else{ }
-    //echo "* TOTAL ANUAL: ".$sumapvptoti."<br>";
+    //echo "- TOTAL ANUAL: ".$sumapvptoti."<br>";
 
 /* FIN PARA SUMAR PVPTOT */
 /////////////////////////
@@ -62,7 +67,7 @@
     global $OperSql;        $OperSql = "SUM(`factrete`)";
 
     $sqlSumRetei = "SELECT $OperSql AS 'YearSumRetei' FROM $vnamei";
-    //echo $sqlSumRete."<br>";
+    //echo "* ".$sqlSumRetei."<br>";
     $qrySumRetei = mysqli_query($db, $sqlSumRetei);
     $SumRetei = mysqli_fetch_assoc($qrySumRetei);
 	global $sumaretei;
@@ -79,14 +84,14 @@
 
     global $OperSql;        $OperSql = "SUM(`factivae`)";
     $sqlSumIvai = "SELECT $OperSql AS 'YearSumIvai' FROM $vnamei";
-    //echo $sqlSumIva."<br>";
+    //echo "- ".$sqlSumIvai."<br>";
     $qrySumIvai = mysqli_query($db, $sqlSumIvai);
     $SumIvai = mysqli_fetch_assoc($qrySumIvai);
 	global $sumaivaei;
     $sumaivaei = $SumIvai['YearSumIvai'];
 	$sumaivaei  = number_format($sumaivaei ,2,".","");
     //if($sumaivaei == ''){ $sumaivaei = "0.00";   }else{ }
-    //echo "* TOTAL ANUAL IVA: ".$sumaivaei."<br>";
+    //echo "- TOTAL ANUAL IVA: ".$sumaivaei."<br>";
 
 /* FIN PARA SUMAR IVA */
 /////////////////////////
@@ -95,9 +100,78 @@
 			<div class='divTablaIndex' >
 			<table class='tabla' >
 			<tr>
-				<th colspan=6 class='BorderInf'>
+				<th colspan=6 class='BorderInf resultadosi'>
 					BALANCE INGRESOS ".$counti."R
 				</th>
+			</tr>
+			<tr>
+				<td colspan=6 class='BorderInf'>
+					<div class='section'>
+						<ul class='timeline'>");
+			  
+		global $grd;	$gri = 1;
+
+		while($gri<=4){
+
+			if($dm1 == 'TRI0'){
+				if($mesIniGri < 10){ $mesIniGri = '0'.$mesIniGri; }else{ }
+				if($mesFinGri < 10){ $mesFinGri = '0'.$mesFinGri; }else{ }
+				$betwIniGri = $dyt1y.'/'.$mesIniGri.'/01';
+				$betwFinGri = $dyt1y.'/'.$mesFinGri.'/31';
+		
+				global $MesNombGri;
+				if($mesFinGri < 4){ $MesNombGri = "TRI1"; 
+				}elseif($mesFinGri < 7){ $MesNombGri = "TRI2"; 
+				}elseif($mesFinGri < 10){ $MesNombGri = "TRI3"; 
+				}else{  $MesNombGri = "TRI4"; }
+
+				$rowi['factdate'] = $MesNombGri;
+			}
+			
+			$SqlFromi = "FROM $vnamei WHERE (`factdate` BETWEEN '$betwIniGri' AND '$betwFinGri')";
+			$sqlSumToti = "SELECT SUM(`factpvptot`) AS 'TriSumToti' $SqlFromi";
+			$qrySumToti = mysqli_query($db, $sqlSumToti);
+			$SumToti = mysqli_fetch_assoc($qrySumToti);
+			$TriSumToti = $SumToti['TriSumToti'];
+			$rowi['factpvptot']  = number_format($TriSumToti ,2,".","");
+			//if($TriSumTotg == ''){ $TriSumTotg = "0.00"; }else{ }
+			global $sumapvptoti;
+			if($sumapvptoti > 0){
+				$TotEi = ($rowi['factpvptot']*100)/$sumapvptoti;
+			}else{ $TotEi = 0.00;}
+
+			print("<li>
+						<a href='#' title='".$rowi['factdate']." ".$rowi['factpvptot']." €'>
+							<span class='label'>".$rowi['factdate']."<br>".$rowi['factpvptot']."</span>
+							<span class='count bgcolori' style='height: ".$TotEi."%'>(".$TotEi.")</span>
+						</a>
+					</li>");
+
+			$gri++;	$mesIniGri = $mesIniGri+3;    $mesFinGri = $mesFinGri+3;
+		}
+
+		print("	</ul>
+				</div>
+					</td>
+				</tr>
+			
+			</tr>
+				<tr>
+					<td colspan='6' class='BorderInf'>
+				</td>
+			</tr>
+			<tr>
+				<td colspan='2' class='BorderInfDch resultadosi' align='center'>IMP REPER</td>
+				<td colspan='2' class='BorderInfDch resultadosi' align='center'>RETEN REPER</td>
+				<td colspan='2' class='BorderInf resultadosi' align='center'>TOT INGRESOS</td>
+			</tr>
+			<tr>
+				<td colspan='2' class='BorderInfDch resultadosi' align='right'>".$sumaivaei." €</td>
+				<td colspan='2' class='BorderInfDch resultadosi' align='right'>".$sumaretei." €</td>
+				<td colspan='2' class='BorderInf resultadosi' align='right'>".$sumapvptoti." €</td>
+			</tr>
+			<tr>
+				<td colspan='6' class='BorderInf'></td>
 			</tr>
 			<tr>
 				<th class='BorderInfDch'>AÑO</th>		
@@ -115,8 +189,8 @@
         if(($dm1 == 'TRI0')||($dm1 == 'TRI0')){
             if($mesIni < 10){ $mesIni = '0'.$mesIni; }else{ }
             if($mesFin < 10){ $mesFin = '0'.$mesFin; }else{ }
-            $betwIni = '23/'.$mesIni.'/01';
-            $betwFin = '23/'.$mesFin.'/31';
+            $betwIni = $dyt1y.'/'.$mesIni.'/01';
+            $betwFin = $dyt1y.'/'.$mesFin.'/31';
     
             global $MesNomb;
             if($mesFin < 4){ $MesNomb = "TRI1"; 
@@ -151,6 +225,7 @@
     //if($TriSumRetei == ''){ $TriSumRetei ="0.00"; }else{ }
 
     $sqlSumTot = "SELECT SUM(`factpvptot`) AS 'TriSumToti' $SqlFromi";
+	//echo "* ".$sqlSumTot."<br>";
     $qrySumTot = mysqli_query($db, $sqlSumTot);
     $SumTot = mysqli_fetch_assoc($qrySumTot);
     $TriSumToti = $SumTot['TriSumToti'];
@@ -194,29 +269,22 @@
 
     } /* Fin del while.*/ 
 
-	print("<tr>
-				<td colspan='6' class='BorderInf'></td>
-			</tr>
-			<tr>
-				<td colspan='2' class='BorderInfDch' align='center'>IMP REPER</td>
-				<td colspan='2' class='BorderInfDch' align='center'>RETEN REPER</td>
-				<td colspan='2' class='BorderInf' align='center'>TOT INGRESOS</td>
-			</tr>
-			<tr>
-				<td colspan='2' class='BorderInfDch' align='right'>".$sumaivaei." €</td>
-				<td colspan='2' class='BorderInfDch' align='right'>".$sumaretei." €</td>
-				<td colspan='2' class='BorderInf' align='right'>".$sumapvptoti." €</td>
-			</tr>
-		</table>");
+	print("</table>");
 
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
+	
 	////////////////////		***********  		////////////////////
                         /* TABLA BALANCE GASTOS */
 	////////////////////		***********  		////////////////////
 
 	global $betwIni;    global $betwFin;
     global $mesIni;     global $mesFin;
+	global $mesIniGrg;	global $mesFinGrg;
     if($dm1 == 'TRI0'){
         $mesIni = 1;	$mesFin = 3;
+		$mesIniGrg = 1;	$mesFinGrg = 3;
 	}
 
 	global $vnameg; 	$vnameg = "`".$_SESSION['clave']."gastos_".$dyt1."`";
@@ -280,30 +348,99 @@
 /* FIN PARA SUMAR IVA */
 /////////////////////////
 
-    print ("<table class='tablac'>
+    print ("<table class='tablac' style='text-aling:center !important;'>
 			<tr>
-				<th colspan=6 class='BorderInf'>
+				<th colspan=6 class='BorderInf resultadosg'>
 					BALANCE GATOS ".$countg."R
 				</th>
 			</tr>
 			<tr>
-				<th class='BorderInfDch'>AÑO</th>		
-				<th class='BorderInfDch'>MES</th>		
-				<th class='BorderInfDch'>IVA REPER</th>
-				<th class='BorderInfDch'>SUB TOT</th>
-				<th class='BorderInfDch'>RET REPER</th>
-				<th class='BorderInf'>TOTAL €</th>			
-			</tr>");
+				<td colspan=6 class='BorderInf'>
+					<div class='section'>
+						<ul class='timeline'>");
+			  
+		global $grg;	$grg = 1;
 
-    global $i;  $i = 1; 
+		while($grg<=4){
+
+			if($dm1 == 'TRI0'){
+				if($mesIniGrg < 10){ $mesIniGrg = '0'.$mesIniGrg; }else{ }
+				if($mesFinGrg < 10){ $mesFinGrg = '0'.$mesFinGrg; }else{ }
+				$betwIniGrg = $dyt1y.'/'.$mesIniGrg.'/01';
+				$betwFinGrg = $dyt1y.'/'.$mesFinGrg.'/31';
+		
+				global $MesNombGrg;
+				if($mesFinGrg < 4){ $MesNombGrg = "TRI1"; 
+				}elseif($mesFinGrg < 7){ $MesNombGrg = "TRI2"; 
+				}elseif($mesFinGrg < 10){ $MesNombGrg = "TRI3"; 
+				}else{  $MesNombGrg = "TRI4"; }
+
+				$rowg['factdate'] = $MesNombGrg;
+			}
+			
+			$SqlFromg = "FROM $vnameg WHERE (`factdate` BETWEEN '$betwIniGrg' AND '$betwFinGrg')";
+
+			$sqlSumTotg = "SELECT SUM(`factpvptot`) AS 'TriSumTotg' $SqlFromg";
+			$qrySumTotg = mysqli_query($db, $sqlSumTotg);
+			$SumTotg = mysqli_fetch_assoc($qrySumTotg);
+			$TriSumTotg = $SumTotg['TriSumTotg'];
+			$rowg['factpvptot']  = number_format($TriSumTotg ,2,".","");
+			//if($TriSumTotg == ''){ $TriSumTotg = "0.00"; }else{ }
+			global $sumapvptotg;
+			if($sumapvptotg > 0){
+				$TotE = ($rowg['factpvptot']*100)/$sumapvptotg;
+			}else{ $TotE = 0.00;}
+
+			print("<li>
+						<a href='#' title='".$rowg['factdate']." ".$rowg['factpvptot']." €'>
+							<span class='label'>".$rowg['factdate']."<br>".$rowg['factpvptot']."</span>
+							<span class='count bgcolorg' style='height: ".$TotE."%'>(".$TotE.")</span>
+						</a>
+					</li>");
+
+			$grg++;	$mesIniGrg = $mesIniGrg+3;    $mesFinGrg = $mesFinGrg+3;
+		}
+
+		print("	</ul>
+				</div>
+					</td>
+				</tr>
+				<tr>
+					<td colspan='6' class='BorderInf'>
+					</td>
+				</tr>
+				<tr>
+					<td colspan='2' class='BorderInfDch resultadosg' align='center'>IMP REPER</td>
+					<td colspan='2' class='BorderInfDch resultadosg' align='center'>RETEN REPER</td>
+					<td colspan='2' class='BorderInf resultadosg' align='center'>TOT INGRESOS</td>
+				</tr>
+				<tr>
+					<td colspan='2' class='BorderInfDch resultadosg' align='right'>".$sumaivaeg." €</td>
+					<td colspan='2' class='BorderInfDch resultadosg' align='right'>".$sumareteg." €</td>
+					<td colspan='2' class='BorderInf resultadosg' align='right'>".$sumapvptotg." €</td>
+				</tr>
+				<tr>
+					<td colspan='6' class='BorderInf'>
+					</td>
+				</tr>
+				<tr>
+					<th class='BorderInfDch'>AÑO</th>		
+					<th class='BorderInfDch'>MES</th>		
+					<th class='BorderInfDch'>IVA REPER</th>
+					<th class='BorderInfDch'>SUB TOT</th>
+					<th class='BorderInfDch'>RET REPER</th>
+					<th class='BorderInf'>TOTAL €</th>			
+				</tr>");
+
+	global $i;  $i = 1; 
     
 	while($i <= 4){
     
         if($dm1 == 'TRI0'){
             if($mesIni < 10){ $mesIni = '0'.$mesIni; }else{ }
             if($mesFin < 10){ $mesFin = '0'.$mesFin; }else{ }
-            $betwIni = '23/'.$mesIni.'/01';
-            $betwFin = '23/'.$mesFin.'/31';
+            $betwIni = $dyt1y.'/'.$mesIni.'/01';
+            $betwFin = $dyt1y.'/'.$mesFin.'/31';
     
             global $MesNomb;
             if($mesFin < 4){ $MesNomb = "TRI1"; 
@@ -380,22 +517,12 @@
 
     } /* Fin del while.*/ 
 
-	print("<tr>
-				<td colspan='6' class='BorderInf'>
-				</td>
-			</tr>
-			<tr>
-				<td colspan='2' class='BorderInfDch' align='center'>IMP REPER</td>
-				<td colspan='2' class='BorderInfDch' align='center'>RETEN REPER</td>
-				<td colspan='2' class='BorderInf' align='center'>TOT INGRESOS</td>
-			</tr>
-			<tr>
-				<td colspan='2' class='BorderInfDch' align='right'>".$sumaivaeg." €</td>
-				<td colspan='2' class='BorderInfDch' align='right'>".$sumareteg." €</td>
-				<td colspan='2' class='BorderInf' align='right'>".$sumapvptotg." €</td>
-			</tr>
-		</table>");
-		
+	print("</table>");
+
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
+
 			////////////////////		**********  		////////////////////
 								/* TABLA BALANCE DIFERENCIAL */
 			////////////////////		**********  		////////////////////
@@ -426,9 +553,101 @@
 
     print ("<table class='tabla' >
 			<tr>
-				<th colspan=6 class='BorderInf'>
+				<th colspan=6 class='BorderInf resultadosd'>
 					DIFERENCIA INGRESOS / GASTOS
 				</th>
+			</tr>
+			<tr>
+				<td colspan=6 class='BorderInf'>
+					<div class='section'>
+						<ul class='timeline'>");
+	
+		global $grd;	$grd = 1;
+
+		while($grd<=4){
+
+			if($dm1 == 'TRI0'){
+				if($mesIniGrd < 10){ $mesIniGrd = '0'.$mesIniGrd; }else{ }
+				if($mesFinGrd < 10){ $mesFinGrd = '0'.$mesFinGrd; }else{ }
+
+				$betwIniGri = $dyt1y.'/'.$mesIniGrd.'/01';	$betwIniGrg = $dyt1y.'/'.$mesIniGrd.'/01';
+				$betwFinGri = $dyt1y.'/'.$mesFinGrd.'/31';	$betwFinGrg = $dyt1y.'/'.$mesFinGrd.'/31';
+		
+				global $MesNombGrd;
+				if($mesFinGrd < 4){ $MesNombGrd = "TRI1"; 
+				}elseif($mesFinGrd < 7){ $MesNombGrd = "TRI2"; 
+				}elseif($mesFinGrd < 10){ $MesNombGrd = "TRI3"; 
+				}else{  $MesNombGrd = "TRI4"; }
+
+				$rowd['factdate'] = $MesNombGrd;
+			}
+			
+			
+			$SqlFromgri = "FROM $vnamei WHERE (`factdate` BETWEEN '$betwIniGri' AND '$betwFinGri')";
+			//echo $SqlFromgri."<br>";
+			$sqlSumTotgri = "SELECT SUM(`factpvptot`) AS 'TriSumTotgri' $SqlFromgri";
+			$qrySumTotgri = mysqli_query($db, $sqlSumTotgri);
+			$SumTotgri = mysqli_fetch_assoc($qrySumTotgri);
+			$TriSumTotgri = $SumTotgri['TriSumTotgri'];
+			$rowgri['factpvptot']  = number_format($TriSumTotgri ,2,".","");
+			//if($TriSumTotg == ''){ $TriSumTotg = "0.00"; }else{ }
+			//echo $rowgri['factpvptot']."<br>";
+
+			global $sumapvptoti;
+			if($sumapvptoti > 0){
+				$TotEi = ($rowi['factpvptot']*100)/$sumapvptoti;
+			}else{ $TotEi = 0.00;}
+			
+			/*	*/
+			$SqlFromgrg = "FROM $vnameg WHERE (`factdate` BETWEEN '$betwIniGrg' AND '$betwFinGrg')";
+			//echo $SqlFromgrg."<br>";
+			$sqlSumTotgrg = "SELECT SUM(`factpvptot`) AS 'TriSumTotgrg' $SqlFromgrg";
+			$qrySumTotgrg = mysqli_query($db, $sqlSumTotgrg);
+			$SumTotgrg = mysqli_fetch_assoc($qrySumTotgrg);
+			$TriSumTotgrg = $SumTotgrg['TriSumTotgrg'];
+			$rowgrg['factpvptot']  = number_format($TriSumTotgrg ,2,".","");
+			//if($TriSumTotg == ''){ $TriSumTotg = "0.00"; }else{ }
+			//echo $rowgrg['factpvptot']."<br>";
+			/* */
+
+			global $sumapvptotd;
+			$calculo = $rowgri['factpvptot']  - $rowgrg['factpvptot'];
+			$rowd['factpvptot'] = number_format($calculo ,2,".","");
+			if($sumapvptotd > 0){
+				$TotEd = ($rowd['factpvptot']*100)/$sumapvptotd;
+			}else{ $TotEd = 0.00;}
+
+			print("<li>
+						<a href='#' title='".$rowd['factdate']." ".$rowd['factpvptot']." €'>
+							<span class='label'>".$rowd['factdate']."<br>".$rowd['factpvptot']."</span>
+							<span class='count bgcolord' style='height: ".$TotEd."%'>(".$TotEd.")</span>
+						</a>
+					</li>");
+
+			$grd++;	$mesIniGrd = $mesIniGrd+3;    $mesFinGrd = $mesFinGrd+3;
+		}
+
+	print("	</ul>
+				</div>
+					</td>
+			</tr>
+			<tr>
+				<td colspan='6' class='BorderInf'>
+				</td>
+			</tr>
+			<tr>
+				<td colspan='2' class='BorderInfDch resultadosd' align='center'>IMP REPER</td>
+				<td colspan='2' class='BorderInfDch resultadosd' align='center'>RETEN REPER</td>
+				<td colspan='2' class='BorderInf resultadosd' align='center'>TOT INGRESOS</td>
+			</tr>
+			<tr>
+				<td colspan='2' class='BorderInfDch resultadosd' align='right'>".$sumaivaed." €</td>
+				<td colspan='2' class='BorderInfDch resultadosd' align='right'>".$sumareted." €</td>
+				<td colspan='2' class='BorderInf resultadosd' align='right'>".$sumapvptotd." €</td>
+			</tr>
+			<tr>
+				<td colspan='6' class='BorderInf'>
+				</td>
 			</tr>
 			<tr>
 				<th class='BorderInfDch'>AÑO</th>		
@@ -447,8 +666,8 @@
         if($dm1 == 'TRI0'){
             if($mesIni < 10){ $mesIni = '0'.$mesIni; }else{ }
             if($mesFin < 10){ $mesFin = '0'.$mesFin; }else{ }
-            $betwIni = '23/'.$mesIni.'/01';
-            $betwFin = '23/'.$mesFin.'/31';
+            $betwIni = $dyt1y.'/'.$mesIni.'/01';
+            $betwFin = $dyt1y.'/'.$mesFin.'/31';
     
             global $MesNomb;
             if($mesFin < 4){ $MesNomb = "TRI1"; 
@@ -488,7 +707,7 @@
 		$TriSumToti = $SumTot['TriSumToti'];
 		$TriSumToti= number_format($TriSumToti,2,".","");
 		//if($TriSumToti == ''){ $TriSumToti = "0.00"; }else{ }
-	
+
 		/* CONSULTAS PARA GASTOS */
 		global $vnameg; 	global $SqlFromg;
 		$SqlFromg = "FROM $vnameg WHERE (`factdate` BETWEEN '$betwIni' AND '$betwFin')";
@@ -520,8 +739,8 @@
 		$TriSumTotg = $SumTotg['TriSumTotg'];
 		$TriSumTotg = number_format($TriSumTotg,2,".","");
 		//if($TriSumTotg == ''){ $TriSumTotg = "0.00"; }else{ }
-	
-	/* CALCULO DE LAS DIFERENCIAS */
+
+		/* CALCULO DE LAS DIFERENCIAS */
 
 	$TriSumIvad = $TriSumIvai - $TriSumIvag;
 	$TriSumIvad = number_format($TriSumIvad,2,".","");
@@ -571,21 +790,7 @@
 
     } /* Fin del while.*/ 
 
-	print("<tr>
-				<td colspan='6' class='BorderInf'>
-				</td>
-			</tr>
-			<tr>
-				<td colspan='2' class='BorderInfDch' align='center'>IMP REPER</td>
-				<td colspan='2' class='BorderInfDch' align='center'>RETEN REPER</td>
-				<td colspan='2' class='BorderInf' align='center'>TOT INGRESOS</td>
-			</tr>
-			<tr>
-				<td colspan='2' class='BorderInfDch' align='right'>".$sumaivaed." €</td>
-				<td colspan='2' class='BorderInfDch' align='right'>".$sumareted." €</td>
-				<td colspan='2' class='BorderInf' align='right'>".$sumapvptotd." €</td>
-			</tr>
-		</table>");
+	print("</table>");
 
 			////////////////////		***********  		////////////////////
 

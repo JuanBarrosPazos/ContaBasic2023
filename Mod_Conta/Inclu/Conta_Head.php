@@ -1,7 +1,7 @@
 <?php
 
     global $index;      global $ruta;       global $Titulo;
-    global $OnLoad;     global $PlayHoraJs;
+    global $OnLoad;     global $PlayHoraJs; global $GrafIndex;
     if($index == 1){
         $ruta = "";
         $PlayHoraJs = "<script src='js/playhora.js' type='text/javascript'></script>";
@@ -9,6 +9,8 @@
         $Titulo = '<div style="margin-top:4px; text-align:center" id="TitTut">
                       <font color="#59746A"><span id="hora">000000</span></font>
                     </div> ';
+        $GrafIndex = "<link href='".$ruta."IncluIndex/GrafIndex.css' rel='stylesheet' type='text/css' />
+        <script type='text/javascript'>window['_gaUserPrefs'] = { ioo : function() { return true; } }</script>";
     }else{
         $ruta = "../";
         $PlayHoraJs = "";
@@ -16,6 +18,7 @@
         $Titulo = '<div style="margin-top:10px; text-align:center">
                       <span style="font-size:12px; color:#59746A">ESTÁ EN CONTA BASIC</span>
                     </div>';
+        $GrafIndex = "";
     }
 
     print("<!DOCTYPE html>
@@ -30,6 +33,7 @@
             <meta name='audience' content='All' />
             <title>Juan Manuel Barros Pazos</title>
 
+            ".$GrafIndex."
             <link href='".$ruta."Css/conta.css' rel='stylesheet' type='text/css' />
             <link href='".$ruta."cbj_Images/logo_new' type='image/ico' rel='shortcut icon' />
             <!--
@@ -43,7 +47,6 @@
 
             <script src='".$ruta."js/limtaCaracteres.js' type='text/javascript'></script>
             ".$PlayHoraJs."
-
         </head>
 
     <body topmargin='0' ".$OnLoad." >
