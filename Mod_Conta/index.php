@@ -466,14 +466,14 @@ session_start();
 						  'TRI0' => 'TRIMESTRAL', 'TRI1' => 'TRIMESTRE 1', 'TRI2' => 'TRIMESTRE 2',
 						  'TRI3' => 'TRIMESTRE 3', 'TRI4' => 'TRIMESTRE 4', 'ANU' => 'ANUAL');
 
-			$ordenar = array ('`id` ASC' => 'id Asc',
-							  '`id` DESC' => 'id Desc',
-							  '`year` ASC' => 'YEAR Asc',
-							  '`year` DESC' => 'YEAR Desc',
-							  '`mes` ASC' => 'MES Asc',
-							  '`mes` DESC' => 'MES Desc',
-							  '`tot` ASC' => 'TOTAL Asc',
-							  '`tot` DESC' => 'TOTAL Desc');
+			$ordenar = array ('`factdate` ASC' => 'Fecha Asc',
+							  '`factdate` DESC' => 'Fecha Desc',
+							  '`factpvptot` ASC' => 'TOTAL Asc',
+							  '`factpvptot` DESC' => 'TOTAL Desc',
+							  '`factnif` ASC' => 'Nif Asc',
+							  '`factnif` DESC' => 'Nif Desc',
+							  '`id` ASC' => 'Id Asc',
+							  '`id` DESC' => 'Id Desc');
 	
 		if ($errors){
 			print("<table align='center'>

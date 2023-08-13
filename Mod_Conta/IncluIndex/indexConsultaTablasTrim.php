@@ -1,7 +1,7 @@
 <?php
 
-	global $db; 	global $db_name;
-	global $dyt1;
+	global $db; 	global $db_name; 	global $dyt1;
+	
 	if(isset($_POST['dy'])){
 		if(strlen(trim($_POST['dy'])) != 0){ $dyt1  = '20'.$_POST['dy']; }else{ $dyt1 = date('Y'); }
 	}else{ $dyt1 = date('Y'); }
@@ -79,7 +79,7 @@
 /* FIN PARA SUMAR RETENCION TOT */
 /////////////////////////
 
-/////////////////////	
+/////////////////////	 
 /* PARA SUMAR IVA */	
 
     global $OperSql;        $OperSql = "SUM(`factivae`)";

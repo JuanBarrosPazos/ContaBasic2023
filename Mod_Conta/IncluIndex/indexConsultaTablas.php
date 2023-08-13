@@ -1,5 +1,10 @@
 <?php
 
+	global $orden;
+	if(isset($_POST['Orden'])){
+			$orden = $_POST['Orden'];
+	}else{ $orden = '`factdate` ASC'; }
+    //echo $orden;
 
 	global $db; 	global $db_name;
 	
@@ -14,34 +19,73 @@
 		if(strlen(trim($_POST['dm'])) != 0){ $dm1 = $_POST['dm']; }else{ $dm1 = "TRI0"; }
 	}else{ $dm1 = "TRI0"; }	
 
-	global $sent; 	
-	if($dm1 == "TRI1"){
-		$dm1 = "01";
-		$sent = "LIKE '".$dyt1y."/".$dm1."/%'";
+	/* NOMBRE DE LAS TABLAS */
 
+	global $vnamei; 	$vnamei = "`".$_SESSION['clave']."ingresos_".$dyt1."`";
+	global $vnameg; 	$vnameg = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+
+	/* SENTENCIAS */
+
+	global $sent; 		//$sent = "LIKE '".$dyt1y."/".$dm1."/%'";	
+	global $sqli;		//$sqli = "SELECT * FROM $vnamei WHERE `factdate` $sent ORDER BY `id` ASC ";
+	global $sqlg; 		//$sqlg = "SELECT * FROM $vnameg WHERE `factdate` $sent ORDER BY `id` ASC ";
+	/* INGRESOS SUMAR PVPTOT */
+	global $OperSqlToti;    //$OperSqlToti = "SUM(`factpvptot`)";
+	global $sqlSumToti; 	//$sqlSumToti = "SELECT $OperSqlToti AS 'YearSumToti' FROM $vnamei WHERE `factdate` $sent ";
+	/* INGRESOS SUMAR RETENCION TOT */
+	global $OperSqlRetei; //$OperSqlRetei = "SUM(`factrete`)";
+	global $sqlSumRetei;  //$sqlSumRetei = "SELECT $OperSqlRetei AS 'YearSumRetei' FROM $vnamei WHERE `factdate` $sent ";
+	/* INGRESOS SUMAR IVA */	
+    global $OperSqlIvai;   //$OperSqlIvai = "SUM(`factivae`)";
+	global $sqlSumIvai;    //$sqlSumIvai = "SELECT $OperSqlIvai AS 'YearSumIvai' FROM $vnamei WHERE `factdate` $sent ";
+	/* GASTOS SUMAR PVPTOT  */
+	global $OperSqlTotg;   //$OperSqlTotg = "SUM(`factpvptot`)";
+	global $sqlSumTotg;    //$sqlSumTotg = "SELECT $OperSqlTotg AS 'YearSumTotg' FROM $vnameg WHERE `factdate` $sent ";
+	/* GASTOS SUMAR RETENCION TOT */
+	global $OperSqlReteg;  //$OperSqlReteg = "SUM(`factrete`)";
+	global $sqlSumReteg;   //$sqlSumReteg = "SELECT $OperSqlReteg AS 'YearSumReteg' FROM $vnameg WHERE `factdate` $sent ";
+	/* GASTOS SUMAR IVA */
+	global $OperSqlIvag;  //$OperSqlIvag = "SUM(`factivae`)";
+	global $sqlSumIvag;   //$sqlSumIvag = "SELECT $OperSqlIvag AS 'YearSumIvag' FROM $vnameg WHERE `factdate` $sent ";
+
+	global $betwIng;    global $betwFing;
+	global $betwIni;    global $betwFini;
+	
+	/* LOGICA */
+	if($dm1 == "TRI1"){
+		$betwIng = $betwIni = $dyt1y."/01/01";
+		$betwFing = $betwFini = $dyt1y."/03/31";
+		require 'IncluIndex/SelectTrimes.php';
+		
 	}elseif($dm1 == "TRI2"){
-		$dm1 = "04";
-		$sent = "LIKE '".$dyt1y."/".$dm1."/%'";
+		$betwIng = $betwIni = $dyt1y."/04/01";
+		$betwFing = $betwFini = $dyt1y."/06/31";
+		require 'IncluIndex/SelectTrimes.php';
 
 	}elseif($dm1 == "TRI3"){
-		$dm1 = "07";
-		$sent = "LIKE '".$dyt1y."/".$dm1."/%'";
+		$betwIng = $betwIni = $dyt1y."/07/01";
+		$betwFing = $betwFini = $dyt1y."/09/31";
+		require 'IncluIndex/SelectTrimes.php';
 
 	}elseif($dm1 == "TRI4"){
-		$dm1 = "10";
-		$sent = "LIKE '".$dyt1y."/".$dm1."/%'";
+		$betwIng = $betwIni = $dyt1y."/10/01";
+		$betwFing = $betwFini = $dyt1y."/12/31";
+		require 'IncluIndex/SelectTrimes.php';
 
 	}elseif($dm1 == "ANU"){
 		$dm1 = "";
-		$sent = "LIKE '".$dyt1y."/%'";
-
+		$sent = "LIKE '".$dyt1y."/%' ORDER BY $orden ";
+		require 'incluIndex/SelectAnu.php';
+	
 	}else{ 
 		$dm1 = substr($dm1,1,2);
-		$sent = "LIKE '".$dyt1y."/".$dm1."/%'";
-
+		$sent = "LIKE '".$dyt1y."/".$dm1."/%' ORDER BY $orden ";
+		require 'incluIndex/SelectAnu.php';
 	}
 
-	echo "* ".$dm1."<br>";
+	//echo "* ".$dm1."<br>";
+	//echo "<br>".$sqli."<br>";
+	//echo "<br>".$sqlg."<br>";
 
 					   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -51,18 +95,11 @@
                         /* TABLA BALANCE INGRESOS */
 	////////////////////		***********  		////////////////////
 
-	global $vnamei; 	$vnamei = "`".$_SESSION['clave']."ingresos_".$dyt1."`";
-	global $sqli;
-
-	$sqli = "SELECT * FROM $vnamei WHERE `factdate` $sent ORDER BY `id` ASC ";
-	echo "<br>".$sqli."<br>";
 	$qbi = mysqli_query($db, $sqli);
 
 /////////////////////	
 /* PARA SUMAR PVPTOT */
 
-    global $OperSqlToti;        $OperSqlToti = "SUM(`factpvptot`)";
-	$sqlSumToti = "SELECT $OperSqlToti AS 'YearSumToti' FROM $vnamei WHERE `factdate` $sent ";
     //echo $sqlSumToti."<br>";
     $qrySumToti = mysqli_query($db, $sqlSumToti);
     $SumToti = mysqli_fetch_assoc($qrySumToti);
@@ -76,8 +113,6 @@
 /////////////////////	
 /* PARA SUMAR RETENCION TOT */	
 
-    global $OperSqlRetei;        $OperSqlRetei = "SUM(`factrete`)";
-    $sqlSumRetei = "SELECT $OperSqlRetei AS 'YearSumRetei' FROM $vnamei WHERE `factdate` $sent ";
     $qrySumRetei = mysqli_query($db, $sqlSumRetei);
     $SumRetei = mysqli_fetch_assoc($qrySumRetei);
 	global $sumaretei;
@@ -90,8 +125,6 @@
 /////////////////////	
 /* PARA SUMAR IVA */	
 
-    global $OperSqlIvai;        $OperSqlIvai = "SUM(`factivae`)";
-    $sqlSumIvai = "SELECT $OperSqlIvai AS 'YearSumIvai' FROM $vnamei WHERE `factdate` $sent ";
     $qrySumIvai = mysqli_query($db, $sqlSumIvai);
     $SumIvai = mysqli_fetch_assoc($qrySumIvai);
 	global $sumaivaei;
@@ -248,16 +281,11 @@
                         /* TABLA BALANCE GASTOS */
 	////////////////////		***********  		////////////////////
 
-	global $vnameg; 	$vnameg = "`".$_SESSION['clave']."gastos_".$dyt1."`";
-	global $sqlg; 		$sqlg = "SELECT * FROM $vnameg WHERE `factdate` $sent ORDER BY `id` ASC ";
-	//echo $sqlg."<br>";
 	global $qbg;	$qbg = mysqli_query($db, $sqlg);
 
 /////////////////////	
 /* PARA SUMAR PVPTOT */
 
-    global $OperSqlTotg;        $OperSqlTotg = "SUM(`factpvptot`)";
-    $sqlSumTotg = "SELECT $OperSqlTotg AS 'YearSumTotg' FROM $vnameg WHERE `factdate` $sent ";
     //echo $sqlSumTot."<br>";
     $qrySumTotg = mysqli_query($db, $sqlSumTotg);
     $SumTotg = mysqli_fetch_assoc($qrySumTotg);
@@ -271,8 +299,6 @@
 /////////////////////	
 /* PARA SUMAR RETENCION TOT */
 
-    global $OperSqlReteg;        $OperSqlReteg = "SUM(`factrete`)";
-    $sqlSumReteg = "SELECT $OperSqlReteg AS 'YearSumReteg' FROM $vnameg WHERE `factdate` $sent ";
     //echo $sqlSumRete."<br>";
     $qrySumReteg = mysqli_query($db, $sqlSumReteg);
     $SumReteg = mysqli_fetch_assoc($qrySumReteg);
@@ -286,8 +312,6 @@
 /////////////////////	
 /* PARA SUMAR IVA */
 
-    global $OperSqlIvag;        $OperSqlIvag = "SUM(`factivae`)";
-    $sqlSumIvag = "SELECT $OperSqlIvag AS 'YearSumIvag' FROM $vnameg WHERE `factdate` $sent ";
     //echo $sqlSumIva."<br>";
     $qrySumIvag = mysqli_query($db, $sqlSumIvag);
     $SumIvag = mysqli_fetch_assoc($qrySumIvag);
