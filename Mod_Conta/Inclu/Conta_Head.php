@@ -9,7 +9,7 @@
         $Titulo = '<div style="margin-top:4px; text-align:center" id="TitTut">
                       <font color="#59746A"><span id="hora">000000</span></font>
                     </div> ';
-        $GrafIndex = "<link href='".$ruta."IncluIndex/GrafIndex.css' rel='stylesheet' type='text/css' />
+        $GrafIndex = "<link href='".$ruta."Inclu_Index/GrafIndex.css' rel='stylesheet' type='text/css' />
         <script type='text/javascript'>window['_gaUserPrefs'] = { ioo : function() { return true; } }</script>";
     }else{
         $ruta = "../";

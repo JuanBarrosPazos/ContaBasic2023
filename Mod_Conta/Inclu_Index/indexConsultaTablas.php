@@ -55,32 +55,32 @@
 	if($dm1 == "TRI1"){
 		$betwIng = $betwIni = $dyt1y."/01/01";
 		$betwFing = $betwFini = $dyt1y."/03/31";
-		require 'IncluIndex/SelectTrimes.php';
+		require 'Inclu_Index/SelectTrimes.php';
 		
 	}elseif($dm1 == "TRI2"){
 		$betwIng = $betwIni = $dyt1y."/04/01";
 		$betwFing = $betwFini = $dyt1y."/06/31";
-		require 'IncluIndex/SelectTrimes.php';
+		require 'Inclu_Index/SelectTrimes.php';
 
 	}elseif($dm1 == "TRI3"){
 		$betwIng = $betwIni = $dyt1y."/07/01";
 		$betwFing = $betwFini = $dyt1y."/09/31";
-		require 'IncluIndex/SelectTrimes.php';
+		require 'Inclu_Index/SelectTrimes.php';
 
 	}elseif($dm1 == "TRI4"){
 		$betwIng = $betwIni = $dyt1y."/10/01";
 		$betwFing = $betwFini = $dyt1y."/12/31";
-		require 'IncluIndex/SelectTrimes.php';
+		require 'Inclu_Index/SelectTrimes.php';
 
 	}elseif($dm1 == "ANU"){
 		$dm1 = "";
 		$sent = "LIKE '".$dyt1y."/%' ORDER BY $orden ";
-		require 'incluIndex/SelectAnu.php';
+		require 'inclu_Index/SelectAnu.php';
 	
 	}else{ 
 		$dm1 = substr($dm1,1,2);
 		$sent = "LIKE '".$dyt1y."/".$dm1."/%' ORDER BY $orden ";
-		require 'incluIndex/SelectAnu.php';
+		require 'inclu_Index/SelectAnu.php';
 	}
 
 	//echo "* ".$dm1."<br>";
