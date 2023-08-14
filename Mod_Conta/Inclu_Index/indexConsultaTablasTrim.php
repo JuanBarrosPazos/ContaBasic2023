@@ -138,6 +138,8 @@
 			global $sumapvptoti;
 			if($sumapvptoti > 0){
 				$TotEi = ($rowi['factpvptot']*100)/$sumapvptoti;
+			}elseif($sumapvptoti < 0){
+				$TotEi = ($rowi['factpvptot']*100)/(abs($sumapvptoti));
 			}else{ $TotEi = 0.00;}
 
 			print("<li>
@@ -389,6 +391,8 @@
 			global $sumapvptotg;
 			if($sumapvptotg > 0){
 				$TotE = ($rowg['factpvptot']*100)/$sumapvptotg;
+			}elseif($sumapvptotg < 0){
+				$TotE = ($rowg['factpvptot']*100)/(abs($sumapvptotg));
 			}else{ $TotE = 0.00;}
 
 			print("<li>
@@ -551,6 +555,38 @@
 	$sumaivaed  = number_format($sumaivaed ,2,".","");
 	//if($sumaivaed == ""){ $sumaivaed = "0.00"; }else{ }
 
+	//$sumapvptotd = '';	$sumareted = 0.00;	$sumaivaed = 0;
+
+	if((($sumapvptotd == 0.00)||($sumapvptotd == ''))&&(($sumareted == 0.00)||($sumareted == ''))&&(($sumaivaed == 0.00)||($sumaivaed == ''))){			
+				print ("<table class='tabla' >
+				<tr>
+					<th colspan='3' class='BorderInf resultadosd'>
+						DIFERENCIA INGRESOS / GASTOS 
+					</th>
+				</tr>
+					<tr>
+						<td colspan='3'>
+						<span style='display:block; margin-top: 0.4em;'>
+							<font color='#FF0000'>NO HAY DATOS</font>
+						</span>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='3' class='BorderInf'></td>
+					</tr>
+					<tr>
+						<td class='BorderInfDch resultadosd' align='center'>IMP DIFER</td>
+						<td class='BorderInfDch resultadosd' align='center'>RETEN DIFER</td>
+						<td class='BorderInf resultadosd' align='center'>TOT DIFER</td>
+					</tr>
+					<tr>
+						<td class='BorderInfDch resultadosd' align='right'>".$sumaivaed." €</td>
+						<td class='BorderInfDch resultadosd' align='right'>".$sumareted." €</td>
+						<td class='BorderInf resultadosd' align='right'>".$sumapvptotd." €</td>
+					</tr>
+				</table>");
+	}else{	
+	
     print ("<table class='tabla' >
 			<tr>
 				<th colspan=6 class='BorderInf resultadosd'>
@@ -596,6 +632,8 @@
 			global $sumapvptoti;
 			if($sumapvptoti > 0){
 				$TotEi = ($rowi['factpvptot']*100)/$sumapvptoti;
+			}elseif($sumapvptoti < 0){
+				$TotEi = ($rowi['factpvptot']*100)/(abs($sumapvptoti));
 			}else{ $TotEi = 0.00;}
 			
 			/*	*/
@@ -606,20 +644,25 @@
 			$SumTotgrg = mysqli_fetch_assoc($qrySumTotgrg);
 			$TriSumTotgrg = $SumTotgrg['TriSumTotgrg'];
 			$rowgrg['factpvptot']  = number_format($TriSumTotgrg ,2,".","");
+			
 			//if($TriSumTotg == ''){ $TriSumTotg = "0.00"; }else{ }
 			//echo $rowgrg['factpvptot']."<br>";
 			/* */
 
 			global $sumapvptotd;
 			$calculo = $rowgri['factpvptot']  - $rowgrg['factpvptot'];
-			$rowd['factpvptot'] = number_format($calculo ,2,".","");
+			$rowd['factpvptot'] = number_format(abs($calculo) ,2,".","");
 			if($sumapvptotd > 0){
 				$TotEd = ($rowd['factpvptot']*100)/$sumapvptotd;
+			}elseif($sumapvptotd < 0){
+				$TotEd = ($rowd['factpvptot']*100)/(abs($sumapvptotd));
 			}else{ $TotEd = 0.00;}
+
+		if(	$rowd['factpvptot'] >= 0){ $bgRed = ""; }else{ $bgRed = "style='background: #ff5e00 !important;'"; }
 
 			print("<li>
 						<a href='#' title='".$rowd['factdate']." ".$rowd['factpvptot']." €'>
-							<span class='label'>".$rowd['factdate']."<br>".$rowd['factpvptot']."</span>
+							<span class='label' ".$bgRed.">".$rowd['factdate']."<br>".$rowd['factpvptot']."</span>
 							<span class='count bgcolord' style='height: ".$TotEd."%'>(".$TotEd.")</span>
 						</a>
 					</li>");
@@ -791,6 +834,8 @@
     } /* Fin del while.*/ 
 
 	print("</table>");
+
+	} // FIN SI HAY DATOS
 
 			////////////////////		***********  		////////////////////
 

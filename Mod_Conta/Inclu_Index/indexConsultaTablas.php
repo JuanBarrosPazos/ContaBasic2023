@@ -52,36 +52,46 @@
 	global $betwIni;    global $betwFini;
 	
 	/* LOGICA */
-	if($dm1 == "TRI1"){
-		$betwIng = $betwIni = $dyt1y."/01/01";
-		$betwFing = $betwFini = $dyt1y."/03/31";
-		require 'Inclu_Index/SelectTrimes.php';
+
+	 switch (true) {
+		case ($dm1 == "TRI1"):
+			$betwIng = $betwIni = $dyt1y."/01/01";
+			$betwFing = $betwFini = $dyt1y."/03/31";
+			require 'Inclu_Index/SelectTrimes.php';
+			break;
 		
-	}elseif($dm1 == "TRI2"){
-		$betwIng = $betwIni = $dyt1y."/04/01";
-		$betwFing = $betwFini = $dyt1y."/06/31";
-		require 'Inclu_Index/SelectTrimes.php';
+		case ($dm1 == "TRI2"):
+			$betwIng = $betwIni = $dyt1y."/04/01";
+			$betwFing = $betwFini = $dyt1y."/06/31";
+			require 'Inclu_Index/SelectTrimes.php';
+			break;
+		
+		case ($dm1 == "TRI3"):
+			$betwIng = $betwIni = $dyt1y."/07/01";
+			$betwFing = $betwFini = $dyt1y."/09/31";
+			require 'Inclu_Index/SelectTrimes.php';
+			break;
+		
+		case ($dm1 == "TRI4"):
+			$betwIng = $betwIni = $dyt1y."/10/01";
+			$betwFing = $betwFini = $dyt1y."/12/31";
+			require 'Inclu_Index/SelectTrimes.php';
+			break;
+		
+		case ($dm1 == "ANU"):
+			$dm1 = "";
+			$sent = "LIKE '".$dyt1y."/%' ORDER BY $orden ";
+			require 'inclu_Index/SelectAnu.php';
+			break;
+		
+		default:
+			$dm1 = substr($dm1,1,2);
+			$sent = "LIKE '".$dyt1y."/".$dm1."/%' ORDER BY $orden ";
+			require 'inclu_Index/SelectAnu.php';
+			break;
 
-	}elseif($dm1 == "TRI3"){
-		$betwIng = $betwIni = $dyt1y."/07/01";
-		$betwFing = $betwFini = $dyt1y."/09/31";
-		require 'Inclu_Index/SelectTrimes.php';
+	 } // FIN SWITCH CASE
 
-	}elseif($dm1 == "TRI4"){
-		$betwIng = $betwIni = $dyt1y."/10/01";
-		$betwFing = $betwFini = $dyt1y."/12/31";
-		require 'Inclu_Index/SelectTrimes.php';
-
-	}elseif($dm1 == "ANU"){
-		$dm1 = "";
-		$sent = "LIKE '".$dyt1y."/%' ORDER BY $orden ";
-		require 'inclu_Index/SelectAnu.php';
-	
-	}else{ 
-		$dm1 = substr($dm1,1,2);
-		$sent = "LIKE '".$dyt1y."/".$dm1."/%' ORDER BY $orden ";
-		require 'inclu_Index/SelectAnu.php';
-	}
 
 	//echo "* ".$dm1."<br>";
 	//echo "<br>".$sqli."<br>";
@@ -201,12 +211,14 @@
 				global $sumapvptoti;
 				if($sumapvptoti > 0){
 					$TotEi = ($rowgri['factpvptot']*100)/$sumapvptoti;
-				}else{ $TotEi = 0.00;}
-	
+				}elseif($sumapvptoti < 0){
+					$TotEi = (abs($sumapvptoti)*100)/($rowgri['factpvptot']);
+				}else{ $TotEi = 0.00; }
+
 				print("<li>
 							<a href='#' title='".$rowgri['factdate']." || ".$rowgri['factpvptot']." €'>
 				<span class='count '>".$rowgri['factdate']." || ".$rowgri['factpvptot']." €</span>
-				<span class='index bgcolori' style='width: ".$TotEi."%'>".$rowgri['factpvptot']."</span>
+				<span class='index bgcolori' style='width: ".$TotEi."%;'>".$rowgri['factpvptot']."</span>
 							</a>
 						</li>");
 	
@@ -351,7 +363,6 @@
 							<td class='BorderInf resultadosg' align='right'>".$sumapvptotg." €</td>
 						</tr>
 					</table>");
-
 		} else { 
 			print ("<table class='tablac' >
 				<tr>
@@ -388,12 +399,14 @@
 			global $sumapvptotg;
 			if($sumapvptotg > 0){
 				$TotEg = ($rowgrg['factpvptot']*100)/$sumapvptotg;
-			}else{ $TotEg = 0.00;}
+			}elseif($sumapvptotg < 0){
+				$TotEg = (abs($sumapvptotg)*100)/($rowgrg['factpvptot']);
+			}else{ $TotEg = 0.00; }
 
 			print("<li>
 						<a href='#' title='".$rowgrg['factdate']." || ".$rowgrg['factpvptot']." €'>
 			<span class='count'>".$rowgrg['factdate']." || ".$rowgrg['factpvptot']." €</span>
-			<span class='index bgcolorg' style='width: ".$TotEg."%'>".$rowgrg['factpvptot']."</span>
+			<span class='index bgcolorg' style='width: ".$TotEg."%;'>".$rowgrg['factpvptot']."</span>
 						</a>
 					</li>");
 
@@ -487,16 +500,55 @@
 	$sumaivaed  = number_format($sumaivaed ,2,".","");
 
 	global $sumapvptotd;
-	if($sumapvptotd> 0){
-		$TotEd1 = ($sumaivaed*100)/$sumapvptotd;
-		$TotEd2 = ($sumareted*100)/$sumapvptotd;
-		$TotEd3 = ($sumapvptotd*100)/$sumapvptoti;
-	}else{ $TotEd1 = 0.00;	$TotEd2 = 0.00;	$TotEd3 = 0.00;	}
 
+	if($sumapvptotd > 0){
+		$TotEd1 = (abs($sumaivaed)*100)/$sumapvptotd;
+		$TotEd2 = (abs($sumareted)*100)/$sumapvptotd;
+		$TotEd3 = (abs($sumapvptotd)*100)/$sumapvptoti;
+	}elseif($sumapvptotd < 0){
+		$TotEd1 = (abs($sumaivaed*100))/(abs($sumapvptotd));
+		$TotEd2 = (abs($sumareted*100))/(abs($sumapvptotd));
+		$TotEd3 = (abs($sumapvptoti*100))/(abs($sumapvptotd));
+	}else{ $TotEd1 = 0.00;		$TotEd2 = 0.00;		$TotEd3 = 0.00;}
+
+	global $bgRed;
+	if(	$sumaivaed >= 0){ $bgivaed = ""; }else{ $bgivaed = "style='background: #ff5e00 !important;'"; }
+	if(	$sumareted >= 0){ $bgreted = ""; }else{ $bgreted = "style='background: #ff5e00 !important;'"; }
+	if(	$sumapvptotd >= 0){ $bgpvptotd = ""; }else{ $bgpvptotd = "style='background: #ff5e00 !important;'"; }
+
+	if(($TotEd1 == 0.00)&&($TotEd2 == 0.00)&&($TotEd3 == 0.00)){			
+				print ("<table class='tabla' >
+				<tr>
+					<th colspan='3' class='BorderInf resultadosd'>
+						DIFERENCIA INGRESOS / GASTOS 
+					</th>
+				</tr>
+					<tr>
+						<td colspan='3'>
+						<span style='display:block; margin-top: 0.4em;'>
+							<font color='#FF0000'>NO HAY DATOS</font>
+						</span>
+						</td>
+					</tr>
+					<tr>
+						<td colspan='3' class='BorderInf'></td>
+					</tr>
+					<tr>
+						<td class='BorderInfDch resultadosd' align='center'>IMP DIFER</td>
+						<td class='BorderInfDch resultadosd' align='center'>RETEN DIFER</td>
+						<td class='BorderInf resultadosd' align='center'>TOT DIFER</td>
+					</tr>
+					<tr>
+						<td class='BorderInfDch resultadosd' align='right'>".$sumaivaed." €</td>
+						<td class='BorderInfDch resultadosd' align='right'>".$sumareted." €</td>
+						<td class='BorderInf resultadosd' align='right'>".$sumapvptotd." €</td>
+					</tr>
+				</table>");
+	}else{
 	print ("<table class='tabla' >
 				<tr>
 					<th colspan='3' class='BorderInf resultadosd'>
-						DIFERENCIA INGRESOS / GASTOS
+						DIFERENCIA INGRESOS / GASTOS 
 					</th>
 				</tr>
 				<tr>
@@ -508,31 +560,30 @@
 					<td class='BorderInf resultadosd' align='center'>TOT DIFER</td>
 				</tr>
 				<tr>
-						<td class='BorderInfDch resultadosd' align='right'>".$sumaivaed." €</td>
-						<td class='BorderInfDch resultadosd' align='right'>".$sumareted." €</td>
-						<td class='BorderInf resultadosd' align='right'>".$sumapvptotd." €</td>
+					<td class='BorderInfDch resultadosd' align='right'>".$sumaivaed." €</td>
+					<td class='BorderInfDch resultadosd' align='right'>".$sumareted." €</td>
+					<td class='BorderInf resultadosd' align='right'>".$sumapvptotd." €</td>
 				</tr>
-
 				<tr>
 					<td colspan=6 class='BorderInf'>
 						<div class='section'>
 				<ul class='timeline'>
 					<li>
 						<a href='#' title='IMPUESTOS DIFER ".$sumaivaed." €'>
-							<span class='label'>IMP <br>".$sumaivaed."</span>
-							<span class='count bgcolord' style='height: ".$TotEd1."%'>(".$TotEd1.")</span>
+				<span class='label' ".$bgivaed.">IMP <br>".$sumaivaed."</span>
+				<span class='count bgcolord' style='height: ".$TotEd1."%;'>(".$TotEd1.")</span>
 						</a>
 					</li>	
 					<li>
 						<a href='#' title='RETENCION DIFER ".$sumareted." €'>
-							<span class='label'>RET <br>".$sumareted."</span>
-							<span class='count bgcolord' style='height: ".$TotEd2."%'>(".$TotEd2.")</span>
+				<span class='label' ".$bgreted.">RET <br>".$sumareted."</span>
+				<span class='count bgcolord' style='height: ".$TotEd2."%;'>(".$TotEd2.")</span>
 						</a>
 					</li>	
 					<li>
 						<a href='#' title='TOTAL ".$sumapvptotd." €'>
-							<span class='label'>TOTAL <br>".$sumapvptotd."</span>
-							<span class='count bgcolord' style='height: ".$TotEd3."%'>(".$TotEd3.")</span>
+				<span class='label' ".$bgpvptotd.">TOTAL <br>".$sumapvptotd."</span>
+				<span class='count bgcolord' style='height: ".$TotEd3."%;'>(".$TotEd3.")</span>
 						</a>
 					</li>	
 				</ul>
@@ -541,6 +592,6 @@
 				</tr>
 			</table>
 		</div>");
-
+	}
 
 ?>
