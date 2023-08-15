@@ -24,7 +24,7 @@
   `Password` varchar(10) collate utf8_spanish2_ci NOT NULL,
   `Direccion` varchar(60) collate utf8_spanish2_ci NOT NULL,
   `Tlf1`varchar(9) NOT NULL default '0',
-  `Tlf2`varchar(9) NOT NULL default '0',
+  `Tlf2`varchar(9) NULL default 000000000,
   `lastin` varchar(20) collate utf8_spanish2_ci NOT NULL default '0',
   `lastout` varchar(20) collate utf8_spanish2_ci NOT NULL default '0',
   `visitadmin` varchar(4) collate utf8_spanish2_ci NOT NULL default '0',
@@ -159,7 +159,7 @@
   `Email` varchar(50) collate utf8_spanish2_ci NOT NULL,
   `Direccion` varchar(60) collate utf8_spanish2_ci NOT NULL,
   `Tlf1`varchar(9) NOT NULL default '0',
-  `Tlf2`varchar(9) NOT NULL default '0',
+  `Tlf2`varchar(9) NULL default 000000000,
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `ref` (`ref`),
   UNIQUE KEY `dni` (`dni`)
@@ -197,10 +197,10 @@
   `doc` varchar(11) collate utf8_spanish2_ci NOT NULL,
   `dni` varchar(8) collate utf8_spanish2_ci NOT NULL,
   `ldni` varchar(1) collate utf8_spanish2_ci NOT NULL,
-  `Email` varchar(50) collate utf8_spanish2_ci NOT NULL,
+  `Email` varchar(50) collate utf8_spanish2_ci NULL,
   `Direccion` varchar(60) collate utf8_spanish2_ci NOT NULL,
   `Tlf1`varchar(9) NOT NULL default '0',
-  `Tlf2`varchar(9) NOT NULL default '0',
+  `Tlf2`varchar(9) NULL default,
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `ref` (`ref`),
   UNIQUE KEY `dni` (`dni`)
@@ -215,7 +215,7 @@
 			}
 					
 	$vpi = "INSERT INTO `$db_name`.$vname6 (`id`, `ref`, `rsocial`, `myimg`, `doc`, `dni`, `ldni`, `Email`, `Direccion`, `Tlf1`, `Tlf2`) VALUES
-(1, 'ANONIMO', 'ANONIMO', 'untitled.png', 'ANONIMO', 'ANONIMO', 'X', 'ANONIMO', 'ANONIMO', '000000000', '000000000')";
+(1, 'ANONIMO', 'ANONIMO', 'untitled.png', 'ANONIMO', 'ANONIMO', 'X', 'anonimo@anonimo.es', 'Not Adress', '000000000', '000000000')";
 		
 	if(mysqli_query($db, $vpi)){
 			global $table9;

@@ -101,7 +101,7 @@
 			<table class='tabla' >
 			<tr>
 				<th colspan=6 class='BorderInf resultadosi'>
-					BALANCE INGRESOS ".$counti."R
+					INGRESOS TRIMESTRALES
 				</th>
 			</tr>
 			<tr>
@@ -353,7 +353,7 @@
     print ("<table class='tablac' style='text-aling:center !important;'>
 			<tr>
 				<th colspan=6 class='BorderInf resultadosg'>
-					BALANCE GATOS ".$countg."R
+					GATOS TRIMESTRALES
 				</th>
 			</tr>
 			<tr>
@@ -561,7 +561,7 @@
 				print ("<table class='tabla' >
 				<tr>
 					<th colspan='3' class='BorderInf resultadosd'>
-						DIFERENCIA INGRESOS / GASTOS 
+						DIFERENCIA INGRESOS / GASTOS TRIMESTRALES 
 					</th>
 				</tr>
 					<tr>
@@ -590,7 +590,7 @@
     print ("<table class='tabla' >
 			<tr>
 				<th colspan=6 class='BorderInf resultadosd'>
-					DIFERENCIA INGRESOS / GASTOS
+					DIFERENCIA INGRESOS / GASTOS TRIMESTRALES
 				</th>
 			</tr>
 			<tr>

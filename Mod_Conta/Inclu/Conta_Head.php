@@ -15,9 +15,12 @@
         $ruta = "../";
         $PlayHoraJs = "";
         $OnLoad = '';
+        /*
         $Titulo = '<div style="margin-top:10px; text-align:center">
                       <span style="font-size:12px; color:#59746A">ESTÁ EN CONTA BASIC</span>
                     </div>';
+        */
+        $Titulo = '';
         $GrafIndex = "";
     }
 

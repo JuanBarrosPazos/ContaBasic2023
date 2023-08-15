@@ -668,28 +668,24 @@ function gt2(){
 		 			<td colspan='2' align='right' class='BorderInf'>
 				<div style='float:left; margin-right:3px;  margin-left:3px;'>
 			<form name='grafico' action='grafico_gf.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input name='time' type='hidden' value='".@$_SESSION['time']."' />
 				<input type='submit' value='GRAFIC LINEAL TOTAL' />
 				<input type='hidden' name='grafico' value=1 />
 			</form>	
 				</div>	 				
 				<div style='float:left; margin-right:3px;  margin-left:3px;'>
 			<form name='grafico' action='grafico_gfb.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input name='time' type='hidden' value='".@$_SESSION['time']."' />
 				<input type='submit' value='GRAFIC BARRAS TOTAL' />
 				<input type='hidden' name='grafico' value=1 />
 			</form>	
 				</div>					
 				<div style='float:left; margin-right:3px;  margin-left:3px;'>
 			<form name='grafico2' action='grafico_gf2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input name='time' type='hidden' value='".@$_SESSION['time']."' />
 				<input type='submit' value='GRAFIC LINEAL DETALLE' />
 				<input type='hidden' name='grafico2' value=1 />
 			</form>	
 				</div>					
 				<div style='float:left; margin-right:3px;  margin-left:3px;'>
 			<form name='grafico2' action='grafico_gf2b.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input name='time' type='hidden' value='".@$_SESSION['time']."' />
 				<input type='submit' value='GRAFIC BARRAS DETALLE' />
 				<input type='hidden' name='grafico2' value=1 />
 			</form>	
@@ -743,21 +739,18 @@ function gt2(){
 		 			<td align='right' class='BorderInf' colspan='2'>
 				<div style='float:left; margin-right:3px;  margin-left:3px;'>
 			<form name='grafico' action='grafico_g.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input name='time' type='hidden' value='".@$_SESSION['time']."' />
 				<input type='submit' value='GRAFIC LINEAL TOT DIA' />
 				<input type='hidden' name='grafico' value=1 />
 			</form>	
 				</div>
 				<div style='float:left; margin-right:3px;  margin-left:3px;'>
 			<form name='graficob' action='grafico_gb.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input name='time' type='hidden' value='".@$_SESSION['time']."' />
 				<input type='submit' value='GRAFIC BARRAS TOT DIA' />
 				<input type='hidden' name='graficob' value=1 />
 			</form>	
 				</div>
 				<div style='float:left' margin-right:3px;  margin-left:3px;>
 			<form name='grafico2' action='grafico_g2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input name='time' type='hidden' value='".@$_SESSION['time']."' />
 				<input type='submit' value='GRAFIC LINEAL DETALLE' />
 				<input type='hidden' name='grafico2' value=1 />
 			</form>	
@@ -765,7 +758,6 @@ function gt2(){
 			</div>
 				<div style='float:left' margin-right:3px;  margin-left:3px;>
 			<form name='graficob2' action='grafico_gb2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input name='time' type='hidden' value='".@$_SESSION['time']."' />
 				<input type='submit' value='GRAFIC BARRAS DETALLE' />
 				<input type='hidden' name='graficob2' value=1 />
 			</form>	

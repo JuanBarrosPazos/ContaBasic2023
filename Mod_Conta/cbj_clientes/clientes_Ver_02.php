@@ -37,7 +37,7 @@ function process_form(){
 	
 	print("<table align='center' width=490px>
 				<tr>
-					<th colspan=3  class='BorderInf'>DATOS DEL PROVEEDOR</th>
+					<th colspan=3  class='BorderInf'>DATOS DEL CLIENTE</th>
 				</tr>
 				<tr>
 					<td width=140px>ID</td><td>".$_POST['id']."</td>

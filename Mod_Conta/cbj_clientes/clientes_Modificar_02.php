@@ -124,19 +124,19 @@ function process_form(){
 
 		$sql = "UPDATE `$db_name`.$vname SET  `ref`= '$rf', `rsocial` = '$_POST[rsocial]', `myimg` = '$new_name', `doc` = '$_POST[doc]', `dni` = '$_POST[dni]', `ldni` = '$_POST[ldni]', `Email` = '$_POST[Email]', `Direccion` = '$_POST[Direccion]', `Tlf1` = '$_POST[Tlf1]', `Tlf2` = '$tlf2' WHERE $vname.`id` = '$_POST[id]' LIMIT 1 ";
 	
-			/* ACTUALIZA EN CASACADA LAS TABLAS INGRESOS CON EL NUEVO NIF, RAZON SOCIAL */
+			/* ACTUALIZA EN CASACADA LAS TABLAS GASTOS CON EL NUEVO NIF, RAZON SOCIAL */
 			global $tableName; 			$tableName = "`".$_SESSION['clave']."status`";
 			$a = "SELECT MIN(year) FROM `$db_name`.$tableName ";
 			$ra = mysqli_query($db, $a);
 			$ym = mysqli_fetch_row($ra);
 			global $yearMin;	$yearMin = $ym[0];		//echo $yearMin;
 			global $yearHoy; 	$yearHoy = date('Y'); 	//echo $yearHoy;
-		 
+		
 			while($yearMin<=$yearHoy){
 		
 				//echo "* AÑO: ".$yearMin.".<br>";
-				global $tName; 	$tName =  "`".$_SESSION['clave']."ingresos_".$yearMin."`";
-				$sg6 = "UPDATE `$db_name`.$tName SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $tName.`factnif` LIKE '$dnif' ";
+				global $tName; 	$tName =  "`".$_SESSION['clave']."gastos_".$yearMin."`";
+				$sg6 = "UPDATE `$db_name`.$tName SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $tName.`factnif` LIKE '$dnif' ";
 	
 				if(mysqli_query($db, $sg6)){ //print("* OK");
 				} else { //print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
@@ -148,8 +148,8 @@ function process_form(){
 
 			} // FIN WHILE
 
-			global $tableGastPend; 		$tableGastPend = "`".$_SESSION['clave']."ingresos_pendientes`";
-			$sg6 = "UPDATE `$db_name`.$tableGastPend SET `refcliente` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $tableGastPend.`factnif` LIKE '$dnif' ";
+			global $tableGastPend; 		$tableGastPend = "`".$_SESSION['clave']."gastos_pendientes`";
+			$sg6 = "UPDATE `$db_name`.$tableGastPend SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $tableGastPend.`factnif` LIKE '$dnif' ";
 	
 			if(mysqli_query($db, $sg6)){ //print("* OK");
 			} else { //print("<font color='#FF0000'>* ".mysqli_error($db))."</br>";
@@ -157,7 +157,7 @@ function process_form(){
 					 $texerror6 = "\n\t ".mysqli_error($db);
 						}
 
-			/* FIN ACTUALIZA EN CASACADA LAS TABLAS INGRESOS CON EL NUEVO NIF, RAZON SOCIAL */
+			/* FIN ACTUALIZA EN CASACADA LAS TABLAS GASTOS CON EL NUEVO NIF, RAZON SOCIAL */
 	
 		} // FIN ELSE
 
@@ -173,48 +173,54 @@ function process_form(){
 
 		print("<table align='center' style='margin-top:10px'>
 				<tr>
-					<th colspan=3 class='BorderInf'>
-						HA MODIFICADO EL CLIENTE
-					</th>
+					<th colspan=3 class='BorderInf'>HA MODIFICADO EL CLIENTE</th>
 				</tr>
 				<tr>
-					<td width=150px> RAZON SOCIAL</td>
-					<td width=200px>".$_POST['rsocial']."</td>
-					<td rowspan='5' align='center' width='100px'>
-	<img src='../cbj_Docs/img_clientes/".$dudas."' height='120px' width='90px' />
+					<td style='width: 120px; text-align: right;' RAZON SOCIAL</td>
+					<td style='width: 120px;'>".$_POST['rsocial']."</td>
+					<td rowspan='4' align='center' width='100px'>
+			<img src='../cbj_Docs/img_clientes/".$dudas."' height='120px' width='90px' />
 					</td>
 				</tr>
 				<tr>
-					<td>DOCUMENTO</td><td>".$_POST['doc']."</td>
+					<td style='text-align: right;'>DOCUMENTO</td><td>".$_POST['doc']."</td>
 				</tr>				
 				<tr>
-					<td>NUMERO</td><td>".$_POST['dni']."</td>
+					<td style='text-align: right;'>NUMERO</td><td>".$_POST['dni']."</td>
 				</tr>				
 				<tr>
-					<td>CONTROL</td><td>".$_POST['ldni']."</td>
+					<td style='text-align: right;'>CONTROL</td><td>".$_POST['ldni']."</td>
 				</tr>				
 				<tr>
-					<td>MAIL</td><td colspan='2'>".$_POST['Email']."</td>
+					<td style='text-align: right;'>MAIL</td><td colspan='2'>".$_POST['Email']."</td>
 				</tr>
 				<tr>
-					<td>REFERENCIA</td><td>".$rf."</td>
+					<td style='text-align: right;'>REFERENCIA</td><td colspan='2'>".$rf."</td>
 				</tr>
 				<tr>
-					<td>PAIS</td><td colspan='2'>".$_POST['Direccion']."</td>
+					<td style='text-align: right;'>PAIS</td><td colspan='2'>".$_POST['Direccion']."</td>
 				</tr>
 				<tr>
-					<td>TELEFONO 1</td><td colspan='2'>".$_POST['Tlf1']."</td>
+					<td style='text-align: right;'>TELEFONO 1</td><td colspan='2'>".$_POST['Tlf1']."</td>
 				</tr>
 				<tr>
-					<td>TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
+					<td style='text-align: right;'>TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
 				</tr>
 				<tr>
 					<td colspan='3' align='center'>
 						<a href='clientes_Ver.php' class='botonverde'>INICIO CLIENTES</a>
 					</td>
 				</tr>
-			</table>" );
-			
+			</table>");
+			global $redir;
+			$redir = "<script type='text/javascript'>
+							function redir(){
+							window.location.href='clientes_Ver.php';
+						}
+						setTimeout('redir()',4000);
+						</script>";
+			print ($redir);
+	
 		} else { print("</br><font color='#FF0000'>* ERROR L. 114/133: </font></br> ".mysqli_error($db))."</br>";
 					show_form ();
 					//global $texerror;
@@ -421,9 +427,8 @@ function show_form($errors=[]){
 						<a href='clientes_Ver.php' class='botonverde'>INICIO CLIENTES</a>
 					</td>
 				</tr>
-			</table>				
-					"); /* Fin del print */
-	
+			</table>"); /* Fin del print */
+
 	}	/* Fin show_form(); */
 
 				   ////////////////////				   ////////////////////
@@ -506,7 +511,7 @@ function info_02(){
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	require '../Inclu/Conta_Footer.php';
+	//require '../Inclu/Conta_Footer.php';
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

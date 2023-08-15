@@ -209,7 +209,7 @@ function show_form($errors=[]){
 								'doc' => '',
 								'dni' => '',
 								'ldni' => '',
-								'Email' => 'nomail@nomail.es',
+								'Email' => '',
 								'Direccion' => '',
 								'Tlf1' => '',
 								'Tlf2' => '');
@@ -239,11 +239,12 @@ function show_form($errors=[]){
 				<div style='clear:both'></div>");
 		} // FIN ERRORS
 	
-	$doctype = array (	'DNI' => 'DNI/NIF Espa&ntilde;oles',
+	$doctype = array (	'' => 'TIPO DE IDENTIFICADOR',
+						'DNI' => 'DNI/NIF Espa&ntilde;oles',
 						'NIE' => 'NIE/NIF Extranjeros',
 						'NIFespecial' => 'NIF Persona F&iacute;sica Especial',
-						/*
 						'NIFsa' => 'NIF Sociedad An&oacute;nima',
+						/*
 						'NIFsrl' => 'NIF Sociedad Responsabilidad Limitada',
 						'NIFscol' => 'NIF Sociedad Colectiva',
 						'NIFscom' => 'NIF Sociedad Comanditaria',
@@ -279,7 +280,7 @@ function show_form($errors=[]){
 							DATOS DEL NUEVO PROVEEDOR
 					</th>
 				</tr>
-	<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'  enctype='multipart/form-data'>
+	<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
 				<tr>
 					<td style='width:120px; text-align:right;'>REFERENCIA<font color='#FF0000'> *</font></td>
 					<td>SE GENERARÁ UNA REFERENCIA AUTOMÁTICA</td>
@@ -294,13 +295,13 @@ function show_form($errors=[]){
 				<tr>
 					<td style='text-align:right;'>DOCUMENTO<font color='#FF0000'> *</font></td>
 					<td>
-			<select name='doc'>");
+			<select name='doc' required >");
 				foreach($doctype as $option => $label){
 					print ("<option value='".$option."' ");
 					if($option == $defaults['doc']){ 
 							print ("selected = 'selected'");
 													}
-										print ("> $label </option>");
+									print ("> $label </option>");
 								}	
 	print ("</select>
 					</td>
@@ -308,19 +309,19 @@ function show_form($errors=[]){
 				<tr>
 					<td style='text-align:right;'>NÚMERO<font color='#FF0000'> *</font></td>
 					<td>
-		<input type='text' name='dni' size=12 maxlength=8 pattern='[0-9A-Z]{8,8}' placeholder='NUM. DOC.'  value='".$defaults['dni']."' required />
+		<input type='text' name='dni' size=14 maxlength=8 pattern='[0-9A-Z]{8,8}' placeholder='IDENTIFCADOR'  value='".$defaults['dni']."' required />
 					</td>
 				</tr>
 				<tr>
 					<td style='text-align:right;'>CONTROL<font color='#FF0000'> *</font></td>
 					<td>
-		<input type='text' name='ldni' size=4 maxlength=1  pattern='[0-9A-Z]{1,1}' value='".$defaults['ldni']."' required />
-					</td>
+		<input type='text' name='ldni' size=14 maxlength=1  pattern='[0-9A-Z]{1,1}' placeholder='CONTROL ID.' value='".$defaults['ldni']."' required />
+				</td>
 				</tr>
-				<tr>
+				<tr> 
 					<td style='text-align:right;'>MAIL<font color='#FF0000'> *</font></td>
 					<td>
-		<input type='mail' name='Email' size=52 maxlength=50 placeholder='MI EMAIL EN MINUSCULAS' value='".$defaults['Email']."' required />
+		<input type='mail' name='Email' size=52 maxlength=50 placeholder='miemail@enminusculas' value='".$defaults['Email']."'/>
 					</td>
 				</tr>	
 				<tr>
@@ -332,7 +333,7 @@ function show_form($errors=[]){
 				<tr>
 					<td style='text-align:right;'>TELÉFONO 1<font color='#FF0000'> *</font></td>
 					<td>
-		<input type='text' name='Tlf1' size=12 maxlength=9 pattern='[0-9]{9,9}' placeholder='000000000' value='".$defaults['Tlf1']."' required />
+		<input type='text' name='Tlf1' size=12 maxlength=9 pattern='[0-9]{9,9}' placeholder='TELEFONO 1' value='".$defaults['Tlf1']."' required />
 					</td>
 				</tr>
 				<tr>

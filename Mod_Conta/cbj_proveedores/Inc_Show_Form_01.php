@@ -99,12 +99,9 @@
 					</tr>
 					<tr>
 						<th class='BorderInf BorderSup' colspan=4 width=100% >
-						<a href='proveedores_Crear.php' class='botonverde'>CREAR NUEVO PROVEEDOR</a>
-						<a href='proveedores_Ver.php' class='botonazul'>REFRESCAR VISTA</a>
-
+							<a href='proveedores_Crear.php' class='botonverde'>CREAR NUEVO PROVEEDOR</a>
 						</th>
 					</tr>
 				</table>"); /* Fin del print */
-
 
 ?>

@@ -1,8 +1,8 @@
 <?php
-session_start();
+//session_start();
 
 	require '../../Mod_Admin/Inclu/error_hidden.php';
-	require '../Inclu/Conta_Head.php';
+	//require '../Inclu/Conta_Head.php';
 	require '../../Mod_Admin/Inclu/my_bbdd_clave.php';
 	require '../../Mod_Admin/Conections/conection.php';
 	require '../../Mod_Admin/Conections/conect.php';
@@ -13,30 +13,32 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
+	/*
 	if ($_SESSION['Nivel'] == 'admin'){
 
 		//print("Hello ".$_SESSION['Nombre']." ".$_SESSION['Apellidos'].".</br>");
 					
 		if (isset($_POST['oculto2'])){
-						show_form();
+						show_form_img();
 		} elseif (isset($_POST['imagenmodif'])){
 									
-			if($form_errors = validate_form()){
-				show_form($form_errors);
+			if($form_errors = validate_form_img()){
+				show_form_img($form_errors);
 					} else {
-						process_form();
-						info();
+						process_form_img();
+						info_img();
 						}
 									
-		} else { show_form(); }
+		} else { show_form_img(); }
 
 	} else { require '../Inclu/table_permisos.php'; }
 
+	*/
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function validate_form(){
+function validate_form_img(){
 	
 		global $sqld; 		global $qd; 		global $rowd;
 		
@@ -74,13 +76,13 @@ function validate_form(){
 						
 		return $errors;
 
-	} // FIN function validate_form()
+	} // FIN function validate_form_img()
 		
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function process_form(){
+function process_form_img(){
 	
 	global $db;
 
@@ -138,42 +140,39 @@ function process_form(){
 							<th colspan=3  class='BorderInf'>NUEVOS DATOS</th>
 						</tr>
 						<tr>
-							<td width=200px>RAZON SOCIAL</td>
-							<td width=200px>".$_POST['rsocial']."</td>
+							<td style='width: 120px; text-align: right;'>RAZON SOCIAL</td>
+							<td style='width: 120px;'>".$_POST['rsocial']."</td>
 							<td rowspan='4' align='center' width='100px'>
 				<img src='../cbj_Docs/img_proveedores/".$new_name."' height='120px' width='90px' />
 							</td>
 						</tr>
 						<tr>
-							<td>REFERENCIA</td><td>".$_POST['ref']."</td>
+							<td style='text-align: right;'>REFERENCIA</td><td>".$_POST['ref']."</td>
 						</tr>				
 						<tr>
-							<td>DOCUMENTO</td><td>".$_POST['doc']."</td>
+							<td style='text-align: right;'>DOCUMENTO</td><td>".$_POST['doc']."</td>
 						</tr>				
 						<tr>
-							<td>NÚMERO</td><td>".$_POST['dni']."</td>
+							<td style='text-align: right;'>NÚMERO</td><td>".$_POST['dni']."</td>
 						</tr>				
 						<tr>
-							<td>CONTROL</td><td colspan=2>".$_POST['ldni']."</td>
+							<td style='text-align: right;'>CONTROL</td><td colspan=2>".$_POST['ldni']."</td>
 						</tr>				
 						<tr>
-							<td>MAIL</td><td colspan=2>".$_POST['Email']."</td>
+							<td style='text-align: right;'>MAIL</td><td colspan=2>".$_POST['Email']."</td>
 						</tr>
 						<tr>
-							<td>DIRECCIÓN</td><td colspan=2>".$_POST['Direccion']."</td>
+							<td style='text-align: right;'>DIRECCIÓN</td><td colspan=2>".$_POST['Direccion']."</td>
 						</tr>
 						<tr>
-							<td>TELÉFONO 1</td><td colspan=2>".$_POST['Tlf1']."</td>
+							<td style='text-align: right;'>TELÉFONO 1</td><td colspan=2>".$_POST['Tlf1']."</td>
 						</tr>
 						<tr>
-							<td>TELÉFONO 2</td><td colspan=2>".$_POST['Tlf2']."</td>
+							<td style='text-align: right;'>TELÉFONO 2</td><td colspan=2>".$_POST['Tlf2']."</td>
 						</tr>
 						<tr>
 							<td colspan=3 align='right' class='BorderSup'>
-					<form name='closewindow' action='$_SERVER[PHP_SELF]'  onsubmit=\"window.close()\">
-							<input type='submit' value='CERRAR VENTANA' class='botonverde' />
-							<input type='hidden' name='oculto2' value=1 />
-					</form>
+						<a href='proveedores_Ver.php' class='botonverde'>VER TODOS LOS PROVEEDORES</a>
 							</td>
 						</tr>
 					</table>");
@@ -181,22 +180,31 @@ function process_form(){
 					unset($_SESSION['myimgx']);
 					unset($_SESSION['refx']);
 					unset($_SESSION['idx']);
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='proveedores_Ver.php';
+					}
+					setTimeout('redir()',4000);
+					</script>";
+		print ($redir);
+	
 
 			} else { print("* ERROR ".mysqli_error($db));
-						show_form ();
+						show_form_img();
 						global $texerror; 		$texerror = "\n\t ".mysqli_error($db);
 						}
 		}
 						
 		else {print("NO SE HA PODIDO GUARDAR EN ../imgpro/imgpro".$_SESSION['miseccion']."/");}
 
-			} // FIN function process_form()
+			} // FIN function process_form_img()
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function show_form($errors=[]){
+function show_form_img($errors=[]){
 	
 	global $dt; 		global $db; 	
 	
@@ -245,8 +253,8 @@ function show_form($errors=[]){
 								'Tlf2' => $_POST['Tlf2']);
 							}
 	if ($errors){
-		print("	<div width='90%' style='float:left'>
-					<table align='left' style='border:none'>
+		print("	<div>
+					<table style='border:none; margin: 0.4em auto 0.4em auto; align:center;'>
 					<th style='text-align:left'>
 					<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
 					</th>
@@ -270,32 +278,28 @@ function show_form($errors=[]){
 				<tr>
 					<th class='BorderInf'>LA IMAGEN ACTUAL DE : </br>".$defaults['rsocial']."</th>
 					<th class='BorderInf'>
-<img src='../cbj_Docs/img_proveedores/".$defaults['myimg']."' height='120px' width='90px' />
+		<img src='../cbj_Docs/img_proveedores/".$defaults['myimg']."' height='120px' width='90px' />
 					</th>
 				</tr>
-<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'  enctype='multipart/form-data'>
 				<tr>
-					<td>Seleccione una Fotografía</td>
-					<td>
-		<input type='file' name='myimg' value='".$defaults['myimg']."' />						
+					<td colspan=2>
+					SELECCIONE UNA IMAGEN
+		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'  enctype='multipart/form-data'>
+			<input type='file' name='myimg' value='".$defaults['myimg']."' />						
 					</td>
-				</tr>
-	<input type='hidden' name='id' value='".$defaults['id']."' />					
-	<input type='hidden' name='ref' value='".$defaults['ref']."' />					
-	<input type='hidden' name='rsocial' value='".$defaults['rsocial']."' />
-	<input type='hidden' name='doc' value='".$defaults['doc']."' />
-	<input type='hidden' name='dni' value='".$defaults['dni']."' />
-	<input type='hidden' name='ldni' value='".$defaults['ldni']."' />
-	<input type='hidden' name='Email' value='".$defaults['Email']."' />
-	<input type='hidden' name='Direccion' value='".$defaults['Direccion']."' />
-	<input type='hidden' name='Tlf1' value='".$defaults['Tlf1']."' />
-	<input type='hidden' name='Tlf2' value='".$defaults['Tlf2']."' />
-					</td>
-				</tr>
-				<tr align='center' height=60px>
-					<td></td>
-					<td >
-						<input type='submit' value='MODIFICAR LA IMAGEN' />
+				<tr>
+					<td colspan=2 style='text-align: right;'>
+						<input type='hidden' name='id' value='".$defaults['id']."' />					
+						<input type='hidden' name='ref' value='".$defaults['ref']."' />					
+						<input type='hidden' name='rsocial' value='".$defaults['rsocial']."' />
+						<input type='hidden' name='doc' value='".$defaults['doc']."' />
+						<input type='hidden' name='dni' value='".$defaults['dni']."' />
+						<input type='hidden' name='ldni' value='".$defaults['ldni']."' />
+						<input type='hidden' name='Email' value='".$defaults['Email']."' />
+						<input type='hidden' name='Direccion' value='".$defaults['Direccion']."' />
+						<input type='hidden' name='Tlf1' value='".$defaults['Tlf1']."' />
+						<input type='hidden' name='Tlf2' value='".$defaults['Tlf2']."' />
+						<input type='submit' value='MODIFICAR LA IMAGEN' class='botonverde'/>
 						<input type='hidden' name='imagenmodif' value=1 />
 					</td>
 					<td align='right'>
@@ -303,26 +307,19 @@ function show_form($errors=[]){
 				</tr>
 		</form>														
 				<tr>
-					<td class='BorderSup'></td>
-					<td align='right' class='BorderSup'></td>
-				</tr>
-				<tr>
-					<td class='BorderSup'></td>
-					<td align='right' class='BorderSup'>
-		<form name='closewindow' action='$_SERVER[PHP_SELF]'  onsubmit=\"window.close()\">
-							<input type='submit' value='CERRAR VENTANA' class='botonverde' />
-							<input type='hidden' name='oculto2' value=1 />
-			</form>
+					<td colspan=2 align='right' class='BorderSup'>
+				<a href='proveedores_Ver.php' class='botonnaranja'>CANCELAR MODIFICAR IMAGEN</a>
 					</td>
 				</tr>
 			</table>");
 			
-	} // FIN show_form($errors=[])	
+	} // FIN show_form_img($errors=[])	
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
-	
+
+	/*
 	function master_index(){
 		
 		global $rutaIndex;		$rutaIndex = "../";
@@ -331,12 +328,13 @@ function show_form($errors=[]){
 		require '../Inclu_MInd/MasterIndex.php'; 
 		
 				} 
+	*/
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function info(){
+function info_img(){
 
 	global $db; 		global $destination_file;		global $rename_filename;
 
@@ -364,7 +362,7 @@ $text = "\n- PROVEEDORES IMG MODIFICADA ".$ActionTime.".\n\tR. Social: ".$_POST[
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	require '../Inclu/Conta_Footer.php';
+	//require '../Inclu/Conta_Footer.php';
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

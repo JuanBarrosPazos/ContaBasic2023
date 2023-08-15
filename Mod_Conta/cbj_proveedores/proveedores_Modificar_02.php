@@ -173,48 +173,54 @@ function process_form(){
 
 		print("<table align='center' style='margin-top:10px'>
 				<tr>
-					<th colspan=3 class='BorderInf'>
-						HA MODIFICADO EL PROVEEDOR
-					</th>
+					<th colspan=3 class='BorderInf'>HA MODIFICADO EL PROVEEDOR</th>
 				</tr>
 				<tr>
-					<td width=150px> RAZON SOCIAL</td>
-					<td width=200px>".$_POST['rsocial']."</td>
-					<td rowspan='5' align='center' width='100px'>
-	<img src='../cbj_Docs/img_proveedores/".$dudas."' height='120px' width='90px' />
+					<td style='width: 120px; text-align: right;' RAZON SOCIAL</td>
+					<td style='width: 120px;'>".$_POST['rsocial']."</td>
+					<td rowspan='4' align='center' width='100px'>
+			<img src='../cbj_Docs/img_proveedores/".$dudas."' height='120px' width='90px' />
 					</td>
 				</tr>
 				<tr>
-					<td>DOCUMENTO</td><td>".$_POST['doc']."</td>
+					<td style='text-align: right;'>DOCUMENTO</td><td>".$_POST['doc']."</td>
 				</tr>				
 				<tr>
-					<td>NUMERO</td><td>".$_POST['dni']."</td>
+					<td style='text-align: right;'>NUMERO</td><td>".$_POST['dni']."</td>
 				</tr>				
 				<tr>
-					<td>CONTROL</td><td>".$_POST['ldni']."</td>
+					<td style='text-align: right;'>CONTROL</td><td>".$_POST['ldni']."</td>
 				</tr>				
 				<tr>
-					<td>MAIL</td><td colspan='2'>".$_POST['Email']."</td>
+					<td style='text-align: right;'>MAIL</td><td colspan='2'>".$_POST['Email']."</td>
 				</tr>
 				<tr>
-					<td>REFERENCIA</td><td>".$rf."</td>
+					<td style='text-align: right;'>REFERENCIA</td><td colspan='2'>".$rf."</td>
 				</tr>
 				<tr>
-					<td>PAIS</td><td colspan='2'>".$_POST['Direccion']."</td>
+					<td style='text-align: right;'>PAIS</td><td colspan='2'>".$_POST['Direccion']."</td>
 				</tr>
 				<tr>
-					<td>TELEFONO 1</td><td colspan='2'>".$_POST['Tlf1']."</td>
+					<td style='text-align: right;'>TELEFONO 1</td><td colspan='2'>".$_POST['Tlf1']."</td>
 				</tr>
 				<tr>
-					<td>TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
+					<td style='text-align: right;'>TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
 				</tr>
 				<tr>
 					<td colspan='3' align='center'>
 						<a href='proveedores_Ver.php' class='botonverde'>INICIO PROVEEDORES</a>
 					</td>
 				</tr>
-			</table>" );
-			
+			</table>");
+			global $redir;
+			$redir = "<script type='text/javascript'>
+							function redir(){
+							window.location.href='proveedores_Ver.php';
+						}
+						setTimeout('redir()',4000);
+						</script>";
+			print ($redir);
+	
 		} else { print("</br><font color='#FF0000'>* ERROR L. 114/133: </font></br> ".mysqli_error($db))."</br>";
 					show_form ();
 					//global $texerror;
@@ -421,9 +427,8 @@ function show_form($errors=[]){
 						<a href='proveedores_Ver.php' class='botonverde'>INICIO PROVEEDORES</a>
 					</td>
 				</tr>
-			</table>				
-					"); /* Fin del print */
-	
+			</table>"); /* Fin del print */
+
 	}	/* Fin show_form(); */
 
 				   ////////////////////				   ////////////////////
@@ -506,7 +511,7 @@ function info_02(){
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	require '../Inclu/Conta_Footer.php';
+	//require '../Inclu/Conta_Footer.php';
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

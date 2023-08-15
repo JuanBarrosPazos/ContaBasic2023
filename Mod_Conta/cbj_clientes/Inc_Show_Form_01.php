@@ -99,12 +99,9 @@
 					</tr>
 					<tr>
 						<th class='BorderInf BorderSup' colspan=4 width=100% >
-						<a href='clientes_Crear.php' class='botonverde'>CREAR NUEVO CLIENTE</a>
-						<a href='clientes_Ver.php' class='botonazul'>REFRESCAR VISTA</a>
-
+							<a href='clientes_Crear.php' class='botonverde'>CREAR NUEVO CLIENTE</a>
 						</th>
 					</tr>
 				</table>"); /* Fin del print */
-
 
 ?>

@@ -93,8 +93,8 @@ session_start();
 							<th class='BorderInfDch'>REFERENCIA</th>
 							<th class='BorderInfDch'>DNI</th>
 							<th class='BorderInfDch'>RAZON SOCIAL</th>
-							<th colspan='6' class='BorderInf'>BOTONERA ACCIONES</th>
-						</tr>");
+							<th colspan='6' class='BorderInf'>
+							</th></tr>");
 				
 			while($rowc = mysqli_fetch_assoc($qc)){
 				
@@ -155,7 +155,7 @@ session_start();
 			</td>	
 
 			<td align='center' class='BorderInf'>
-		<form name='modifica_img' action='clientes_Modificar_img.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=520px,height=560px')\">
+		<form name='modifica_img' action='$_SERVER[PHP_SELF]' method='POST' >
 				<input name='id' type='hidden' value='".$rowc['id']."' />
 				<input name='ref' type='hidden' value='".$rowc['ref']."' />
 				<input name='rsocial' type='hidden' value='".$rowc['rsocial']."' />
@@ -208,7 +208,7 @@ session_start();
 	function show_form($errors=[]){
 		
 		global $titulo;
-		$titulo = "MODIFICAR CLIENTES";
+		$titulo = "GESTIONAR CLIENTES";
 
 		require 'Inc_Show_Form_01.php';
 	
@@ -257,7 +257,7 @@ session_start();
 								<th class='BorderInfDch'>REFERENCIA</th>
 								<th class='BorderInfDch'>DNI</th>
 								<th class='BorderInfDch'>RAZON SOCIAL</th>
-								<th colspan='6' class='BorderInf'>BOTONERA ACCIONES</th>
+								<th colspan='6' class='BorderInf'></th>
 							</tr>");
 				
 			while($rowb = mysqli_fetch_assoc($qb)){
@@ -320,7 +320,7 @@ session_start();
 
 			<td align='center' class='BorderInf'>
 							
-		<form name='modifica_img' action='clientes_Modificar_img.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=520px,height=560px')\">
+		<form name='modifica_img' action='$_SERVER[PHP_SELF]' method='POST' >
 				<input name='id' type='hidden' value='".$rowb['id']."' />
 				<input name='ref' type='hidden' value='".$rowb['ref']."' />
 				<input name='rsocial' type='hidden' value='".$rowb['rsocial']."' />

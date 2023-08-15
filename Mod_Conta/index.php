@@ -497,7 +497,7 @@ session_start();
 		
 		print("<table align='center' style=\"border:0px;margin-top:4px\">
 					<tr>
-						<th colspan=2>BALANCE CONTABLE TRIMESTRAL</th>
+						<th colspan=2>BALANCE CONTABLE & GRÁFICAS</th>
 					</tr>
 			<form name='filtroBal' method='post' action='$_SERVER[PHP_SELF]' >
 					<tr>

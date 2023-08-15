@@ -152,7 +152,7 @@ th {
 
 #Caja2Admin {
 	width: 98%;
-	margin: -2.2em auto 0.4em auto;	color: #FFFFFF;
+	margin: -0.8em auto 0.4em auto;	color: #FFFFFF;
 	text-align: left;
 	/* border: 1px solid #93D7BF; */
 }
@@ -325,8 +325,11 @@ a:hover  img {
 .botonverde, .botonnaranja, .botonrojo, .botonazul, select {
 	cursor: pointer;
 	border: none;
-	vertical-align: text-bottom;
-	margin: 2px;
+
+	display: inline-block;
+	width: max-content;
+	/*vertical-align: text-bottom;*/
+	margin: 0.6em;
 	padding: 5px 5px 3px 5px !important;
 	border-radius: 4px;
 	font-weight: bold;

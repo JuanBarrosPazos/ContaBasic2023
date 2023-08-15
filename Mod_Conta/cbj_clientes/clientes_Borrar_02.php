@@ -40,9 +40,10 @@ function process_form(){
 					<th colspan=3 class='BorderInf'>HA BORRADO AL CLIENTE</th>
 				</tr>
 				<tr>
-					<td>RAZON SOCIAL</td><td>".$_POST['rsocial']."</td>
+					<td>RAZON SOCIAL</td>
+					<td>".$_POST['rsocial']."</td>
 					<td rowspan='4'>
-	<img src='../cbj_Docs/temp/".$_POST['myimg']."' height='120px' width='90px' />
+			<img src='../cbj_Docs/img_clientes/".$_POST['myimg']."' height='120px' width='90px' />
 					</td>
 				</tr>
 				<tr>
@@ -71,7 +72,7 @@ function process_form(){
 				</tr>
 				<tr>
 					<td colspan='3' align='center'>
-						<a href='clientes_Ver.php' class='botonverde'>INICIO CLIENTES</a>
+						<a href='clientes_Ver.php' class='botonverde'>INICIO clientes</a>
 					</td>
 				</tr>
 			</table>" );
@@ -89,11 +90,11 @@ function process_form(){
 		$destination_file = "../cbj_Docs/img_clientes/".$_POST['myimg'];
 		if( file_exists($destination_file)){unlink($destination_file);}
 		
-		} else {print("</br><font color='#FF0000'>
+		} else { print("</br><font color='#FF0000'>
 					* MODIFIQUE LA ENTRADA 157: </font></br> ".mysqli_error($db))."</br>";
-					show_form ();
-					global $texerror;		$texerror = "\n\t ".mysqli_error($db);
-				}
+						show_form ();
+						global $texerror; 		$texerror = "\n\t ".mysqli_error($db);
+					}
 	} // FIN function process_form()
 
 	function DelTemp(){
@@ -114,7 +115,7 @@ function process_form(){
 			if(file_exists($DirTemp)){ 
 					$dir1 = $DirTemp."/";
 					$handle1 = opendir($dir1);
-					// BORRA LO ARCHIVOS DENTRO DEL DIRECTORIO
+					// BORRA LOS ARCHIVOS DENTRO DEL DIRECTORIO
 					while ($file1 = readdir($handle1)){
 						if (is_file($dir1.$file1)){unlink($dir1.$file1);}
 									}
@@ -125,6 +126,7 @@ function process_form(){
 	
 	} // FIN function DelTemp()
 
+
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
@@ -133,13 +135,12 @@ function show_form(){
 	
 	$_SESSION['xid'] = $_POST['id'];
 
-	print("<table align='center' style=\"margin-top:10px\">
+	print("
+			<table align='center' style=\"margin-top:10px\">
 				<tr>
 					<th colspan=3 class='BorderInf'>BORRARÁ EL CLIENTE</th>
 				</tr>
-				
 		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
-						
 				<tr>
 					<td><font color='#FF0000'>*</font>ID</td>
 					<td>
@@ -239,7 +240,8 @@ function show_form(){
 
 function info_01(){
 
-	global $db; 		global $orden;
+	global $db;
+	global $orden;
 
 	$ActionTime = date('H:i:s');
 	
@@ -268,7 +270,8 @@ function info_01(){
 
 function info_02(){
 
-	global $db; 		global $orden;
+	global $db;
+	global $orden;
 
 	$ActionTime = date('H:i:s');
 	

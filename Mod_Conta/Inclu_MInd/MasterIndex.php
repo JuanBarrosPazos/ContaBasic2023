@@ -134,7 +134,7 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
 	
 <!-- Fin BBDD -->
 
- <!-- Inicio NOTIFICACIONES -->
+ <!-- Inicio NOTIFICACIONES
 
   <li><a href='#' class='MenuBarItemSubmenu'>NOTIFICACIONES</a>
     <ul>
@@ -148,9 +148,9 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
 				AGRADECIMIENTOS
 			</a>
 		</li>
-     </ul>
+     </ul> 
     </li>
-	
+-->
 <!-- Fin NOTIFICACIONES -->
 
   	</ul>
@@ -159,10 +159,10 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
 <!-- FIN MENU ADMINISTRADORES -->
  
   	<li style='text-align:left'>
-  				<form name='cerrar' action='".$rutaModAdmin."Admin/mcgexit.php' method='post'>
-						<input type='submit' value='CLOSE SESION' />
-						<input type='hidden' name='cerrar' value=1 />
-				</form>	
+  		<form name='cerrar' action='".$rutaModAdmin."Admin/mcgexit.php' method='post'>
+			<input type='submit' value='CLOSE SESION' class='botonverde' style='margin:0.2em auto 0.2em -0.4em;'/>
+			<input type='hidden' name='cerrar' value=1 />
+	</form>	
 	</li>
 	
 	</ul>

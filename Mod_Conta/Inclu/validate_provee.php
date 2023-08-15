@@ -554,18 +554,19 @@
 	$qml = mysqli_query($db, $sqlml);
 	$rowml = mysqli_fetch_assoc($qml);
 
-	if((isset($_POST['id']))&&($_POST['Email']!="nomail@nomail.es")){
+	if((isset($_POST['id']))&&($_POST['Email']!="")){
 		if($_POST['id'] == $rowml['id']){}
 		elseif(mysqli_num_rows($qml)!= 0){
 			$errors [] = "Mail: <font color='#FF0000'>YA EXISTE.</font>";
 			}
 	} else { }
 		
-	if(strlen(trim($_POST['Email'])) == 0){
+	if(strlen(trim($_POST['Email']) > 0)){
+	/*if(strlen(trim($_POST['Email'])) == 0){
 		$errors [] = "Mail: <font color='#FF0000'>Este campo es obligatorio.</font>";
 		}
 	
-	elseif (strlen(trim($_POST['Email'])) < 5 ){
+	else*/if (strlen(trim($_POST['Email'])) < 5 ){
 		$errors [] = "Mail: <font color='#FF0000'>Escriba más de cinco carácteres.</font>";
 		}
 		
@@ -577,7 +578,8 @@
 		$errors [] = "Mail: <font color='#FF0000'>Esta dirección no es válida.</font>";
 		}
 		
-/* if(trim($_POST['id'] == $rowd['id'])&&(!strcasecmp($_POST['Email'] , $rowd['Email']))){}
+	/* 
+	if(trim($_POST['id'] == $rowd['id'])&&(!strcasecmp($_POST['Email'] , $rowd['Email']))){}
 			elseif(!strcasecmp($_POST['Email'] , $rowd['Email'])){
 				$errors [] = "Mail: <font color='#FF0000'>No se puede registrar con este Mail.</font>";
 				}	
@@ -585,8 +587,9 @@
 	elseif(!strcasecmp($_POST['Email'] , $rowd['Email'])){
 		$errors [] = "Mail: <font color='#FF0000'>No se puede registrar con este Mail.</font>";
 		}	
-*/
-
+	*/
+	} // FIN ISSET MAIL
+	
 	/* Validamos el campo Dirección. */
 	
 	if(strlen(trim($_POST['Direccion'])) == 0){

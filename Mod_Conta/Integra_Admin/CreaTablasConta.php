@@ -140,7 +140,7 @@ function config_one_cbj(){
   `doc` varchar(11) collate utf8_spanish2_ci NOT NULL,
   `dni` varchar(8) collate utf8_spanish2_ci NOT NULL,
   `ldni` varchar(1) collate utf8_spanish2_ci NOT NULL,
-  `Email` varchar(50) collate utf8_spanish2_ci NOT NULL,
+  `Email` varchar(50) collate utf8_spanish2_ci NULL,
   `Direccion` varchar(60) collate utf8_spanish2_ci NOT NULL,
   `Tlf1` int(9) NOT NULL default 000000000,
   `Tlf2` int(9) NOT NULL default 000000000,
@@ -159,7 +159,7 @@ function config_one_cbj(){
 			}
 
 	$vp = "INSERT INTO `$db_name`.$vname5 (`id`, `ref`, `rsocial`, `myimg`, `doc`, `dni`, `ldni`, `Email`, `Direccion`, `Tlf1`, `Tlf2`) VALUES
-(1, 'ANONIMO', 'ANONIMO', 'untitled.png', 'ANONIMO', 'ANONIMO', 'X', 'ANONIMO', 'ANONIMO', 000000000, 000000000)";
+(1, 'ANONIMO', 'ANONIMO', 'untitled.png', 'ANONIMO', 'ANONIMO', 'X', 'anonimo@anonimo.es', 'Not Adress', 000000000, 000000000)";
 		
 	if(mysqli_query($db, $vp)){
 			global $table7;
@@ -224,7 +224,7 @@ function config_one_cbj(){
   `doc` varchar(11) collate utf8_spanish2_ci NOT NULL,
   `dni` varchar(8) collate utf8_spanish2_ci NOT NULL,
   `ldni` varchar(1) collate utf8_spanish2_ci NOT NULL,
-  `Email` varchar(50) collate utf8_spanish2_ci NOT NULL,
+  `Email` varchar(50) collate utf8_spanish2_ci NULL,
   `Direccion` varchar(60) collate utf8_spanish2_ci NOT NULL,
   `Tlf1` int(9) NOT NULL default 000000000,
   `Tlf2`int(9) NOT NULL default 000000000,
@@ -242,7 +242,7 @@ function config_one_cbj(){
 				 $table8 = "\t* NO OK TABLA ".$vname6.". ".mysqli_error($db)." \n";
 			}
 					
-	$vpi = "INSERT INTO `$db_name`.$vname6 (`id`, `ref`, `rsocial`, `myimg`, `doc`, `dni`, `ldni`, `Email`, `Direccion`, `Tlf1`, `Tlf2`) VALUES (1, 'ANONIMO', 'ANONIMO', 'untitled.png', 'ANONIMO', 'ANONIMO', 'X', 'ANONIMO', 'ANONIMO', 000000000, 000000000)";
+	$vpi = "INSERT INTO `$db_name`.$vname6 (`id`, `ref`, `rsocial`, `myimg`, `doc`, `dni`, `ldni`, `Email`, `Direccion`, `Tlf1`, `Tlf2`) VALUES (1, 'ANONIMO', 'ANONIMO', 'untitled.png', 'ANONIMO', 'ANONIMO', 'X', 'anonimo@anonimo.es', 'Not Adress', 000000000, 000000000)";
 		
 	if(mysqli_query($db, $vpi)){
 			global $table9;
