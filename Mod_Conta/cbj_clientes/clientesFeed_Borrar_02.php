@@ -35,72 +35,76 @@ session_start();
 
 function process_form(){
 	
-	print("<table align='center' style='margin-top:10px'>
-			<tr>
-				<th colspan=3 class='BorderInf'>HA BORRADO AL PROVEEDOR</th>
-			</tr>
-			<tr>
-				<td>RAZON SOCIAL</td>
-				<td>".$_POST['rsocial']."</td>
-				<td rowspan='4'>
-		<img src='../cbj_Docs/img_proveedores/".$_POST['myimg']."' height='120px' width='90px' />
-				</td>
-			</tr>
-			<tr>
-				<td>DOCUMENTO</td><td>".$_POST['doc']."</td>
-			</tr>				
-			<tr>
-				<td>NUMERO</td><td>".$_POST['dni']."</td>
-			</tr>				
-			<tr>
-				<td>CONTROL</td><td>".$_POST['ldni']."</td>
-			</tr>				
-			<tr>
-				<td>MAIL</td><td colspan='2'>".$_POST['Email']."</td>
-			</tr>
-			<tr>
-				<td>REFERENCIA</td><td colspan='2'>".$_POST['ref']."</td>
-			</tr>
-			<tr>
-				<td>PAIS</td><td colspan='2'>".$_POST['Direccion']."</td>
-			</tr>
-			<tr>
-				<td>TELEFONO 1</td><td>".$_POST['Tlf1']."</td>
-			</tr>
-			<tr>
-				<td>TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
-			</tr>
-			<tr>
-				<td colspan='3' align='center'>
-					<a href='proveedores_Ver.php' class='botonverde'>INICIO PROVEEDORES</a>
-				</td>
-			</tr>
-		</table>" );
-
 		global $db; 		global $db_name;	
-		global $vname; 		$vname = "`".$_SESSION['clave']."proveedoresfeed`";
-		
-		$sql = "INSERT INTO `$db_name`.$vname (`ref`, `rsocial`, `myimg`, `doc`, `dni`, `ldni`, `Email`, `Direccion`, `Tlf1`, `Tlf2`) VALUES ('$_POST[ref]', '$_POST[rsocial]', '$_POST[myimg]', '$_POST[doc]', '$_POST[dni]', '$_POST[ldni]', '$_POST[Email]', '$_POST[Direccion]', '$_POST[Tlf1]', '$_POST[Tlf2]')";
+		global $vname; 		$vname = "`".$_SESSION['clave']."clientesfeed`";
+		$sql = "DELETE FROM `$db_name`.$vname WHERE $vname.`id` = '$_POST[id]' LIMIT 1 ";
 		
 		if(mysqli_query($db, $sql)){
 
-			global $vnamed; 		$vnamed = "`".$_SESSION['clave']."proveedores`";
-			$sqld = "DELETE FROM `$db_name`.$vnamed WHERE $vnamed.`id` = '$_POST[id]' LIMIT 1 ";
-			if(mysqli_query($db, $sqld)){
-				// NADA
-			}else{
-				print("</br><font color='#FF0000'>
-						* MODIFIQUE LA ENTRADA 87: </font></br> ".mysqli_error($db))."</br>";
-				show_form ();
-				global $texerror; 		$texerror = "\n\t ".mysqli_error($db);
-			}
+			print("<table align='center' style='margin-top:10px'>
+				<tr>
+					<th colspan=3 class='BorderInf'>HA BORRADO AL CLIENTE</th>
+				</tr>
+				<tr>
+					<td>RAZON SOCIAL</td>
+					<td>".$_POST['rsocial']."</td>
+					<td rowspan='4'>
+			<img src='../cbj_Docs/temp/".$_POST['myimg']."' height='120px' width='90px' />
+					</td>
+				</tr>
+				<tr>
+					<td>DOCUMENTO</td><td>".$_POST['doc']."</td>
+				</tr>				
+				<tr>
+					<td>NUMERO</td><td>".$_POST['dni']."</td>
+				</tr>				
+				<tr>
+					<td>CONTROL</td><td>".$_POST['ldni']."</td>
+				</tr>				
+				<tr>
+					<td>MAIL</td><td colspan='2'>".$_POST['Email']."</td>
+				</tr>
+				<tr>
+					<td>REFERENCIA</td><td colspan='2'>".$_POST['ref']."</td>
+				</tr>
+				<tr>
+					<td>PAIS</td><td colspan='2'>".$_POST['Direccion']."</td>
+				</tr>
+				<tr>
+					<td>TELEFONO 1</td><td>".$_POST['Tlf1']."</td>
+				</tr>
+				<tr>
+					<td>TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
+				</tr>
+				<tr>
+					<td colspan='3' align='center'>
+						<a href='clientesFeed_Ver.php' class='botonverde'>INICIO PAPELERA CLIENTES</a>
+					</td>
+				</tr>
+			</table>" );
+
+			$filename = "../cbj_Docs/img_clientes/".$_POST['myimg'];							
+			$tempfilename = "../cbj_Docs/temp/".$_POST['myimg'];							
+			copy($filename, $tempfilename);
+
+			$destination_file = "../cbj_Docs/img_clientes/".$_POST['myimg'];
+			if( file_exists($destination_file)){unlink($destination_file);}
+			
+			/*	*/
+			global $redir;
+			$redir = "<script type='text/javascript'>
+							function redir(){
+							window.location.href='clientesFeed_Ver.php';
+						}
+						setTimeout('redir()',4000);
+						</script>";
+			print ($redir);
 
 		} else { print("</br><font color='#FF0000'>
-						* MODIFIQUE LA ENTRADA 83: </font></br> ".mysqli_error($db))."</br>";
-					show_form ();
-					global $texerror; 		$texerror = "\n\t ".mysqli_error($db);
-				}
-
+						* MODIFIQUE LA ENTRADA 82: </font></br> ".mysqli_error($db))."</br>";
+							show_form ();
+							global $texerror; 		$texerror = "\n\t ".mysqli_error($db);
+					}
 	} // FIN function process_form()
 
 				   ////////////////////				   ////////////////////
@@ -136,7 +140,6 @@ function process_form(){
 	
 	} // FIN function DelTemp()
 
-
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
@@ -148,7 +151,7 @@ function show_form(){
 	print("
 			<table align='center' style=\"margin-top:10px\">
 				<tr>
-					<th colspan=3 class='BorderInf'>BORRARÁ EL PROVEEDOR</th>
+					<th colspan=3 class='BorderInf'>BORRARÁ EL CLIENTE</th>
 				</tr>
 		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
 				<tr>
@@ -158,7 +161,7 @@ function show_form(){
 					</td>
 					<td rowspan='4' align='center'>
 			<input type='hidden' name='myimg' value='".$_POST['myimg']."' />
-			<img src='../cbj_Docs/img_proveedores/".$_POST['myimg']."' height='120px' width='90px' />
+			<img src='../cbj_Docs/img_clientes/".$_POST['myimg']."' height='120px' width='90px' />
 					</td>
 				</tr>
 				<tr>
@@ -210,13 +213,13 @@ function show_form(){
 					</td>
 				</tr>
 				<tr>
-					<td>TELÉFONO 2</td>
+					<td>TELEÉFONO 2</td>
 					<td colspan=2>
 			<input type='hidden' name='Tlf2' value='".$_POST['Tlf2']."' />".$_POST['Tlf2']."
 					</td>
 				</tr>
 				<tr>
-					<td colspan='3'  align='right' valign='middle' >
+					<td colspan='3' align='right' valign='middle' >
 						<input type='submit' value='BORRAR DATOS' class='botonrojo' />
 						<input type='hidden' name='borra' value=1 />
 					</td>
@@ -224,7 +227,7 @@ function show_form(){
 		</form>														
 				<tr>
 					<td colspan='3' align='center'>
-						<a href='proveedores_Ver.php' class='botonverde'>INICIO PROVEEDORES</a>
+						<a href='clientesFeed_Ver.php' class='botonverde'>INICIO PAPELERA CLIENTES</a>
 					</td>
 				</tr>
 			</table>"); /* Fin del print */
@@ -239,7 +242,7 @@ function show_form(){
 		
 		global $rutaIndex;		$rutaIndex = "../";
 		require '../Inclu_MInd/MasterIndexVar.php';
-		global $rutaProveedores;	$rutaProveedores = "";
+		global $rutaClientes;	$rutaClientes = "";
 		require '../Inclu_MInd/MasterIndex.php'; 
 		
 				} /* Fin funcion master_index.*/
@@ -261,7 +264,7 @@ function info_01(){
 				}
 
 	global $text;
-	$text = "\n- PROVEEDOR ELIMINAR SELECCIONADO ".$ActionTime.".\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";			
+	$text = "\n- CLIENTE ELIMINAR SELECCIONADO ".$ActionTime.".\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";			
 
 	global $texerror;
 	$logdocu = $_SESSION['ref'];
@@ -291,7 +294,7 @@ function info_02(){
 				}
 
 	global $text;
-	$text = "\n- PROVEEDOR ELIMINADO ".$ActionTime.".\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";			
+	$text = "\n- CLIENTE ELIMINADO ".$ActionTime.".\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";			
 
 	global $texerror;
 	$logdocu = $_SESSION['ref'];

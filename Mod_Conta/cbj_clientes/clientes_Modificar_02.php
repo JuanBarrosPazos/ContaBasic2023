@@ -176,7 +176,7 @@ function process_form(){
 					<th colspan=3 class='BorderInf'>HA MODIFICADO EL CLIENTE</th>
 				</tr>
 				<tr>
-					<td style='width: 120px; text-align: right;' RAZON SOCIAL</td>
+					<td style='width: 120px; text-align: right;'>RAZON SOCIAL</td>
 					<td style='width: 120px;'>".$_POST['rsocial']."</td>
 					<td rowspan='4' align='center' width='100px'>
 			<img src='../cbj_Docs/img_clientes/".$dudas."' height='120px' width='90px' />
@@ -396,7 +396,6 @@ function show_form($errors=[]){
 	<input type='text' name='Direccion' size=52 maxlength=60 value='".$defaults['Direccion']."' />
 					</td>
 				</tr>
-				<tr>
 				<tr>
 					<td>
 						<font color='#FF0000'>*</font>TELÉFONO 1

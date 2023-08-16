@@ -18,7 +18,7 @@
 		fwrite($log, $logtext);
 		fclose($log);
 
-		}
+	}
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -31,11 +31,10 @@
 
 function config_one_cbj(){
 	
+	global $data1;
 	if(file_exists('../Mod_Conta/config/year.txt')){unlink("../Mod_Conta/config/year.txt");
-					global $data1;
 					$data1 = PHP_EOL."\tUNLINK ../Mod_Conta/config/year.txt";}
 			else {print("DON`T UNLINK ../Mod_Conta/config/year.txt </br>");
-					global $data1;
 					$data1 = PHP_EOL."\tDON'T UNLINK ../Mod_Conta/config/year.txt";}
 
 	/*
@@ -47,60 +46,52 @@ function config_one_cbj(){
 					$data2 = PHP_EOL."\tDON'T UNLINK ../Mod_Conta/config/ayear.php";}
 	*/
 
+	global $data3;
 	if(!file_exists('../Mod_Conta/config/year.txt')){
 			if(file_exists('../Mod_Conta/config/year_Init_System.txt')){
 				copy("../Mod_Conta/config/year_Init_System.txt", "../Mod_Conta/config/year.txt");
-		global $data3;
 		$data3 = PHP_EOL."\tRENAME ../Mod_Conta/config/year_Init_System.txt TO ../Mod_Conta/config/year.txt";
 			} else {
 		//print("DON'T RENAME ../Mod_Conta/config/year_Init_System.txt TO ../Mod_Conta/config/year.txt </br>");
-		global $data3;
 		$data3 = PHP_EOL."\tDON'T RENAME ../Mod_Conta/config/year_Init_System.txt TO ../Mod_Conta/config/year.txt";}
-			}else{	global $data3;
-					$data3 = "";}
+			}else{ $data3 = "";}
 
 	/*
+	global $data4;
 	if(!file_exists('../Mod_Conta/config/ayear.php')){
 			if(file_exists('../Mod_Conta/config/ayear_Init_System.php')){
 				copy("../Mod_Conta/config/ayear_Init_System.php", "../Mod_Conta/config/ayear.php");
-		global $data4;
 		$data4 = PHP_EOL."\tRENAME ../Mod_Conta/config/ayear_Init_System.php TO ../Mod_Conta/config/ayear.php";
 			} else {
 		//print("DON'T RENAME ../Mod_Conta/config/ayear_Init_System.php TO ../Mod_Conta/config/ayear.php </br>");
-		global $data4;
 		$data4 = PHP_EOL."\tDON'T RENAME ../Mod_Conta/config/ayear_Init_System.php TO ../Mod_Conta/config/ayear.php";}
-			}else{	global $data4;
-					$data4 = "";}
+			}else{ $data4 = "";}
 	*/
 
 				/*		****	*/
 
+	global $data5;
 	if(!file_exists('../Mod_Conta/cbj_Docs/year.txt')){
 			if(file_exists('../Mod_Conta/config/year_Init_System.txt')){
 				copy("../Mod_Conta/config/year_Init_System.txt", "../Mod_Conta/cbj_Docs/year.txt");
-		global $data5;
 		$data5 = "\n \t RENAME ../Mod_Conta/config/year_Init_System.txt TO "."../Mod_Conta/cbj_Docs/year.txt";
 			} else {
 		//print("DON'T RENAME ../Mod_Conta/config/year_Init_System.txt TO ../Mod_Conta/config/year.txt </br>");
-		global $data5;
 		$data5 = "\n \t RENAME ../Mod_Conta/config/year_Init_System.txt TO ../Mod_Conta/cbj_Docs/year.txt";
 				}
-			}else{	global $data5;
-					$data5 = "";}
+			}else{ $data5 = "";}
 
 	/*
+	global $data6;
 	if(!file_exists('../Mod_Conta/cbj_Docs/ayear.php')){
 			if(file_exists('../Mod_Conta/config/ayear_Init_System.php')){
 				copy("../Mod_Conta/config/ayear_Init_System.php", "../Mod_Conta/cbj_Docs/ayear.php");
-		global $data6;
 		$data6 = "\n \t RENAME ../Mod_Conta/config/ayear_Init_System.php TO ../Mod_Conta/cbj_Docs/ayear.php";
 			} else {
-		//print("DON'T RENAME ../Mod_Conta/config/ayear_Init_System.php TO ../Mod_Conta/cbj_Docs/ayear.php </br>");
-		global $data6;
+	//print("DON'T RENAME ../Mod_Conta/config/ayear_Init_System.php TO ../Mod_Conta/cbj_Docs/ayear.php </br>");
 		$data6 = "\n \t RENAME ../Mod_Conta/config/ayear_Init_System.php TO ../Mod_Conta/cbj_Docs/ayear.php";
 				}
-			}else{	global $data6;
-					$data6 = "";}
+			}else{ $data6 = "";}
 	*/
   
 	// PASAMOS LOS PARAMETROS A LOS LOG.
@@ -136,7 +127,7 @@ function config_one_cbj(){
   `id` int(4) NOT NULL auto_increment,
   `ref` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `rsocial` varchar(30) collate utf8_spanish2_ci NOT NULL,
-  `myimg` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png ',
+  `myimg` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `doc` varchar(11) collate utf8_spanish2_ci NOT NULL,
   `dni` varchar(8) collate utf8_spanish2_ci NOT NULL,
   `ldni` varchar(1) collate utf8_spanish2_ci NOT NULL,
@@ -150,23 +141,48 @@ function config_one_cbj(){
   UNIQUE KEY `dni` (`dni`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
+	global $table6;
 	if(mysqli_query($db, $provee)){
-			global $table6;
 			$table6 = "\t* OK TABLA ".$vname5."\n";
-		} else { print("* NO OK TABLA ".$vname5.". ".mysqli_error($db)."</br>");
-				 global $table6;
-				 $table6 = "\t* NO OK TABLA ".$vname5.". ".mysqli_error($db)."\n";
+	}else{ print("* NO OK TABLA ".$vname5.". ".mysqli_error($db)."</br>");
+			$table6 = "\t* NO OK TABLA ".$vname5.". ".mysqli_error($db)."\n";
 			}
 
 	$vp = "INSERT INTO `$db_name`.$vname5 (`id`, `ref`, `rsocial`, `myimg`, `doc`, `dni`, `ldni`, `Email`, `Direccion`, `Tlf1`, `Tlf2`) VALUES
 (1, 'ANONIMO', 'ANONIMO', 'untitled.png', 'ANONIMO', 'ANONIMO', 'X', 'anonimo@anonimo.es', 'Not Adress', 000000000, 000000000)";
 		
+	global $table7;
 	if(mysqli_query($db, $vp)){
-			global $table7;
 			$table7 = "\t* OK INIT VALUES EN ".$vname5."\n";
-		} else { print("* NO OK INIT VALUES EN ".$vname5.". ".mysqli_error($db)."</br>");
-				 global $table7;
-				 $table7 = "\t* NO OK INIT VALUES EN ".$vname5.". ".mysqli_error($db)."\n";
+	}else{ print("* NO OK INIT VALUES EN ".$vname5.". ".mysqli_error($db)."</br>");
+			$table7 = "\t* NO OK INIT VALUES EN ".$vname5.". ".mysqli_error($db)."\n";
+			}
+
+	/************** CREAMOS LA TABLA PROVEEDORES FEED ***************/
+
+	global $vname5f;
+	$vname5f = "`".$_SESSION['clave']."proveedoresfeed`";
+	
+	$provee = "CREATE TABLE `$db_name`.$vname5f (
+  `id` int(4) NOT NULL auto_increment,
+  `ref` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `rsocial` varchar(30) collate utf8_spanish2_ci NOT NULL,
+  `myimg` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `doc` varchar(11) collate utf8_spanish2_ci NOT NULL,
+  `dni` varchar(8) collate utf8_spanish2_ci NOT NULL,
+  `ldni` varchar(1) collate utf8_spanish2_ci NOT NULL,
+  `Email` varchar(50) collate utf8_spanish2_ci NULL,
+  `Direccion` varchar(60) collate utf8_spanish2_ci NOT NULL,
+  `Tlf1` int(9) NULL,
+  `Tlf2` int(9) NULL,
+  `borrado` datetime collate utf8_spanish2_ci NOT NULL default CURRENT_TIMESTAMP,
+ UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
+		
+	if(mysqli_query($db, $provee)){
+			$table6 = $table6."\t* OK TABLA ".$vname5f."\n";
+	}else{ print("* NO OK TABLA ".$vname5f.". ".mysqli_error($db)."</br>");
+			$table6 = $table6."\t* NO OK TABLA ".$vname5f.". ".mysqli_error($db)."\n";
 			}
 
 			/************** CREAMOS LA TABLA GASTOS PENDIENTES  ***************/
@@ -202,16 +218,15 @@ function config_one_cbj(){
   */
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
+	global $table4;
 	if(mysqli_query($db, $tgb)){
-			global $table4;
 			$table4 = "\t* OK TABLA ".$vname1b."\n";
-	} else {print( "* NO OK TABLA ".$vname1b.". ".mysqli_error($db)."\n");
-			global $table4;
+	}else{ print( "* NO OK TABLA ".$vname1b.". ".mysqli_error($db)."\n");
 			$table4 = "\t* NO OK TABLA ".$vname1b.". ".mysqli_error($db)."\n";
-		}
+			}
 			
 
-		/************** CREAMOS LA TABLA clientes ***************/
+		/************** CREAMOS LA TABLA CLIENTES ***************/
 
 	global $vname6;
 	$vname6 = "`".$_SESSION['clave']."clientes`";
@@ -220,7 +235,7 @@ function config_one_cbj(){
   `id` int(4) NOT NULL auto_increment,
   `ref` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `rsocial` varchar(30) collate utf8_spanish2_ci NOT NULL,
-  `myimg` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png ',
+  `myimg` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `doc` varchar(11) collate utf8_spanish2_ci NOT NULL,
   `dni` varchar(8) collate utf8_spanish2_ci NOT NULL,
   `ldni` varchar(1) collate utf8_spanish2_ci NOT NULL,
@@ -234,22 +249,47 @@ function config_one_cbj(){
   UNIQUE KEY `dni` (`dni`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
+	global $table8;
 	if(mysqli_query($db, $provei)){
-			global $table8;
 			$table8 = "\t* OK TABLA ".$vname6."\n";
-		} else { print("* NO OK TABLA ".$vname6.". ".mysqli_error($db)."</br>");
-				 global $table8;
-				 $table8 = "\t* NO OK TABLA ".$vname6.". ".mysqli_error($db)." \n";
+	}else{ print("* NO OK TABLA ".$vname6.". ".mysqli_error($db)."</br>");
+			$table8 = "\t* NO OK TABLA ".$vname6.". ".mysqli_error($db)." \n";
 			}
 					
 	$vpi = "INSERT INTO `$db_name`.$vname6 (`id`, `ref`, `rsocial`, `myimg`, `doc`, `dni`, `ldni`, `Email`, `Direccion`, `Tlf1`, `Tlf2`) VALUES (1, 'ANONIMO', 'ANONIMO', 'untitled.png', 'ANONIMO', 'ANONIMO', 'X', 'anonimo@anonimo.es', 'Not Adress', 000000000, 000000000)";
 		
+	global $table9;
 	if(mysqli_query($db, $vpi)){
-			global $table9;
 			$table9 = "\t* OK INIT VALUES EN ".$vname6."\n";
-		} else { print("* NO OK INIT VALUES EN ".$vname6.". ".mysqli_error($db)."</br>");
-				 global $table9;
-				 $table9 = "\t* NO OK INIT VALUES EN ".$vname6.". ".mysqli_error($db)."\n";
+	}else{ print("* NO OK INIT VALUES EN ".$vname6.". ".mysqli_error($db)."</br>");
+			$table9 = "\t* NO OK INIT VALUES EN ".$vname6.". ".mysqli_error($db)."\n";
+			}
+
+	/************** CREAMOS LA TABLA CLIENTES FEED ***************/
+
+	global $vname6f;
+	$vname6f = "`".$_SESSION['clave']."clientesfeed`";
+	
+	$provee = "CREATE TABLE `$db_name`.$vname6f (
+  `id` int(4) NOT NULL auto_increment,
+  `ref` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `rsocial` varchar(30) collate utf8_spanish2_ci NOT NULL,
+  `myimg` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `doc` varchar(11) collate utf8_spanish2_ci NOT NULL,
+  `dni` varchar(8) collate utf8_spanish2_ci NOT NULL,
+  `ldni` varchar(1) collate utf8_spanish2_ci NOT NULL,
+  `Email` varchar(50) collate utf8_spanish2_ci NULL,
+  `Direccion` varchar(60) collate utf8_spanish2_ci NOT NULL,
+  `Tlf1` int(9) NULL,
+  `Tlf2` int(9) NULL,
+  `borrado` datetime collate utf8_spanish2_ci NOT NULL default CURRENT_TIMESTAMP,
+ UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
+		
+	if(mysqli_query($db, $provee)){
+			$table8 = $table8."\t* OK TABLA ".$vname6f."\n";
+	}else{ print("* NO OK TABLA ".$vname6f.". ".mysqli_error($db)."</br>");
+			$table8 = $table8."\t* NO OK TABLA ".$vname6f.". ".mysqli_error($db)."\n";
 			}
 
 				/************** CREAMOS LA TABLA INGRESOS PENDIENTES ***************/
@@ -285,12 +325,11 @@ function config_one_cbj(){
   */
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
+	global $table5;
 	if(mysqli_query($db, $tib)){
-			global $table5;
 			$table5 = "\t* OK TABLA ".$vname3b."\n";
-	} else {print( "* NO OK TABLA ".$vname3b.". ".mysqli_error($db)."\n");
-				global $table5;
-				$table5 = "\t* NO OK TABLA ".$vname3b.". ".mysqli_error($db)."\n";
+	}else{print( "* NO OK TABLA ".$vname3b.". ".mysqli_error($db)."\n");
+		  $table5 = "\t* NO OK TABLA ".$vname3b.". ".mysqli_error($db)."\n";
 			}
 
 	/************* CREAMOS LAS TABLAS BALANCES ****************/
@@ -314,14 +353,12 @@ function config_one_cbj(){
 	$dy = date('Y');
 	$dy_1 = (date('Y')-1);
 	
+	global $table10;
 	if(mysqli_query($db, $balanceg)){
-					global $table10;
 					$table10 = "\t* OK TABLA ".$vname7.". \n";
-				} else {
-					print("* NO OK TABLE ".$vname7.". ".mysqli_error($db)."</br>");
-					global $table10;
-					$table10 = "\t* NO OK TABLA ".$vname7.". ".mysqli_error($db)." \n";
-					}
+	} else { print("* NO OK TABLE ".$vname7.". ".mysqli_error($db)."</br>");
+			 $table10 = "\t* NO OK TABLA ".$vname7.". ".mysqli_error($db)." \n";
+			 }
 $vname7 = strtolower($vname7);					
 $balanceg2 = "INSERT INTO `$db_name`.$vname7 (`id`, `year`, `mes`, `iva`, `sub`, `ret`, `tot`) VALUES
 (1, $dy_1, 'M01', '0.00', '0.00', '0.00', '0.00'), 
@@ -359,12 +396,11 @@ $balanceg2 = "INSERT INTO `$db_name`.$vname7 (`id`, `year`, `mes`, `iva`, `sub`,
 (33, $dy, 'TRI4', '0.00', '0.00', '0.00', '0.00'),
 (34, $dy, 'ANU', '0.00', '0.00', '0.00', '0.00')";
 		
+	global $table11;
 	if(mysqli_query($db, $balanceg2)){
-			global $table11;
 			$table11 = "\t* OK INIT VALUES EN ".$vname7.". \n";
-		} else { print("* NO OK INIT VALUES EN ".$vname7.". ".mysqli_error($db)."</br>");
-				 global $table11;
-				 $table11 = "\t* NO OK INIT VALUES EN ".$vname7.". ".mysqli_error($db)." \n";
+	}else{ print("* NO OK INIT VALUES EN ".$vname7.". ".mysqli_error($db)."</br>");
+			$table11 = "\t* NO OK INIT VALUES EN ".$vname7.". ".mysqli_error($db)." \n";
 			}
 					
 	/************** CREAMOS LA TABLA BALANCE ING ***************/
@@ -386,12 +422,11 @@ $balanceg2 = "INSERT INTO `$db_name`.$vname7 (`id`, `year`, `mes`, `iva`, `sub`,
 	$dy = date('Y');
 	$dy_1 = (date('Y')-1);
 	
+	global $table12;
 	if(mysqli_query($db, $balancei)){
-			global $table12;
 			$table12 = "\t* OK TABLA BALANCE ".$vname8.". \n";
-		} else { print("* NO OK TABLE ".$vname8.". ".mysqli_error($db)."</br>");
-				 global $table12;
-				 $table12 = "\t* NO OK TABLA ".$vname8.". ".mysqli_error($db)." \n";
+	}else{ print("* NO OK TABLE ".$vname8.". ".mysqli_error($db)."</br>");
+			$table12 = "\t* NO OK TABLA ".$vname8.". ".mysqli_error($db)." \n";
 			}
 					
 $vname8 = strtolower($vname8);					
@@ -431,12 +466,11 @@ $balancei2 = "INSERT INTO `$db_name`.$vname8 (`id`, `year`, `mes`, `iva`, `sub`,
 (33, $dy, 'TRI4', '0.00', '0.00', '0.00', '0.00'),
 (34, $dy, 'ANU', '0.00', '0.00', '0.00', '0.00')";
 		
+	global $table13;
 	if(mysqli_query($db, $balancei2)){
-			global $table13;
 			$table13 = "\t* OK INIT VALUES EN ".$vname8.".  \n";
-		} else { print("* NO OK INIT VALUES EN ".$vname8.". ".mysqli_error($db)."</br>");
-				 global $table13;
-				 $table13 = "\t* NO OK INIT VALUES EN ".$vname8.". ".mysqli_error($db)." \n";
+	}else{ print("* NO OK INIT VALUES EN ".$vname8.". ".mysqli_error($db)."</br>");
+			$table13 = "\t* NO OK INIT VALUES EN ".$vname8.". ".mysqli_error($db)." \n";
 			}
 
 	/************** CREAMOS LA TABLA BALANCE DIF ***************/
@@ -458,12 +492,11 @@ $balancei2 = "INSERT INTO `$db_name`.$vname8 (`id`, `year`, `mes`, `iva`, `sub`,
 	$dy = date('Y');
 	$dy_1 = (date('Y')-1);
 	
+	global $table14;
 	if(mysqli_query($db, $balanced)){
-			global $table14;
 			$table14 = "\t* OK TABLA BALANCE ".$vname9.". \n";
-		} else { print("* NO OK TABLE ".$vname9.". ".mysqli_error($db)."</br>");
-				 global $table14;
-				 $table14 = "\t* NO OK TABLA ".$vname9.". ".mysqli_error($db)." \n";
+	}else{ print("* NO OK TABLE ".$vname9.". ".mysqli_error($db)."</br>");
+			$table14 = "\t* NO OK TABLA ".$vname9.". ".mysqli_error($db)." \n";
 			}
 					
 $vname9 = strtolower($vname9);					
@@ -503,12 +536,11 @@ $balanced2 = "INSERT INTO `$db_name`.$vname9 (`id`, `year`, `mes`, `iva`, `sub`,
 (33, $dy, 'TRI4', '0.00', '0.00', '0.00', '0.00'),
 (34, $dy, 'ANU', '0.00', '0.00', '0.00', '0.00')";
 		
+	global $table15;
 	if(mysqli_query($db, $balanced2)){
-			global $table15;
 			$table15 = "\t* OK INIT VALUES BALANCE ".$vname9.". \n";
-		} else { print("* NO OK INIT VALUES EN ".$vname9.". ".mysqli_error($db)."</br>");
-				 global $table15;
-				 $table15 = "\t* NO OK INIT VALUES ".$vname9.". ".mysqli_error($db)." \n";
+	}else{ print("* NO OK INIT VALUES EN ".$vname9.". ".mysqli_error($db)."</br>");
+			$table15 = "\t* NO OK INIT VALUES ".$vname9.". ".mysqli_error($db)." \n";
 			}
 
 	/************** CREAMOS LA TABLA IMPUESTOS ***************/
@@ -523,12 +555,11 @@ $balanced2 = "INSERT INTO `$db_name`.$vname9 (`id`, `year`, `mes`, `iva`, `sub`,
 				  PRIMARY KEY  (`id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=6 ";
 		
+	global $table16;
 	if(mysqli_query($db, $impuestos)){
-			global $table16;
 			$table16 = "\t* OK TABLA ".$vname10.". \n";
-		} else { print("* NO OK TABLE ".$vname10.". ".mysqli_error($db)."</br>");
-				 global $table16;
-				 $table16 = "\t* NO OK TABLA ".$vname10.". ".mysqli_error($db)." \n";
+	}else{ print("* NO OK TABLE ".$vname10.". ".mysqli_error($db)."</br>");
+			$table16 = "\t* NO OK TABLA ".$vname10.". ".mysqli_error($db)." \n";
 			}
 					
 $vname10 = strtolower($vname10);					
@@ -539,12 +570,11 @@ $impuestos2 = "INSERT INTO `$db_name`.$vname10 (`id`, `iva`, `name`) VALUES
 (4, '10.00', '10.00 %'),  
 (5, '21.00', '21.00 %')";
 		
+	global $table17;
 	if(mysqli_query($db, $impuestos2)){
-			global $table17;
 			$table17 = "\t* OK INIT VALUES EN ".$vname10.". \n";
-		} else { print("* NO OK INIT VALUES EN ".$vname10.". ".mysqli_error($db)."</br>");
-				 global $table17;
-				 $table17 = "\t* NO OK INIT VALUES EN ".$vname10.". ".mysqli_error($db)." \n";
+	}else{ print("* NO OK INIT VALUES EN ".$vname10.". ".mysqli_error($db)."</br>");
+			$table17 = "\t* NO OK INIT VALUES EN ".$vname10.". ".mysqli_error($db)." \n";
 			}
 
 	/************** CREAMOS LA TABLA STATUS ***************/
@@ -561,12 +591,11 @@ $impuestos2 = "INSERT INTO `$db_name`.$vname10 (`id`, `iva`, `name`) VALUES
 				  PRIMARY KEY  (`id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=3 ";
 		
+	global $table18;
 	if(mysqli_query($db, $status)){
-			global $table18;
 			$table18 = "\t* OK TABLA ".$vname11.". \n";
-		} else { print("* NO OK TABLE ".$vname11.". ".mysqli_error($db)."</br>");
-				 global $table18;
-				 $table18 = "\t* NO OK TABLA ".$vname11.". ".mysqli_error($db)." \n";
+	}else{ print("* NO OK TABLE ".$vname11.". ".mysqli_error($db)."</br>");
+			$table18 = "\t* NO OK TABLA ".$vname11.". ".mysqli_error($db)." \n";
 			}
 global $y1;		$y1 = date('Y')-1;
 global $y1b;	$y1b = date('y')-1;
@@ -578,12 +607,11 @@ $status2 = "INSERT INTO `$db_name`.$vname11 (`id`, `year`, `ycod`, `stat`, `hidd
 (1, '$y1', '$y1b', 'open', 'no'), 
 (2, '$y2', '$y2b', 'open', 'no') ";
 
+	global $table19;
 	if(mysqli_query($db, $status2)){
-			global $table19;
 			$table19 = "\t* OK INIT VALUES EN ".$vname11.". \n";
-		} else { print("* NO OK INIT VALUES EN ".$vname11.". ".mysqli_error($db)."</br>");
-				 global $table19;
-				 $table19 = "\t* NO OK INIT VALUES EN ".$vname11.". ".mysqli_error($db)." \n";
+	}else{ print("* NO OK INIT VALUES EN ".$vname11.". ".mysqli_error($db)."</br>");
+			$table19 = "\t* NO OK INIT VALUES EN ".$vname11.". ".mysqli_error($db)." \n";
 			}
 
 	/************** CREAMOS LA TABLA STATUSFEEDBACK ***************/
@@ -601,12 +629,11 @@ $status2 = "INSERT INTO `$db_name`.$vname11 (`id`, `year`, `ycod`, `stat`, `hidd
 				  PRIMARY KEY  (`id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
+	global $table20;
 	if(mysqli_query($db, $statusfeedback)){
-			global $table20;
 			$table20 = "\t* OK TABLA ".$vname12.". \n";
-		} else { print("* NO OK TABLE ".$vname12.". ".mysqli_error($db)."</br>");
-				 global $table20;
-				 $table20 = "\t* NO OK TABLA ".$vname12.". ".mysqli_error($db)." \n";
+	}else{ print("* NO OK TABLE ".$vname12.". ".mysqli_error($db)."</br>");
+			$table20 = "\t* NO OK TABLA ".$vname12.". ".mysqli_error($db)." \n";
 			}
 
 	/************** CREAMOS LA TABLA RETENCION ***************/
@@ -621,12 +648,11 @@ $status2 = "INSERT INTO `$db_name`.$vname11 (`id`, `year`, `ycod`, `stat`, `hidd
 				  PRIMARY KEY  (`id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=6 ";
 		
+	global $table21;
 	if(mysqli_query($db, $retencion)){
-			global $table21;
 			$table21 = "\t* OK TABLA ".$vname13.". \n";
-		} else { print("* NO OK TABLE ".$vname13.". ".mysqli_error($db)."</br>");
-				 global $table21;
-				 $table21 = "\t* NO OK TABLA ".$vname13.". ".mysqli_error($db)." \n";
+	}else{ print("* NO OK TABLE ".$vname13.". ".mysqli_error($db)."</br>");
+			$table21 = "\t* NO OK TABLA ".$vname13.". ".mysqli_error($db)." \n";
 			}
 					
 $vname13 = strtolower($vname13);					
@@ -635,12 +661,11 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 (2, '0.00', '0.00 %'), 
 (3, '15.00', '15.00 %')";
 		
+	global $table22;
 	if(mysqli_query($db, $retencion2)){
-			global $table22;
 			$table22 = "\t* OK INIT VALUES EN ".$vname10.". \n";
-		} else { print("* NO OK INIT VALUES EN ".$vname10.". ".mysqli_error($db)."</br>");
-				 global $table22;
-				 $table22 = "\t* NO OK INIT VALUES EN ".$vname10.". ".mysqli_error($db)." \n";
+	}else{ print("* NO OK INIT VALUES EN ".$vname10.". ".mysqli_error($db)."</br>");
+			$table22 = "\t* NO OK INIT VALUES EN ".$vname10.". ".mysqli_error($db)." \n";
 			}
 
 	/************	PASAMOS LOS PARAMETROS A .LOG	*****************/
@@ -671,8 +696,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	if (!file_exists($carpeta)) {
 		mkdir($carpeta, 0777, true);
 		$data1 = "\t* OK DIRECTORIO ../Mod_Conta/cbj_Docs. \n";
-		}
-		else{	//print("* NO HA CREADO EL DIRECTORIO ".$carpeta."\n");
+	}else{	//print("* NO HA CREADO EL DIRECTORIO ".$carpeta."\n");
 			$data1 = "\t* YA EXISTE EL DIRECTORIO ../Mod_Conta/cbj_Docs. \n";
 			}
 
@@ -708,26 +732,27 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   FOREIGN KEY (`refprovee`) REFERENCES $tablProveedores (`ref`) ON DELETE NO ACTION ON UPDATE CASCADE
   */
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
-		
+
+	global $data1;
 	if(mysqli_query($db, $tg)){
 			$data1 = $data1."\t* OK TABLA ".$vname1."\n";
-		} else { print( "* NO OK TABLA ".$vname1.". ".mysqli_error($db)."\n");
-				 $$data1 = $data1."\t* NO OK TABLA ".$vname1.". ".mysqli_error($db)."\n";
+	} else { print( "* NO OK TABLA ".$vname1.". ".mysqli_error($db)."\n");
+			 $data1 = $data1."\t* NO OK TABLA ".$vname1.". ".mysqli_error($db)."\n";
 			}
 
 // CREA EL DIRECTORIO DE DOC GASTOS.
 
 	$vn1 = "docgastos_".date('Y');
 	$carpeta1 = "../Mod_Conta/cbj_Docs/".$vn1;
+	global $data2;
 	if (!file_exists($carpeta1)) {
 		mkdir($carpeta1, 0777, true);
 		copy("../Mod_Conta/cbj_Images/untitled.png", $carpeta1."/untitled.png");
 		copy("../Mod_Conta/cbj_Images/pdf.png", $carpeta1."/pdf.png");
 		$data2 = "\t* OK DIRECTORIO ".$carpeta1."\n";
-		}
-		else{ //print("* NO OK EL DIRECTORIO ".$carpeta1."\n");
-				$data2 = "\t* YA EXISTE EL DIRECTORIO ".$carpeta1."\n";
-				}
+	}else{ //print("* NO OK EL DIRECTORIO ".$carpeta1."\n");
+			$data2 = "\t* YA EXISTE EL DIRECTORIO ".$carpeta1."\n";
+			}
 
 	/************** CREAMOS LA TABLA GASTOS del año anterior  ***************/
 
@@ -759,11 +784,10 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	*/
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
+	global $data3;
 	if(mysqli_query($db, $tg2)){
-			global $data3;
 			$data3 = "\t* OK TABLA ".$vname2." \n";
-		} else { print( "* NO OK TABLA ".$vname2.". ".mysqli_error($db)."\n");
-				 global $data3;
+	}else{ print( "* NO OK TABLA ".$vname2.". ".mysqli_error($db)."\n");
 				 $data3 = "\t* NO OK TABLA ".$vname2.". ".mysqli_error($db)."\n";
 			}
 				
@@ -771,14 +795,15 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 
 	$vn2 = "docgastos_".(date('Y')-1);
 	$carpeta2 = "../Mod_Conta/cbj_Docs/".$vn2;
+	global $data4;
 	if (!file_exists($carpeta2)) {
 			mkdir($carpeta2, 0777, true);
 			copy("../Mod_Conta/cbj_Images/untitled.png", $carpeta2."/untitled.png");
 			copy("../Mod_Conta/cbj_Images/pdf.png", $carpeta2."/pdf.png");
 			$data4 = "\t* OK DIRECTORIO ".$carpeta2."\n";
-		} else {//print("* YA EXISTE EL DIRECTORIO DIRECTORIO ".$carpeta2."\n");
-				$data4 = "\t* YA EXISTE EL DIRECTORIO ".$carpeta2."\n";
-					}
+	}else{//print("* YA EXISTE EL DIRECTORIO DIRECTORIO ".$carpeta2."\n");
+			$data4 = "\t* YA EXISTE EL DIRECTORIO ".$carpeta2."\n";
+				}
 	
 	/************** CREAMOS LA TABLA INGRESOS  ***************/
 
@@ -813,26 +838,26 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   */
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
+	global $data5;
 	if(mysqli_query($db, $ti)){
-			global $data5;
 			$data5 = "\t* OK TABLA ".$vname3."\n";
-		} else { print( "* NO OK TABLA ".$vname3.". ".mysqli_error($db)."\n");
-				 global $data5;
-				 $data5 = "\t* NO OK TABLA ".$vname3.". ".mysqli_error($db)."\n";
-					}
+	}else{ print( "* NO OK TABLA ".$vname3.". ".mysqli_error($db)."\n");
+			$data5 = "\t* NO OK TABLA ".$vname3.". ".mysqli_error($db)."\n";
+				}
 				
 // CREA EL DIRECTORIO DE INGRESOS DEL AÑO.
 
 	$vn3 = "docingresos_".date('Y');
 	$carpeta3 = "../Mod_Conta/cbj_Docs/".$vn3;
+	global $data6;
 	if (!file_exists($carpeta3)) {
 			mkdir($carpeta3, 0777, true);
 			copy("../Mod_Conta/cbj_Images/untitled.png", $carpeta3."/untitled.png");
 			copy("../Mod_Conta/cbj_Images/pdf.png", $carpeta3."/pdf.png");
 			$data6 = "\t* OK DIRECTORIO ".$carpeta3."\n";
-		} else { //print("* NO OK EL DIRECTORIO ".$carpeta3."\n");
-				 $data6 = "\t* YA EXISTE EL DIRECTORIO ".$carpeta3."\n";
-		}
+	}else{ //print("* NO OK EL DIRECTORIO ".$carpeta3."\n");
+			$data6 = "\t* YA EXISTE EL DIRECTORIO ".$carpeta3."\n";
+				}
 	
 	/************** CREAMOS LA TABLA INGRESOS del año anterior  ***************/
 
@@ -864,26 +889,26 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   */
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
+	global $data7;
 	if(mysqli_query($db, $ti2)){
-			global $data7;
 			$data7 = "\t* OK TABLA ".$vname4."\n";
-		} else { print( "* NO OK TABLA ".$vname4.". ".mysqli_error($db)."\n");
-				 global $data7;
-				 $data7 = "\t* NO OK TABLA ".$vname4.". ".mysqli_error($db)."\n";
-					}
+	}else{  print( "* NO OK TABLA ".$vname4.". ".mysqli_error($db)."\n");
+			$data7 = "\t* NO OK TABLA ".$vname4.". ".mysqli_error($db)."\n";
+			}
 				
 // CREA EL DIRECTORIO DE INGRESOS DEL AÑO ANTERIOR.
 
 	$vn4 = "docingresos_".(date('Y')-1);
 	$carpeta4 = "../Mod_Conta/cbj_Docs/".$vn4;
+	global $data8;
 	if (!file_exists($carpeta4)) {
 			mkdir($carpeta4, 0777, true);
 			copy("../Mod_Conta/cbj_Images/untitled.png", $carpeta4."/untitled.png");
 			copy("../Mod_Conta/cbj_Images/pdf.png", $carpeta4."/pdf.png");
 			$data8 = "\t* OK DIRECTORIO ".$carpeta4."\n";
-		} else { //print("* NO OK EL DIRECTORIO ".$carpeta4."\n");
-				 $data8 = "\t* YA EXISTE EL DIRECTORIO ".$carpeta4."\n";
-		}
+	} else { //print("* NO OK EL DIRECTORIO ".$carpeta4."\n");
+			 $data8 = "\t* YA EXISTE EL DIRECTORIO ".$carpeta4."\n";
+				}
 	
 		/************	PASAMOS LOS PARAMETROS A .LOG	*****************/
 	
@@ -1040,7 +1065,7 @@ function ayear_cbj(){
 		if (!file_exists($carpetaimg2)) {
 			mkdir($carpetaimg2, 0777, true);
 			copy("config/cbj_Images/untitled.png", $carpetaimg2."/untitled.png");
-			$$data0 = $data0."\t* OK DIRECTORIO ".$carpetaimg2."\n";
+			$data0 = $data0."\t* OK DIRECTORIO ".$carpetaimg2."\n";
 			}
 			else{//print("* NO OK EL DIRECTORIO ".$carpetaimg2."\n");
 				$data0 = $data0."\t* YA EXISTE EL DIRECTORIO ".$carpetaimg2."\n";
@@ -1105,11 +1130,8 @@ function ayear_cbj(){
 				 ////////////////////				  ///////////////////
 
 
-
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
-
-
 
 ?>

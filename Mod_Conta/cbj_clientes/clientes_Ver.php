@@ -209,6 +209,12 @@ session_start();
 		
 		global $titulo;
 		$titulo = "GESTIONAR CLIENTES";
+		global $LinkProvee1;
+		$LinkProvee1 = "<a href='clientes_Crear.php' class='botonverde'>CREAR NUEVO CLIENTE</a>";
+		global $LinkProvee2;
+		$LinkProvee2 = "<a href='clientesFeed_Ver.php' class='botonverde'>PAPELERA CLIENTES</a>";
+		global $titulo2;
+		$titulo2 = "CLIENTES VER TODOS";
 
 		require 'Inc_Show_Form_01.php';
 	
