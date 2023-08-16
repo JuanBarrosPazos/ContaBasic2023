@@ -134,6 +134,7 @@ function process_form(){
 	$bplot1->SetLegend($titulo);
 	
 	//$bplot1->SetShadow();
+	$graph->legend->SetPos(0.5,0.96,'center','bottom');
 	
 	$graph->Stroke();	
 		

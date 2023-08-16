@@ -130,6 +130,8 @@ function process_form(){
 	$p1->SetColor("#01DFD7");
 	$p1->SetLegend($titulo);
 
+	$graph->legend->SetPos(0.5,0.96,'center','bottom');
+
 	$graph->Stroke();
 		
 		}
