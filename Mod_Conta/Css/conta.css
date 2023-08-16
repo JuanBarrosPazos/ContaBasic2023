@@ -375,3 +375,15 @@ a:hover  img {
 	font-weight: bolder;
 }
 
+.imgDelete{
+	width: 2.1em !important;
+	height: 2.1em !important;
+	margin: 0.1em;
+	background-image: url(../cbj_Images/delete_white.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+.imgDelete:hover{
+	background-image: url(../cbj_Images/delete_black.png);
+}
