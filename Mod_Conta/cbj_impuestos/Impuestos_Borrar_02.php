@@ -9,7 +9,9 @@ session_start();
 		
 	require '../Inclu/sqld_query_fetch_assoc.php';
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 	if ($_SESSION['Nivel'] == 'admin'){
 
@@ -23,7 +25,9 @@ session_start();
 
 	} else { require '../Inclu/table_permisos.php'; } 
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 function process_form(){
 	
@@ -32,56 +36,48 @@ function process_form(){
 	
 	$iva1 = $_POST['iva1'];
 	$iva2 = $_POST['iva2'];
-	global $tiva; 		$tiva = $iva1.".".$iva2;
-	$tiva = trim($tiva);
+	global $tiva; 		$tiva = $iva1.".".$iva2; 		$tiva = trim($tiva);
 	global $name; 		$name = $tiva." %";
 
 	global $vname; 		$vname = "`".$_SESSION['clave']."impuestos`";
 
 	$tabla = "<table align='center' style='margin-top:10px'>
 				<tr>
-					<th colspan=4 class='BorderInf'>
-						BORRADO EN ".strtoupper($vname)."
-					</th>
+					<td colspan=4 class='BorderInf' style='text-align:center;'>
+						<a href='Impuestos_Ver.php' class='botonverde'>INICIO IMPUESTOS</a>
+					</td>
 				</tr>
-												
 				<tr>
-					<td>
-						IMPUESTOS %
-					</td>
-					<td>"
-						.$tiva.
-					"</td>
-					<td>	
-						NAME
-					</td>
-					<td>"
-						.$name.
-					"</td>
+					<th colspan=4 >BORRADO EN ".strtoupper($vname)."</th>
 				</tr>
-				
-			</table>
-				
-		";	
+				<tr>
+					<td>IMPUESTO %</td><td>".$tiva."</td>
+					<td>NAME</td><td>".$name."</td>
+				</tr>
+				<tr>
+					<td colspan=4 class='BorderSup' style='text-align:center;'>
+						<a href='Impuestos_Ver.php' class='botonverde'>INICIO IMPUESTOS</a>
+					</td>
+				</tr>
+			</table>";	
 		
-		global $db;
-		global $db_name;
-		global $idx;
-		$idx = $_SESSION['idx'];
+		global $db;		global $db_name;
+		global $idx;	$idx = $_SESSION['idx'];
 
-	$sqla = "DELETE FROM `$db_name`.$vname WHERE $vname.`id` = '$idx'";
+		$sqla = "DELETE FROM `$db_name`.$vname WHERE $vname.`id` = '$idx'";
 		
 		if(mysqli_query($db, $sqla)){ print($tabla); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA 104: ".mysqli_error($db));
-									show_form ();
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-					}
+				} else {
+					print("* MODIFIQUE LA ENTRADA 104: ".mysqli_error($db));
+					show_form ();
+					global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
+						}
 					
-}	
+	}	
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 function show_form($errors=[]){
 	
@@ -107,61 +103,58 @@ function show_form($errors=[]){
 								
 ////////////////////
 
-	print("
-			<table align='center' style=\"margin-top:10px\">
+	print("<table align='center' style=\"margin-top:10px\">
 				<tr>
-					<th colspan=2 class='BorderInf'>
-								BORRAR % IMPUESTOS					
-					</th>
-				</tr>
-				
-<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
-
-				<tr>
-					<td>						
-						IMPUESTOS % TIPO
+					<td colspan=2 class='BorderInf' style='text-align:center;'>
+						<a href='Impuestos_Ver.php' class='botonverde'>INICIO IMPUESTOS</a>
 					</td>
+				</tr>
+				<tr>
+					<th colspan=2 >BORRAR % IMPUESTO</th>
+				</tr>
+		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
+				<tr>
+					<td>IMPUESTO % TIPO</td>
 					<td>
 					".$defaults['iva1']."
-<input style='text-align:right' type='hidden' name='iva1' size=4 maxlength=2 value='".$defaults['iva1']."' />
-,".$defaults['iva2']."
-<input  type='hidden' name='iva2' size=4 maxlength=2 value='".$defaults['iva2']."' />
-%
+	<input style='text-align:right' type='hidden' name='iva1' size=4 maxlength=2 value='".$defaults['iva1']."' />,".$defaults['iva2']."<input  type='hidden' name='iva2' size=4 maxlength=2 value='".$defaults['iva2']."' />%
 					</td>
 				</tr>
-					
 				<tr>
-					<td colspan='2' align='right' valign='middle'  class='BorderSup'>
-						<input type='submit' value='BORRAR % IMPUESTOS' />
+					<th colspan='2' valign='middle' >
+						<input type='submit' class='botonrojo' value='BORRAR % IMPUESTO' />
 						<input type='hidden' name='oculto' value=1 />
+			</form>														
 					</td>
 				</tr>
-				
-		</form>														
-			
-			</table>				
-						"); 
+				<tr>
+					<td colspan=2 class='BorderSup' style='text-align:center;'>
+						<a href='Impuestos_Ver.php' class='botonverde'>INICIO IMPUESTOS</a>
+					</td>
+				</tr>
+			</table>"); 
 	
 	}	
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function info_01(){
+	function info_01(){
 
-	global $db;
+		global $db;
+		
+		global $tiva; 		global $name;
+
+		$ActionTime = date('H:i:s');
+
+		global $dir;
+		if ($_SESSION['Nivel'] == 'admin'){ 
+					$dir = "../cbj_Docs/log";
+					}
 	
-	global $tiva;
-	global $name;
-
-	$ActionTime = date('H:i:s');
-
-	global $dir;
-	if ($_SESSION['Nivel'] == 'admin'){ 
-				$dir = "../cbj_Docs/log";
-				}
-	
-global $text;
-$text = "\n- IMPUESTO BORRAR SELECCIONADO ".$ActionTime.".\n\t ID: ".$_POST['id'].".\n\t % TIPO IMPUESTO: ".$_POST['iva'].".\n\t NOMBRE: ".$_POST['name'].".";
+		global $text;
+		$text = "\n- IMPUESTO BORRAR SELECCIONADO ".$ActionTime.".\n\t ID: ".$_POST['id'].".\n\t % TIPO IMPUESTO: ".$_POST['iva'].".\n\t NOMBRE: ".$_POST['name'].".";
 
 		$logdocu = $_SESSION['ref'];
 		$logdate = date('Y-m-d');
@@ -173,24 +166,25 @@ $text = "\n- IMPUESTO BORRAR SELECCIONADO ".$ActionTime.".\n\t ID: ".$_POST['id'
 
 	}
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function info_02(){
+	function info_02(){
 
-	global $db;
+		global $db;
+		
+		global $tiva; 		global $name;
+
+		$ActionTime = date('H:i:s');
+
+		global $dir;
+		if ($_SESSION['Nivel'] == 'admin'){ 
+					$dir = "../cbj_Docs/log";
+					}
 	
-	global $tiva;
-	global $name;
-
-	$ActionTime = date('H:i:s');
-
-	global $dir;
-	if ($_SESSION['Nivel'] == 'admin'){ 
-				$dir = "../cbj_Docs/log";
-				}
-	
-global $text;
-$text = "\n- IMPUESTO BORRADO ".$ActionTime.".\n\t ID: ".$_SESSION['idx'].".\n\t % TIPO IMPUESTO: ".$tiva.".\n\t NOMBRE: ".$name.".";
+		global $text;
+		$text = "\n- IMPUESTO BORRADO ".$ActionTime.".\n\t ID: ".$_SESSION['idx'].".\n\t % TIPO IMPUESTO: ".$tiva.".\n\t NOMBRE: ".$name.".";
 
 		$logdocu = $_SESSION['ref'];
 		$logdate = date('Y-m-d');
@@ -202,6 +196,9 @@ $text = "\n- IMPUESTO BORRADO ".$ActionTime.".\n\t ID: ".$_SESSION['idx'].".\n\t
 
 	}
 
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 	
 	function master_index(){
 		
@@ -210,12 +207,16 @@ $text = "\n- IMPUESTO BORRADO ".$ActionTime.".\n\t ID: ".$_SESSION['idx'].".\n\t
 		global $rutaImpuestos;	$rutaImpuestos = "";
 		require '../Inclu_MInd/MasterIndex.php'; 
 		
-				} /* Fin funcion master_index.*/
+	} /* Fin funcion master_index.*/
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-	
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 	require '../Inclu/Conta_Footer.php';
+
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 ?>

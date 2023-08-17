@@ -49,11 +49,11 @@
 	<form name='form_tabla' method='post' action='$_SERVER[PHP_SELF]'>
 				<tr>
 					<td align='right'>
-						<input type='submit' value='CONSULTA' class='botonazul' />
+						<input type='submit' title='FILTRO CLIENTES' value='FILTRO' class='botonazul' />
 						<input type='hidden' name='oculto' value=1 />
 					</td>
 					<td>
-		<select name='Orden' class='botonverde'>");
+		<select name='Orden' title='ORDEN CLIENTES' class='botonazul'>");
 						
 		foreach($ordenar as $option => $label){
 			print ("<option value='".$option."' ");
@@ -71,23 +71,22 @@
 			<tr>
 				<td align='right'>Nº DNI/NIF</td>
 				<td>
-					<input type='text' name='dni' size=20 maxlenth=8 value='".@$defaults['dni']."' />
+			<input type='text' name='dni' size=20 maxlenth=8 value='".@$defaults['dni']."' />
 				</td>
 				<td align='right'>R. SOCIAL</td>
 				<td>
-					<input type='text' name='rsocial' size=20 maxlenth=20 value='".@$defaults['rsocial']."' />
+			<input type='text' name='rsocial' size=20 maxlenth=20 value='".@$defaults['rsocial']."' />
 			</form>	
 				</td>
 			</tr>
-				
 		<form name='todo' method='post' action='$_SERVER[PHP_SELF]' >
 			<tr>
 				<td colspan=2 align='right' class='BorderInf BorderSup'>
-				<input type='submit' value='".$titulo2."' class='botonazul' />
-				<input type='hidden' name='todo' value=1 />
+					<input type='submit' title='".$titulo2."' value='".$titulo2."' class='botonazul' />
+					<input type='hidden' name='todo' value=1 />
 				</td>
 				<td colspan=2 class='BorderInf BorderSup'>
-			<select name='Orden' class='botonverde'>");
+			<select name='Orden' title='ORDEN CLIENTES' class='botonazul'>");
 
 			foreach($ordenar as $option => $label){
 				print ("<option value='".$option."' ");

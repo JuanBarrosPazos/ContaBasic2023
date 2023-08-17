@@ -94,9 +94,10 @@ session_start();
 							<th class='BorderInfDch'>DNI</th>
 							<th class='BorderInfDch'>RAZON SOCIAL</th>
 							<th colspan='6' class='BorderInf'>
-							</th></tr>");
+							</th>
+						</tr>");
 				
-			while($rowc = mysqli_fetch_assoc($qc)){
+		while($rowc = mysqli_fetch_assoc($qc)){
 				
 			print (	"<tr align='center'>
 										
@@ -105,34 +106,28 @@ session_start();
 			<td align='left' class='BorderInfDch'>
 				<input name='id' type='hidden' value='".$rowc['id']."' />".$rowc['id']."
 			</td>
-
 			<td align='left' class='BorderInfDch'>
 				<input name='ref' type='hidden' value='".$rowc['ref']."' />".$rowc['ref']."
 			</td>
-								
 			<td align='left' class='BorderInfDch'>
 				<input name='dni' type='hidden' value='".$rowc['dni']."' />".$rowc['dni'].$rowc['ldni']."
 				<input name='ldni' type='hidden' value='".$rowc['ldni']."' />
 			</td>
-
 			<td align='left' class='BorderInfDch'>
 				<input name='rsocial' type='hidden' value='".$rowc['rsocial']."' />".$rowc['rsocial']."
 			</td>
-							
 			<td class='BorderInfDch'>
 				<input name='myimg' type='hidden' value='".$rowc['myimg']."' />
 				<img src='../cbj_Docs/img_proveedores/".$rowc['myimg']."' height='40px' width='30px' />
 			</td>
-													
-			<input name='doc' type='hidden' value='".$rowc['doc']."' />
-			<input name='Email' type='hidden' value='".$rowc['Email']."' />
-			<input name='Direccion' type='hidden' value='".$rowc['Direccion']."' />
-			<input name='Tlf1' type='hidden' value='".$rowc['Tlf1']."' />
-			<input name='Tlf2' type='hidden' value='".$rowc['Tlf2']."' />
-
+				<input name='doc' type='hidden' value='".$rowc['doc']."' />
+				<input name='Email' type='hidden' value='".$rowc['Email']."' />
+				<input name='Direccion' type='hidden' value='".$rowc['Direccion']."' />
+				<input name='Tlf1' type='hidden' value='".$rowc['Tlf1']."' />
+				<input name='Tlf2' type='hidden' value='".$rowc['Tlf2']."' />
 			<td colspan=2 align='center' class='BorderInf'>
-						<input type='submit' value='VER DETALLES' class='botonverde' />
-						<input type='hidden' name='oculto2' value=1 />
+					<input type='submit' value='VER DETALLES' class='botonverde' />
+					<input type='hidden' name='oculto2' value=1 />
 			</td>
 				</form>
 			<td align='center' class='BorderInf'>
@@ -185,12 +180,12 @@ session_start();
 				<input name='Direccion' type='hidden' value='".$rowc['Direccion']."' />
 				<input name='Tlf1' type='hidden' value='".$rowc['Tlf1']."' />
 				<input name='Tlf2' type='hidden' value='".$rowc['Tlf2']."' />
-						<!--
-							<input type='submit' value='BORRAR DATOS' class='botonrojo' />
-						-->
-						<button type='submit' class='botonrojo imgDelete'></button>
-						
-							<input type='hidden' name='oculto2' value=1 />
+					<!--
+						<input type='submit' value='BORRAR DATOS' class='botonrojo' />
+					-->
+					<button type='submit' title='BORRAR PROVEEDOR' class='botonrojo imgDelete DeleteWhite'>
+					</button>
+					<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td>
 		</tr>");
@@ -216,7 +211,7 @@ session_start();
 		global $LinkProvee1;
 		$LinkProvee1 = "<a href='proveedores_Crear.php' class='botonverde'>CREAR NUEVO PROVEEDOR</a>";
 		global $LinkProvee2;
-		$LinkProvee2 = "<a href='proveedoresFeed_Ver.php' class='botonverde'>PAPELERA PROVEEDORES</a>";
+		$LinkProvee2 = "<button type='submit' title='PAPELERA PROVEEDORES' class='botonverde imgDelete DeleteGrey'><a href='proveedoresFeed_Ver.php'>&nbsp;&nbsp;&nbsp;</a></button>";
 		global $titulo2;
 		$titulo2 = "PROVEEDORES VER TODOS";
 
@@ -359,12 +354,12 @@ session_start();
 				<input name='Direccion' type='hidden' value='".$rowb['Direccion']."' />
 				<input name='Tlf1' type='hidden' value='".$rowb['Tlf1']."' />
 				<input name='Tlf2' type='hidden' value='".$rowb['Tlf2']."' />
-						<!--
-							<input type='submit' value='BORRAR DATOS' class='botonrojo' />
-						-->
-						<button type='submit' class='botonrojo imgDelete'></button>
-
-							<input type='hidden' name='oculto2' value=1 />
+					<!--
+						<input type='submit' value='BORRAR DATOS' class='botonrojo' />
+					-->
+				<button type='submit' title='BORRAR PROVEEDOR' class='botonrojo imgDelete DeleteWhite'>
+				</button>
+					<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td>
 				</tr>");

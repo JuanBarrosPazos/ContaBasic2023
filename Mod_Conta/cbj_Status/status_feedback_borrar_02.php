@@ -7,7 +7,9 @@ session_start();
 	require '../../Mod_Admin/Conections/conection.php';
 	require '../../Mod_Admin/Conections/conect.php';
 	
-///////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 	if ($_SESSION['Nivel'] == 'admin'){
 
@@ -21,276 +23,233 @@ session_start();
 	
 	} else { require '../Inclu/table_permisos.php'; } 
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function process_form(){
+	function process_form(){
 	
-	global $db; 		global $db_name;	
-	
-	global $vname; 		$vname = "`".$_SESSION['clave']."statusfeedback`";
-	global $id; 		$id = $_POST['id'];
-	global $year; 		$year = $_POST['year'];
-	global $ycod; 		$ycod = substr(trim($_POST['year']),-2,2);
-	global $stat; 		$stat = $_POST['stat'];
-	global $hidden; 	$hidden = $_POST['hidden'];
-	
-	$tabla = "<table align='center' style='margin-top:10px'>
-				<tr>
-					<th colspan=4 class='BorderInf'>
-						BORRADO EN ".strtoupper($vname)."
-					</th>
+		global $db; 		global $db_name;	
+		
+		global $vname; 		$vname = "`".$_SESSION['clave']."statusfeedback`";
+		global $id; 		$id = $_POST['id'];
+		global $year; 		$year = $_POST['year'];
+		global $ycod; 		$ycod = substr(trim($_POST['year']),-2,2);
+		global $stat; 		$stat = $_POST['stat'];
+		global $hidden; 	$hidden = $_POST['hidden'];
+		
+		$tabla = "<table align='center' style='margin-top:10px'>
+					<tr>
+						<th colspan=4 class='BorderInf'>BORRADO EN ".strtoupper($vname)."</th>
+					</tr>
+					<tr align='center'>
+						<td class='BorderInfDch'>YEAR</td>
+						<td class='BorderInfDch'>CODE</td>
+						<td class='BorderInfDch'>STATUS</td>
+						<td class='BorderInfDch'>HIDDEN</td>
+					</tr>
+					<tr align='center'>
+						<td  class='BorderInfDch'>".$year."</td>
+						<td  class='BorderInfDch'>".$ycod."</td>
+						<td  class='BorderInfDch'>".$stat."</td>
+						<td  class='BorderInfDch'>".$hidden."</td>
+					</tr>
+					<tr>
+					<td colspan='4' style='text-align:center;'' class='BorderSup'>
+				<a href='status_Ver.php' class='botonverde'>INICIO EJERCICOS STATUS</a>
+				<button type='submit' title='PAPELERA EJERCICIO' class='botonverde imgDelete DeleteGrey'>
+					<a href='status_feedback_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+				</button>
+						</td>
 				</tr>
-												
-				<tr align='center'>
-					<td class='BorderInfDch'>
-						YEAR
-					</td>
-					<td class='BorderInfDch'>	
-						CODE
-					</td>
-					<td class='BorderInfDch'>	
-						STATUS
-					</td>
-					<td class='BorderInfDch'>	
-						HIDDEN
-					</td>
-				</tr>
-				<tr align='center'>
-					<td  class='BorderInfDch'>"
-						.$year.
-					"</td>
-					<td  class='BorderInfDch'>"
-						.$ycod.
-					"</td>
-					<td  class='BorderInfDch'>"
-						.$stat.
-					"</td>
-					<td  class='BorderInfDch'>"
-						.$hidden.
-					"</td>
-				</tr>
-				
-			</table>
-				
-		";	
+			</table>";	
 		
 		$sqla = "DELETE FROM `$db_name`.$vname WHERE `year` = '$year'";
 	
-		if(mysqli_query($db, $sqla)){ 	borrart();
-										borrard();
-										borrare();
-										print($tabla);
-										ver_todo();
-										ver_feedback();
-			} else {
-					print("* MODIFIQUE LA ENTRADA 114: ".mysqli_error($db));
-					show_form ();
-					global $texerror;
-					$texerror = "\n\t ".mysqli_error($db);
+		if(mysqli_query($db, $sqla)){ borrart(); 	borrard();
+									  borrare(); 	print($tabla);
+									  ver_todo(); 	ver_feedback();
+		} else { print("* MODIFIQUE LA ENTRADA 114: ".mysqli_error($db));
+				show_form ();
+				global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 			}
 					
-}	
+	} // FIN function process_form()
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function borrard(){
+	function borrard(){
 	
-		global $db_name;	
-		global $sesionref;
-		global $year;
-		global $ycod;
+		global $db_name; 		global $sesionref;
+		global $year; 			global $ycod;
 
 		/* BORRAMOS DIRECTORIO Y ARCHIVOS INGRESOS => YEAR XXXX. */
-					$dird1 = "../cbj_Docs/docingresos_".$year;
-					if(file_exists($dird1)){	$dir1 = $dird1."/";
-												$handle1 = opendir($dir1);
-												while ($file1 = readdir($handle1))
-														{if (is_file($dir1.$file1))
-															{unlink($dir1.$file1);}
-														}
-												rmdir ($dird1);
+			$dird1 = "../cbj_Docs/docingresos_".$year;
+			if(file_exists($dird1)){ $dir1 = $dird1."/";
+									 $handle1 = opendir($dir1);
+								while ($file1 = readdir($handle1))
+										{if (is_file($dir1.$file1))
+											{unlink($dir1.$file1);}
+												}
+										rmdir ($dird1);
 												global $dd1;
 												$dd1 = "\t- BORRADA: ".$dird1."/ \n";
-												} else {print("");}
+										} else {print("");}
 
 		/* BORRAMOS TABLA, DIRECTORIO Y ARCHIVOS GASTOS => YEAR XXXX. */
-					$dird2 = "../cbj_Docs/docgastos_".$year;
-					if(file_exists($dird2)){	$dir2 = $dird2."/";
-												$handle2 = opendir($dir2);
-												while ($file2 = readdir($handle2))
-														{if (is_file($dir2.$file2))
-															{unlink($dir2.$file2);}
-														}
-												rmdir ($dird2);
-												global $dd2;
-												$dd2 = "\t- BORRADA: ".$dird2."/ \n";
-												} else {print("");}
+			$dird2 = "../cbj_Docs/docgastos_".$year;
+			if(file_exists($dird2)){ $dir2 = $dird2."/";
+									 $handle2 = opendir($dir2);
+								while ($file2 = readdir($handle2))
+										{if (is_file($dir2.$file2))
+											{unlink($dir2.$file2);}
+												}
+										rmdir ($dird2);
+											global $dd2;
+											$dd2 = "\t- BORRADA: ".$dird2."/ \n";
+										} else {print("");}
 	
+	} // FIN function borrard()
+
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
+
+	function borrare(){
 	
-	}
+		global $db; 			global $db_name;	
+		global $sesionref; 		global $year;
+		global $ycod;
+		global $vname3;		$vname3 = "`".$_SESSION['clave']."balanceg`";
+		$vname3 = strtolower($vname3);	
+		$sql3 = "DELETE FROM `$db_name`.$vname3 WHERE `year` = '$year'";
+		if(mysqli_query($db, $sql3)){} 
+		else {print("* MODIFIQUE LA ENTRADA 182: ".mysqli_error($db));}
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-function borrare(){
-	
-	global $db; 			global $db_name;	
-	global $sesionref; 		global $year;
-	global $ycod;
-	global $vname3;		$vname3 = "`".$_SESSION['clave']."balanceg`";
-	$vname3 = strtolower($vname3);	
-	$sql3 = "DELETE FROM `$db_name`.$vname3 WHERE `year` = '$year'";
-	if(mysqli_query($db, $sql3)){} 
-	else {print("* MODIFIQUE LA ENTRADA 182: ".mysqli_error($db));}
-
-	global $vname4;		$vname4 = "`".$_SESSION['clave']."balancei`";
-	$vname4 = strtolower($vname4);	
-	$sql4 = "DELETE FROM `$db_name`.$vname4 WHERE `year` = '$year'";
-	if(mysqli_query($db, $sql4)){} 
-	else {print("* MODIFIQUE LA ENTRADA 189: ".mysqli_error($db));}
-	
-	global $vname5;		$vname5 = "`".$_SESSION['clave']."balanced`";
-	$vname5 = strtolower($vname5);	
-	$sql5 = "DELETE FROM `$db_name`.$vname5 WHERE `year` = '$year'";
-	if(mysqli_query($db, $sql5)){} 
-	else {print("* MODIFIQUE LA ENTRADA 198: ".mysqli_error($db));}
-
-
-	global $fil;		$fil = $ycod."/%";
-	
-	global $vname6;		$vname6 = "`".$_SESSION['clave']."gastos_pendientes`";
-	$vname6 = strtolower($vname6);	
-	$sql6 = "DELETE FROM `$db_name`.$vname6 WHERE `factdate` LIKE '$fil' ";
-	if(mysqli_query($db, $sql6)){} 
-	else {print("* MODIFIQUE LA ENTRADA 207: ".mysqli_error($db));}
-
-	global $vname7;		$vname7 = "`".$_SESSION['clave']."ingresos_pendientes`";
-	$vname7 = strtolower($vname7);	
-	$sql7 = "DELETE FROM `$db_name`.$vname7 WHERE `factdate` LIKE '$fil' ";
-	if(mysqli_query($db, $sql7)){} 
-	else {print("* MODIFIQUE LA ENTRADA 215: ".mysqli_error($db));}
-
-	}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-function borrart(){
-	
-	global $db; 			global $db_name;	
-	global $sesionref; 		global $year;
-	global $ycod;
+		global $vname4;		$vname4 = "`".$_SESSION['clave']."balancei`";
+		$vname4 = strtolower($vname4);	
+		$sql4 = "DELETE FROM `$db_name`.$vname4 WHERE `year` = '$year'";
+		if(mysqli_query($db, $sql4)){} 
+		else {print("* MODIFIQUE LA ENTRADA 189: ".mysqli_error($db));}
 		
-	/* BORRAMOS TABLA INGRESOS => YEAR XXXX. */
-	global $vname1; 		$vname1 = "`".$_SESSION['clave']."ingresos_".$year."`";
-	$sql1 = "DROP TABLE `$db_name`.$vname1 ";
-	if(mysqli_query($db, $sql1)){ 
+		global $vname5;		$vname5 = "`".$_SESSION['clave']."balanced`";
+		$vname5 = strtolower($vname5);	
+		$sql5 = "DELETE FROM `$db_name`.$vname5 WHERE `year` = '$year'";
+		if(mysqli_query($db, $sql5)){} 
+		else {print("* MODIFIQUE LA ENTRADA 198: ".mysqli_error($db));}
+
+
+		global $fil;		$fil = $ycod."/%";
+		
+		global $vname6;		$vname6 = "`".$_SESSION['clave']."gastos_pendientes`";
+		$vname6 = strtolower($vname6);	
+		$sql6 = "DELETE FROM `$db_name`.$vname6 WHERE `factdate` LIKE '$fil' ";
+		if(mysqli_query($db, $sql6)){} 
+		else {print("* MODIFIQUE LA ENTRADA 207: ".mysqli_error($db));}
+
+		global $vname7;		$vname7 = "`".$_SESSION['clave']."ingresos_pendientes`";
+		$vname7 = strtolower($vname7);	
+		$sql7 = "DELETE FROM `$db_name`.$vname7 WHERE `factdate` LIKE '$fil' ";
+		if(mysqli_query($db, $sql7)){} 
+		else {print("* MODIFIQUE LA ENTRADA 215: ".mysqli_error($db));}
+
+	} // FIN function borrare()
+
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
+
+	function borrart(){
+	
+		global $db; 			global $db_name;	
+		global $sesionref; 		global $year;
+		global $ycod;
+			
+		/* BORRAMOS TABLA INGRESOS => YEAR XXXX. */
+		global $vname1; 		$vname1 = "`".$_SESSION['clave']."ingresos_".$year."`";
+		$sql1 = "DROP TABLE `$db_name`.$vname1 ";
+		if(mysqli_query($db, $sql1)){ 
+					} else {
+						print("* MODIFIQUE LA ENTRADA 234: ".mysqli_error($db));
+							}
+		
+		/* BORRAMOS TABLA  GASTOS => YEAR XXXX. */
+		global $vname2; 		$vname2 = "`".$_SESSION['clave']."gastos_".$year."`";
+		$sql2 = "DROP TABLE `$db_name`.$vname2 ";
+		if(mysqli_query($db, $sql2)){ 
 				} else {
-					print("* MODIFIQUE LA ENTRADA 234: ".mysqli_error($db));
+					print("* MODIFIQUE LA ENTRADA 244: ".mysqli_error($db));
 						}
-	
-	/* BORRAMOS TABLA  GASTOS => YEAR XXXX. */
-	global $vname2; 		$vname2 = "`".$_SESSION['clave']."gastos_".$year."`";
-	$sql2 = "DROP TABLE `$db_name`.$vname2 ";
-	if(mysqli_query($db, $sql2)){ 
-			} else {
-				print("* MODIFIQUE LA ENTRADA 244: ".mysqli_error($db));
-					}
 
-	}
+	} // FIN function borrart()
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function ver_todo(){
+		function ver_todo(){
+			
+		global $db; 		global $db_name;
 		
-	global $db; 		global $db_name;
-	
-	global $vname; 		$vname = "`".$_SESSION['clave']."status`";
+		global $vname; 		$vname = "`".$_SESSION['clave']."status`";
 
-	$sqlb =  "SELECT * FROM $vname ORDER BY `year` DESC ";
-	$qb = mysqli_query($db, $sqlb);
+		$sqlb =  "SELECT * FROM $vname ORDER BY `year` DESC ";
+		$qb = mysqli_query($db, $sqlb);
 
-	if(!$qb){
+		if(!$qb){
 			print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
-			
 		} else {
-			
 			if(mysqli_num_rows($qb) == 0){
-							print ("<table align='center'>
-										<tr>
-											<td>
-												<font color='#FF0000'>
-													NO HAY DATOS ".strtolower($vname)."
-
-												</font>
-											</td>
-										</tr>
-									</table>");
-
-				} else { 	print ("<table align='center'>
-										<th colspan=6 class='BorderInf'>
-									EJERCCIOS STATUS ".mysqli_num_rows($qb).".
-										</th>
-									</tr>
-									
-									<tr align='center'>
-										<th class='BorderInfDch'>
-												ID
-										</th>																			
-										
-										<th class='BorderInfDch'>
-												YEAR
-										</th>																			
-										
-										<th class='BorderInfDch'>
-												ICOD
-										</th>																			
-										
-										<th class='BorderInfDch'>
-												STATE
-										</th>																			
-										
-										<th class='BorderInf'>
-												HIDDEN
-										</th>																			
-
-									</tr>");
+				print ("<table align='center'>
+							<tr>
+								<td>
+						<font color='#FF0000'>NO HAY DATOS ".strtolower($vname)."</font>
+								</td>
+							</tr>
+							<tr>
+								<td style='text-align:center;'' class='BorderSup'>
+						<a href='status_Ver.php' class='botonverde'>INICIO EJERCICOS STATUS</a>
+								</td>
+							</tr>
+						</table>");
+			} else { print ("<table align='center'>
+								<tr>
+									<th colspan=6 class='BorderInf'>
+										EJERCCIOS STATUS ".mysqli_num_rows($qb).".
+									</th>
+								</tr>
+								<tr align='center'>
+									<th class='BorderInfDch'>ID</th>																			
+									<th class='BorderInfDch'>YEAR</th>																			
+									<th class='BorderInfDch'>ICOD</th>																			
+									<th class='BorderInfDch'>STATE</th>																			
+									<th class='BorderInf'>HIDDEN</th>																			
+								</tr>");
 			
 			while($rowb = mysqli_fetch_assoc($qb)){
 
-
 			print (	"<tr align='center'>
-
-						<td class='BorderInfDch' align='center'>
-						".$rowb['id']."
-						</td>
-
-						<td class='BorderInfDch' align='center'>
-						".$rowb['year']."
-						</td>
-	
-						<td class='BorderInfDch' align='center'>
-						".$rowb['ycod']."
-						</td>
-						
-						<td class='BorderInfDch' align='center'>
-						".$rowb['stat']."
-						</td>
-
-						<td class='BorderInf' align='center'>
-						".$rowb['hidden']."
-						</td>
-
+						<td class='BorderInfDch' align='center'>".$rowb['id']."</td>
+						<td class='BorderInfDch' align='center'>".$rowb['year']."</td>
+						<td class='BorderInfDch' align='center'>".$rowb['ycod']."</td>
+						<td class='BorderInfDch' align='center'>".$rowb['stat']."</td>
+						<td class='BorderInf' align='center'>".$rowb['hidden']."</td>
 					</tr>");
-								} /* Fin del while.*/ 
+				} /* Fin del while.*/ 
 
-									print("	</table> ");
+			print("	</table> ");
 			
-						} /* Fin segundo else anidado en if */
+			} /* Fin segundo else anidado en if */
 
-			} /* Fin de primer else . */
+		} /* Fin de primer else . */
 
 	}	/* Final ver_todo(); */
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 function ver_feedback(){
 		
@@ -303,200 +262,154 @@ function ver_feedback(){
 
 	if(!$qb){
 			print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
-			
-		} else {
-			
-			if(mysqli_num_rows($qb) == 0){
-							print ("<table align='center'>
-										<tr>
-											<td>
-												<font color='#FF0000'>
-													NO HAY DATOS ".strtolower($vname)."
-												</font>
-											</td>
-										</tr>
-									</table>");
+	} else {
+		if(mysqli_num_rows($qb) == 0){
+			print ("<table align='center'>
+					<tr>
+						<td>
+					<font color='#FF0000'>NO HAY DATOS ".strtolower($vname)."</font>
+						</td>
+					</tr>
+					<tr>
+						<td style='text-align:center;'' class='BorderSup'>
+				<a href='status_Ver.php' class='botonverde'>INICIO EJERCICOS STATUS</a>
+						</td>
+					</tr>
+				</table>");
 
-				} else { 	print ("<table align='center'>
-										<th colspan=6 class='BorderInf'>
+		} else { print ("<table align='center'>
+							<tr>
+								<th colspan=6 class='BorderInf'>
 									FEEDBACK EJERCICIOS ".mysqli_num_rows($qb).".
-										</th>
-									</tr>
-									
-									<tr align='center'>
-										<th class='BorderInfDch'>
-												ID
-										</th>																			
-										
-										<th class='BorderInfDch'>
-												YEAR
-										</th>																			
-										
-										<th class='BorderInfDch'>
-												ICOD
-										</th>																			
-										
-										<th class='BorderInfDch'>
-												STATE
-										</th>																			
-										
-										<th class='BorderInfDch'>
-												HIDDEN
-										</th>																			
-
-										<th class='BorderInf'>
-												DATE
-										</th>																			
-
-									</tr>");
+								</th>
+							</tr>
+							<tr align='center'>
+								<th class='BorderInfDch'>ID</th>																			
+								<th class='BorderInfDch'>YEAR</th>																			
+								<th class='BorderInfDch'>ICOD</th>																			
+								<th class='BorderInfDch'>STATE</th>																			
+								<th class='BorderInfDch'>HIDDEN</th>																			
+								<th class='BorderInf'>DATE</th>																			
+							</tr>");
 			
 			while($rowb = mysqli_fetch_assoc($qb)){
 
-
 			print (	"<tr align='center'>
-
-						<td class='BorderInfDch' align='center'>
-						".$rowb['id']."
-						</td>
-
-						<td class='BorderInfDch' align='center'>
-						".$rowb['year']."
-						</td>
-	
-						<td class='BorderInfDch' align='center'>
-						".$rowb['ycod']."
-						</td>
-						
-						<td class='BorderInfDch' align='center'>
-						".$rowb['stat']."
-						</td>
-
-						<td class='BorderInfDch' align='center'>
-						".$rowb['hidden']."
-						</td>
-
-						<td class='BorderInf' align='center'>
-						".$rowb['date']."
-						</td>
-
+						<td class='BorderInfDch' align='center'>".$rowb['id']."</td>
+						<td class='BorderInfDch' align='center'>".$rowb['year']."</td>
+						<td class='BorderInfDch' align='center'>".$rowb['ycod']."</td>
+						<td class='BorderInfDch' align='center'>".$rowb['stat']."</td>
+						<td class='BorderInfDch' align='center'>".$rowb['hidden']."</td>
+						<td class='BorderInf' align='center'>".$rowb['date']."</td>
 					</tr>");
-								} /* Fin del while.*/ 
+				} /* Fin del while.*/ 
 
-									print("	</table> ");
+			print("	</table> ");
 			
-						} /* Fin segundo else anidado en if */
+			} /* Fin segundo else anidado en if */
 
-			} /* Fin de primer else . */
+		} /* Fin de primer else . */
 
 	}	/* Final ver_todo(); */
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function show_form(){
+	function show_form(){
 	
-	global $db; 	global $db_name;
+		global $db; 	global $db_name;
 	
-	if(isset($_POST['oculto2'])){	
-		$defaults = array (	'id' => $_POST['id'],
-							'year' => $_POST['year'],	
-							'ycod' => $_POST['ycod'],	
-							'stat' => $_POST['stat'],
-							'hidden' => $_POST['hidden'],
-							'sesion' => $_POST['sesion']);
-	} elseif(isset($_POST['oculto'])){
-			$defaults = $_POST;
-	} else { $defaults = array ( 'id' => $_POST['id'],
-								 'year' => $_POST['year'],	
-								 'ycod' => $_POST['ycod'],	
-								 'stat' => $_POST['stat'],
-								 'hidden' => $_POST['hidden'],	
-								 'sesion' => $_POST['sesion']);
-							}
+		if(isset($_POST['oculto2'])){	
+			$defaults = array (	'id' => $_POST['id'],
+								'year' => $_POST['year'],	
+								'ycod' => $_POST['ycod'],	
+								'stat' => $_POST['stat'],
+								'hidden' => $_POST['hidden'],
+								'sesion' => @$_POST['sesion']);
+		} elseif(isset($_POST['oculto'])){
+				$defaults = $_POST;
+		} else { $defaults = array ( 'id' => $_POST['id'],
+									'year' => $_POST['year'],	
+									'ycod' => $_POST['ycod'],	
+									'stat' => $_POST['stat'],
+									'hidden' => $_POST['hidden'],	
+									'sesion' => @$_POST['sesion']);
+								}
 
-	$stat = array (	'open' => 'STATE OPEN',
-					'close' => 'STATE CLOSE',
-										);
-										
-	$hidden = array (	'no' => 'HIDDEN NO',
-						'si' => 'HIDDEN YES',
-										);
+		$stat = array (	'open' => 'STATE OPEN',
+						'close' => 'STATE CLOSE');
+											
+		$hidden = array (	'no' => 'HIDDEN NO',
+							'si' => 'HIDDEN YES');
 
-////////////////////
+	////////////////////
 
-	print("
-			<table align='center' style=\"margin-top:10px\">
+	print("<table align='center' style=\"margin-top:10px\">
 				<tr>
 					<th colspan=4 class='BorderInf'>
-								BORRARDO TOTAL FEEDBACK EJERCICIO					
+						BORRARDO TOTAL FEEDBACK EJERCICIO					
 					</th>
 				</tr>
-				 
-	<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
-
-			<tr>
-					<td align='center'>						
-						YEAR
-					</td>
-					<td align='center'>						
-						CODE
-					</td>
-					<td align='center'>						
-						STATUS
-					</td>
-					<td align='center'>						
-						HIDDEN
-					</td>
-			</tr>
+		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
+				<tr>
+					<td align='center'>YEAR</td>
+					<td align='center'>CODE</td>
+					<td align='center'>STATUS</td>
+					<td align='center'>HIDDEN</td>
+				</tr>
 				<tr>
 					<td>
-	<input name='year' type='hidden' value='".$defaults['year']."' />".$defaults['year']."
-	<input name='id' type='hidden' value='".$defaults['id']."' />
-	<input name='sesion' type='hidden' value='".$defaults['sesion']."' />
+		<input name='year' type='hidden' value='".$defaults['year']."' />".$defaults['year']."
+		<input name='id' type='hidden' value='".$defaults['id']."' />
+		<input name='sesion' type='hidden' value='".$defaults['sesion']."' />
 					</td>
-					
 					<td align='center'>
-	<input name='ycod' type='hidden' value='".$defaults['ycod']."' />".$defaults['ycod']."
+		<input name='ycod' type='hidden' value='".$defaults['ycod']."' />".$defaults['ycod']."
 					</td>
-						
 					<td align='center'>
-	<input name='stat' type='hidden' value='".$defaults['stat']."' />".$defaults['stat']."
+		<input name='stat' type='hidden' value='".$defaults['stat']."' />".$defaults['stat']."
 					</td>
-
 					<td align='center'>
-	<input name='hidden' type='hidden' value='".$defaults['hidden']."' />".$defaults['hidden']."
+		<input name='hidden' type='hidden' value='".$defaults['hidden']."' />".$defaults['hidden']."
 					</td>
-
 				</tr>
-					
 				<tr>
-					<td colspan='4' align='right' valign='middle'  class='BorderSup'>
-						<input type='submit' value='ELIMINAR FEEDBACK EJERCICIO' />
-						<input type='hidden' name='oculto' value=1 />
+					<td colspan='4' align='center' valign='middle' >
+			<input type='submit' value='ELIMINAR FEEDBACK EJERCICIO' class='botonrojo' />
+			<input type='hidden' name='oculto' value=1 />
+		</form>														
 					</td>
 				</tr>
-				
-		</form>														
-			
-			</table>				
-						"); 
+				<tr>
+					<td colspan='4' style='text-align:center;'' class='BorderSup'>
+				<a href='status_Ver.php' class='botonverde'>INICIO EJERCICOS STATUS</a>
+				<button type='submit' title='PAPELERA EJERCICIO' class='botonverde imgDelete DeleteGrey'>
+					<a href='status_feedback_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+				</button>
+					</td>
+				</tr>
+			</table>"); 
 	
-	}	
+	} // FIN function show_form()	
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function info_01(){
+	function info_01(){
 
-	global $db;
+		global $db;
+		
+		$ActionTime = date('H:i:s');
+
+		global $dir;
+		if ($_SESSION['Nivel'] == 'admin'){ 
+					$dir = "../cbj_Docs/log";
+					}
 	
-	$ActionTime = date('H:i:s');
-
-	global $dir;
-	if ($_SESSION['Nivel'] == 'admin'){ 
-				$dir = "../cbj_Docs/log";
-				}
-	
-global $text;
-$text = "\n- FEEDBACK ELIMINAR SELECCIONADO ".$ActionTime.".\n\t ID: ".$_POST['id'].".\n\t YEAR: ".$_POST['year'].".\n\t STATUS: ".$_POST['stat'].".\n\t HIDDEN: ".$_POST['hidden'].".";
+		global $text;
+		$text = "\n- FEEDBACK ELIMINAR SELECCIONADO ".$ActionTime.".\n\t ID: ".$_POST['id'].".\n\t YEAR: ".$_POST['year'].".\n\t STATUS: ".$_POST['stat'].".\n\t HIDDEN: ".$_POST['hidden'].".";
 
 		$logdocu = $_SESSION['ref'];
 		$logdate = date('Y-m-d');
@@ -508,21 +421,23 @@ $text = "\n- FEEDBACK ELIMINAR SELECCIONADO ".$ActionTime.".\n\t ID: ".$_POST['i
 
 	}
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function info_02(){
+	function info_02(){
 
-	global $db;
-	
-	$ActionTime = date('H:i:s');
+		global $db;
+		
+		$ActionTime = date('H:i:s');
 
-	global $dir;
-	if ($_SESSION['Nivel'] == 'admin'){ 
-				$dir = "../cbj_Docs/log";
-				}
-	
-global $text;
-$text = "\n- FEEDBACK ELIMINADO ".$ActionTime.".\n\t ID: ".$_POST['id'].".\n\t YEAR: ".$_POST['year'].".\n\t STATUS: ".$_POST['stat'].".\n\t HIDDEN: ".$_POST['hidden'].".";
+		global $dir;
+		if ($_SESSION['Nivel'] == 'admin'){ 
+					$dir = "../cbj_Docs/log";
+					}
+		
+		global $text;
+		$text = "\n- FEEDBACK ELIMINADO ".$ActionTime.".\n\t ID: ".$_POST['id'].".\n\t YEAR: ".$_POST['year'].".\n\t STATUS: ".$_POST['stat'].".\n\t HIDDEN: ".$_POST['hidden'].".";
 
 		$logdocu = $_SESSION['ref'];
 		$logdate = date('Y-m-d');
@@ -534,7 +449,9 @@ $text = "\n- FEEDBACK ELIMINADO ".$ActionTime.".\n\t ID: ".$_POST['id'].".\n\t Y
 
 	}
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 	function master_index(){
 		
@@ -543,13 +460,16 @@ $text = "\n- FEEDBACK ELIMINADO ".$ActionTime.".\n\t ID: ".$_POST['id'].".\n\t Y
 		global $rutaStatus;	$rutaStatus = "";
 		require '../Inclu_MInd/MasterIndex.php'; 
 		
-				} /* Fin funcion master_index.*/
+	} /* Fin funcion master_index.*/
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 	require '../Inclu/Conta_Footer.php';
+
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 ?>

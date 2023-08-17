@@ -167,12 +167,11 @@ session_start();
 					<input name='Direccion' type='hidden' value='".$rowc['Direccion']."' />
 					<input name='Tlf1' type='hidden' value='".$rowc['Tlf1']."' />
 					<input name='Tlf2' type='hidden' value='".$rowc['Tlf2']."' />
-						<!--
-							<input type='submit' value='BORRAR DATOS' class='botonrojo' />
-						-->
-						<button type='submit' class='botonrojo imgDelete'></button>
-						
-							<input type='hidden' name='oculto2' value=1 />
+					<!--
+						<input type='submit' value='BORRAR DATOS' class='botonrojo' />
+					-->
+					<button type='submit' title='BORRAR' class='botonrojo imgDelete DeleteWhite'></button>
+					<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td>
 		</tr>");
@@ -323,12 +322,11 @@ session_start();
 					<input name='Direccion' type='hidden' value='".$rowb['Direccion']."' />
 					<input name='Tlf1' type='hidden' value='".$rowb['Tlf1']."' />
 					<input name='Tlf2' type='hidden' value='".$rowb['Tlf2']."' />
-						<!--
-							<input type='submit' value='BORRAR DATOS' class='botonrojo' />
-						-->
-						<button type='submit' class='botonrojo imgDelete'></button>
-						
-							<input type='hidden' name='oculto2' value=1 />
+					<!--
+						<input type='submit' value='BORRAR DATOS' class='botonrojo' />
+					-->
+					<button type='submit' title='BORRAR' class='botonrojo imgDelete DeleteWhite'></button>
+					<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td>
 				</tr>");

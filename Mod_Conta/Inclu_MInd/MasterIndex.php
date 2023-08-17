@@ -90,41 +90,19 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
  
 <!-- Inicio GESTIÓN DE IMPUESTOS -->
 
-	<li><a href='#' class='MenuBarItemSubmenu'>% IMPUESTOS</a>
-		<ul>
-			<li><a href='".$rutaImpuestos."Impuestos_Ver.php'>IMPUESTOS VER %</a></li>
-			<li><a href='".$rutaImpuestos."Impuestos_Crear.php'>IMPUESTOS CREA %</a></li>
-			<li><a href='".$rutaImpuestos."Impuestos_Modificar_01.php'>IMPUESTOS MODIF %</a></li>
-			<li><a href='".$rutaImpuestos."Impuestos_Borrar_01.php'>IMPUESTOS ELIMINA</a></li>
-		</ul>
-	</li>
+	<li><a href='".$rutaImpuestos."Impuestos_Ver.php'>% IMPUESTOS</a></li>
 	
 <!-- Fin GESTIÓN DE IMPUESTOS -->
  
 <!-- Inicio RETENCION -->
 
-	<li><a href='#' class='MenuBarItemSubmenu'>% RETENCIONES</a>
-		<ul>
-			<li><a href='".$rutaRetencion."retencion_Ver.php'>RETENCION VER</a></li>
-			<li><a href='".$rutaRetencion."retencion_Crear.php'>RETENCION CREAR</a></li>
-			<li><a href='".$rutaRetencion."retencion_Modificar_01.php'>RETENCION MODIF</a></li>
-			<li><a href='".$rutaRetencion."retencion_Borrar_01.php'>RETENCION ELIMINA</a></li>
-		</ul>
-	</li>
+	<li><a href='".$rutaRetencion."retencion_Ver.php' >% RETENCIONES</a></li>
 	
 <!-- Fin RETENCION -->
 
 <!-- Inicio STATUS EJERCICIOS -->
 
-	<li><a href='#' class='MenuBarItemSubmenu'>STATUS EJERCICIOS</a>
-		<ul>
-			<li><a href='".$rutaStatus."status_Modificar_01.php'>STATUS MODIFICAR</a></li>
-			<li><a href='".$rutaStatus."status_Crear.php'>EJERCICIO CREAR</a></li>
-			<li><a href='".$rutaStatus."status_Borrar_01.php'>EJERCICIO ELIMINAR</a></li>
-			<li><a href='".$rutaStatus."status_feedback_recuperar_01.php'>FEEDBACK RECUPER</a></li>
-			<li><a href='".$rutaStatus."status_feedback_borrar_01.php'>FEEDBACK BORRAR</a></li>
-		</ul>
-	</li>
+	<li><a href='".$rutaStatus."status_Ver.php'>STATUS EJERCICIOS</a></li>
 	
 <!-- Fin STATUS EJERCICIO -->
 

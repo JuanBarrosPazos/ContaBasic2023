@@ -9,7 +9,9 @@ session_start();
 		
 	require '../Inclu/sqld_query_fetch_assoc.php';
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 	if ($_SESSION['Nivel'] == 'admin'){
 
@@ -27,13 +29,13 @@ session_start();
 	
 	} else { require '../Inclu/table_permisos.php'; } 
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 function validate_form(){
 	
-	global $sqld;
-	global $qd;
-	global $rowd;
+	global $sqld; 		global $qd; 		global $rowd;
 
 	$errors = array();
 	
@@ -63,192 +65,181 @@ function validate_form(){
 			$errors [] = "IMPUESTOS % <font color='#FF0000'>SOLO NUMEROS</font>";
 			}
 
-////////////////
+	////////////////
 
-	elseif(isset($_POST['oculto'])){
+		elseif(isset($_POST['oculto'])){
 
-	global $db; 		global $db_name;
-	
-	$a = $_POST['iva1'].".".$_POST['iva2'];
-	$a = trim($a);
-																	
-	global $vname; 		$vname = "`".$_SESSION['clave']."impuestos`";
+		global $db; 		global $db_name;
 		
-	$sqlx =  "SELECT * FROM `$db_name`.$vname WHERE `iva` = '$a'";
-	$qx = mysqli_query($db, $sqlx);
-	$countx = mysqli_num_rows($qx);
-	$rowsx = mysqli_fetch_assoc($qx);
+		$a = $_POST['iva1'].".".$_POST['iva2'];
+		$a = trim($a);
+																		
+		global $vname; 		$vname = "`".$_SESSION['clave']."impuestos`";
+			
+		$sqlx =  "SELECT * FROM `$db_name`.$vname WHERE `iva` = '$a'";
+		$qx = mysqli_query($db, $sqlx);
+		$countx = mysqli_num_rows($qx);
+		$rowsx = mysqli_fetch_assoc($qx);
+			
+		global $exist;	
+		if($countx > 0){$errors [] = "<font color='#FF0000'>YA EXISTE ESTE % IMPUESTOS</font>";
+							}
+		}
+
+		////////////////////
 		
-	global $exist;	
-	if($countx > 0){$errors [] = "<font color='#FF0000'>YA EXISTE ESTE % IMPUESTOS</font>";
-						}
-	}
-////////////////////
-	
-	return $errors;
+		return $errors;
 
-		} 
+	} 
 		
-//////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function process_form(){
-	
-	global $db;
-	global $db_name;	
-	global $dyt1;
-	global $dm1;
-	
-
-	$iva1 = $_POST['iva1'];
-	$iva2 = $_POST['iva2'];
-	global $tiva; 		$tiva = $iva1.".".$iva2;
-	$tiva = trim($tiva);
-	global $name; 		$name = $tiva." %";
-
-	global $vname; 		$vname = "`".$_SESSION['clave']."impuestos`";
-
-	$tabla = "<table align='center' style='margin-top:10px'>
-				<tr>
-					<th colspan=4 class='BorderInf'>
-						MODIFICADO EN ".strtoupper($vname)."
-					</th>
-				</tr>
-												
-				<tr>
-					<td>
-						IMPUESTOS %
-					</td>
-					<td>"
-						.$tiva.
-					"</td>
-					<td>	
-						NAME
-					</td>
-					<td>"
-						.$name.
-					"</td>
-				</tr>
-				
-			</table>
-				
-		";	
+	function process_form(){
 		
-		global $db;
-		global $db_name;
-		global $idx;
-		$idx = $_SESSION['idx'];
+		global $db; 		global $db_name;	
+		global $dyt1; 		global $dm1;
+		
+		$iva1 = $_POST['iva1'];
+		$iva2 = $_POST['iva2'];
+		global $tiva; 		$tiva = $iva1.".".$iva2; 	$tiva = trim($tiva);
+
+		global $name; 		$name = $tiva." %";
+		global $vname; 		$vname = "`".$_SESSION['clave']."impuestos`";
+
+		$tabla = "<table align='center' style='margin-top:10px'>
+					<tr>
+						<td colspan=4 class='BorderInf' style='text-align:center;'>
+							<a href='Impuestos_Ver.php' class='botonverde'>INICIO IMPUESTOS</a>
+						</td>
+					</tr>
+					<tr>
+						<th colspan=4 >MODIFICADO EN ".strtoupper($vname)."</th>
+					</tr>
+					<tr>
+						<td>IMPUESTOS %</td><td>".$tiva."</td>
+						<td>NAME</td><td>".$name."</td>
+					</tr>
+					<tr>
+						<td colspan=4 class='BorderSup' style='text-align:center;'>
+							<a href='Impuestos_Ver.php' class='botonverde'>INICIO IMPUESTOS</a>
+						</td>
+					</tr>
+				</table>";	
+		
+		global $db; 		global $db_name;
+		global $idx; 		$idx = $_SESSION['idx'];
 
 	$sqla = "UPDATE `$db_name`.$vname SET `iva` = '$tiva', `name` = '$name' WHERE `id` = '$idx'";
 		
 		if(mysqli_query($db, $sqla)){ print($tabla); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA 177: ".mysqli_error($db));
-									show_form ();
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
+		} else {
+			print("* MODIFIQUE LA ENTRADA 177: ".mysqli_error($db));
+			show_form ();
+			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 					}
 					
-}	
+	}	
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function show_form($errors=[]){
+	function show_form($errors=[]){
 	
-	global $db; 		global $db_name;
+		global $db; 		global $db_name;
 	
-	if(isset($_POST['oculto2'])){$_SESSION['idx'] = $_POST['id'];
-	
-		$iva = strlen(trim($_POST['iva']));
-		$iva = $iva - 3;
-		$ivax = $_POST['iva'];
-		$iva1 = substr($_POST['iva'],0,$iva);
-		$iva2 = substr($_POST['iva'],-2,2);
+		if(isset($_POST['oculto2'])){$_SESSION['idx'] = $_POST['id'];
+		
+			$iva = strlen(trim($_POST['iva']));
+			$iva = $iva - 3;
+			$ivax = $_POST['iva'];
+			$iva1 = substr($_POST['iva'],0,$iva);
+			$iva2 = substr($_POST['iva'],-2,2);
 
-		$defaults = array (	'iva1' => $iva1,	
-							'iva2' => $iva2);
+			$defaults = array (	'iva1' => $iva1,	
+								'iva2' => $iva2);
 
-	} elseif(isset($_POST['oculto'])){
-		$defaults = $_POST;
+		} elseif(isset($_POST['oculto'])){
+			$defaults = $_POST;
 
-	} else { $defaults = array ( 'iva1' => $_POST['iva1'],	
-								 'iva2' => $_POST['iva2']);
-							   		}
+		} else { $defaults = array ( 'iva1' => $_POST['iva1'],	
+									'iva2' => $_POST['iva2']);
+										}
 
-	if ($errors){
-		print("	<div width='90%' style='float:left'>
-					<table align='left' style='border:none'>
-					<th style='text-align:left'>
-					<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-					</th>
+		if ($errors){
+			print("<table style='border:none, margin: 0.4em auto 0.4em auto;'>
 					<tr>
-					<td style='text-align:left'>");
-			
+						<th style='text-align:left'>
+							<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
+						</th>
+					</tr>
+					<tr>
+						<td style='text-align:left'>");
+				
 		for($a=0; $c=count($errors), $a<$c; $a++){
 			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
 			}
 		print("</td>
 				</tr>
 				</table>
-				</div>
-				<div style='clear:both'></div>");
+			<div style='clear:both'></div>");
 		}
 
 ////////////////////
 
-	print("
-			<table align='center' style=\"margin-top:10px\">
+	print("<table align='center' style=\"margin-top:10px\">
 				<tr>
-					<th colspan=2 class='BorderInf'>
-								MODIFICAR % IMPUESTOS					
-					</th>
-				</tr>
-				
-<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
-
-				<tr>
-					<td>						
-						IMPUESTOS % TIPO
+					<td colspan=2 class='BorderInf' style='text-align:center;'>
+						<a href='Impuestos_Ver.php' class='botonverde'>INICIO IMPUESTOS</a>
 					</td>
+				</tr>
+				<tr>
+					<th colspan=2 >MODIFICAR % IMPUESTOS</th>
+				</tr>
+		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
+				<tr>
+					<td>IMPUESTOS % TIPO</td>
 					<td>
-<input style='text-align:right' type='text' name='iva1' size=4 maxlength=2 value='".$defaults['iva1']."' />
-,
-<input type='text' name='iva2' size=4 maxlength=2 value='".$defaults['iva2']."' />
-%
+		<input style='text-align:right' type='text' name='iva1' size=4 maxlength=2 value='".$defaults['iva1']."' />,<input type='text' name='iva2' size=4 maxlength=2 value='".$defaults['iva2']."' />%
 					</td>
 				</tr>
-					
 				<tr>
-					<td colspan='2' align='right' valign='middle'  class='BorderSup'>
-						<input type='submit' value='MODIFICAR % IMPUESTOS' />
+					<th colspan='2' valign='middle' >
+						<input type='submit' class='botonazul' value='MODIFICAR % IMPUESTOS' />
 						<input type='hidden' name='oculto' value=1 />
+			</form>														
 					</td>
 				</tr>
-				
-		</form>														
-			
-			</table>				
-						"); 
+				<tr>
+					<td colspan=2 class='BorderSup' style='text-align:center;'>
+						<a href='Impuestos_Ver.php' class='botonverde'>INICIO IMPUESTOS</a>
+					</td>
+				</tr>
+			</table>"); 
 	
 	}	
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function info_01(){
+	function info_01(){
 
-	global $db;
+		global $db;
+		
+		global $tiva; 		global $name;
+
+		$ActionTime = date('H:i:s');
+
+		global $dir;
+		if ($_SESSION['Nivel'] == 'admin'){ 
+					$dir = "../cbj_Docs/log";
+					}
 	
-	global $tiva;
-	global $name;
-
-	$ActionTime = date('H:i:s');
-
-	global $dir;
-	if ($_SESSION['Nivel'] == 'admin'){ 
-				$dir = "../cbj_Docs/log";
-				}
-	
-global $text;
-$text = "\n- IMPUESTO MODIFICAR SELECCIONADO ".$ActionTime.".\n\t ID: ".$_POST['id'].".\n\t % TIPO IMPUESTO: ".$_POST['iva'].".\n\t NOMBRE: ".$_POST['name'].".";
+		global $text;
+		$text = "\n- IMPUESTO MODIFICAR SELECCIONADO ".$ActionTime.".\n\t ID: ".$_POST['id'].".\n\t % TIPO IMPUESTO: ".$_POST['iva'].".\n\t NOMBRE: ".$_POST['name'].".";
 
 		$logdocu = $_SESSION['ref'];
 		$logdate = date('Y-m-d');
@@ -260,24 +251,25 @@ $text = "\n- IMPUESTO MODIFICAR SELECCIONADO ".$ActionTime.".\n\t ID: ".$_POST['
 
 	}
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function info_02(){
+	function info_02(){
 
-	global $db;
+		global $db;
+		
+		global $tiva; 		global $name;
+
+		$ActionTime = date('H:i:s');
+
+		global $dir;
+		if ($_SESSION['Nivel'] == 'admin'){ 
+					$dir = "../cbj_Docs/log";
+					}
 	
-	global $tiva;
-	global $name;
-
-	$ActionTime = date('H:i:s');
-
-	global $dir;
-	if ($_SESSION['Nivel'] == 'admin'){ 
-				$dir = "../cbj_Docs/log";
-				}
-	
-global $text;
-$text = "\n- IMPUESTO MODIFICADO ".$ActionTime.".\n\t ID: ".$_SESSION['idx'].".\n\t % TIPO IMPUESTO: ".$tiva.".\n\t NOMBRE: ".$name.".";
+		global $text;
+		$text = "\n- IMPUESTO MODIFICADO ".$ActionTime.".\n\t ID: ".$_SESSION['idx'].".\n\t % TIPO IMPUESTO: ".$tiva.".\n\t NOMBRE: ".$name.".";
 
 		$logdocu = $_SESSION['ref'];
 		$logdate = date('Y-m-d');
@@ -289,7 +281,10 @@ $text = "\n- IMPUESTO MODIFICADO ".$ActionTime.".\n\t ID: ".$_SESSION['idx'].".\
 
 	}
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
+
 	function master_index(){
 		
 		global $rutaIndex;		$rutaIndex = "../";
@@ -297,13 +292,16 @@ $text = "\n- IMPUESTO MODIFICADO ".$ActionTime.".\n\t ID: ".$_SESSION['idx'].".\
 		global $rutaImpuestos;	$rutaImpuestos = "";
 		require '../Inclu_MInd/MasterIndex.php'; 
 		
-				} /* Fin funcion master_index.*/
+	} /* Fin funcion master_index.*/
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 	require '../Inclu/Conta_Footer.php';
+
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 ?>

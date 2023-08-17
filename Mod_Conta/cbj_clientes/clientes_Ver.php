@@ -185,12 +185,12 @@ session_start();
 				<input name='Direccion' type='hidden' value='".$rowc['Direccion']."' />
 				<input name='Tlf1' type='hidden' value='".$rowc['Tlf1']."' />
 				<input name='Tlf2' type='hidden' value='".$rowc['Tlf2']."' />
-						<!--
-							<input type='submit' value='BORRAR DATOS' class='botonrojo' />
-						-->
-						<button type='submit' class='botonrojo imgDelete'></button>
-						
-							<input type='hidden' name='oculto2' value=1 />
+					<!--
+						<input type='submit' value='BORRAR DATOS' class='botonrojo' />
+					-->
+					<button type='submit' title='BORRAR CLIENTE' class='botonrojo imgDelete DeleteWhite'>
+					</button>
+					<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td>
 		</tr>");
@@ -214,9 +214,9 @@ session_start();
 		global $titulo;
 		$titulo = "GESTIONAR CLIENTES";
 		global $LinkProvee1;
-		$LinkProvee1 = "<a href='clientes_Crear.php' class='botonverde'>CREAR NUEVO CLIENTE</a>";
+		$LinkProvee1 = "<a href='clientes_Crear.php' title='CREAR NUEVO CLIENTE' class='botonverde'>CREAR NUEVO CLIENTE</a>";
 		global $LinkProvee2;
-		$LinkProvee2 = "<a href='clientesFeed_Ver.php' class='botonverde'>PAPELERA CLIENTES</a>";
+		$LinkProvee2 = "<button type='submit' title='PAPELERA CLIENTES' class='botonverde imgDelete DeleteGrey'><a href='clientesFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a></button>";
 		global $titulo2;
 		$titulo2 = "CLIENTES VER TODOS";
 
@@ -348,23 +348,23 @@ session_start();
 			</td>
 			<td align='center' class='BorderInf'>
 				<form name='modifica' action='clientes_Borrar_02.php' method='POST'>
-				<input name='id' type='hidden' value='".$rowb['id']."' />
-				<input name='ref' type='hidden' value='".$rowb['ref']."' />
-				<input name='rsocial' type='hidden' value='".$rowb['rsocial']."' />
-				<input name='myimg' type='hidden' value='".$rowb['myimg']."' />
-				<input name='doc' type='hidden' value='".$rowb['doc']."' />
-				<input name='dni' type='hidden' value='".$rowb['dni']."' />
-				<input name='ldni' type='hidden' value='".$rowb['ldni']."' />
-				<input name='Email' type='hidden' value='".$rowb['Email']."' />
-				<input name='Direccion' type='hidden' value='".$rowb['Direccion']."' />
-				<input name='Tlf1' type='hidden' value='".$rowb['Tlf1']."' />
-				<input name='Tlf2' type='hidden' value='".$rowb['Tlf2']."' />
-						<!--
-							<input type='submit' value='BORRAR DATOS' class='botonrojo' />
-						-->
-						<button type='submit' class='botonrojo imgDelete'></button>
-						
-							<input type='hidden' name='oculto2' value=1 />
+					<input name='id' type='hidden' value='".$rowb['id']."' />
+					<input name='ref' type='hidden' value='".$rowb['ref']."' />
+					<input name='rsocial' type='hidden' value='".$rowb['rsocial']."' />
+					<input name='myimg' type='hidden' value='".$rowb['myimg']."' />
+					<input name='doc' type='hidden' value='".$rowb['doc']."' />
+					<input name='dni' type='hidden' value='".$rowb['dni']."' />
+					<input name='ldni' type='hidden' value='".$rowb['ldni']."' />
+					<input name='Email' type='hidden' value='".$rowb['Email']."' />
+					<input name='Direccion' type='hidden' value='".$rowb['Direccion']."' />
+					<input name='Tlf1' type='hidden' value='".$rowb['Tlf1']."' />
+					<input name='Tlf2' type='hidden' value='".$rowb['Tlf2']."' />
+					<!--
+						<input type='submit' value='BORRAR DATOS' class='botonrojo' />
+					-->
+					<button type='submit' title='BORRAR CLIENTE' class='botonrojo imgDelete DeleteWhite'>
+					</button>
+					<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td>
 				</tr>");
