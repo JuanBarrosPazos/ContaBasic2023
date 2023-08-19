@@ -16,6 +16,7 @@ $_SESSION['usuarios'] = '';
 	if ($_SESSION['Nivel'] == 'admin'){
 
 		master_index();
+		global $limit;  $limit = '';
 
 		if(isset($_POST['todo'])){	show_form();							
 									ver_todo();
@@ -26,7 +27,10 @@ $_SESSION['usuarios'] = '';
 					} else { process_form();
 							 info();
 								}
-		} else { show_form(); }
+		} else { show_form();
+				 $limit = 'LIMIT 20';
+				 ver_todo(); 
+					}
 								
 	} else { require '../Inclu/table_permisos.php'; }
 
@@ -34,45 +38,41 @@ $_SESSION['usuarios'] = '';
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function validate_form(){
+	function validate_form(){
 	
-	$errors = array();
-	
-	if ( (strlen(trim($_POST['factnum'])) == 0) && (strlen(trim($_POST['factnif'])) == 0)  && (strlen(trim($_POST['factnom'])) == 0)){
-		$errors [] = "<font color='#FF0000'> Nº FACTURA / Nº NIF / RAZON SOCIAL:</font><br> UNO DE LOS TRES CAMPOS ES OBLIGATORIO";
-		}
-	
-	return $errors;
+		require 'Inc_Show_Form_01_Val.php';
 
-		} 
+		return $errors;
+
+	} 
 		
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function process_form(){
-	
-	global $db;
+	function process_form(){
+		
+		global $db;
 
-	show_form();
+		show_form();
 
-	global $dyt1;
-	
-	if($_POST['dy'] == ''){ $dy1 = '';
-							 $dyt1 = date('Y');	
-							 $_SESSION['gyear'] = date('Y');} 
-							 				else {	$dy1 = $_POST['dy'];
-													$dyt1 = "20".$_POST['dy'];
-													$_SESSION['gyear'] = "20".$_POST['dy'];									
-													}
-	if($_POST['dm'] == ''){ $dm1 = '';
-							 $_SESSION['gtime'] = '';} 
-							 				else {	$dm1 = "/".$_POST['dm']."/";
-													$_SESSION['gtime'] = $_POST['dm'];	
-													}
-	if($_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];
-																	}
-	
+		global $dyt1;
+		
+		if($_POST['dy'] == ''){ $dy1 = '';
+								$dyt1 = date('Y');	
+								$_SESSION['gyear'] = date('Y');} 
+												else {	$dy1 = $_POST['dy'];
+														$dyt1 = "20".$_POST['dy'];
+														$_SESSION['gyear'] = "20".$_POST['dy'];									
+														}
+		if($_POST['dm'] == ''){ $dm1 = '';
+								$_SESSION['gtime'] = '';} 
+												else {	$dm1 = "/".$_POST['dm']."/";
+														$_SESSION['gtime'] = $_POST['dm'];	
+														}
+		if($_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];
+																		}
+		
 	// print("* ".$dy1.$dm1.$dd1.". TU PUTA MADRE");
 	
 	global $fil;
@@ -200,107 +200,66 @@ function process_form(){
 			print("<font color='#FF0000'>
 					Se ha producido un error: </font>".mysqli_error($db)."</br>");
 	} else {
-			if(mysqli_num_rows($qc) == 0){
-							print ("<table align='center' style=\"border:0px\">
-										<tr>
-											<td align='center'>
-												<font color='#FF0000'>
-										NINGÚN DATO SE CIÑE A ESTOS CRITERIOS.
-											</br>
-										INTENTELO CON OTROS PARÁMETROS.
-												</font>
-											</td>
-										</tr>
-									</table>");
+		if(mysqli_num_rows($qc) == 0){
+			print ("<table align='center' style=\"border:0px\">
+						<tr>
+							<td align='center'>
+								<font color='#FF0000'>
+						NINGÚN DATO SE CIÑE A ESTOS CRITERIOS.
+							</br>
+						INTENTELO CON OTROS PARÁMETROS.
+								</font>
+							</td>
+						</tr>
+					</table>");
 
-			} else { print ("<table align='center'>
-								<tr>
-									<th colspan=13 class='BorderInf'>".mysqli_num_rows($qc)." RESULTADOS</th>
-								</tr>
-								<tr>
-									<th class='BorderInfDch'>ID</th>
-									<th class='BorderInfDch'>NUMERO</th>
-									<th class='BorderInfDch'>Y/M/D</th>
-									<th class='BorderInfDch'>RAZON SOCIAL</th>
-									<th class='BorderInfDch'>NIF / CIF</th>
-									<th class='BorderInfDch'>IMP %</th>
-									<th class='BorderInfDch'>IMP €</th>
-									<th class='BorderInfDch'>SUBTOT</th>										
-									<th class='BorderInfDch'>RET %</th>
-									<th class='BorderInfDch'>RET €</th>
-									<th class='BorderInfDch'>TOTAL</th>
-									<th class='BorderInfDch'>DESCRIPCION</th>
-									<th class='BorderInfDch'></th>
-								</tr>");
+		}else{ 
+			print ("<table align='center'>
+					<tr>
+						<th colspan=15 class='BorderInf'>".mysqli_num_rows($qc)." RESULTADOS</th>
+					</tr>
+					<tr>
+						<th class='BorderInfDch'>ID</th>
+						<th class='BorderInfDch'>NUMERO</th>
+						<th class='BorderInfDch'>Y/M/D</th>
+						<th class='BorderInfDch'>RAZON SOCIAL</th>
+						<th class='BorderInfDch'>NIF/CIF</th>
+						<th class='BorderInfDch'>IMP %</th>
+						<th class='BorderInfDch'>IMP €</th>
+						<th class='BorderInfDch'>SUBTOT</th>										
+						<th class='BorderInfDch'>RET %</th>
+						<th class='BorderInfDch'>RET €</th>
+						<th class='BorderInfDch'>TOTAL</th>
+						<th colspan=4 class='BorderInfDch'>
+					<a href='Gastos_Crear.php' class='botonverde'>CREAR NUEVO GASTO</a>
+					<a href='Gastos_Pendientes_Ver.php' class='botonverde'>VER GASTOS PENDIENTES</a>
+						</th>
+					</tr>");
 			
-		while($rowc = mysqli_fetch_assoc($qc)){
+		while($rowb = mysqli_fetch_assoc($qc)){
  			
 			global $vname; 		global $dyt1;
 		
-			print (	"<tr align='center'>
-				<form name='ver' action='Gastos_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=480px,height=380px')\">
-					<input name='dyt1' type='hidden' value='".$dyt1."' />
-					<input name='vname' type='hidden' value='".$vname."' />
-						<td class='BorderInfDch' align='center'>
-					<input name='id' type='hidden' value='".$rowc['id']."' />".$rowc['id']."
-						</td>
-						<td class='BorderInfDch' align='center'>
-					<input name='factnum' type='hidden' value='".$rowc['factnum']."' />".$rowc['factnum']."
-						</td>
-						<td class='BorderInfDch' align='left'>
-					<input name='factdate' type='hidden' value='".$rowc['factdate']."' />".$rowc['factdate']."
-						</td>
-						<td class='BorderInfDch' align='center'>
-					<input name='factnom' type='hidden' value='".$rowc['factnom']."' />".$rowc['factnom']."
-						</td>
-						<td class='BorderInfDch' align='left'>
-					<input name='factnif' type='hidden' value='".$rowc['factnif']."' />".$rowc['factnif']."
-						</td>
-						<td class='BorderInfDch' align='right'>
-					<input name='factiva' type='hidden' value='".$rowc['factiva']."' />".$rowc['factiva']." %
-						</td>
-						<td class='BorderInfDch' align='right'>
-					<input name='factivae' type='hidden' value='".$rowc['factivae']."' />".$rowc['factivae']."
-						</td>
-						<td class='BorderInfDch' align='right'>
-					<input name='factpvp' type='hidden' value='".$rowc['factpvp']."' />".$rowc['factpvp']."
-						</td>
-						<td class='BorderInfDch' align='right'>
-					<input name='factret' type='hidden' value='".$rowc['factret']."' />".$rowc['factret']." %
-						</td>
-						<td class='BorderInfDch' align='right'>
-					<input name='factrete' type='hidden' value='".$rowc['factrete']."' />".$rowc['factrete']."
-						</td>
-						<td class='BorderInfDch' align='right'>
-					<input name='factpvptot' type='hidden' value='".$rowc['factpvptot']."' />".$rowc['factpvptot']."
-						</td>
-						<td class='BorderInfDch' align='left' width='180px'>
-					<input name='coment' type='hidden' value='".$rowc['coment']."' />".$rowc['coment']."
-						</td>
-						<td class='BorderInfDch' align='right'>
-							<input type='submit' value='FACT DOCS' />
-							<input type='hidden' name='oculto2' value=1 />
-						</td>
-				</form>
-					</tr>");
-			}  
+			require 'Gastos_rowb_Total.php';
+
+		} // FIN WHILE  
 
 		print("<tr>
-					<td colspan='13' class='BorderInf'></td>
+					<td colspan='15' class='BorderInf'></td>
 				</tr>
 				<tr>
-					<td class='BorderInfDch' align='center'></td>
+					<td class='BorderInf' align='center'></td>
 					<td colspan='3' class='BorderInfDch' align='center'>IMPUESTOS REPERC €</td>
 					<td colspan='3' class='BorderInfDch' align='center'>RETENCION REPERC €</td>
 					<td colspan='4' class='BorderInfDch' align='center'>TOTAL €</td>
-					<td colspan='2' class='BorderInf' align='right'></td>
+					<td colspan='4' class='BorderInf' align='right'></td>
 				</tr>
 				<tr>
-					<td class='BorderInfDch' align='center'></td>
+					<td class='BorderInf' align='center'></td>
 					<td colspan='3' class='BorderInfDch' align='right'>".$sumaivae." €</td>
 					<td colspan='3' class='BorderInfDch' align='right'>".$sumarete." €</td>
 					<td colspan='4' class='BorderInfDch' align='right'>".$sumapvptot." €</td>
-					<td colspan='2' class='BorderInf' align='right'></td>
+					<td colspan='4' class='BorderInf' align='right'></td>
 				</tr>
 			</table>");
 			
@@ -359,256 +318,14 @@ function process_form(){
 
 	}	/* Final process_form(); */
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function show_form($errors=[]){
+	function show_form($errors=[]){
 	
-	if(isset($_POST['show_formcl'])){
-				$defaults = $_POST;
-	} elseif(isset($_POST['todo'])){
-			$defaults = $_POST;
-	} else { $defaults = array ('factnom' => '',
-								 'factnif' => '',
-								 'factnum' => '',
-								 'Orden' => isset($ordenar));
-							}
+		require 'Inc_Show_Form_01.php';	
 
-	$dm = array ( '' => 'MONTH', '01' => 'ENERO', '02' => 'FEBRERO',
-				  '03' => 'MARZO', '04' => 'ABRIL', '05' => 'MAYO',
-				  '06' => 'JUNIO', '07' => 'JULIO', '08' => 'AGOSTO',
-				  '09' => 'SEPTIEMBRE', '10' => 'OCTUBRE', '11' => 'NOVIEMBRE',
-				  '12' => 'OCTUBRE');
-	
-	$dd = array ( '' => 'DAY', '01' => '01', '02' => '02', '03' => '03',
-				  '04' => '04', '05' => '05', '06' => '06', '07' => '07',
-				  '08' => '08', '09' => '09', '10' => '10', '11' => '11',
-				  '12' => '12', '13' => '13', '14' => '14', '15' => '15',
-				  '16' => '16', '17' => '17', '18' => '18', '19' => '19',
-				  '20' => '20', '21' => '21', '22' => '22', '23' => '23',
-				  '24' => '24', '25' => '25', '26' => '26', '27' => '27',
-				  '28' => '28', '29' => '29', '30' => '30', '31' => '31');
-										
-	global $cnt; 		$cnt = 0;
-	
-	if ($errors){
-		global $cnt; 		$cnt = 1;
-		print("	<table style='border:none; text-align: center; margin: 0.4em auto 0.4em auto;'>
-				<tr>
-					<th style='text-align:center'>
-						<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-					</th>
-				</tr>
-				<tr>
-					<td style='text-align:left'>");
-			
-		for($a=0; $c=count($errors), $a<$c; $a++){
-			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
-			}
-		print("</td>
-				</tr>
-			</table>
-				<div style='clear:both'></div>");
-		} // FIN ERRORS
-	
-	$ordenar = array (	'`factdate` ASC' => 'Fecha Asc',
-						'`factdate` DESC' => 'Fecha Desc',
-						'`factnum` ASC' => 'Nº Factura Asc',
-						'`factnum` DESC' => 'Nº Factura Desc',
-						'`factnif` ASC' => 'NIF Asc',
-						'`factnif` DESC' => 'NIF Desc',
-						'`factnom` ASC' => 'Razon Social Asc',
-						'`factnom` DESC' => 'Razon Social Desc',
-																);
-	
-	print("<table align='center' style=\"border:0px;margin-top:4px\">
-				<tr>
-					<th colspan=2>CONSULTAR GASTOS</th>
-				</tr>
-			<form name='form_tabla' method='post' action='$_SERVER[PHP_SELF]'>
-				<tr>
-					<td align='right' class='BorderSup'>
-						<input type='submit' value='FILTRO GASTOS' />
-						<input type='hidden' name='show_formcl' value=1 />
-					</td>
-					<td class='BorderSup'>
-					<div style='float:left'>
-		<select name='Orden'>");
-				foreach($ordenar as $option => $label){
-					print ("<option value='".$option."' ");
-					if($option == $defaults['Orden']){
-									print ("selected = 'selected'");
-										}
-								print ("> $label </option>");
-					}	
-						
-	print ("</select>
-				</div>
-				<div style='float:left'>");
-								
-		require '../Inclu/year_select_bbdd.php';
-
-	print ("</select>
-				</div>
-				<div style='float:left'>
-						<select name='dm'>");
-				foreach($dm as $optiondm => $labeldm){
-					print ("<option value='".$optiondm."' ");
-					if($optiondm == @$defaults['dm']){
-								print ("selected = 'selected'");
-									}
-								print ("> $labeldm </option>");
-						}	
-																
-	print ("</select>
-				</div>
-				<div style='float:left'>
-					<select name='dd'>");
-				foreach($dd as $optiondd => $labeldd){
-					print ("<option value='".$optiondd."' ");
-					if($optiondd == @$defaults['dd']){
-										print ("selected = 'selected'");
-											}
-									print ("> $labeldd </option>");
-							}	
-																
-	print ("</select>
-				</div>
-				</td>
-			</tr>
-			<tr>					
-				<td colspan='2' class='BorderInf'>	
-				<div style='float:left; margin-right:12px'>
-			Nº FACTURA: &nbsp;
-			<input type='text' name='factnum' size=22 maxlength=20 value='".@$defaults['factnum']."' />
-				</div>
-				<div style='float:left; margin-right:12px'>
-			NIF: &nbsp;
-			<!--
-			<input type='text' name='factnif' size=22 maxlength=10 value='".@$defaults['factnif']."' />
-			-->
-			<select name='factnif'>
-			<option value=''>Nº NIF</option>");
-			global $db; 
-			global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."proveedores`";
-
-			$sqlb =  "SELECT * FROM $tabla1 ORDER BY `rsocial` ASC ";
-			$qb = mysqli_query($db, $sqlb);
-			if(!$qb){
-					print("* ".mysqli_error($db)."<br/>");
-			} else {
-					while($rows = mysqli_fetch_assoc($qb)){
-						print ("<option value='".$rows['dni'].$rows['ldni']."' ");
-						if($rows['dni'].$rows['ldni'] == @$defaults['factnif']){
-													print ("selected = 'selected'");
-															}
-								print ("> ".$rows['dni'].$rows['ldni']." </option>");
-							}
-					}  
-
-	print ("</select>
-				</div>
-				<div style='float:left; margin-right:12px'>
-					RAZON SOCIAL: &nbsp;
-					<!--
-					<input type='text' name='factnom' size=22 maxlength=22 value='".@$defaults['factnom']."' />
-					-->
-			<select name='factnom'>
-			<option value=''>RAZON SOCIAL</option>");
-		global $db;
-		global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."proveedores`";
-		$sqlb =  "SELECT * FROM $tabla1 ORDER BY `rsocial` ASC ";
-		$qb = mysqli_query($db, $sqlb);
-		if(!$qb){
-				print("* ".mysqli_error($db)."<br/>");
-		} else {
-		while($rows = mysqli_fetch_assoc($qb)){
-					print ("<option value='".$rows['ref']."' ");
-					if($rows['ref'] == @$defaults['factnom']){
-										print ("selected = 'selected'");
-												}
-								print ("> ".$rows['rsocial']." </option>");
-						}
-			}
-
-	print ("</select>
-				</div>
-					</td>
-				</tr>
-			</form>");
-						
-	////////
-
-	if(isset($_POST['show_formcl'])){	global $cnt;
-										gt2();
-											}
-	////////
-
-	print ("<form name='todo' method='post' action='$_SERVER[PHP_SELF]' >
-				<tr>
-					<td align='center' class='BorderSup'>
-						<input type='submit' value='TODOS LOS GASTOS' />
-						<input type='hidden' name='todo' value=1 />
-					</td>
-					<td class='BorderSup'>	
-					<div style='float:left'>
-
-						<select name='Orden'>");
-						
-				foreach($ordenar as $option => $label){
-					
-					print ("<option value='".$option."' ");
-					
-					if($option == $defaults['Orden']){
-															print ("selected = 'selected'");
-																								}
-													print ("> $label </option>");
-												}	
-						
-	print ("</select>
-				</div>
-				<div style='float:left'>");
-								
-		require '../Inclu/year_select_bbdd.php';
-									
-	print ("</select>
-				</div>
-				<div style='float:left'>
-					<select name='dm'>");
-					foreach($dm as $optiondm => $labeldm){
-								print ("<option value='".$optiondm."' ");
-						if($optiondm == @$defaults['dm']){
-											print ("selected = 'selected'");
-													}
-										print ("> $labeldm </option>");
-							}	
-																
-	print ("</select>
-				</div>
-				<div style='float:left'>
-					<select name='dd'>");
-						foreach($dd as $optiondd => $labeldd){
-							print ("<option value='".$optiondd."' ");
-							if($optiondd == @$defaults['dd']){
-												print ("selected = 'selected'");
-															}
-											print ("> $labeldd </option>");
-									}	
-																
-	print ("</select>
-					</div>
-				</form>														
-					</td></tr>");
-
-	////////
-	
-		if(isset($_POST['todo'])){ gt1(); }
-
-	////////
-			
-		print("	</table>
-							
-				"); /* Fin del print */
-	
 	}	/* Fin show_form(); */
 
 	
@@ -668,26 +385,26 @@ function gt2(){
 		 			<td colspan='2' align='right' class='BorderInf'>
 				<div style='float:left; margin-right:3px;  margin-left:3px;'>
 			<form name='grafico' action='grafico_gf.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input type='submit' value='GRAFIC LINEAL TOTAL' />
-				<input type='hidden' name='grafico' value=1 />
+		<input type='submit' value='GRAFIC LINEAL TOTAL' title='VER GRAFICA LINEAL TOTAL' class='botonnaranja' />
+		<input type='hidden' name='grafico' value=1 />
 			</form>	
 				</div>	 				
 				<div style='float:left; margin-right:3px;  margin-left:3px;'>
 			<form name='grafico' action='grafico_gfb.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input type='submit' value='GRAFIC BARRAS TOTAL' />
-				<input type='hidden' name='grafico' value=1 />
+		<input type='submit' value='GRAFIC BARRAS TOTAL' title='VER GRAFICA BARRAS TOTAL' class='botonnaranja' />
+		<input type='hidden' name='grafico' value=1 />
 			</form>	
 				</div>					
 				<div style='float:left; margin-right:3px;  margin-left:3px;'>
 			<form name='grafico2' action='grafico_gf2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input type='submit' value='GRAFIC LINEAL DETALLE' />
-				<input type='hidden' name='grafico2' value=1 />
+		<input type='submit' value='GRAFIC LINEAL DETALLE' title='VER GRAFICA LINEAL DETALLE' class='botonnaranja' />
+		<input type='hidden' name='grafico2' value=1 />
 			</form>	
 				</div>					
 				<div style='float:left; margin-right:3px;  margin-left:3px;'>
 			<form name='grafico2' action='grafico_gf2b.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input type='submit' value='GRAFIC BARRAS DETALLE' />
-				<input type='hidden' name='grafico2' value=1 />
+		<input type='submit' value='GRAFIC BARRAS DETALLE' title='VER GRAFICA BARRAS DETALLE' class='botonnaranja' />
+		<input type='hidden' name='grafico2' value=1 />
 			</form>	
 				</div>					
 					</td>
@@ -739,27 +456,27 @@ function gt2(){
 		 			<td align='right' class='BorderInf' colspan='2'>
 				<div style='float:left; margin-right:3px;  margin-left:3px;'>
 			<form name='grafico' action='grafico_g.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input type='submit' value='GRAFIC LINEAL TOT DIA' />
-				<input type='hidden' name='grafico' value=1 />
+	<input type='submit' value='GRAFIC LINEAL TOTAL DIA' title='VER GRAFICA LINEAL TOTAL POR DIA' class='botonnaranja' />
+	<input type='hidden' name='grafico' value=1 />
 			</form>	
 				</div>
 				<div style='float:left; margin-right:3px;  margin-left:3px;'>
 			<form name='graficob' action='grafico_gb.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input type='submit' value='GRAFIC BARRAS TOT DIA' />
-				<input type='hidden' name='graficob' value=1 />
+	<input type='submit' value='GRAFIC BARRAS TOTAL DIA' title='VER GRAFICA BARRAS TOTAL POR DIA' class='botonnaranja' />
+	<input type='hidden' name='graficob' value=1 />
 			</form>	
 				</div>
 				<div style='float:left' margin-right:3px;  margin-left:3px;>
 			<form name='grafico2' action='grafico_g2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input type='submit' value='GRAFIC LINEAL DETALLE' />
-				<input type='hidden' name='grafico2' value=1 />
+	<input type='submit' value='GRAFIC LINEAL DETALLE' title='VER GRAFICA LINEAL DETALLE' class='botonnaranja' />
+	<input type='hidden' name='grafico2' value=1 />
 			</form>	
 				</div>					
 			</div>
 				<div style='float:left' margin-right:3px;  margin-left:3px;>
 			<form name='graficob2' action='grafico_gb2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-				<input type='submit' value='GRAFIC BARRAS DETALLE' />
-				<input type='hidden' name='graficob2' value=1 />
+	<input type='submit' value='GRAFIC BARRAS DETALLE' title='VER GRAFICA BARRAS DETALLE' class='botonnaranja' />
+	<input type='hidden' name='graficob2' value=1 />
 			</form>	
 				</div>					
 					</td>
@@ -773,7 +490,7 @@ function gt2(){
 
 	function ver_todo(){
 		
-		global $db; 		global $db_name;
+		global $db; 		global $db_name;		global $limit;
 
 		global $orden;
 		if(isset($_POST['Orden'])){
@@ -781,31 +498,30 @@ function gt2(){
 		}else{ $orden = '`id` ASC'; }
 
 		global $dyt1;
-	
-		if($_POST['dy'] == ''){ $dy1 = '';
+		if(@$_POST['dy'] == ''){ $dy1 = '';
 								$dyt1 = date('Y');	
 								$_SESSION['gyear'] = date('Y');} 
 												else {	$dy1 = $_POST['dy'];
 														$dyt1 = "20".$_POST['dy'];
 														$_SESSION['gyear'] = "20".$_POST['dy'];									
 														}
-		if($_POST['dm'] == ''){ $dm1 = '';
+		if(@$_POST['dm'] == ''){ $dm1 = '';
 								$_SESSION['gtime'] = '';} 
 												else {	$dm1 = "/".$_POST['dm']."/";
 														$_SESSION['gtime'] = $_POST['dm'];	
 														}
-		if($_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];}
+		if(@$_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];}
 		
 		global $fil;												
 		$fil = "%".$dy1.$dm1.$dd1."%";
-		if(($_POST['dm'] == '')&&($_POST['dd'] != '')){$dm1 = '';
-														$dd1 = $_POST['dd'];
-														global $fil;
-														$fil = "%".$dy1."/%".$dm1."%/".$dd1."%";
+		if((@$_POST['dm'] == '')&&(@$_POST['dd'] != '')){$dm1 = '';
+														 $dd1 = $_POST['dd'];
+														 global $fil;
+														 $fil = "%".$dy1."/%".$dm1."%/".$dd1."%";
 																						}
 		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
 
-		$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
+		$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden $limit ";
 		$qb = mysqli_query($db, $sqlb);
 	
 /////////////////////	
@@ -874,7 +590,7 @@ function gt2(){
 							</table>");
 
 			} else { print ("<table align='center'>
-							<th colspan=13 class='BorderInf'>".mysqli_num_rows($qb)." RESULTADOS</th>
+							<th colspan=15 class='BorderInf'>".mysqli_num_rows($qb)." RESULTADOS</th>
 						</tr>
 						<tr>
 							<th class='BorderInfDch'>ID</th>			
@@ -888,79 +604,36 @@ function gt2(){
 							<th class='BorderInfDch'>RET %</th>
 							<th class='BorderInfDch'>RET €</th>
 							<th class='BorderInfDch'>TOTAL</th>
-							<th class='BorderInfDch'>DESCRIPCION</th>
-							<th class='BorderInfDch'></th>
+							<th colspan=4 class='BorderInfDch'>
+						<a href='Gastos_Crear.php' class='botonverde'>CREAR NUEVO GASTO</a>
+						<a href='Gastos_Pendientes_Ver.php' class='botonverde'>VER GASTOS PENDIENTES</a>
+							</th>
 						</tr>");
 				
-				while($rowb = mysqli_fetch_assoc($qb)){
+			while($rowb = mysqli_fetch_assoc($qb)){
 
-		global $dyt1;
-		
-		print (	"<tr align='center'>
-										
-				<form name='ver' action='Gastos_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=480px,height=380px')\">
-					<input name='dyt1' type='hidden' value='".$dyt1."' />
-					<input name='vname' type='hidden' value='".$vname."' />
-							<td class='BorderInfDch' align='center'>
-					<input name='id' type='hidden' value='".$rowb['id']."' />".$rowb['id']."
-							</td>
-							<td class='BorderInfDch' align='center'>
-					<input name='factnum' type='hidden' value='".$rowb['factnum']."' />".$rowb['factnum']."
-							</td>
-							<td class='BorderInfDch' align='left'>
-					<input name='factdate' type='hidden' value='".$rowb['factdate']."' />".$rowb['factdate']."
-							</td>
-							<td class='BorderInfDch' align='center'>
-					<input name='factnom' type='hidden' value='".$rowb['factnom']."' />".$rowb['factnom']."
-							</td>
-							<td class='BorderInfDch' align='left'>
-					<input name='factnif' type='hidden' value='".$rowb['factnif']."' />".$rowb['factnif']."
-							</td>
-							<td class='BorderInfDch' align='right'>
-					<input name='factiva' type='hidden' value='".$rowb['factiva']."' />".$rowb['factiva']."
-							</td>
-							<td class='BorderInfDch' align='right'>
-					<input name='factivae' type='hidden' value='".$rowb['factivae']."' />".$rowb['factivae']."
-							</td>
-							<td class='BorderInfDch' align='right'>
-					<input name='factpvp' type='hidden' value='".$rowb['factpvp']."' />".$rowb['factpvp']."
-							</td>
-							<td class='BorderInfDch' align='right'>
-					<input name='factret' type='hidden' value='".$rowb['factret']."' />".$rowb['factret']."
-							</td>
-							<td class='BorderInfDch' align='right'>
-					<input name='factrete' type='hidden' value='".$rowb['factrete']."' />".$rowb['factrete']."
-							</td>
-							<td class='BorderInfDch' align='right'>
-					<input name='factpvptot' type='hidden' value='".$rowb['factpvptot']."' />".$rowb['factpvptot']."
-							</td>
-							<td class='BorderInfDch' align='left' width='180px'>
-					<input name='coment' type='hidden' value='".$rowb['coment']."' />".$rowb['coment']."
-							</td>
-							<td class='BorderInfDch' align='right'>
-									<input type='submit' value='FACT DOCS' />
-									<input type='hidden' name='oculto2' value=1 />
-							</td>
-				</form>
-						</tr>");
-				} /* Fin del while.*/ 
+				global $vname; 		global $dyt1;
+				
+				require 'Gastos_rowb_Total.php';
+						
+			} // FIN WHILE
 
 				print("<tr>
-							<td colspan='13' class='BorderInf'></td>
+							<td colspan='15' class='BorderInf'></td>
 						</tr>
 						<tr>
-							<td class='BorderInfDch' align='right'></td>
+							<td class='BorderInf' align='right'></td>
 							<td colspan='3' class='BorderInfDch' align='center'>IMPUESTOS REPERC €</td>
 							<td colspan='3' class='BorderInfDch' align='center'>RETENCION REPERC €</td>
 							<td colspan='4' class='BorderInfDch' align='center'>TOTAL €</td>
-							<td colspan='2' class='BorderInf' align='center'></td>
+							<td colspan='4' class='BorderInf' align='center'></td>
 						</tr>
 						<tr>
-							<td class='BorderInfDch' align='right'></td>
+							<td class='BorderInf' align='right'></td>
 							<td colspan='3' class='BorderInfDch' align='right'>".$sumaivae." €</td>
 							<td colspan='3' class='BorderInfDch' align='right'>".$sumarete." €</td>
 							<td colspan='4' class='BorderInfDch' align='right'>".$sumapvptot." €</td>
-							<td colspan='2' class='BorderInf' align='right'></td>
+							<td colspan='4' class='BorderInf' align='right'></td>
 						</tr>
 					</table>");
 				} /* Fin segundo else anidado en if */

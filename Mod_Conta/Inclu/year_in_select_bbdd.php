@@ -1,7 +1,7 @@
 <?php
 
 print("
-		<select name='dy'>
+		<select name='dy' title='SELECCIONAR AÑO..' class='botonverde'>
 			<option value=''>YEAR</option>");
 				
 	global $db;

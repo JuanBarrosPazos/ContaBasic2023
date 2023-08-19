@@ -9,7 +9,9 @@ session_start();
 		
 	require '../Inclu/sqld_query_fetch_assoc.php';
 
-///////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 	if ($_SESSION['Nivel'] == 'admin'){
 
@@ -25,267 +27,100 @@ session_start();
 					} elseif(strlen($_POST['xl']) != 0){
 								//print("* SI SELECCIONADO");
 								process_form_2();
-								difer1();
 									}
 		} else {show_form();}
 							
 	}else { require '../Inclu/table_permisos.php';} 
 
-//////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-	function difer1(){
-
-	global $db;
-	global $db_name;
+	function process_form_2(){
 	
-	$_SESSION['diferyear'] = $_POST['dy'];
-	
-	global $dyx;
-	$dyx = "20".$_POST['dy'];
-	global $dmx;
-	$dmx = "M".$_POST['dm'];
-/*
-	if(($dmx != 10)||($dmx != 11)||($dmx != 12)){
-	$dmx = substr($_POST['dm'],-1);
-		}
-*/
-	global $sesionref;
-
-	global $vnamebali; 		$vnamebali = "`".$_SESSION['clave']."balancei`";
-	global $vnamebalg; 		$vnamebalg = "`".$_SESSION['clave']."balanceg`";
-	global $vnamebald; 		$vnamebald = "`".$_SESSION['clave']."balanced`";
-	
-	////////////////	DIFERENCIAL MES		////////////////
-
-	$sqlbalg =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
-	$qbalg = mysqli_query($db, $sqlbalg);
-	$countbalg = mysqli_num_rows($qbalg);
-	$rowbalg = mysqli_fetch_assoc($qbalg);
-	
-	$sqlbali =  "SELECT * FROM `$db_name`.$vnamebali WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
-	$qbali = mysqli_query($db, $sqlbali);
-	$countbali = mysqli_num_rows($qbali);
-	$rowbali = mysqli_fetch_assoc($qbali);
-	
-	$sumamesiva = $rowbali['iva'] - $rowbalg['iva'];
-	$sumamespvp = $rowbali['sub'] - $rowbalg['sub'];
-	$sumamesret = $rowbali['ret'] - $rowbalg['ret'];
-	$sumamestot = $rowbali['tot'] - $rowbalg['tot'];
-
-	//	print("* ".$dyt1." ".$dm1.".<br/>");
-	//	print("* ".$sumamesiva." ".$sumamespvp." ".$sumamestot.".<br/>");
-
-	$sqlbg = "UPDATE `$db_name`.$vnamebald  SET `iva` = '$sumamesiva', `sub` = '$sumamespvp',`ret` = '$sumamesret', `tot` =  '$sumamestot' WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
+		global $db; 		global $db_name;
+		global $vname; 		global $dyt1; 		global $dynew;
 		
-		if(mysqli_query($db, $sqlbg)){ //	print("**"); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA 108: ".mysqli_error($db));
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-							}
+		if($_POST['dy'] == ''){ $dy1 = '';
+								$dynew = date('y');
+								$dyt1 = date('Y');} else { $dy1 = $_POST['dy'];
+															$dynew = $_POST['dy'];
+															$dyt1 = "20".$_POST['dy'];
+																			}
+		if($_POST['dm'] == ''){ $dm1 = '';} else { $dm1 = $_POST['dm'];
+													$dm1 = "/".$dm1."/";}
+		if($_POST['dd'] == ''){ $dd1 = '';} else { $dd1 = $_POST['dd'];
+													$dd1 = $dd1;}
 
-	////////////////	DIFERENCIAL ANUAL		////////////////
+		global $factdate;
+		$factdate = $_POST['dy']."/".$_POST['dm']."/".$_POST['dd'];
 
-	$sqlbalg2 =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = 'ANU' ";
-	$qbalg2 = mysqli_query($db, $sqlbalg2);
-	$countbalg2 = mysqli_num_rows($qbalg2);
-	$rowbalg2 = mysqli_fetch_assoc($qbalg2);
-
-	$sqlbali2 =  "SELECT * FROM `$db_name`.$vnamebali WHERE `year` = '$dyx' AND `mes` = 'ANU' ";
-	$qbali2 = mysqli_query($db, $sqlbali2);
-	$countbali2 = mysqli_num_rows($qbali2);
-	$rowbali2 = mysqli_fetch_assoc($qbali2);
-	
-	$sumayeariva2 = $rowbali2['iva'] - $rowbalg2['iva'];	
-	$sumayearpvp2 = $rowbali2['sub'] - $rowbalg2['sub'];	
-	$sumayearret2 = $rowbali2['ret'] - $rowbalg2['ret'];	
-	$sumayeartot2 = $rowbali2['tot'] - $rowbalg2['tot'];	
-
-	//	print("* ".$sumayeariva." ".$sumayearpvp." ".$sumayeartot.".<br/>");
-
-	$sqlbg2 = "UPDATE `$db_name`.$vnamebald  SET `iva` = '$sumayeariva2', `sub` = '$sumayearpvp2',`ret` = '$sumayearret2', `tot` =  '$sumayeartot2' WHERE `year` = '$dyx' AND `mes` = 'ANU' ";
-		
-		if(mysqli_query($db, $sqlbg2)){ // print("**"); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA 135: ".mysqli_error($db));
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-							}
-
-	////////////////	DIFERENCIAL TRIMESTRAL		////////////////
-
-	global $mes;
-	if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
-	elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
-	elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
-	elseif(($dmx == "M10")||($dmx == "M11")||($dmx == "M12")){$mes = "TRI4";}
-	
-	$sqlbalg3 =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = '$mes' ";
-	$qbalg3 = mysqli_query($db, $sqlbalg3);
-	$countbalg3 = mysqli_num_rows($qbalg3);
-	$rowbalg3 = mysqli_fetch_assoc($qbalg3);
-
-	$sqlbali3 =  "SELECT * FROM `$db_name`.$vnamebali WHERE `year` = '$dyx' AND `mes` = '$mes' ";
-	$qbali3 = mysqli_query($db, $sqlbali3);
-	$countbali3 = mysqli_num_rows($qbali3);
-	$rowbali3 = mysqli_fetch_assoc($qbali3);
-	
-	$sumatriiva3 = $rowbali3['iva'] - $rowbalg3['iva'];
-	$sumatripvp3 = $rowbali3['sub'] - $rowbalg3['sub'];
-	$sumatriret3 = $rowbali3['ret'] - $rowbalg3['ret'];
-	$sumatritot3 = $rowbali3['tot'] - $rowbalg3['tot'];
-
-	//	print("* ".$sumatriiva." ".$sumatripvp." ".$sumatritot.".<br/>");
-
-	$sqlbg3 = "UPDATE `$db_name`.$vnamebald  SET `iva` = '$sumatriiva3', `sub` = '$sumatripvp3',`ret` = '$sumatriret3', `tot` =  '$sumatritot3' WHERE `year` = '$dyx' AND `mes` = '$mes' ";
-		
-		if(mysqli_query($db, $sqlbg3)){ //	print("**"); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA 168: ".mysqli_error($db));
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-							}
-			
-		}
-		
-//////////////////////////////////////////////////////////////////////////////////////////////
-
-function process_form_2(){
-	
-	global $db; 		global $db_name;
-	global $vname; 		global $dyt1; 		global $dynew;
-	
-	if($_POST['dy'] == ''){ $dy1 = '';
-							 $dynew = date('y');
-							 $dyt1 = date('Y');} else { $dy1 = $_POST['dy'];
-														$dynew = $_POST['dy'];
-														$dyt1 = "20".$_POST['dy'];
-																		}
-	if($_POST['dm'] == ''){ $dm1 = '';} else { $dm1 = $_POST['dm'];
-												$dm1 = "/".$dm1."/";}
-	if($_POST['dd'] == ''){ $dd1 = '';} else { $dd1 = $_POST['dd'];
-												$dd1 = $dd1;}
-
-	global $factdate;
-	$factdate = $_POST['dy']."/".$_POST['dm']."/".$_POST['dd'];
-
-	$factivae1 = $_POST['factivae1'];
-	$factivae2 = $_POST['factivae2'];
-	global $factivae;
-	$factivae = $factivae1.".".$factivae2;
-			
-	$factrete1 = $_POST['factrete1'];
-	$factrete2 = $_POST['factrete2'];
-	global $factrete;
-	$factrete = $factrete1.".".$factrete2;
-
-	$factpvp1 = $_POST['factpvp1'];
-	$factpvp2 = $_POST['factpvp2'];
-	global $factpvp;
-	$factpvp = $factpvp1.".".$factpvp2;
-	
-	$factpvptot1 = $_POST['factpvptot1'];
-	$factpvptot2 = $_POST['factpvptot2'];
-	global $factpvptot;
-	$factpvptot = $factpvptot1.".".$factpvptot2;
-	
-	$tabla = "<table align='center' style='margin-top:10px' width='700px'>
-				<tr>
-					<th colspan=4 class='BorderInf'>
-						SE HA MODIFICADO EN ".strtoupper($vname)."
-					</th>
-				</tr>
-												
-				<tr>
-					<td>
-						NUMERO
-					</td>
-					<td>"
-						.$_POST['factnum'].
-					"</td>
-					<td>	
-						FECHA
-					</td>
-					<td>20"
-						/*.$iniy*/.$factdate.
-					"</td>
-				</tr>
+		$factivae1 = $_POST['factivae1'];
+		$factivae2 = $_POST['factivae2'];
+		global $factivae;
+		$factivae = $factivae1.".".$factivae2;
 				
-				<tr>
-					<td>
-						RAZON SOCIAL
-					</td>
-					<td>"
-						.$_POST['factnom'].
-					"</td>
-					<td>
-						NIF / CIF
-					</td>
-					<td>"
-						.$_POST['factnif'].
-					"</td>
-				</tr>
-								
-				<tr>
-					<td>
-						IMP %
-					</td>
-					<td>"
-						.$_POST['factiva'].
-					"</td>
-					<td>
-						IMP €
-					</td>
-					<td>"
-						.$factivae.
-					"</td>
-				</tr>
-								
-				<tr>
-					<td>
-						RETENCIONES %
-					</td>
-					<td>"
-						.$_POST['factret'].
-					"</td>
-					<td>
-						RETENCIONES €
-					</td>
-					<td width=250px>"
-						.$factrete.
-					"</td>
-				</tr>
-								
-				<tr>
-					<td>
-						SUBTOTAL
-					</td>
-					<td>"
-						.$factpvp.
-					"</td>
-					<td>
-						TOTAL
-					</td>
-					<td>"
-						.$factpvptot.
-					"</td>
-				</tr>
-								
-				<tr>
-					<td>
-						DESCRIPCION
-					</td>
-					<td colspan='3'>"
-						.$_POST['coment'].
-					"</td>
-				</tr>
+		$factrete1 = $_POST['factrete1'];
+		$factrete2 = $_POST['factrete2'];
+		global $factrete;
+		$factrete = $factrete1.".".$factrete2;
 
-			</table>";	
+		$factpvp1 = $_POST['factpvp1'];
+		$factpvp2 = $_POST['factpvp2'];
+		global $factpvp;
+		$factpvp = $factpvp1.".".$factpvp2;
+		
+		$factpvptot1 = $_POST['factpvptot1'];
+		$factpvptot2 = $_POST['factpvptot2'];
+		global $factpvptot;
+		$factpvptot = $factpvptot1.".".$factpvptot2;
+		
+		$tabla = "<table align='center' style='margin-top:10px' width='700px'>
+					<tr>
+						<th colspan=4 class='BorderInf'>
+							SE HA MODIFICADO EN ".strtoupper($vname)."
+						</th>
+					</tr>
+					<tr>
+						<td>NUMERO</td>
+						<td>".$_POST['factnum']."</td>
+						<td>FECHA</td>
+						<td>20"/*.$iniy*/.$factdate."</td>
+					</tr>
+					<tr>
+						<td>RAZON SOCIAL</td>
+						<td>".$_POST['factnom']."</td>
+						<td>NIF/CIF</td>
+						<td>".$_POST['factnif']."</td>
+					</tr>
+					<tr>
+						<td>IMP %</td>
+						<td>".$_POST['factiva']."</td>
+						<td>IMP €</td>
+						<td>".$factivae."</td>
+					</tr>
+					<tr>
+						<td>RETENCIONES %</td>
+						<td>".$_POST['factret']."</td>
+						<td>RETENCIONES €</td>
+						<td width=250px>".$factrete."</td>
+					</tr>
+					<tr>
+						<td>SUBTOTAL</td>
+						<td>".$factpvp."</td>
+						<td>TOTAL</td>
+						<td>".$factpvptot."</td>
+					</tr>
+					<tr>
+						<td>DESCRIPCION</td>
+						<td colspan='3'>".$_POST['coment']."</td>
+					</tr>
+				</table>";	
 
-	global $rutaold;
-	global $rutanew;
-	$rutaold = "../cbj_Docs/docgastos_pendientes/";
-	$rutanew = "../cbj_Docs/docgastos_20".$dynew."/";
+		global $rutaold;
+		global $rutanew;
+		$rutaold = "../cbj_Docs/docgastos_pendientes/";
+		$rutanew = "../cbj_Docs/docgastos_20".$dynew."/";
 		
 		if(file_exists($rutaold.$_SESSION['myimg1b']) ){
 					copy($rutaold.$_SESSION['myimg1b'], $rutanew.$_SESSION['myimg1b']);
@@ -323,18 +158,18 @@ function process_form_2(){
 		
 		if(mysqli_query($db, $sent)){ //	print("<br/>* OK DELETE DATA."); 
 										print($tabla); 
-					} else {print("* MODIFIQUE LA ENTRADA 335: ".mysqli_error($db));
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-									}
+		} else {
+			print("* MODIFIQUE LA ENTRADA 335: ".mysqli_error($db));
+			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
+				}
 	$idx = $_SESSION['idx'];
 	global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastos_pendientes`";
 	$sqla = "DELETE FROM `$db_name`.$vnamed  WHERE $vnamed.`id` = '$idx'  ";
 		if(mysqli_query($db, $sqla)){ //	print("<br/>* OK DELETE DATA."); 
-					} else {print("* MODIFIQUE LA ENTRADA 349: ".mysqli_error($db));
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-									}
+		} else {
+			print("* MODIFIQUE LA ENTRADA 349: ".mysqli_error($db));
+			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
+				}
 
 	//////////////
 				//////////////
@@ -343,85 +178,20 @@ function process_form_2(){
 	global $dyx; 		$dyx = "20".$_POST['dy'];
 	global $dmx; 		$dmx = "M".$_POST['dm'];
 
-	global $vnamebalg; 		$vnamebalg = "`".$_SESSION['clave']."balancei`";
-	$sqlbalg =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
-	$qbalg = mysqli_query($db, $sqlbalg);
-	$countbalg = mysqli_num_rows($qbalg);
-	$rowbalg = mysqli_fetch_assoc($qbalg);
-	
-	$sumamesiva = $rowbalg['iva'] + $factivae;	
-	$sumamespvp = $rowbalg['sub'] + $factpvp;	
-	$sumamesret = $rowbalg['ret'] + $factrete;	
-	$sumamestot = $rowbalg['tot'] + $factpvptot;	
-
-	//print("* ".$dyt1." ".$dm1.".</br>");
-	//print("* ".$sumamesiva." ".$sumamespvp." ".$sumamestot.".</br>");
-
-	$sqlbg = "UPDATE `$db_name`.$vnamebalg  SET `iva` = '$sumamesiva', `sub` = '$sumamespvp', `ret` = '$sumamesret', `tot` =  '$sumamestot' WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
-		
-		if(mysqli_query($db, $sqlbg)){ //print("**"); 
-					} else {print("* MODIFIQUE LA ENTRADA 382: ".mysqli_error($db));
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-									}
-
-		/////////////
-	
-	$sqlbalg2 =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = 'ANU' ";
-	$qbalg2 = mysqli_query($db, $sqlbalg2);
-	$countbalg2 = mysqli_num_rows($qbalg2);
-	$rowbalg2 = mysqli_fetch_assoc($qbalg2);
-
-	$sumayeariva = $rowbalg2['iva'] + $factivae;	
-	$sumayearpvp = $rowbalg2['sub'] + $factpvp;	
-	$sumayearret = $rowbalg2['ret'] + $factrete;	
-	$sumayeartot = $rowbalg2['tot'] + $factpvptot;	
-
-	//print("* ".$sumayeariva." ".$sumayearpvp." ".$sumayeartot.".</br>");
-
-	$sqlbg2 = "UPDATE `$db_name`.$vnamebalg  SET `iva` = '$sumayeariva', `sub` = '$sumayearpvp', `ret` = '$sumayearret', `tot` =  '$sumayeartot' WHERE `year` = '$dyx' AND `mes` = 'ANU' ";
-		
-		if(mysqli_query($db, $sqlbg2)){ //print("**"); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA 403: ".mysqli_error($db));
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-							}
-
-		/////////////
-
 	global $mes;
 	if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
 	elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
 	elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
 	elseif(($dmx == "10")||($dmx == "11")||($dmx == "12")){$mes = "TRI4";}
 	
-	$sqlbalg3 =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = '$mes' ";
-	$qbalg3 = mysqli_query($db, $sqlbalg3);
-	$countbalg3 = mysqli_num_rows($qbalg3);
-	$rowbalg3 = mysqli_fetch_assoc($qbalg3);
+		} 
 
-	$sumatriiva = $rowbalg3['iva'] + $factivae;	
-	$sumatripvp = $rowbalg3['sub'] + $factpvp;	
-	$sumatriret = $rowbalg3['ret'] + $factrete;	
-	$sumatritot = $rowbalg3['tot'] + $factpvptot;	
-
-	//print("* ".$sumatriiva." ".$sumatripvp." ".$sumatritot.".</br>");
-
-	$sqlbg3 = "UPDATE `$db_name`.$vnamebalg  SET `iva` = '$sumatriiva', `sub` = '$sumatripvp', `ret` = '$sumatriret', `tot` =  '$sumatritot' WHERE `year` = '$dyx' AND `mes` = '$mes' ";
-		
-		if(mysqli_query($db, $sqlbg3)){ //print("**"); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA 431: ".mysqli_error($db));
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-							}
-							
-	} 
-
-///////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 function show_form($errors=[]){
+
 	global $db; 	global $db_name;
 	
 	global $sesionref; 		$sesionref = "`".$_SESSION['clave']."clientes`";
@@ -536,7 +306,7 @@ function show_form($errors=[]){
 
 	elseif(isset($_POST['oculto'])){
 				$defaults = $_POST;
-	} elseif(isset($_POST['oculto1'])) {
+	}elseif(isset($_POST['oculto1'])) {
 				$defaults = array (	'id' => $_SESSION['idx'],
 									'proveedores' => $_POST['proveedores'],
 								   	'refprovee' => $_POST['refprovee'],
@@ -559,9 +329,8 @@ function show_form($errors=[]){
 									'factpvp2' => $_POST['factpvp2'],	
 									'factpvptot1' => $_POST['factpvptot1'],	
 									'factpvptot2' => $_POST['factpvptot2'],	
-									'coment' => $_POST['coment'],	
-																	);
-							   											}
+									'coment' => $_POST['coment']);
+							}
 
 	if ($errors){
 		print("	<div width='90%' style='float:left'>
@@ -582,260 +351,188 @@ function show_form($errors=[]){
 				<div style='clear:both'></div>");
 		}
 
-	$dm = array (	'' => 'MONTH',
-					'01' => 'ENERO',
-					'02' => 'FEBRERO',
-					'03' => 'MARZO',
-					'04' => 'ABRIL',
-					'05' => 'MAYO',
-					'06' => 'JUNIO',
-					'07' => 'JULIO',
-					'08' => 'AGOSTO',
-					'09' => 'SEPTIEMBRE',
-					'10' => 'OCTUBRE',
-					'11' => 'NOVIEMBRE',
-					'12' => 'DICIEMBRE',
-									);
+		$dm = array ('' => 'MONTH', '01' => 'ENERO', '02' => 'FEBRERO',
+					'03' => 'MARZO', '04' => 'ABRIL', '05' => 'MAYO', '06' => 'JUNIO',
+					'07' => 'JULIO', '08' => 'AGOSTO', '09' => 'SEPTIEMBRE',
+					'10' => 'OCTUBRE', '11' => 'NOVIEMBRE', '12' => 'DICIEMBRE');
 	
-	$dd = array (	'' => 'DAY',
-					'01' => '01',
-					'02' => '02',
-					'03' => '03',
-					'04' => '04',
-					'05' => '05',
-					'06' => '06',
-					'07' => '07',
-					'08' => '08',
-					'09' => '09',
-					'10' => '10',
-					'11' => '11',
-					'12' => '12',
-					'13' => '13',
-					'14' => '14',
-					'15' => '15',
-					'16' => '16',
-					'17' => '17',
-					'18' => '18',
-					'19' => '19',
-					'20' => '20',
-					'21' => '21',
-					'22' => '22',
-					'23' => '23',
-					'24' => '24',
-					'25' => '25',
-					'26' => '26',
-					'27' => '27',
-					'28' => '28',
-					'29' => '29',
-					'30' => '30',
-					'31' => '31',
-									);
-										
-
+		$dd = array ('' => 'DAY', '01' => '01', '02' => '02', '03' => '03',
+					'04' => '04', '05' => '05', '06' => '06', '07' => '07',
+					'08' => '08', '09' => '09', '10' => '10', '11' => '11',
+					'12' => '12', '13' => '13', '14' => '14', '15' => '15',
+					'16' => '16', '17' => '17', '18' => '18', '19' => '19',
+					'20' => '20', '21' => '21', '22' => '22', '23' => '23',
+					'24' => '24', '25' => '25', '26' => '26', '27' => '27',
+					'28' => '28', '29' => '29', '30' => '30', '31' => '31');
 				
-////////////////////
+	////////////////////
 
-	print("
-			<table align='center' style=\"margin-top:10px\">
+	print("<table align='center' style=\"margin-top:10px\">
 				<tr>
 					<th colspan=2 class='BorderInf'>
-
 								MARCAR COMO COBRADO GASTO PENDIENTE					
- 
 					</th>
 				</tr>
 				<tr>
-					<td>
-						<div style='float:left'>
-								REF. CLIENTE
-						</div>
-					</td>
-					
-					<td>
-						<div style='float:left'>
-								".$defaults['proveedores']."
-						</div>
-				</td>
-			</tr>
-				"); 
+					<td>REF. CLIENTE</td>
+					<td>".$defaults['proveedores']."</td>
+			</tr>"); 
 			
 	if($_POST['proveedores'] != '') {
 
-	print("
-<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
+	print("	<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
 
-<input type='hidden' name='proveedores' value='".$defaults['proveedores']."' />
-<input type='hidden' name='refprovee' value='".$defaults['refprovee']."' />
-<input type='hidden' name='id' value='".$defaults['id']."' />
-
-
+				<input type='hidden' name='proveedores' value='".$defaults['proveedores']."' />
+				<input type='hidden' name='refprovee' value='".$defaults['refprovee']."' />
+				<input type='hidden' name='id' value='".$defaults['id']."' />
+			<tr>
+				<td colspan='2'>
+					SI SE HA COBRADO LA FACTURA MARQUE LA CASILLA: &nbsp; 
+			<input type='checkbox' name='xl' value='yes' ");
+			if($defaults['xl'] == 'yes') {print(" checked=\"checked\"");}
+			print(" />
+					</td>
+				</tr>
 				<tr>
-					<td colspan='2'>
-						SI SE HA COBRADO LA FACTURA MARQUE LA CASILLA: &nbsp; 
-		<input type='checkbox' name='xl' value='yes' ");
-		if($defaults['xl'] == 'yes') {print(" checked=\"checked\"");}
-		print(" />
-
+					<td>NUMERO</td>
+					<td>
+		<input type='hidden' name='factnum' value='".$defaults['factnum']."' />".strtoupper($defaults['factnum'])."
 					</td>
 				</tr>
-									
 				<tr>
+					<td>FECHA</td>
 					<td>
-						NUMERO
-					</td>
-					<td>
-
-<input type='hidden' name='factnum' value='".$defaults['factnum']."' />".strtoupper($defaults['factnum'])."
-
+						<div style='float:left'>
+			<input type='hidden' name='dy' value='".$defaults['dy']."' />20".$defaults['dy']."
+						</div>
+						<div style='float:left'>
+			<input type='hidden' name='dm' value='".$defaults['dm']."' />/".$defaults['dm']."
+						</div>
+						<div style='float:left'>
+			<input type='hidden' name='dd' value='".$defaults['dd']."' />/".$defaults['dd']."
+						</div>
 					</td>
 				</tr>
-									
 				<tr>
-					<td>						
-						FECHA
-					</td>
+					<td>RAZON SOCIAL</td>
 					<td>
-					
-				<div style='float:left'>
-<input type='hidden' name='dy' value='".$defaults['dy']."' />20".$defaults['dy']."
-					</div>
-					
-					<div style='float:left'>
-<input type='hidden' name='dm' value='".$defaults['dm']."' />/".$defaults['dm']."
-					</div>
-
-					<div style='float:left'>
-<input type='hidden' name='dd' value='".$defaults['dd']."' />/".$defaults['dd']."
-					</div>
-
+		<input type='hidden' name='factnom' value='".$defaults['factnom']."' />".$defaults['factnom']."
 					</td>
 				</tr>
-									
 				<tr>
-					<td>						
-						RAZON SOCIAL
-					</td>
+					<td>NIF/CIF</td>
 					<td>
-<input type='hidden' name='factnom' value='".$defaults['factnom']."' />".$defaults['factnom']."
+		<input type='hidden' name='factnif'value='".$defaults['factnif']."' />".$defaults['factnif']."
 					</td>
 				</tr>
-					
-					</td>
-				</tr>
-
 				<tr>
-					<td>						
-						NIF/CIF
-					</td>
+					<td>IMPUESTOS %</td>
 					<td>
-<input type='hidden' name='factnif'value='".$defaults['factnif']."' />".$defaults['factnif']."
+						<div style='float:left'>
+		<input type='hidden' name='factiva' value='".$defaults['factiva']."' />".$defaults['factiva']." %
+						</div>
 					</td>
 				</tr>
-					
 				<tr>
-					<td>						
-						IMPUESTOS %
-					</td>
+					<td>IMPUESTOS €</td>
 					<td>
-					
-			<div style='float:left'>
-<input type='hidden' name='factiva' value='".$defaults['factiva']."' />".$defaults['factiva']." %
-			</div>
+		<input type='hidden' name='factivae1' value='".$defaults['factivae1']."' />".$defaults['factivae1']."
+			,
+		<input type='hidden' name='factivae2' value='".$defaults['factivae2']."' />".$defaults['factivae2']."
+			€
 					</td>
 				</tr>
-
 				<tr>
-					<td>						
-						IMPUESTOS €
-					</td>
+					<td>RETENCIONES %</td>
 					<td>
-<input type='hidden' name='factivae1' value='".$defaults['factivae1']."' />".$defaults['factivae1']."
-,
-<input type='hidden' name='factivae2' value='".$defaults['factivae2']."' />".$defaults['factivae2']."
-€
+						<div style='float:left'>
+		<input type='hidden' name='factret' value='".$defaults['factret']."' />".$defaults['factret']." %
+						</div>
 					</td>
 				</tr>
-					
 				<tr>
-					<td>						
-						RETENCIONES %
-					</td>
+					<td>RETENCIONES €</td>
 					<td>
-					
-			<div style='float:left'>
-<input type='hidden' name='factret' value='".$defaults['factret']."' />".$defaults['factret']." %
-			</div>
+		<input type='hidden' name='factrete1' value='".$defaults['factrete1']."' />".$defaults['factrete1']."
+			,
+		<input type='hidden' name='factrete2' value='".$defaults['factrete2']."' />".$defaults['factrete2']."
+		€
 					</td>
 				</tr>
-
 				<tr>
-					<td>						
-						RETENCIONES €
-					</td>
+					<td>SUBTOTAL €</td>
 					<td>
-<input type='hidden' name='factrete1' value='".$defaults['factrete1']."' />".$defaults['factrete1']."
-,
-<input type='hidden' name='factrete2' value='".$defaults['factrete2']."' />".$defaults['factrete2']."
-€
+		<input type='hidden' name='factpvp1' value='".$defaults['factpvp1']."' />".$defaults['factpvp1']."
+			,
+		<input type='hidden' name='factpvp2' value='".$defaults['factpvp2']."' />".$defaults['factpvp2']."
+		€
 					</td>
 				</tr>
-
 				<tr>
-					<td>						
-						SUBTOTAL €
-					</td>
+					<td>TOTAL €</td>
 					<td>
-<input type='hidden' name='factpvp1' value='".$defaults['factpvp1']."' />".$defaults['factpvp1']."
-,
-<input type='hidden' name='factpvp2' value='".$defaults['factpvp2']."' />".$defaults['factpvp2']."
-€
+		<input type='hidden' name='factpvptot1' value='".$defaults['factpvptot1']."' />".$defaults['factpvptot1']."
+			,
+		<input type='hidden' name='factpvptot2' value='".$defaults['factpvptot2']."' />".$defaults['factpvptot2']."
+			€
 					</td>
 				</tr>
-					
 				<tr>
-					<td>						
-						TOTAL €
-					</td>
+					<td>DESCRIPCIÓN</td>
 					<td>
-<input type='hidden' name='factpvptot1' value='".$defaults['factpvptot1']."' />".$defaults['factpvptot1']."
-,
-<input type='hidden' name='factpvptot2' value='".$defaults['factpvptot2']."' />".$defaults['factpvptot2']."
-€
+		<input type='hidden' name='coment' id='coment' value='".$defaults['coment']."'>".$defaults['coment']."
 					</td>
 				</tr>
-
-				<tr>
-					<td>
-						DESCRIPCIÓN
-					</td>
-					<td>
-					
-<input type='hidden' name='coment' id='coment' value='".$defaults['coment']."'>".$defaults['coment']."
-
-					</td>
-				</tr>
-
 				<tr>
 					<td colspan='2' align='right' valign='middle'  class='BorderSup'>
 						<input type='submit' value='COBRAR GASTO PENDIENTE' />
 						<input type='hidden' name='oculto' value=1 />
+				</form>														
 					</td>
 				</tr>
-				
-		</form>														
 			
-			</table>				
-						"); 
+			</table>"); 
 			}
 		}
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-function info_01(){
+	function info_01(){
 
-	global $db;
+		global $db;
+		
+		$filtro = "\n\tFiltro => \n\tDATE: ".$_POST['factdate'].".\n\tR. Social: ".$_POST['factnom'].".\n\tDNI: ".$_POST['factnif'].".\n\tNº FACTURA: ".$_POST['factnum'].".";
+
+		$ActionTime = date('H:i:s');
+
+		global $dir;
+		if ($_SESSION['Nivel'] == 'admin'){ 
+					$dir = "../cbj_Docs/log";
+					}
+		
+		global $text;
+		$text = "\n- GASTO PENDIENTE MODIFICAR SELECCIONADO FACTURA PAGADA ".$ActionTime.".\n\tNº FACTURA: ".$_POST['factnum'].".\n\tDATE FACTURA: ".$_POST['factdate'].".\n\tRAZON SOCIAL: ".$_POST['factnom'].".\n\tNIF: ".$_POST['factnif'].".\n\tTIPO IVA %: ".$_POST['factiva'].".\n\tIMP €: ".$_POST['factivae'].".\n\tNETO €: ".$_POST['factpvp'].".\n\tTOTAL €: ".$_POST['factpvptot'];
 	
-	$filtro = "\n\tFiltro => \n\tDATE: ".$_POST['factdate'].".\n\tR. Social: ".$_POST['factnom'].".\n\tDNI: ".$_POST['factnif'].".\n\tNº FACTURA: ".$_POST['factnum'].".";
+		$logdocu = $_SESSION['ref'];
+		$logdate = date('Y-m-d');
+		$logtext = $text."\n";
+		$filename = $dir."/".$logdate."_".$logdocu.".log";
+		$log = fopen($filename, 'ab+');
+		fwrite($log, $logtext);
+		fclose($log);
+
+	}
+
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
+
+	function info_02(){
+
+	global $db; 		global $factivae;
+	global $factpvp; 	global $factpvptot; 	global $factdate;
 
 	$ActionTime = date('H:i:s');
 
@@ -845,37 +542,7 @@ function info_01(){
 				}
 	
 	global $text;
-$text = "\n- GASTO PENDIENTE MODIFICAR SELECCIONADO FACTURA PAGADA ".$ActionTime.".\n\tNº FACTURA: ".$_POST['factnum'].".\n\tDATE FACTURA: ".$_POST['factdate'].".\n\tRAZON SOCIAL: ".$_POST['factnom'].".\n\tNIF: ".$_POST['factnif'].".\n\tTIPO IVA %: ".$_POST['factiva'].".\n\tIMP €: ".$_POST['factivae'].".\n\tNETO €: ".$_POST['factpvp'].".\n\tTOTAL €: ".$_POST['factpvptot'];
-	
-	$logdocu = $_SESSION['ref'];
-	$logdate = date('Y-m-d');
-	$logtext = $text."\n";
-	$filename = $dir."/".$logdate."_".$logdocu.".log";
-	$log = fopen($filename, 'ab+');
-	fwrite($log, $logtext);
-	fclose($log);
-
-	}
-
-/////////////////////////////////////////////////////////////////////////////////////////////////
-
-function info_02(){
-
-	global $db;
-	global $factivae;
-	global $factpvp;
-	global $factpvptot;
-	global $factdate;
-
-	$ActionTime = date('H:i:s');
-
-	global $dir;
-	if ($_SESSION['Nivel'] == 'admin'){ 
-				$dir = "../cbj_Docs/log";
-				}
-	
-global $text;
-$text = "\n- GASTO PENDIENTE MODIFICADO FACTURA PAGADA ".$ActionTime.".\n\tNº FACTURA: ".$_POST['factnum'].".\n\tDATE FACTURA: ".$factdate.".\n\tRAZON SOCIAL: ".$_POST['factnom'].".\n\tNIF: ".$_POST['factnif'].".\n\tTIPO IVA %: ".$_POST['factiva'].".\n\tIMP €: ".$factivae.".\n\tNETO €: ".$factpvp.".\n\tTOTAL €: ".$factpvptot;
+	$text = "\n- GASTO PENDIENTE MODIFICADO FACTURA PAGADA ".$ActionTime.".\n\tNº FACTURA: ".$_POST['factnum'].".\n\tDATE FACTURA: ".$factdate.".\n\tRAZON SOCIAL: ".$_POST['factnom'].".\n\tNIF: ".$_POST['factnif'].".\n\tTIPO IVA %: ".$_POST['factiva'].".\n\tIMP €: ".$factivae.".\n\tNETO €: ".$factpvp.".\n\tTOTAL €: ".$factpvptot;
 
 		$logname = $_SESSION['Nombre'];	
 		$logape = $_SESSION['Apellidos'];	
@@ -891,7 +558,9 @@ $text = "\n- GASTO PENDIENTE MODIFICADO FACTURA PAGADA ".$ActionTime.".\n\tNº F
 
 	}
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 	
 	function master_index(){
 		
@@ -902,11 +571,14 @@ $text = "\n- GASTO PENDIENTE MODIFICADO FACTURA PAGADA ".$ActionTime.".\n\tNº F
 		
 				} /* Fin funcion master_index.*/
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-	require '../Inclu/Conta_Footer.php';
+	 require '../Inclu/Conta_Footer.php';
+
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
 ?>

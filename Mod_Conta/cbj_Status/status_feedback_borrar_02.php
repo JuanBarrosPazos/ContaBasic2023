@@ -122,24 +122,6 @@ session_start();
 		global $db; 			global $db_name;	
 		global $sesionref; 		global $year;
 		global $ycod;
-		global $vname3;		$vname3 = "`".$_SESSION['clave']."balanceg`";
-		$vname3 = strtolower($vname3);	
-		$sql3 = "DELETE FROM `$db_name`.$vname3 WHERE `year` = '$year'";
-		if(mysqli_query($db, $sql3)){} 
-		else {print("* MODIFIQUE LA ENTRADA 182: ".mysqli_error($db));}
-
-		global $vname4;		$vname4 = "`".$_SESSION['clave']."balancei`";
-		$vname4 = strtolower($vname4);	
-		$sql4 = "DELETE FROM `$db_name`.$vname4 WHERE `year` = '$year'";
-		if(mysqli_query($db, $sql4)){} 
-		else {print("* MODIFIQUE LA ENTRADA 189: ".mysqli_error($db));}
-		
-		global $vname5;		$vname5 = "`".$_SESSION['clave']."balanced`";
-		$vname5 = strtolower($vname5);	
-		$sql5 = "DELETE FROM `$db_name`.$vname5 WHERE `year` = '$year'";
-		if(mysqli_query($db, $sql5)){} 
-		else {print("* MODIFIQUE LA ENTRADA 198: ".mysqli_error($db));}
-
 
 		global $fil;		$fil = $ycod."/%";
 		

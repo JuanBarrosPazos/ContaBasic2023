@@ -163,9 +163,6 @@ function validate_form(){
 	function crear_tablas(){
 				tingresos();
 				tgastos();
-				inserbalg();
-				inserbali();
-				inserbald();
 				insert_log();
 	}
 
@@ -271,110 +268,8 @@ function validate_form(){
 				}
 			}
 			
-		function inserbalg(){
-			
-			global $db;	 		global $db_name;
-			global $year; 		$dy = $year;
-			global $vname3;		$vname3 = "`".$_SESSION['clave']."balanceg`";
-			$vname3 = strtolower($vname3);	
+
 							
-			$balanceg = "INSERT INTO `$db_name`.$vname3 (`year`, `mes`, `iva`, `sub`, `ret`, `tot`) VALUES
-			($dy, 'M01', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M02', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M03', '0.00', '0.00', '0.00', '0.00'),  
-			($dy, 'M04', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M05', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M06', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M07', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M08', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M09', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M10', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M11', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M12', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'TRI1', '0.00', '0.00', '0.00', '0.00'),
-			($dy, 'TRI2', '0.00', '0.00', '0.00', '0.00'),
-			($dy, 'TRI3', '0.00', '0.00', '0.00', '0.00'),
-			($dy, 'TRI4', '0.00', '0.00', '0.00', '0.00'),
-			($dy, 'ANU', '0.00', '0.00', '0.00', '0.00')";
-					
-			global $dat3;
-			if(mysqli_query($db, $balanceg)){
-					$dat3 = "\tACTUALIZADA TABLA ".$vname3.".\n";
-			}else{print("* NO OK VALUES EN ".$vname3.". ".mysqli_error($db)."</br>");
-					$dat3 = "\tNO OK VALUES EN ".$vname3.". ".mysqli_error($db).".\n";
-						}
-			
-		}
-
-		function inserbali(){
-			
-			global $db;	 		global $db_name;
-			global $year; 		$dy = $year;
-			global $vname4;		$vname4 = "`".$_SESSION['clave']."balancei`";
-			$vname4 = strtolower($vname4);	
-							
-			$balancei = "INSERT INTO `$db_name`.$vname4 (`year`, `mes`, `iva`, `sub`, `ret`, `tot`) VALUES
-			($dy, 'M01', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M02', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M03', '0.00', '0.00', '0.00', '0.00'),  
-			($dy, 'M04', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M05', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M06', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M07', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M08', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M09', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M10', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M11', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M12', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'TRI1', '0.00', '0.00', '0.00', '0.00'),
-			($dy, 'TRI2', '0.00', '0.00', '0.00', '0.00'),
-			($dy, 'TRI3', '0.00', '0.00', '0.00', '0.00'),
-			($dy, 'TRI4', '0.00', '0.00', '0.00', '0.00'),
-			($dy, 'ANU', '0.00', '0.00', '0.00', '0.00')";
-
-			global $dat4;
-			if(mysqli_query($db, $balancei)){
-					$dat4 = "\tACTUALIZADA TABLA ".$vname4.".\n";
-			}else{ print("* NO OK VALUES EN ".$vname4.". ".mysqli_error($db)."</br>");
-					$dat4 = "\tNO OK VALUES EN ".$vname4.". ".mysqli_error($db).".\n";
-						}
-		}
-							
-		function inserbald(){
-			
-			global $db;	 		global $db_name;
-			global $year; 		$dy =  $year;
-
-			global $vname5; 		$vname5 = "`".$_SESSION['clave']."balanced`";
-			$vname5 = strtolower($vname5);	
-							
-			$balanced = "INSERT INTO `$db_name`.$vname5 (`year`, `mes`, `iva`, `sub`, `ret`, `tot`) VALUES
-			($dy, 'M01', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M02', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M03', '0.00', '0.00', '0.00', '0.00'),  
-			($dy, 'M04', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M05', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M06', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M07', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M08', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M09', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M10', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M11', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'M12', '0.00', '0.00', '0.00', '0.00'), 
-			($dy, 'TRI1', '0.00', '0.00', '0.00', '0.00'),
-			($dy, 'TRI2', '0.00', '0.00', '0.00', '0.00'),
-			($dy, 'TRI3', '0.00', '0.00', '0.00', '0.00'),
-			($dy, 'TRI4', '0.00', '0.00', '0.00', '0.00'),
-			($dy, 'ANU', '0.00', '0.00', '0.00', '0.00')";
-
-			global $dat5;
-			if(mysqli_query($db, $balanced)){
-					$dat5 = "\tACTUALIZADA TABLA ".$vname5.".\n";
-			}else{ print("* NO OK VALUES EN ".$vname5.". ".mysqli_error($db)."</br>");
-					$dat5 = "\tNO CREADA TABLA ".$vname5.". ".mysqli_error($db).".\n";
-						}
-			}
-
 		function insert_log(){
 			
 				global $dat1;	global $dat1b;	global $dat2;	global $dat2b;

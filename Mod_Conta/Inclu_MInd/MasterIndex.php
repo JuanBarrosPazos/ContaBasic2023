@@ -42,6 +42,8 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
  
 <!-- Inicio GESTIÓN DE GASTOS -->
 
+  	<li><a href='".$rutaGastos."Gastos_Ver.php' >GASTOS</a></li>
+
   	<li><a href='#' class='MenuBarItemSubmenu'>GASTOS</a>
 		<ul>
 			<li><a href='".$rutaGastos."Gastos_Ver.php'>GASTO CONSULTAR</a></li>
@@ -78,13 +80,7 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
 
 <!-- Inicio GESTIÓN DE BALANCES -->
 
-	<li><a href='#' class='MenuBarItemSubmenu'>BALANCES</a>
-		<ul>
-			<li><a href='".$rutaBalaces."Balances.php'>BALANCE VER</a></li>
-			<li><a href='".$rutaIngresos."Ingresos_Ver.php'>BALANCE INGRESO</a></li>
-			<li><a href='".$rutaGastos."Gastos_Ver.php'>BALANCE GASTO</a></li>
-		</ul>
-	</li>
+	<li><a  href='".$rutaIndex."index.php' >BALANCES</a></li>
 	
 <!-- Fin GESTIÓN DE BALANCES -->
  

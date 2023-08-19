@@ -313,7 +313,7 @@ a:hover  img {
 	background-color: #90faf5;
 }
 .botonnaranja {
-	background-color: #fdc97a;
+	background-color: #f8cd41;
 }
 .botonrojo {
 	background-color: #ff4d4d;
@@ -322,21 +322,21 @@ a:hover  img {
 	background-color: #dd92fd;
 }
 
-.botonverde, .botonnaranja, .botonrojo, .botonazul, select {
+.botonverde, .botonnaranja, .botonrojo, .botonazul, select, input, label {
 	cursor: pointer;
 	border: none;
 
 	display: inline-block;
 	width: max-content;
 	/*vertical-align: text-bottom;*/
-	margin: 0.6em;
+	margin: 0.1em 0.3em;
 	padding: 5px 5px 3px 5px !important;
 	border-radius: 4px;
 	font-weight: bold;
 	color: #343434 !important;
 }
 .botonverde:hover, .botonnaranja:hover, .botonrojo:hover, .botonazul:hover {
-	background-color: #f8b147;
+	background-color: #fff1b4;
 }
 /* FIN BOTONES */
 

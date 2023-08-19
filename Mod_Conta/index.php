@@ -182,134 +182,8 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	function inserbalg(){
-		
-		global $db;		global $db_name;
-
-		$dy = date('Y');
-
-		$vname7 = "`".$_SESSION['clave']."abalanceg`";
-		$vname7 = strtolower($vname7);	
-						
-	$balanceg2 = "INSERT INTO `$db_name`.$vname7 (`year`, `mes`, `iva`, `sub`, `ret`, `tot`) VALUES
-	($dy, 'M01', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M02', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M03', '0.00', '0.00', '0.00', '0.00'),  
-	($dy, 'M04', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M05', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M06', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M07', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M08', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M09', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M10', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M11', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M12', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'TRI1', '0.00', '0.00', '0.00', '0.00'),
-	($dy, 'TRI2', '0.00', '0.00', '0.00', '0.00'),
-	($dy, 'TRI3', '0.00', '0.00', '0.00', '0.00'),
-	($dy, 'TRI4', '0.00', '0.00', '0.00', '0.00'),
-	($dy, 'ANU', '0.00', '0.00', '0.00', '0.00')";
-		if(mysqli_query($db, $balanceg2)){
-				global $dat6;
-				$dat6 = "\tACTUALIZADA TABLA ".$vname7.".\n";
-					} else {
-						print("* NO OK VALUES EN ".$vname7.". ".mysqli_error($db)."</br>");
-				global $dat6;
-				$dat6 = "\tNO CREADA TABLA ".$vname7.". ".mysqli_error($db).".\n";
-						}
-
-	} // FIN FUNCTION inserbalg()
-
-				   ////////////////////				   ////////////////////
-////////////////////				////////////////////				////////////////////
-				 ////////////////////				  ///////////////////
-
-	function inserbali(){
-		
-		global $db; 	global $db_name;
-
-		$dy = date('Y');
-
-		$vname8 = "`".$_SESSION['clave']."balancei`";
-		$vname8 = strtolower($vname8);	
-						
-	$balancei2 = "INSERT INTO `$db_name`.$vname8 (`year`, `mes`, `iva`, `sub`, `ret`, `tot`) VALUES
-	($dy, 'M01', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M02', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M03', '0.00', '0.00', '0.00', '0.00'),  
-	($dy, 'M04', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M05', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M06', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M07', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M08', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M09', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M10', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M11', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M12', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'TRI1', '0.00', '0.00', '0.00', '0.00'),
-	($dy, 'TRI2', '0.00', '0.00', '0.00', '0.00'),
-	($dy, 'TRI3', '0.00', '0.00', '0.00', '0.00'),
-	($dy, 'TRI4', '0.00', '0.00', '0.00', '0.00'),
-	($dy, 'ANU', '0.00', '0.00', '0.00', '0.00')
-	";
-		if(mysqli_query($db, $balancei2)){
-				global $dat7;
-				$dat7 = "\tACTUALIZADA TABLA ".$vname8.".\n";
-					} else {
-						print("* NO OK VALUES EN ".$vname8.". ".mysqli_error($db)."</br>");
-						global $dat7;
-						$dat7 = "\tNO CREADA TABLA ".$vname8.". ".mysqli_error($db).".\n";
-						}
-	}
-
-				   ////////////////////				   ////////////////////
-////////////////////				////////////////////				////////////////////
-				 ////////////////////				  ///////////////////
-
-	function inserbald(){
-		
-		global $db;	 	global $db_name;
-
-		$dy = date('Y');
-
-		$vname9 = "`".$_SESSION['clave']."balanced`";
-		$vname9 = strtolower($vname9);	
-						
-	$balanced2 = "INSERT INTO `$db_name`.$vname9 (`year`, `mes`, `iva`, `sub`, `ret`, `tot`) VALUES
-	($dy, 'M01', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M02', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M03', '0.00', '0.00', '0.00', '0.00'),  
-	($dy, 'M04', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M05', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M06', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M07', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M08', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M09', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M10', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M11', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'M12', '0.00', '0.00', '0.00', '0.00'), 
-	($dy, 'TRI1', '0.00', '0.00', '0.00', '0.00'),
-	($dy, 'TRI2', '0.00', '0.00', '0.00', '0.00'),
-	($dy, 'TRI3', '0.00', '0.00', '0.00', '0.00'),
-	($dy, 'TRI4', '0.00', '0.00', '0.00', '0.00'),
-	($dy, 'ANU', '0.00', '0.00', '0.00', '0.00')
-	";
-		if(mysqli_query($db, $balanced2)){
-				global $dat8;
-				$dat8 = "\tACTUALIZADA TABLA ".$vname9.".\n";
-					} else {
-						print("* NO OK VALUES EN ".$vname9.". ".mysqli_error($db)."</br>");
-						global $dat8;
-						$dat8 = "\tNO CREADA TABLA ".$vname9.". ".mysqli_error($db).".\n";
-						}
-		
-		}
-
-				   ////////////////////				   ////////////////////
-////////////////////				////////////////////				////////////////////
-				 ////////////////////				  ///////////////////
-	
 	function newstatus(){
+
 		global $db;	 		global $db_name;
 		
 		global $vname10; 	$vname10 = "`".$_SESSION['clave']."status`";
@@ -355,7 +229,6 @@ session_start();
 					<div style='width:200px'>* EL AÑO HA CAMBIADO </div>"/*.date('Y')." != ".$fget */);
 			modif();
 			modif2(); 		tingresos(); 		tgastos();
-			inserbalg(); 	inserbali(); 		inserbald();
 			newstatus();
 			global $dat2;	global $dat3;	global $dat4;	global $dat4b;	global $dat5;
 			global $dat5b;	global $dat6;	global $dat7;	global $dat8;	global $dat9;
@@ -502,12 +375,12 @@ session_start();
 			<form name='filtroBal' method='post' action='$_SERVER[PHP_SELF]' >
 					<tr>
 						<td align='center' class='BorderSup'>
-							<input type='submit' value='FILTRO BALANCES' />
+							<input type='submit' value='FILTRO BALANCES' class='botonazul' />
 							<input type='hidden' name='filtroBal' value=1 />
 						</td>
 						<td class='BorderSup'>	
 						<div style='float:left'>
-							<select name='Orden'>");
+							<select name='Orden' title='ORDENAR POR...' class='botonverde'>");
 							
 		foreach($ordenar as $option => $label){
 				print ("<option value='".$option."' ");
@@ -522,7 +395,7 @@ session_start();
 		print ("</select>
 					</div>
 					<div style='float:left'>
-						<select name='dm'>");
+						<select name='dm' title='SELECCIONAR MES...' class='botonverde' >");
 
 		foreach($dm as $optiondm => $labeldm){
 					print ("<option value='".$optiondm."' ");

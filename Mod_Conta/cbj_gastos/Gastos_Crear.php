@@ -23,7 +23,6 @@ session_start();
 							show_form($form_errors);
 			} else { process_form();
 					 info();
-					 difer1();
 						}
 								
 		} else { show_form(); }
@@ -48,134 +47,7 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	function difer1(){
-
-	global $db; 		global $db_name;
-	
-	$_SESSION['diferyear'] = $_POST['dy'];
-	
-	global $dyx; 		$dyx = "20".$_POST['dy'];
-	global $dmx; 		$dmx = "M".$_POST['dm'];
-/*
-	if(($dmx != 10)||($dmx != 11)||($dmx != 12)){
-	$dmx = substr($_POST['dm'],-1);
-		}
-*/
-	global $sesionref;
-
-	global $vnamebali; 		$vnamebali = "`".$_SESSION['clave']."balancei`";
-	global $vnamebalg; 		$vnamebalg = "`".$_SESSION['clave']."balanceg`";
-	global $vnamebald; 		$vnamebald = "`".$_SESSION['clave']."balanced`";
-	
-	////////////////	DIFERENCIAL MES		////////////////
-
-	$sqlbalg =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
-	$qbalg = mysqli_query($db, $sqlbalg);
-	$countbalg = mysqli_num_rows($qbalg);
-	$rowbalg = mysqli_fetch_assoc($qbalg);
-	
-	$sqlbali =  "SELECT * FROM `$db_name`.$vnamebali WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
-	$qbali = mysqli_query($db, $sqlbali);
-	$countbali = mysqli_num_rows($qbali);
-	$rowbali = mysqli_fetch_assoc($qbali);
-	
-	$sumamesiva = $rowbali['iva'] - $rowbalg['iva'];
-		$sumamesiva = number_format($sumamesiva,2,".","");	
-	$sumamespvp = $rowbali['sub'] - $rowbalg['sub'];
-		$sumamespvp = number_format($sumamespvp,2,".","");	
-	$sumamesret = $rowbali['ret'] - $rowbalg['ret'];
-		$sumamesret = number_format($sumamesret,2,".","");	
-	$sumamestot = $rowbali['tot'] - $rowbalg['tot'];
-		$sumamestot = number_format($sumamestot,2,".","");	
-
-	//	print("* ".$dyt1." ".$dm1.".</br>");
-	//	print("* ".$sumamesiva." ".$sumamespvp." ".$sumamestot.".</br>");
-
-	$sqlbg = "UPDATE `$db_name`.$vnamebald  SET `iva` = '$sumamesiva', `sub` = '$sumamespvp', `ret` =  '$sumamesret', `tot` =  '$sumamestot' WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
-		
-		if(mysqli_query($db, $sqlbg)){ //print("**"); 
-		} else { print("* MODIFIQUE LA ENTRADA 87: ".mysqli_error($db));
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-							}
-
-	////////////////	DIFERENCIAL ANUAL		////////////////
-
-	$sqlbalg2 =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = 'ANU' ";
-	$qbalg2 = mysqli_query($db, $sqlbalg2);
-	$countbalg2 = mysqli_num_rows($qbalg2);
-	$rowbalg2 = mysqli_fetch_assoc($qbalg2);
-
-	$sqlbali2 =  "SELECT * FROM `$db_name`.$vnamebali WHERE `year` = '$dyx' AND `mes` = 'ANU' ";
-	$qbali2 = mysqli_query($db, $sqlbali2);
-	$countbali2 = mysqli_num_rows($qbali2);
-	$rowbali2 = mysqli_fetch_assoc($qbali2);
-	
-	$sumayeariva2 = $rowbali2['iva'] - $rowbalg2['iva'];
-		$sumayeariva2 = number_format($sumayeariva2,2,".","");	
-	$sumayearpvp2 = $rowbali2['sub'] - $rowbalg2['sub'];
-		$sumayearpvp2 = number_format($sumayearpvp2,2,".","");	
-	$sumayearret2 = $rowbali2['ret'] - $rowbalg2['ret'];	
-		$sumayearret2 = number_format($sumayearret2,2,".","");	
-	$sumayeartot2 = $rowbali2['tot'] - $rowbalg2['tot'];	
-		$sumayeartot2 = number_format($sumayeartot2,2,".","");	
-
-	//	print("* ".$sumayeariva." ".$sumayearpvp." ".$sumayeartot.".</br>");
-
-	$sqlbg2 = "UPDATE `$db_name`.$vnamebald  SET `iva` = '$sumayeariva2', `sub` = '$sumayearpvp2', `ret` =  '$sumayearret2', `tot` =  '$sumayeartot2' WHERE `year` = '$dyx' AND `mes` = 'ANU' ";
-		
-		if(mysqli_query($db, $sqlbg2)){ //print("**"); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA 118: ".mysqli_error($db));
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-							}
-
-	////////////////	DIFERENCIAL TRIMESTRAL		////////////////
-
-	global $mes;
-	if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
-	elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
-	elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
-	elseif(($dmx == "10")||($dmx == "11")||($dmx == "12")){$mes = "TRI4";}
-	
-	$sqlbalg3 =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = '$mes' ";
-	$qbalg3 = mysqli_query($db, $sqlbalg3);
-	$countbalg3 = mysqli_num_rows($qbalg3);
-	$rowbalg3 = mysqli_fetch_assoc($qbalg3);
-
-	$sqlbali3 =  "SELECT * FROM `$db_name`.$vnamebali WHERE `year` = '$dyx' AND `mes` = '$mes' ";
-	$qbali3 = mysqli_query($db, $sqlbali3);
-	$countbali3 = mysqli_num_rows($qbali3);
-	$rowbali3 = mysqli_fetch_assoc($qbali3);
-	
-	$sumatriiva3 = $rowbali3['iva'] - $rowbalg3['iva'];
-		$sumatriiva3 = number_format($sumatriiva3,2,".","");	
-	$sumatripvp3 = $rowbali3['sub'] - $rowbalg3['sub'];
-		$sumatripvp3 = number_format($sumatripvp3,2,".","");	
-	$sumatriret3 = $rowbali3['ret'] - $rowbalg3['ret'];
-		$sumatriret3 = number_format($sumatriret3,2,".","");	
-	$sumatritot3 = $rowbali3['tot'] - $rowbalg3['tot'];
-		$sumatritot3 = number_format($sumatritot3,2,".","");	
-
-	//	print("* ".$sumatriiva." ".$sumatripvp." ".$sumatritot.".</br>");
-
-	$sqlbg3 = "UPDATE `$db_name`.$vnamebald  SET `iva` = '$sumatriiva3', `sub` = '$sumatripvp3', `ret` =  '$sumatriret3', `tot` =  '$sumatritot3' WHERE `year` = '$dyx' AND `mes` = '$mes' ";
-		
-		if(mysqli_query($db, $sqlbg3)){ //print("**"); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA 156: ".mysqli_error($db));
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-							}
-			
-	} // FIN function difer1()
-		
-				   ////////////////////				   ////////////////////
-////////////////////				////////////////////				////////////////////
-				 ////////////////////				  ///////////////////
-
-function process_form(){
+	function process_form(){
 	
 	global $db; 		global $db_name;	
 	global $dyt1; 		global $dm1;
@@ -443,94 +315,12 @@ function process_form(){
 	$dmx = substr($_POST['dm'],-1);
 		}
 */
-	global $vnamebalg; 		$vnamebalg = "`".$_SESSION['clave']."balanceg`";
-	global $vnamebali; 		$vnamebali = "`".$_SESSION['clave']."balancei`";
-	$sqlbalg =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
-	$qbalg = mysqli_query($db, $sqlbalg);
-	$countbali = mysqli_num_rows($qbalg);
-	$rowbalg = mysqli_fetch_assoc($qbalg);
 	
-	$sumamesiva = $rowbalg['iva'] + $factivae;	
-		$sumamesiva = number_format($sumamesiva,2,".","");	
-	$sumamespvp = $rowbalg['sub'] + $factpvp;	
-		$sumamespvp = number_format($sumamespvp,2,".","");	
-	$sumamesret = $rowbalg['ret'] + $factrete;	
-		$sumamesret = number_format($sumamesret,2,".","");	
-	$sumamestot = $rowbalg['tot'] + $factpvptot;	
-		$sumamestot = number_format($sumamestot,2,".","");	
-
-	//print("* ".$dyt1." ".$dm1.".</br>");
-	//print("* ".$sumamesiva." ".$sumamespvp." ".$sumamestot.".</br>");
-
-	$sqlbi = "UPDATE `$db_name`.$vnamebalg  SET `iva` = '$sumamesiva', `sub` = '$sumamespvp', `ret` = '$sumamesret', `tot` =  '$sumamestot' WHERE `year` = '$dyx' AND `mes` = '$dmx' ";
-		
-		if(mysqli_query($db, $sqlbi)){ //print("**"); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA 914: ".mysqli_error($db));
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-							}
-
-		/////////////
-	
-	$sqlbalg2 =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = 'ANU' ";
-	$qbalg2 = mysqli_query($db, $sqlbalg2);
-	$countbalg2 = mysqli_num_rows($qbalg2);
-	$rowbalg2 = mysqli_fetch_assoc($qbalg2);
-
-	$sumayeariva = $rowbalg2['iva'] + $factivae;	
-		$sumayeariva = number_format($sumayeariva,2,".","");	
-	$sumayearpvp = $rowbalg2['sub'] + $factpvp;	
-		$sumayearpvp = number_format($sumayearpvp,2,".","");	
-	$sumayearret = $rowbalg2['ret'] + $factrete;	
-		$sumayearret = number_format($sumayearret,2,".","");	
-	$sumayeartot = $rowbalg2['tot'] + $factpvptot;	
-		$sumayeartot = number_format($sumayeartot,2,".","");	
-
-	//print("* ".$sumayeariva." ".$sumayearpvp." ".$sumayeartot.".</br>");
-
-	$sqlbg2 = "UPDATE `$db_name`.$vnamebalg  SET `iva` = '$sumayeariva', `sub` = '$sumayearpvp', `ret` = '$sumayearret', `tot` =  '$sumayeartot' WHERE `year` = '$dyx' AND `mes` = 'ANU' ";
-		
-		if(mysqli_query($db, $sqlbg2)){ //print("**"); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA 936: ".mysqli_error($db));
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-							}
-
-		/////////////
-
 	global $mes;
 	if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
 	elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
 	elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
 	elseif(($dmx == "10")||($dmx == "11")||($dmx == "12")){$mes = "TRI4";}
-	
-	$sqlbalg3 =  "SELECT * FROM `$db_name`.$vnamebalg WHERE `year` = '$dyx' AND `mes` = '$mes' ";
-	$qbalg3 = mysqli_query($db, $sqlbalg3);
-	$countbalg3 = mysqli_num_rows($qbalg3);
-	$rowbalg3 = mysqli_fetch_assoc($qbalg3);
-
-	$sumatriiva = $rowbalg3['iva'] + $factivae;	
-		$sumatriiva = number_format($sumatriiva,2,".","");	
-	$sumatripvp = $rowbalg3['sub'] + $factpvp;	
-		$sumatripvp = number_format($sumatripvp,2,".","");	
-	$sumatriret = $rowbalg3['ret'] + $factrete;	
-		$sumatriret = number_format($sumatriret,2,".","");	
-	$sumatritot = $rowbalg3['tot'] + $factpvptot;	
-		$sumatritot = number_format($sumatritot,2,".","");	
-
-	//print("* ".$sumatriiva." ".$sumatripvp." ".$sumatritot.".</br>");
-
-	$sqlbg3 = "UPDATE `$db_name`.$vnamebalg  SET `iva` = '$sumatriiva', `sub` = '$sumatripvp',`ret` = '$sumatriret', `tot` =  '$sumatritot' WHERE `year` = '$dyx' AND `mes` = '$mes' ";
-		
-		if(mysqli_query($db, $sqlbg3)){ //print("**"); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA 964: ".mysqli_error($db));
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
-							}
-			
 	
 	} // FIN function process_form()	
 
@@ -950,6 +740,5 @@ function process_form(){
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
-
 
 ?>
