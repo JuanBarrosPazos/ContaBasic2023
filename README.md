@@ -9,7 +9,7 @@
 - 
 
 ----
-### 2023/08/17 VERSIÓN Conta_Basic_New V23.03.04
+### 2023/08/19 VERSIÓN Conta_Basic_New V23.03.06
 
 - FEEDBACK / PAPELERA EJERCICOS / STATUS
 - 
