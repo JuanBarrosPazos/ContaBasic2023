@@ -115,15 +115,15 @@ function validate_form(){
 		elseif (move_uploaded_file($_FILES['myimg']['tmp_name'], $destination_file)){
 
 		// Eliminar el archivo antiguo untitled.png
-		if($_SESSION['myimg'] != 'untitled.png' ){
-		unlink($ruta.$_SESSION['myimg']);
+		if($_SESSION['ImgCbj'] != 'untitled.png' ){
+		unlink($ruta.$_SESSION['ImgCbj']);
 									}
 		// Renombrar el archivo:
 		$extension = substr($_FILES['myimg']['name'],-3);
 		// print($extension);
 		// $extension = end(explode('.', $_FILES['myimg']['name']) );
 		//global $new_name;
-		//	$new_name = $_SESSION['myimg'];
+		//	$new_name = $_SESSION['ImgCbj'];
 		date('H:i:s');
 		date('Y-m-d');
 		$dt = date('is');
@@ -166,7 +166,7 @@ function process_form(){
 	if(isset($_POST['oculto2'])){
 		
 		/*
-			unset($_SESSION['myimg']);	
+			unset($_SESSION['ImgCbj']);	
 			unset($_SESSION['myimg1']);
 			unset($_SESSION['myimg2']);
 			unset($_SESSION['myimg3']);
@@ -393,13 +393,13 @@ function show_form($errors=[]){
 	$ruta = "../cbj_Docs/docgastos_".$_SESSION['midyt1']."/";
 	$_SESSION['ruta'] = $ruta;
 
-	if(isset($_POST['mimg1'])){	$_SESSION['myimg'] = $_SESSION['myimg1'];
+	if(isset($_POST['mimg1'])){	$_SESSION['ImgCbj'] = $_SESSION['myimg1'];
 								$_SESSION['imgcamp'] = "myimg1";}
-	if(isset($_POST['mimg2'])){	$_SESSION['myimg'] = $_SESSION['myimg2'];
+	if(isset($_POST['mimg2'])){	$_SESSION['ImgCbj'] = $_SESSION['myimg2'];
 								$_SESSION['imgcamp'] = "myimg2";}
-	if(isset($_POST['mimg3'])){	$_SESSION['myimg'] = $_SESSION['myimg3'];
+	if(isset($_POST['mimg3'])){	$_SESSION['ImgCbj'] = $_SESSION['myimg3'];
 								$_SESSION['imgcamp'] = "myimg3";}
-	if(isset($_POST['mimg4'])){	$_SESSION['myimg'] = $_SESSION['myimg4'];
+	if(isset($_POST['mimg4'])){	$_SESSION['ImgCbj'] = $_SESSION['myimg4'];
 								$_SESSION['imgcamp'] = "myimg4";}
 
 	if(isset($_POST['oculto2'])){
@@ -417,7 +417,7 @@ function show_form($errors=[]){
 									'valor' => $_SESSION['mivalor'],
 									'nombre' => $_SESSION['minombre'],
 									'ref' => $_SESSION['miref'],									
-									'myimg' => $_SESSION['myimg']);
+									'myimg' => $_SESSION['ImgCbj']);
 								}
 
 	elseif(isset($_POST['imagenmodif'])){
@@ -426,7 +426,7 @@ function show_form($errors=[]){
 									'valor' => $_SESSION['mivalor'],
 									'nombre' => $_SESSION['minombre'],
 									'ref' => $_SESSION['miref'],									
-									'myimg' => $_SESSION['myimg']);
+									'myimg' => $_SESSION['ImgCbj']);
 								}
 
 	if ($errors){
@@ -463,7 +463,7 @@ function show_form($errors=[]){
 			</tr>
 			<tr>
 				<th colspan=2>
-					LA IMAGEN ACTUAL </br>".strtoupper($defaults['seccion'])." / ".strtoupper($defaults['nombre'])." / ".strtoupper($_SESSION['myimg']).".
+					LA IMAGEN ACTUAL </br>".strtoupper($defaults['seccion'])." / ".strtoupper($defaults['nombre'])." / ".strtoupper($_SESSION['ImgCbj']).".
 						</br></br>
 				<form name='cero' method='post' action='$_SERVER[PHP_SELF]'>
 					<input type='submit' value='ACTUALIZAR VISTAS' class='botonverde' />
