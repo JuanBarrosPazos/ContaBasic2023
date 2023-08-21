@@ -142,7 +142,7 @@ $_SESSION['usuarios'] = '';
 	/*	
 	$sqlc =  "SELECT * FROM $vname WHERE (`factnum` = '$fnum' OR `factnif` = '$fnif' OR `refprovee` = '$fnom') AND  (`factdate` LIKE '$fil') ORDER BY $orden ";
 	*/
-	echo $sqlc;
+	//echo $sqlc;
 	$qc = mysqli_query($db, $sqlc);
 	
 /////////////////////	
@@ -201,17 +201,21 @@ $_SESSION['usuarios'] = '';
 					Se ha producido un error: </font>".mysqli_error($db)."</br>");
 	} else {
 		if(mysqli_num_rows($qc) == 0){
-			print ("<table align='center' style=\"border:0px\">
-						<tr>
-							<td align='center'>
-								<font color='#FF0000'>
-						NINGÚN DATO SE CIÑE A ESTOS CRITERIOS.
-							</br>
-						INTENTELO CON OTROS PARÁMETROS.
-								</font>
-							</td>
-						</tr>
-					</table>");
+					print ("<table align='center'>
+								<tr>
+									<td><font color='#FF0000'>NO HAY DATOS</font></td>
+								</tr>
+								<tr>
+							<th class='BorderInfDch'>
+			<a href='Gastos_Crear.php' class='botonverde' style='color:#343434 !important;'>
+				CREAR NUEVO GASTO
+			</a>
+			<a href='Gastos_Pendientes_Ver.php' class='botonverde' style='color:#343434 !important;'>
+				VER GASTOS PENDIENTES
+			</a>
+							</th>
+								</tr>
+							</table>");
 
 		}else{ 
 			print ("<table align='center'>
@@ -231,8 +235,8 @@ $_SESSION['usuarios'] = '';
 						<th class='BorderInfDch'>RET €</th>
 						<th class='BorderInfDch'>TOTAL</th>
 						<th colspan=4 class='BorderInfDch'>
-					<a href='Gastos_Crear.php' class='botonverde'>CREAR NUEVO GASTO</a>
-					<a href='Gastos_Pendientes_Ver.php' class='botonverde'>VER GASTOS PENDIENTES</a>
+			<a href='Gastos_Crear.php' class='botonverde' style='color:#343434 !important;'>CREAR NUEVO GASTO</a>
+			<a href='Gastos_Pendientes_Ver.php' class='botonverde' style='color:#343434 !important;'>VER GASTOS PENDIENTES</a>
 						</th>
 					</tr>");
 			
@@ -324,6 +328,18 @@ $_SESSION['usuarios'] = '';
 
 	function show_form($errors=[]){
 	
+		if(isset($_POST['show_formcl'])){
+					$defaults = $_POST;
+		} elseif(isset($_POST['todo'])){
+				$defaults = $_POST;
+		} else { $defaults = array ('factnom' => '',
+									'factnif' => '',
+									'factnum' => '',
+									'Orden' => isset($ordenar));
+								}
+
+		global $titulo; $titulo = "CONSULTAR GASTOS";
+
 		require 'Inc_Show_Form_01.php';	
 
 	}	/* Fin show_form(); */
@@ -587,6 +603,16 @@ function gt2(){
 								<tr>
 									<td><font color='#FF0000'>NO HAY DATOS</font></td>
 								</tr>
+								<tr>
+							<th class='BorderInfDch'>
+			<a href='Gastos_Crear.php' class='botonverde' style='color:#343434 !important;'>
+				CREAR NUEVO GASTO
+			</a>
+			<a href='Gastos_Pendientes_Ver.php' class='botonverde' style='color:#343434 !important;'>
+				VER GASTOS PENDIENTES
+			</a>
+							</th>
+								</tr>
 							</table>");
 
 			} else { print ("<table align='center'>
@@ -605,8 +631,8 @@ function gt2(){
 							<th class='BorderInfDch'>RET €</th>
 							<th class='BorderInfDch'>TOTAL</th>
 							<th colspan=4 class='BorderInfDch'>
-						<a href='Gastos_Crear.php' class='botonverde'>CREAR NUEVO GASTO</a>
-						<a href='Gastos_Pendientes_Ver.php' class='botonverde'>VER GASTOS PENDIENTES</a>
+			<a href='Gastos_Crear.php' class='botonverde' style='color:#343434 !important;'>CREAR NUEVO GASTO</a>
+			<a href='Gastos_Pendientes_Ver.php' class='botonverde' style='color:#343434 !important;'>VER GASTOS PENDIENTES</a>
 							</th>
 						</tr>");
 				

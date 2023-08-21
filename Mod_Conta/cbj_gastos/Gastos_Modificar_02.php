@@ -40,282 +40,11 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 		$errors = array();
 	
-	if(strlen(trim($_POST['factnum'])) == 0){
-		$errors [] = "FACTURA NUMERO <font color='#FF0000'>Campo obligatorio.</font>";
-		}
+		require 'ValidateForm.php';
 	
-	elseif (strlen(trim($_POST['factnum'])) < 5){
-		$errors [] = "FACTURA NUMERO <font color='#FF0000'>Más de 4 carácteres.</font>";
-		}
-		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\.\*\']+$/',$_POST['factnum'])){
-		$errors [] = "FACTURA NUMERO <font color='#FF0000'>Caracteres no válidos.</font>";
-		}
-		
-	elseif (!preg_match('/^[a-zA-Z,0-9_\s]+$/',$_POST['factnum'])){
-		$errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo letras o números sin acentos.</font>";
-		}
+		return $errors;
 
-	elseif (!preg_match('/^[A-Z,0-9_\s]+$/',$_POST['factnum'])){
-		$errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin acentos o _.</font>";
-		}
-
-	/*
-	
-	if(strlen(trim($_POST['factdate'])) == 0){
-		$errors [] = "FECHA <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-	
-	elseif (strlen(trim($_POST['factdate'])) < 5){
-		$errors [] = "FECHA <font color='#FF0000'>Más de 4 carácteres.</font>";
-		}
-		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\.\*\']+$/',$_POST['factdate'])){
-		$errors [] = "FECHA <font color='#FF0000'>Caracteres no válidos.</font>";
-		}
-	elseif (!preg_match('/^[a-zA-Z,0-9\s]+$/',$_POST['factdate'])){
-		$errors [] = "FECHA <font color='#FF0000'>Solo letras o números sin acentos.</font>";
-		}
-	*/
-
-	 /*VALIDAMOS EL CAMPO factnom */
-	
-	if(strlen(trim($_POST['factnom'])) == 0){
-		$errors [] = "RAZON SOCIAL <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-	
-	elseif (strlen(trim($_POST['factnom'])) < 4){
-		$errors [] = "RAZON SOCIAL <font color='#FF0000'>Más de 3 carácteres.</font>";
-		}
-		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\.\*\']+$/',$_POST['factnom'])){
-		$errors [] = "RAZON SOCIAL <font color='#FF0000'>Caracteres no válidos.</font>";
-		}
-		
-	elseif (!preg_match('/^[a-zA-Z,0-9_\s]+$/',$_POST['factnom'])){
-	$errors [] = "RAZON SOCIAL <font color='#FF0000'>Solo letras, números sin acentos 0 _.</font>";
-		}
-
-	 /*VALIDAMOS EL CAMPO factnif */
-	
-	if(strlen(trim($_POST['factnif'])) == 0){
-		$errors [] = "NIF/CIF <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-	
-	elseif (strlen(trim($_POST['factnif'])) < 5){
-		$errors [] = "NIF/CIF <font color='#FF0000'>Más de 4 carácteres.</font>";
-		}
-		
-	elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\.\*\']+$/',$_POST['factnif'])){
-		$errors [] = "NIF/CIF <font color='#FF0000'>Caracteres no válidos.</font>";
-		}
-		
-	elseif (!preg_match('/^[A-Z,0-9\s]+$/',$_POST['factnif'])){
-		$errors [] = "NIF/CIF <font color='#FF0000'>Solo mayusculas o números sin acentos.</font>";
-		}
-
-	/* Validamos el campo iva. */
-	
-	if($_POST['factiva'] == ''){
-		$errors [] = "IMPUESTOS: <font color='#FF0000'>SELECCIONE EL TIPO DE IVA</font>";
-		}
-					
-	/* VALIDAMOS EL CAMPO factivae */
-	
-		if(strlen(trim($_POST['factivae1'])) == 0){
-			$errors [] = "IMPUESTOS € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factivae1'])){
-				$errors [] = "IMPUESTOS € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-				}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factivae1'])){
-			$errors [] = "IMPUESTOS € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-		if(strlen(trim($_POST['factivae2'])) == 0){
-			$errors [] = "IMPUESTOS € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factivae2'])){
-				$errors [] = "IMPUESTOS € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-				}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factivae2'])){
-			$errors [] = "IMPUESTOS € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-	/* Validamos el campo factret.*/ 
-	
-		if($_POST['factret'] == ''){
-			$errors [] = "RETENCIONES: <font color='#FF0000'>SELECCIONE EL TIPO DE IVA</font>";
-			}
-					
-	/* VALIDAMOS EL CAMPO factrete */
-	
-		if(strlen(trim($_POST['factrete1'])) == 0){
-			$errors [] = "RETENCIONES € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factrete1'])){
-			$errors [] = "RETENCIONES € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factrete1'])){
-			$errors [] = "RETENCIONES € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-		if(strlen(trim($_POST['factrete2'])) == 0){
-			$errors [] = "RETENCIONES € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factrete2'])){
-			$errors [] = "RETENCIONES € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factrete2'])){
-			$errors [] = "IMPUESTOS € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-	/* VALIDAMOS EL CAMPO factpvp */
-	
-		if(strlen(trim($_POST['factpvp1'])) == 0){
-			$errors [] = "SUBTOTAL € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factpvp1'])){
-			$errors [] = "SUBTOTAL € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factpvp1'])){
-			$errors [] = "SUBTOTAL € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-		if(strlen(trim($_POST['factpvp2'])) == 0){
-			$errors [] = "SUBTOTAL € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factpvp2'])){
-			$errors [] = "SUBTOTAL € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factpvp2'])){
-			$errors [] = "SUBTOTAL € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-	/* VALIDAMOS EL CAMPO factpvptot */
-	
-		if(strlen(trim($_POST['factpvptot1'])) == 0){
-			$errors [] = "TOTAL € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factpvptot1'])){
-			$errors [] = "TOTAL € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factpvptot1'])){
-			$errors [] = "TOTAL € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-		if(strlen(trim($_POST['factpvptot2'])) == 0){
-			$errors [] = "TOTAL € <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
-			}
-		
-		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['factpvptot2'])){
-			$errors [] = "TOTAL € <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
-			}
-			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['factpvptot2'])){
-			$errors [] = "TOTAL € <font color='#FF0000'>SOLO NUMEROS</font>";
-			}
-
-	 /*VALIDAMOS EL CAMPO coment. */
-		
-	if(strlen(trim($_POST['coment'])) == 0){
-		$errors [] = "DESCRIPCION <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-	
-	elseif (strlen(trim($_POST['coment'])) < 10){
-		$errors [] = "DESCRIPCION <font color='#FF0000'>Más de 10 carácteres.</font>";
-		}
-		
-	elseif (strlen(trim($_POST['coment'])) > 19){
-
-	if (!preg_match('/^[a-z A-Z 0-9 \s ,.;:\'-() áéíóúñ € \/]+$/',$_POST['coment'])){
-		$errors [] = "DESCRIPCION  <font color='#FF0000'>A escrito caracteres no permitidos. { } [ ] ¿ ? < > ¡ ! @ # ...</font>";
-		}
-	}
-
-	 /*VALIDAMOS EL CAMPO dy & dm & dd */
-		
-	if(trim($_POST['dy']) == ''){
-		$errors [] = "YEAR <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-	
-	if(trim($_POST['dm']) == ''){
-		$errors [] = "MONTH <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-	
-	if(trim($_POST['dd']) == ''){
-		$errors [] = "DAY <font color='#FF0000'>Campo obligatorio.</font>";
-		}
-
-////////////////
-
-	$factivae1 = $_POST['factivae1'];
-	$factivae2 = $_POST['factivae2'];
-	global $factivae;
-	$factivae = $factivae1.".".$factivae2;
-
-	$factrete1 = $_POST['factrete1'];
-	$factrete2 = $_POST['factrete2'];
-	global $factrete;
-	$factrete = $factrete1.".".$factrete2;
-
-	$factpvp1 = $_POST['factpvp1'];
-	$factpvp2 = $_POST['factpvp2'];
-	global $factpvp;
-	$factpvp = $factpvp1.".".$factpvp2;
-
-	$factpvptot1 = $_POST['factpvptot1'];
-	$factpvptot2 = $_POST['factpvptot2'];
-	global $factpvptot;
-	$factpvptot = $factpvptot1.".".$factpvptot2;
-
-	$fiva = $_POST['factiva'];
-	
-	$civae = $factpvp * ($fiva / 100);
-	$civae = number_format($civae,2,".","");
-	
-	if(trim($factivae) != trim($civae)){
-		$errors [] = "IMPUESTOS € <font color='#FF0000'>Cantidad no correcta</font> ".$civae." OK";
-	}
-	
-	$fret = $_POST['factret'];
-
-	$crete = $factpvp * ($fret / 100);
-	$crete = number_format($crete,2,".","");
-	if(trim($factrete) != trim($crete)){
-		$errors [] = "RETENCIONES € <font color='#FF0000'>Cantidad no correcta</font> ".$crete." OK";
-	}
-	
-	$cftot = ($factpvp + $civae) - $factrete;
-	$cftot = number_format($cftot,2,".","");
-	if(trim($factpvptot) != trim($cftot)){
-			$errors [] = "TOTAL € <font color='#FF0000'>Cantidad no correcta</font> ".$cftot." OK";
-	}
-
-		$factpvptot = strlen(trim($_POST['factpvptot']));
-		$factpvptot = $factpvptot - 3;
-		$factpvptotx = $_POST['factpvptot'];
-		$factpvptot1 = substr($_POST['factpvptot'],0,$factpvptot);
-		$factpvptot2 = substr($_POST['factpvptot'],-2,2);
-	
-////////////////////
-	
-	return $errors;
-
-		} 
+	} 
 		
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -340,26 +69,8 @@ if ($_SESSION['Nivel'] == 'admin'){
 	global $factdate;
 	$factdate = $_POST['dy']."/".$_POST['dm']."/".$_POST['dd'];
 
-	$factivae1 = $_POST['factivae1'];
-	$factivae2 = $_POST['factivae2'];
-	global $factivae;
-	$factivae = $factivae1.".".$factivae2;
-
-	$factrete1 = $_POST['factrete1'];
-	$factrete2 = $_POST['factrete2'];
-	global $factrete;
-	$factrete = $factrete1.".".$factrete2;
-
-	$factpvp1 = $_POST['factpvp1'];
-	$factpvp2 = $_POST['factpvp2'];
-	global $factpvp;
-	$factpvp = $factpvp1.".".$factpvp2;
-
-	$factpvptot1 = $_POST['factpvptot1'];
-	$factpvptot2 = $_POST['factpvptot2'];
-	global $factpvptot;
-	$factpvptot = $factpvptot1.".".$factpvptot2;
-
+	require 'FormatNumber.php';
+	
 	//////////////
 		//////////////
 	//////////////
@@ -515,19 +226,19 @@ if ($_SESSION['Nivel'] == 'admin'){
 	global $dyx; 		$dyx = "20".$_POST['dy'];
 	global $dmx; 		$dmx = "M".$_POST['dm'];
 
-	$dmxo = "M".$_SESSION['mold'];
-	global $meso;
-	if(($dmxo == "M01")||($dmxo == "M02")||($dmxo == "M03")){$meso = "TRI1";}
-	elseif(($dmxo == "M04")||($dmxo == "M05")||($dmxo == "M06")){$meso = "TRI2";}
-	elseif(($dmxo == "M07")||($dmxo == "M08")||($dmxo == "M09")){$meso = "TRI3";}
-	elseif(($dmxo == "M10")||($dmxo == "M11")||($dmxo == "M12")){$meso = "TRI4";}
-	global $mes;
-	if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
-	elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
-	elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
-	elseif(($dmx == "M10")||($dmx == "M11")||($dmx == "M12")){$mes = "TRI4";}
-	
-	if($meso == $mes){
+		$dmxo = "M".$_SESSION['mold'];
+		global $meso;
+		if(($dmxo == "M01")||($dmxo == "M02")||($dmxo == "M03")){$meso = "TRI1";}
+		elseif(($dmxo == "M04")||($dmxo == "M05")||($dmxo == "M06")){$meso = "TRI2";}
+		elseif(($dmxo == "M07")||($dmxo == "M08")||($dmxo == "M09")){$meso = "TRI3";}
+		elseif(($dmxo == "M10")||($dmxo == "M11")||($dmxo == "M12")){$meso = "TRI4";}
+		global $mes;
+		if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
+		elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
+		elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
+		elseif(($dmx == "M10")||($dmx == "M11")||($dmx == "M12")){$mes = "TRI4";}
+		
+		if($meso == $mes){
 		global $mes;
 		if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
 		elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
@@ -641,62 +352,25 @@ if ($_SESSION['Nivel'] == 'admin'){
 	}
 
 	global $iniy; 		$iniy = substr(date('Y'),0,2);
+
+	global $title;	$title = 'SE HA MODIFICADO EN ';
 	
-	$tabla = "<table align='center' style='margin-top:10px' width=450px >
-				<tr>
-					<th colspan=4 class='BorderInf'>
-						SE HA GRABADO EN ".strtoupper($vname)."
-					</th>
-				</tr>
-				<tr>
-					<td>NUMERO</td>
-					<td>".$_POST['factnum']."</td>
-					<td>FECHA</td>
-					<td>20"/*.$iniy*/.$factdate."</td>
-				</tr>
-				<tr>
-					<td>RAZON SOCIAL</td>
-					<td>".$_POST['factnom']."</td>
-					<td>NIF/CIF</td>
-					<td>".$_POST['factnif']."</td>
-				</tr>
-				<tr>
-					<td>IMP %</td>
-					<td>".$_POST['factiva']."</td>
-					<td>IMP €</td>
-					<td>".$factivae."</td>
-				</tr>
-				<tr>
-					<td>RETENCIONES %</td>
-					<td>".$_POST['factret']."</td>
-					<td>RETENCIONES €</td>
-					<td width=250px>".$factrete."</td>
-				</tr>
-				<tr>
-					<td>SUBTOTAL</td>
-					<td>".$factpvp."</td>
-					<td>TOTAL</td>
-					<td>".$factpvptot."</td>
-				</tr>
-				<tr>
-					<td>DESCRIPCION</td>
-					<td colspan='3'>".$_POST['coment']."</td>
-				</tr>
-			</table>";	
-		
+	global $link1; 	
+	$link1 = "<a href='Gastos_Ver.php' class='botonazul' style='color:#343434 !important' >INICIO GASTOS</a>";
+	global $link2;
+	$link2 = "<a href='Gastos_Crear.php' class='botonazul' style='color:#343434 !important' >CREAR NUEVO GASTO</a>";
+	
+	require 'TableFormResult.php';
+			
 		/////////////
 		
-		global $db; 		global $sent;
-		
-		$sqla = $sent;
+		global $db; 		global $sent; 		$sqla = $sent;
 		
 		if(mysqli_query($db, $sqla)){ //	print("<br/>* INSERT / UPDATE DB DATA.");
 									  print($tabla); 
-					} else {
-							print("* MODIFIQUE LA ENTRADA: 1189/1195 ".mysqli_error($db));
-									show_form ();
-									global $texerror;
-									$texerror = "\n\t ".mysqli_error($db);
+		} else { print("* MODIFIQUE LA ENTRADA: 1189/1195 ".mysqli_error($db));
+				 show_form ();
+				 global $texerror; 		$texerror = "\n\t ".mysqli_error($db);
 					}
 
 		/////////////
@@ -791,15 +465,17 @@ if ($_SESSION['Nivel'] == 'admin'){
 		
 		global $sesionref; 		$sesionref = "`".$_SESSION['clave']."clientes`";
 		
-		$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveegastos]'";
-		$qx = mysqli_query($db, $sqlx);
-		$rowprovee = mysqli_fetch_assoc($qx);
-		$_rsocial = $rowprovee['rsocial'];
-		$_ref = $rowprovee['ref'];
-		$_dni = $rowprovee['dni'];
-		$_ldni = $rowprovee['ldni'];
-		global $_dnil;
-		$_dnil = $_dni.$_ldni;
+		if(isset($_POST['proveegastos'])){
+			$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveegastos]'";
+			$qx = mysqli_query($db, $sqlx);
+			$rowprovee = mysqli_fetch_assoc($qx);
+			$_rsocial = @$rowprovee['rsocial'];
+			$_ref = @$rowprovee['ref'];
+			$_dni = @$rowprovee['dni'];
+			$_ldni = @$rowprovee['ldni'];
+			global $_dnil;
+			$_dnil = $_dni.$_ldni;
+		}
 
 		$_SESSION['idx'] = $_POST['id'];
 
@@ -866,12 +542,11 @@ if ($_SESSION['Nivel'] == 'admin'){
 			$sx =  "SELECT * FROM $sesionref WHERE `dni` LIKE '$fil1' LIMIT 1 ";
 			$qx = mysqli_query($db, $sx);
 			$rowpv = mysqli_fetch_assoc($qx);
-			$_rsocial = $rowpv['rsocial'];
-			$_ref = $rowpv['ref'];
-			$_dni = $rowpv['dni'];
-			$_ldni = $rowpv['ldni'];
-			global $_dnil;
-			$_dnil = $_dni.$_ldni;
+			$_rsocial = @$rowpv['rsocial'];
+			$_ref = @$rowpv['ref'];
+			$_dni = @$rowpv['dni'];
+			$_ldni = @$rowpv['ldni'];
+			global $_dnil; 	$_dnil = $_dni.$_ldni;
 		
 		$_POST['proveegastos'] = $_POST['refprovee'];
 		
@@ -925,263 +600,43 @@ if ($_SESSION['Nivel'] == 'admin'){
 									'coment' => $_POST['coment']);
 							}
 
-		if ($errors){
-				print("	<div width='90%' style='float:left'>
-							<table align='left' style='border:none'>
-							<th style='text-align:left'>
-							<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-							</th>
-							<tr>
-							<td style='text-align:left'>");
-					
-				for($a=0; $c=count($errors), $a<$c; $a++){
-					print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
-					}
-				print("</td>
-						</tr>
-						</table>
-						</div>
-						<div style='clear:both'></div>");
-			}
-
-		$dm = array ('' => 'MONTH', '01' => 'ENERO', '02' => 'FEBRERO',
-					'03' => 'MARZO', '04' => 'ABRIL', '05' => 'MAYO',
-					'06' => 'JUNIO', '07' => 'JULIO', '08' => 'AGOSTO',
-					'09' => 'SEPTIEMBRE', '10' => 'OCTUBRE', '11' => 'NOVIEMBRE',
-					'12' => 'DICIEMBRE');
+	require 'TablaIfErrors.php';
 	
-		$dd = array ('' => 'DAY', '01' => '01', '02' => '02', '03' => '03',
-					'04' => '04', '05' => '05', '06' => '06', '07' => '07',
-					'08' => '08', '09' => '09', '10' => '10', '11' => '11',
-					'12' => '12', '13' => '13', '14' => '14', '15' => '15',
-					'16' => '16', '17' => '17', '18' => '18', '19' => '19',
-					'20' => '20', '21' => '21', '22' => '22', '23' => '23',
-					'24' => '24', '25' => '25', '26' => '26', '27' => '27',
-					'28' => '28', '29' => '29', '30' => '30', '31' => '31');
-										
+	require 'ArrayMesDia.php';
+
 	////////////////////
+	
+	global $Titulo; 	$Titulo = "MODIFICAR GASTO";
+	global $TitValue;	$TitValue = "SELECCIONE NUEVO PROVEEDOR";
 
-	print("
-			<table align='center' style=\"margin-top:10px\">
-				<tr>
-					<th colspan=2 class='BorderInf'>
-								MODIFICAR GASTO					
-					</th>
-				</tr>
-				<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
+	print("<table align='center' style=\"margin-top:10px\">
+	<tr>
+		<th colspan=2'>MODIFICAR GASTO</th>
+	</tr>");
 
-					<input type='hidden' name='proveegastos' value='".$defaults['proveegastos']."' />
-					<input type='hidden' name='id' value='".$defaults['id']."' />
-					<input type='hidden' name='dy' value='".$defaults['dy']."' />
-					<input type='hidden' name='dm' value='".$defaults['dm']."' />
-					<input type='hidden' name='dd' value='".$defaults['dd']."' />
-					<input type='hidden' name='factnum' value='".strtoupper($defaults['factnum'])."' />
-					<input type='hidden' name='refprovee' value='".$defaults['refprovee']."' />
-					<input type='hidden' name='factnom' value='".$defaults['factnom']."' />
-					<input type='hidden' name='factnif' value='".$defaults['factnif']."' />
-					<input type='hidden' name='factiva' value='".$defaults['factiva']."' />
-					<input type='hidden' name='factivae1' value='".$defaults['factivae1']."' />
-					<input type='hidden' name='factivae2' value='".$defaults['factivae2']."' />
-					<input type='hidden' name='factret' value='".$defaults['factret']."' />
-					<input type='hidden' name='factrete1' value='".$defaults['factrete1']."' />
-					<input type='hidden' name='factrete2' value='".$defaults['factrete2']."' />
-					<input type='hidden' name='factpvp1' value='".$defaults['factpvp1']."' />
-					<input type='hidden' name='factpvp2' value='".$defaults['factpvp2']."' />
-					<input type='hidden' name='factpvptot1' value='".$defaults['factpvptot1']."' />
-					<input type='hidden' name='factpvptot2' value='".$defaults['factpvptot2']."' />
-					<input type='hidden' name='coment' value='".$defaults['coment']."' />
-				<tr>
-					<td>
-						<div style='float:left'>
-							<input type='submit' value='SELECCIONE NUEVO CLIENTE' />
-							<input type='hidden' name='oculto1' value=1 />
-						</div>
-					</td>
-					<td>
-						<div style='float:left'>
-					<select name='proveegastos'>");
+	require 'FormSelectProvee.php'; 
 
-		global $db;
-		global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."clientes`";
+		if($_POST['proveegastos'] != ''){
+ 
+			require 'FormDatos.php';
 
-		$sqlb =  "SELECT * FROM $tabla1 ORDER BY `rsocial` ASC ";
-		$qb = mysqli_query($db, $sqlb);
-		if(!$qb){
-				print("* ".mysqli_error($db)."<br/>");
-		} else {
-					
-			while($rows = mysqli_fetch_assoc($qb)){
-					print ("<option value='".$rows['ref']."' ");
-						if($rows['ref'] == $defaults['proveegastos']){
-									print ("selected = 'selected'");
-												}
-									print ("> ".$rows['rsocial']." </option>");
-				}
-			}  
-
-		print ("</select>
-						</div>
-						</form>	
-					</td>
-				</tr>"); 
-			
-	if($_POST['proveegastos'] != ''){
-
-			print("
-		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
-
-		<input type='hidden' name='proveegastos' value='".$defaults['proveegastos']."' />
-		<input type='hidden' name='refprovee' value='".$defaults['refprovee']."' />
-		<input type='hidden' name='id' value='".$defaults['id']."' />
-				<tr>
-					<td>NUMERO</td>
-					<td>
-		<input type='text' name='factnum' size=22 maxlength=20 value='".strtoupper($defaults['factnum'])."' />
-					</td>
-				</tr>
-				<tr>
-					<td>FECHA</td>
-				<div style='float:left'>");
-								
-		require '../Inclu/year_in_select_bbdd.php';
-									
-		print ("</select>
-					</div>
-					<div style='float:left'>
-				<select style='margin-left:12px' name='dm'>");
-
-			foreach($dm as $optiondm => $labeldm){
-					print ("<option value='".$optiondm."' ");
-					if($optiondm == $defaults['dm']){
-									print ("selected = 'selected'");
-												}
-									print ("> $labeldm </option>");
-								}	
-																
-		print ("</select>
-					</div>
-					<div style='float:left'>
-						<select style='margin-left:12px' name='dd'>");
-
-				foreach($dd as $optiondd => $labeldd){
-					print ("<option value='".$optiondd."' ");
-					if($optiondd == $defaults['dd']){
-									print ("selected = 'selected'");
-												}
-									print ("> $labeldd </option>");
-								}	
-																
-		print ("</select> 
-					</div>
-					</td>
-				</tr>
-				<tr>
-					<td>RAZON SOCIAL</td>
-					<td>
-			<input type='hidden' name='factnom' value='".$defaults['factnom']."' />".$defaults['factnom']."
-					</td>
-				</tr>
-				<tr>
-					<td>NIF/CIF</td>
-					<td>
-			<input type='hidden' name='factnif'value='".$defaults['factnif']."' />".$defaults['factnif']."
-					</td>
-				</tr>
-				<tr>
-					<td>IMPUESTOS %</td>
-					<td>
-				<div style='float:left'>
-					<select name='factiva'>");
-
-			global $db;
-			global $vname; 		$vname = "`".$_SESSION['clave']."impuestos`";
-			$sqli =  "SELECT * FROM $vname ORDER BY `iva` ASC ";
-			$qi = mysqli_query($db, $sqli);
-
-			if(!$qi){	print("* ".mysqli_error($db)."<br/>");
-			} else {
-					while($rowimp = mysqli_fetch_assoc($qi)){
-							print ("<option value='".$rowimp['iva']."' ");
-						if($rowimp['iva'] == $defaults['factiva']){
-										print ("selected = 'selected'");}
-							print ("> ".$rowimp['name']." </option>");
-							}
-					} 
-						 
-		print ("</select>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>IMPUESTOS €</td>
-					<td>
-	<input style='text-align:right' type='text' name='factivae1' size=5 maxlength=5 value='".$defaults['factivae1']."' />,<input type='text' name='factivae2' size=2 maxlength=2 value='".$defaults['factivae2']."' />€
-					</td>
-				</tr>
-				<tr>
-					<td>RETENCIONES %</td>
-					<td>
-			<div style='float:left'>
-				<select name='factret'>");
-
-		global $db;
-		global $vnamer; 		$vnamer = "`".$_SESSION['clave']."retencion`";
-		$sqlr =  "SELECT * FROM $vnamer ORDER BY `ret` ASC ";
-		$qr = mysqli_query($db, $sqlr);
-
-			if(!$qr){	print("* ".mysqli_error($db)."</br>");
-			} else {
-					while($rowret = mysqli_fetch_assoc($qr)){
-							print ("<option value='".$rowret['ret']."' ");
-						if($rowret['ret'] == $defaults['factret']){
-							print ("selected = 'selected'");
-						}
-							print ("> ".$rowret['name']." </option>");
-							}
-					} 
-						 
-		print ("</select>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>RETENCIONES €</td>
-					<td>
-	<input style='text-align:right' type='text' name='factrete1' size=5 maxlength=5 value='".$defaults['factrete1']."' />,<input type='text' name='factrete2' size=2 maxlength=2 value='".$defaults['factrete2']."' />€
-					</td>
-				</tr>
-				<tr>
-					<td>SUBTOTAL €</td>
-					<td>
-	<input style='text-align:right' type='text' name='factpvp1' size=5 maxlength=5 value='".$defaults['factpvp1']."' />,<input type='text' name='factpvp2' size=2 maxlength=2 value='".$defaults['factpvp2']."' />€
-					</td>
-				</tr>
-				<tr>
-					<td>TOTAL €</td>
-					<td>
-	<input style='text-align:right' type='text' name='factpvptot1' size=5 maxlength=5 value='".$defaults['factpvptot1']."' />,<input type='text' name='factpvptot2' size=2 maxlength=2 value='".$defaults['factpvptot2']."' />€
-					</td>
-				</tr>
-				<tr>
-					<td>DESCRIPCIÓN</td>
-					<td>
-	<textarea cols='35' rows='7' onkeypress='return limitac(event, 200);' onkeyup='actualizaInfoc(200)' name='coment' id='coment'>".$defaults['coment']."</textarea>
-			<br/>
-	            <div id='infoc' align='center' style='color:#0080C0;'>
-        				Maximum 200 characters            
-				</div>
-					</td>
-				</tr>
-				<tr>
-					<td colspan='2' align='right' valign='middle'  class='BorderSup'>
-						<input type='submit' value='GRABAR GASTO' />
-						<input type='hidden' name='oculto' value=1 />
-				</form>														
-					</td>
-				</tr>
-			</table>"); 
-			}
+			print("<tr>
+						<td colspan='2' align='right' >
+							<input type='submit' value='GRABAR GASTO' class='botonverde' />
+							<input type='hidden' name='oculto' value=1 />
+					</form>														
+						</td>
+					</tr>
+					<tr>
+						<td colspan='4' align='center'>
+			<a href='Gastos_Ver.php' class='botonazul' style='color:#343434 !important' >INICIO GASTOS</a>
+			<a href='Gastos_Crear.php' class='botonazul' style='color:#343434 !important' >CREAR GASTO</a>
+						</td>
+					</tr>
+				</table>");
 		}
+
+	}
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

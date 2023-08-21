@@ -1,65 +1,16 @@
 <?php
 
-	if(isset($_POST['show_formcl'])){
-				$defaults = $_POST;
-	} elseif(isset($_POST['todo'])){
-			$defaults = $_POST;
-	} else { $defaults = array ('factnom' => '',
-								 'factnif' => '',
-								 'factnum' => '',
-								 'Orden' => isset($ordenar));
-							}
-
-	$dm = array ( '' => 'MONTH', '01' => 'ENERO', '02' => 'FEBRERO',
-				  '03' => 'MARZO', '04' => 'ABRIL', '05' => 'MAYO',
-				  '06' => 'JUNIO', '07' => 'JULIO', '08' => 'AGOSTO',
-				  '09' => 'SEPTIEMBRE', '10' => 'OCTUBRE', '11' => 'NOVIEMBRE',
-				  '12' => 'OCTUBRE');
-	
-	$dd = array ( '' => 'DAY', '01' => '01', '02' => '02', '03' => '03',
-				  '04' => '04', '05' => '05', '06' => '06', '07' => '07',
-				  '08' => '08', '09' => '09', '10' => '10', '11' => '11',
-				  '12' => '12', '13' => '13', '14' => '14', '15' => '15',
-				  '16' => '16', '17' => '17', '18' => '18', '19' => '19',
-				  '20' => '20', '21' => '21', '22' => '22', '23' => '23',
-				  '24' => '24', '25' => '25', '26' => '26', '27' => '27',
-				  '28' => '28', '29' => '29', '30' => '30', '31' => '31');
-										
 	global $cnt; 		$cnt = 0;
+
+	require 'ArrayMesDia.php';
 	
-	if ($errors){
-		global $cnt; 		$cnt = 1;
-		print("	<table style='border:none; text-align: center; margin: 0.4em auto 0.4em auto;'>
-				<tr>
-					<th style='text-align:center'>
-						<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-					</th>
-				</tr>
-				<tr>
-					<td style='text-align:left'>");
-			
-		for($a=0; $c=count($errors), $a<$c; $a++){
-			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
-			}
-		print("</td>
-				</tr>
-			</table>
-				<div style='clear:both'></div>");
-		} // FIN ERRORS
-	
-	$ordenar = array (	'`factdate` ASC' => 'Fecha Asc',
-						'`factdate` DESC' => 'Fecha Desc',
-						'`factnum` ASC' => 'Nº Factura Asc',
-						'`factnum` DESC' => 'Nº Factura Desc',
-						'`factnif` ASC' => 'NIF Asc',
-						'`factnif` DESC' => 'NIF Desc',
-						'`factnom` ASC' => 'Razon Social Asc',
-						'`factnom` DESC' => 'Razon Social Desc',
-																);
+	require 'TablaIfErrors.php';
+
+	require 'ArrayOrdenar.php';
 	
 	print("<table align='center' style=\"border:0px;margin-top:4px\">
 				<tr>
-					<th colspan=2>CONSULTAR GASTOS</th>
+					<th colspan=2>".$titulo."</th>
 				</tr>
 			<form name='form_tabla' method='post' action='$_SERVER[PHP_SELF]'>
 				<tr>

@@ -88,12 +88,10 @@ function validate_form(){
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function modifica_form(){
+	function modifica_form(){
 	
-		global $db;
-		global $db_name;
-		global $img;
-		global $imgcamp;
+		global $db; 	global $db_name;
+		global $img; 	global $imgcamp;
 
 		global $ruta;
 		$ruta = "../cbj_Docs/docgastos_".$_SESSION['midyt1']."/";
@@ -481,7 +479,7 @@ function show_form($errors=[]){
 				<td colspan=2 style='text-align:center;' >SELECCIONE IMAGEN</td>
 				<td colspan=2>
 		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'  enctype='multipart/form-data'>
-			<input size=14 type='file' name='myimg' value='".$defaults['myimg']."' />
+			<input size=14 type='file' name='myimg' value='".$defaults['myimg']."' style='color:#fff;' />
 				</td>
 			</tr>
 			<tr>

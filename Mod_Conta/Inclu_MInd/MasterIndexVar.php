@@ -5,6 +5,7 @@
     $rutaBalaces = $rutaIndex."cbj_Balances/";
     $rutaClientes = $rutaIndex."cbj_clientes/";
     $rutaGastos = $rutaIndex."cbj_gastos/";
+    //$rutaPendientes = $rutaIndex."cbj_gastos_pendientes/";
     $rutaImpuestos = $rutaIndex."cbj_impuestos/";
     $rutaIngresos = $rutaIndex."cbj_ingresos/";
     $rutaProveedores = $rutaIndex."cbj_proveedores/";

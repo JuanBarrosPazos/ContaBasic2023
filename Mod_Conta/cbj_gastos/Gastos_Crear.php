@@ -35,9 +35,12 @@ session_start();
 
 	function validate_form(){
 	
+		global $sqld; 		global $qd; 		global $rowd;
+
 		$errors = array();
 		
-		require 'validate.php';
+		require 'ValidateForm.php';
+		require 'ValidateImg.php';
 
 		return $errors;
 
@@ -49,7 +52,7 @@ session_start();
 
 	function process_form(){
 	
-	global $db; 		global $db_name;	
+	global $db; 		global $db_name;		global $vname;	
 	global $dyt1; 		global $dm1;
 
 	if($_POST['dy'] == ''){ $dy1 = '';
@@ -65,76 +68,20 @@ session_start();
 	global $factdate;
 	$factdate = $_POST['dy']."/".$_POST['dm']."/".$_POST['dd'];
 
-	$factivae1 = $_POST['factivae1'];
-	$factivae2 = $_POST['factivae2'];
-	global $factivae;
-	$factivae = $factivae1.".".$factivae2;
-
-	$factrete1 = $_POST['factrete1'];
-	$factrete2 = $_POST['factrete2'];
-	global $factrete;
-	$factrete = $factrete1.".".$factrete2;
-
-	$factpvp1 = $_POST['factpvp1'];
-	$factpvp2 = $_POST['factpvp2'];
-	global $factpvp;
-	$factpvp = $factpvp1.".".$factpvp2;
-
-	$factpvptot1 = $_POST['factpvptot1'];
-	$factpvptot2 = $_POST['factpvptot2'];
-	global $factpvptot;
-	$factpvptot = $factpvptot1.".".$factpvptot2;
+	require 'FormatNumber.php';
 
 	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
 
 	global $iniy; 		$iniy = substr(date('Y'),0,2);
+
+	global $title;	$title = 'SE HA GRABADO EN ';
+
+	global $link1; 	
+	$link1 = "<a href='Gastos_Ver.php' class='botonazul' style='color:#343434 !important' >INICIO GASTOS</a>";
+	global $link2;
+	$link2 = "<a href='Gastos_Crear.php' class='botonazul' style='color:#343434 !important' >CREAR NUEVO GASTO</a>";
 	 
-	$tabla = "<table style='text-align:center; margin-top:10px;' >
-				<tr>
-					<th colspan=4 class='BorderInf'>
-						SE HA GRABADO EN ".strtoupper($vname)."
-					</th>
-				</tr>
-				<tr>
-					<td style='whidth:220px; text-align:right;'>NUMERO</td>
-					<td style='whidth:220px;>".$_POST['factnum']."</td>
-					<td style='whidth:220px;>FECHA</td>
-					<td>".$iniy.$factdate."</td>
-				</tr>
-				<tr>
-					<td style='text-align:right;'>RAZON SOCIAL</td>
-					<td>".$_POST['factnom']."</td>
-					<td>NIF / CIF</td>
-					<td>".$_POST['factnif']."</td>
-				</tr>
-				<tr>
-					<td style='text-align:right;'>IMPUESTOS %</td>
-					<td>".$_POST['factiva']."</td>
-					<td>IMPUESTOS €</td>
-					<td>".$factivae."</td>
-				</tr>
-				<tr>
-					<td style='text-align:right;'>RETENCIONES %</td>
-					<td>".$_POST['factret']."</td>
-					<td>RETENCIONES €</td>
-					<td>".$factivae."</td>
-				</tr>
-				<tr>
-					<td style='text-align:right;'>SUBTOTAL</td>
-					<td>".$factpvp."</td>
-					<td>TOTAL</td>
-					<td>".$factpvptot."</td>
-				</tr>
-				<tr>
-					<td style='text-align:right;'>DESCRIPCION</td>
-					<td colspan='3' style='text-align:left;'>".$_POST['coment']."</td>
-				</tr>
-				<tr>
-				<td colspan='4' align='center'>
-					<a href='Gastos_Crear.php'>VOLVER GASTOS CREAR</a>
-				</td>
-				</tr>
-			</table>";	
+	require 'TableFormResult.php';
 		
 	/************* CREAMOS LAS IMAGENES EN LA IMG PRO SECCION ***************/
 		
@@ -407,81 +354,16 @@ session_start();
 									 'myimg2' => @$_POST['myimg2'],	
 									 'myimg3' => @$_POST['myimg3'],	
 									 'myimg4' => @$_POST['myimg4']);
-							   	}
-
-	if ($errors){
-		print("	<div>
-					<table style='width: max-content; margin: 0.4em auto 0.4em auto; border: none;'>
-						<th style='text-align:left'>
-							<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-						</th>
-					<tr>
-					<td style='text-align:left'>");
-			
-		for($a=0; $c=count($errors), $a<$c; $a++){
-			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
-			}
-		print("</td>
-				</tr>
-				</table>
-				</div>
-				<div style='clear:both'></div>");
 		}
 
-	$dm = array ( '' => 'MONTH', '01' => 'ENERO', '02' => 'FEBRERO',
-				  '03' => 'MARZO', '04' => 'ABRIL', '05' => 'MAYO',
-				  '06' => 'JUNIO', '07' => 'JULIO', '08' => 'AGOSTO',
-				  '09' => 'SEPTIEMBRE', '10' => 'OCTUBRE', '11' => 'NOVIEMBRE',
-				  '12' => 'OCTUBRE');
-	
-	$dd = array ( '' => 'DAY', '01' => '01', '02' => '02', '03' => '03',
-				  '04' => '04', '05' => '05', '06' => '06', '07' => '07',
-				  '08' => '08', '09' => '09', '10' => '10', '11' => '11',
-				  '12' => '12', '13' => '13', '14' => '14', '15' => '15',
-				  '16' => '16', '17' => '17', '18' => '18', '19' => '19',
-				  '20' => '20', '21' => '21', '22' => '22', '23' => '23',
-				  '24' => '24', '25' => '25', '26' => '26', '27' => '27',
-				  '28' => '28', '29' => '29', '30' => '30', '31' => '31');
+		require 'TablaIfErrors.php';
+
+		require 'ArrayMesDia.php';
 										
-		print("<table align='center' style=\"border:0px;margin-top:4px\" width='auto'>
-					<form name='form_tabla' method='post' action='$_SERVER[PHP_SELF]'>
-				<tr>
-					<td colspan='4' align='center'>
-							SELECCIONE UN PROVEEDOR
-					</td>
-				</tr>		
-				<tr>
-					<td>
-					<div style='float:left'>
-						<input type='submit' value='SELECCIONE PROVEEDOR' />
-						<input type='hidden' name='oculto1' value=1 />
-					</div>
-					<div style='float:left'>
-						<select name='proveegastos'>");
-
-	global $db;
-	global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."proveedores`";
-
-	$sqlb =  "SELECT * FROM $tabla1 ORDER BY `rsocial` ASC ";
-	$qb = mysqli_query($db, $sqlb);
-	if(!$qb){
-			print("* ".mysqli_error($db)."</br>");
-	} else {
-		while($rows = mysqli_fetch_assoc($qb)){
-			print ("<option value='".$rows['ref']."' ");
-					if($rows['ref'] == $defaults['proveegastos']){
-								print ("selected = 'selected'");
-										}
-								print ("> ".$rows['rsocial']." </option>");
-						}
-		}  
-
-		print ("</select>
-						</div>
-					</td>
-				</tr>
-			</form>	
-				</table>"); 
+		global $Titulo; 	$Titulo = "CREAR GASTO";
+		global $TitValue;	$TitValue = "SELECCIONE PROVEEDOR";
+		require 'FormSelectProvee.php';
+		print ("</table>");
 				
 	////////////////////
 
@@ -497,192 +379,50 @@ session_start();
 				}
 
 	if($_POST['proveegastos'] != '') {
-	print("<table align='center' style=\"margin-top:10px\">
+	 
+		print("<table align='center' style=\"margin-top:10px\">
 				<tr>
-					<th colspan=2 class='BorderInf'>GRABAR GASTO</th>
-				</tr>
-		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
-			<input type='hidden' name='proveegastos' value='".$defaults['proveegastos']."' />
-				<tr>
-					<td>NUMERO</td>
-					<td>
-			<input type='text' name='factnum' size=22 maxlength=20 value='".strtoupper(@$defaults['factnum'])."' />
-					</td>
-				</tr>
-				<tr>
-					<td>FECHA</td>
-					<td>
-				<div style='float:left'>");
-								
-		require '../Inclu/year_in_select_bbdd.php';
-																
-		print ("</select>
-					</div>
-					<div style='float:left'>
-				<select style='margin-left:12px' name='dm'>");
-					foreach($dm as $optiondm => $labeldm){
-						print ("<option value='".$optiondm."' ");
-					if($optiondm == @$defaults['dm']){
-										print ("selected = 'selected'");
-											}
-								print ("> $labeldm </option>");
-							}	
-																
-		print ("</select>
-					</div>
-					<div style='float:left'>
-						<select style='margin-left:12px' name='dd'>");
-			foreach($dd as $optiondd => $labeldd){
-						print ("<option value='".$optiondd."' ");
-					if($optiondd == @$defaults['dd']){
-										print ("selected = 'selected'");
-											}
-							print ("> $labeldd </option>");
-						}
-							
-		print ("</select> 
-					</div>
-					</td>
-				</tr>
-				<tr>
-					<td>RAZON SOCIAL</td>
-					<td>
-		<input type='hidden' name='factnom' value='".@$defaults['factnom']."' />".@$defaults['factnom']."
-					</td>
-				</tr>
-				<tr>
-					<td>REFERENCIA</td>
-					<td>
-		<input type='hidden' name='refprovee' value='".$defaults['refprovee']."' />".$defaults['refprovee']."
-					</td>
-				</tr>
-				<tr>
-					<td>NIF/CIF</td>
-					<td>
-		<input type='hidden' name='factnif'value='".@$defaults['factnif']."' />".@$defaults['factnif']."
-					</td>
-				</tr>
-				<tr>
-					<td>IMPUESTOS %</td>
-					<td>
-			<div style='float:left'>
-				<select name='factiva'>");
+					<th colspan=2 class='BorderInf'>CREAR NUEVO GASTO</th>
+				</tr>");
+ 
+		require 'FormDatos.php';
 
-		global $db;
-		global $vname; 		$vname = "`".$_SESSION['clave']."impuestos`";
-		$sqli =  "SELECT * FROM $vname ORDER BY `iva` ASC ";
-		$qi = mysqli_query($db, $sqli);
-
-			if(!$qi){	print("* ".mysqli_error($db)."</br>");
-			} else {
-					while($rowimp = mysqli_fetch_assoc($qi)){
-							print ("<option value='".$rowimp['iva']."' ");
-							if($rowimp['iva'] == @$defaults['factiva']){
-							print ("selected = 'selected'");
-									}
-							print ("> ".$rowimp['name']." </option>");
-							}
-						} 
-						 
-		print ("</select>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>IMPUESTOS €</td>
-					<td>
-			<input style='text-align:right' type='text' name='factivae1' size=5 maxlength=5 value='".@$defaults['factivae1']."' />,
-			<input type='text' name='factivae2' size=2 maxlength=2 value='".@$defaults['factivae2']."' />€
-					</td>
-				</tr>
-				<tr>
-					<td>RETENCIONES %</td>
-					<td>
-			<div style='float:left'>
-				<select name='factret'>");
-
-		global $db;
-		global $vnamer; 	$vnamer = "`".$_SESSION['clave']."retencion`";
-		$sqlr =  "SELECT * FROM $vnamer ORDER BY `ret` ASC ";
-		$qr = mysqli_query($db, $sqlr);
-
-			if(!$qr){	print("* ".mysqli_error($db)."</br>");
-				} else {
-					while($rowret = mysqli_fetch_assoc($qr)){
-							print ("<option value='".$rowret['ret']."' ");
-							if($rowret['ret'] == @$defaults['factret']){
-							print ("selected = 'selected'");
-								}
-							print ("> ".$rowret['name']." </option>");
-							}
-						} 
-						 
-		print ("</select>
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>RETENCIONES €</td>
-					<td>
-			<input style='text-align:right' type='text' name='factrete1' size=5 maxlength=5 value='".@$defaults['factrete1']."' />,
-			<input type='text' name='factrete2' size=2 maxlength=2 value='".@$defaults['factrete2']."' />€
-					</td>
-				</tr>
-				<tr>
-					<td>SUBTOTAL €</td>
-					<td>
-			<input style='text-align:right' type='text' name='factpvp1' size=5 maxlength=5 value='".@$defaults['factpvp1']."' />,
-			<input type='text' name='factpvp2' size=2 maxlength=2 value='".@$defaults['factpvp2']."' />€
-					</td>
-				</tr>
-				<tr>
-					<td>TOTAL €</td>
-					<td>
-			<input style='text-align:right' type='text' name='factpvptot1' size=5 maxlength=5 value='".@$defaults['factpvptot1']."' />,
-			<input type='text' name='factpvptot2' size=2 maxlength=2 value='".@$defaults['factpvptot2']."' />€
-					</td>
-				</tr>
-				<tr>
-					<td>DESCRIPCIÓN</td>
-					<td>
-			<textarea cols='35' rows='7' onkeypress='return limitac(event, 200);' onkeyup='actualizaInfoc(200)' name='coment' id='coment'>".@$defaults['coment']."</textarea>
-			</br>
-	            <div id='infoc' align='center' style='color:#0080C0;'>
-        					Maximum 200 characters            
-				</div>
-					</td>
-				</tr>
-				<tr>
+		print("<tr>
 					<td>PDF / FOTO 1</td>
 					<td>
-		<input type='file' name='myimg1' value='".@$defaults['myimg1']."' />						
+		<input type='file' name='myimg1' value='".@$defaults['myimg1']."' style='color:#fff !important;' />
 					</td>
 				</tr>
 				<tr>
 					<td>PDF / FOTO 2</td>
 					<td>
-		<input type='file' name='myimg2' value='".@$defaults['myimg2']."' />						
+		<input type='file' name='myimg2' value='".@$defaults['myimg2']."' style='color:#fff !important;' />
 					</td>
 				</tr>
 				<tr>
 					<td>PDF / FOTO 3</td>
 					<td>
-		<input type='file' name='myimg3' value='".@$defaults['myimg3']."' />						
+		<input type='file' name='myimg3' value='".@$defaults['myimg3']."' style='color:#fff !important;' />
 					</td>
 				</tr>
 				<tr>
 					<td>PDF / FOTO 4</td>
 					<td>
-		<input type='file' name='myimg4' value='".@$defaults['myimg4']."' />						
+		<input type='file' name='myimg4' value='".@$defaults['myimg4']."' style='color:#fff !important;' />
 					</td>
 				</tr>
 				<tr>
-					<td colspan='2' align='right' valign='middle'  class='BorderSup'>
-						<input type='submit' value='GRABAR GASTO' />
+					<td colspan='2' align='right' valign='middle' >
+						<input type='submit' value='GRABAR GASTO' class='botonverde' />
 						<input type='hidden' name='oculto' value=1 />
+			</form>														
 					</td>
 				</tr>
-		</form>														
+				<tr>
+					<td colspan='4' align='center'>
+			<a href='Gastos_Ver.php' class='botonazul' style='color:#343434 !important' >INICIO GASTOS</a>
+					</td>
+				</tr>
 			</table>"); 
 			}
 		}

@@ -52,30 +52,12 @@ session_start();
 		if($_POST['dd'] == ''){ $dd1 = '';} else { $dd1 = $_POST['dd'];
 													$dd1 = $dd1;}
 
-		global $factdate;
-		$factdate = $_POST['dy']."/".$_POST['dm']."/".$_POST['dd'];
+	global $factdate;
+	$factdate = $_POST['dy']."/".$_POST['dm']."/".$_POST['dd'];
 
-		$factivae1 = $_POST['factivae1'];
-		$factivae2 = $_POST['factivae2'];
-		global $factivae;
-		$factivae = $factivae1.".".$factivae2;
-				
-		$factrete1 = $_POST['factrete1'];
-		$factrete2 = $_POST['factrete2'];
-		global $factrete;
-		$factrete = $factrete1.".".$factrete2;
+	require 'FormatNumber.php';
 
-		$factpvp1 = $_POST['factpvp1'];
-		$factpvp2 = $_POST['factpvp2'];
-		global $factpvp;
-		$factpvp = $factpvp1.".".$factpvp2;
-		
-		$factpvptot1 = $_POST['factpvptot1'];
-		$factpvptot2 = $_POST['factpvptot2'];
-		global $factpvptot;
-		$factpvptot = $factpvptot1.".".$factpvptot2;
-		
-		$tabla = "<table align='center' style='margin-top:10px' width='700px'>
+	$tabla = "<table align='center' style='margin-top:10px' width='700px'>
 					<tr>
 						<th colspan=4 class='BorderInf'>
 							SE HA MODIFICADO EN ".strtoupper($vname)."
@@ -332,38 +314,9 @@ function show_form($errors=[]){
 									'coment' => $_POST['coment']);
 							}
 
-	if ($errors){
-		print("	<div width='90%' style='float:left'>
-					<table align='left' style='border:none'>
-					<th style='text-align:left'>
-					<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-					</th>
-					<tr>
-					<td style='text-align:left'>");
-			
-		for($a=0; $c=count($errors), $a<$c; $a++){
-			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
-			}
-		print("</td>
-				</tr>
-				</table>
-				</div>
-				<div style='clear:both'></div>");
-		}
+	require 'TablaIfErrors.php';
 
-		$dm = array ('' => 'MONTH', '01' => 'ENERO', '02' => 'FEBRERO',
-					'03' => 'MARZO', '04' => 'ABRIL', '05' => 'MAYO', '06' => 'JUNIO',
-					'07' => 'JULIO', '08' => 'AGOSTO', '09' => 'SEPTIEMBRE',
-					'10' => 'OCTUBRE', '11' => 'NOVIEMBRE', '12' => 'DICIEMBRE');
-	
-		$dd = array ('' => 'DAY', '01' => '01', '02' => '02', '03' => '03',
-					'04' => '04', '05' => '05', '06' => '06', '07' => '07',
-					'08' => '08', '09' => '09', '10' => '10', '11' => '11',
-					'12' => '12', '13' => '13', '14' => '14', '15' => '15',
-					'16' => '16', '17' => '17', '18' => '18', '19' => '19',
-					'20' => '20', '21' => '21', '22' => '22', '23' => '23',
-					'24' => '24', '25' => '25', '26' => '26', '27' => '27',
-					'28' => '28', '29' => '29', '30' => '30', '31' => '31');
+	require 'ArrayMesDia.php';
 				
 	////////////////////
 
@@ -387,7 +340,7 @@ function show_form($errors=[]){
 				<input type='hidden' name='id' value='".$defaults['id']."' />
 			<tr>
 				<td colspan='2'>
-					SI SE HA COBRADO LA FACTURA MARQUE LA CASILLA: &nbsp; 
+					SI SE HA PAGADO LA FACTURA MARQUE LA CASILLA: &nbsp; 
 			<input type='checkbox' name='xl' value='yes' ");
 			if($defaults['xl'] == 'yes') {print(" checked=\"checked\"");}
 			print(" />

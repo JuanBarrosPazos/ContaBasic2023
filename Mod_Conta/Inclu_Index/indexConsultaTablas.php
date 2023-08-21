@@ -500,7 +500,7 @@
 	$sumaivaed  = number_format($sumaivaed ,2,".","");
 
 	global $sumapvptotd;
-
+	
 	if($sumapvptotd > 0){
 		$TotEd1 = (abs($sumaivaed)*100)/$sumapvptotd;
 		$TotEd2 = (abs($sumareted)*100)/$sumapvptotd;
@@ -508,7 +508,11 @@
 	}elseif($sumapvptotd < 0){
 		$TotEd1 = (abs($sumaivaed*100))/(abs($sumapvptotd));
 		$TotEd2 = (abs($sumareted*100))/(abs($sumapvptotd));
-		$TotEd3 = (abs($sumapvptoti*100))/(abs($sumapvptotd));
+		if($sumapvptoti == 0){ 
+			$TotEd3 = (abs($sumapvptotd*100))/(abs($sumapvptotd));
+		}else{
+			$TotEd3 = (abs($sumapvptoti*100))/(abs($sumapvptotd));
+		}
 	}else{ $TotEd1 = 0.00;		$TotEd2 = 0.00;		$TotEd3 = 0.00;}
 
 	global $bgRed;
@@ -518,11 +522,11 @@
 
 	if(($TotEd1 == 0.00)&&($TotEd2 == 0.00)&&($TotEd3 == 0.00)){			
 				print ("<table class='tabla' >
-				<tr>
-					<th colspan='3' class='BorderInf resultadosd'>
-						DIFERENCIA INGRESOS / GASTOS 
-					</th>
-				</tr>
+					<tr>
+						<th colspan='3' class='BorderInf resultadosd'>
+							DIFERENCIA INGRESOS / GASTOS 
+						</th>
+					</tr>
 					<tr>
 						<td colspan='3'>
 						<span style='display:block; margin-top: 0.4em;'>
