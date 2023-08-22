@@ -2,10 +2,11 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-	if($_POST['dy'] == ''){ $dy = date('y');	
+	if(@$_POST['dy'] == ''){ $dy = date('y');	
 							 } else {$dy = $_POST['dy'];}
-	$dm = "/".$_POST['dm']."/";
-	global $fil; 		global $db;												
+	$dm = "/".@$_POST['dm']."/";
+	global $fil;
+	global $db;												
 
 	global $vname; 		$vname = "`".$_SESSION['clave']."ingresos_".$dyt1."`";
 

@@ -21,7 +21,7 @@
 
 	$fil = "%".$dy."/01%";
 	//$sql01 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-	$sql01 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+$sql01 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
 	$qb01 = mysqli_query($db, $sql01);
 
 	if($qb01){

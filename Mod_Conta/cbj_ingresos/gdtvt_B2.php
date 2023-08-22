@@ -6,7 +6,7 @@
 							 } else {$dy = $_POST['dy'];}
 	//$dm = "/".$_POST['dm']."/";
 	
-	global $db; 		global $db_name; 		global $fil;
+	global $db;	 		global $db_name; 		global $fil;
 	global $orden; 		global $factnom; 		global $factnif;
 	global $factnum; 	global $fnum; 			global $fnif;
 	global $fnom;

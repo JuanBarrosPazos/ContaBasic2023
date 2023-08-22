@@ -4,7 +4,7 @@
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	require 'FormatNumber.php';
+	require 'FormatNumber.php'; 
 
 	global $civae;
 	$civae = $factpvp * ($fiva / 100);
@@ -111,7 +111,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 		$errors [] = "RAZON SOCIAL <font color='#FF0000'>Solo letras, números sin acentos o _.</font>";
 		}
 
-	 // VALIDO EL CAMPO factnif NIF DEL PROVEEDOR
+	 // VALIDO EL CAMPO factnif NIF DEL CLIENTE
 	
 	if(strlen(trim($_POST['factnif'])) == 0){
 		$errors [] = "NIF/CIF <font color='#FF0000'>Campo obligatorio.</font>";
@@ -272,7 +272,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 
         $dyt1 = "20".$_POST['dy'];
                                                                     
-        global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
+        global $vname; 		$vname = "`".$_SESSION['clave']."ingresos_".$dyt1."`";
         
 	    global $exist;	
 		if(isset($_POST['id'])){

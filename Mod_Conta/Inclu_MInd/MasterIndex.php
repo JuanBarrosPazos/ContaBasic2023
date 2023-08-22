@@ -44,37 +44,11 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
 
   	<li><a href='".$rutaGastos."Gastos_Ver.php' >GASTOS</a></li>
 
-  	<li><a href='#' class='MenuBarItemSubmenu'>GASTOS</a>
-		<ul>
-			<li><a href='".$rutaGastos."Gastos_Ver.php'>GASTO CONSULTAR</a></li>
-			<li><a href='".$rutaGastos."Gastos_Crear.php'>GASTO CREAR DATOS</a></li>
-			<li><a href='".$rutaGastos."Gastos_Modificar_01.php'>GASTO MODIFICAR</a></li>
-			<li><a href='".$rutaGastos."Gastos_Borrar_01.php'>GASTO BORRAR</a></li>
-
-			<li><a href='".$rutaGastos."Gastos_Pendientes_Ver.php'>G. PENDIENTE VER</a></li>
-			<li><a href='".$rutaGastos."Gastos_Pendientes_Crear.php'>G. PENDIENTE CREAR</a></li>
-			<li><a href='".$rutaGastos."Gastos_Pendientes_Modificar_01.php'>G. PENDIENTE MODIF</a></li>
-			<li><a href='".$rutaGastos."Gastos_Pendientes_Borrar_01.php'>G. PENDIENTE BORRA</a></li>
-		</ul>
-  	</li>
-	
 <!-- Fin GESTIÓN DE GASTOS -->
 
 <!-- Inicio GESTIÓN DE INGRESOS -->
 
-  	<li><a href='#' class='MenuBarItemSubmenu'>INGRESOS</a>
-		<ul>
-			<li><a href='".$rutaIngresos."Ingresos_Ver.php'>INGRESO VER</a></li>
-			<li><a href='".$rutaIngresos."Ingresos_Crear.php'>INGRESO CREAR</a></li>
-			<li><a href='".$rutaIngresos."Ingresos_Modificar_01.php'>INGRESO MODIFICAR</a></li>
-			<li><a href='".$rutaIngresos."Ingresos_Borrar_01.php'>INGRESO ELIMINAR</a></li>
-
-			<li><a href='".$rutaIngresos."Ingresos_Pendientes_Ver.php'>I. PENDIENTE VER</a></li>
-			<li><a href='".$rutaIngresos."Ingresos_Pendientes_Crear.php'>I. PENDIENTE CREAR</a></li>
-			<li><a href='".$rutaIngresos."Ingresos_Pendientes_Modificar_01.php'>I. PENDIENTE MODIF</a></li>
-			<li><a href='".$rutaIngresos."Ingresos_Pendientes_Borrar_01.php'>I. PENDIENTE BORRA</a></li>
-		</ul>
-	</li>
+  	<li><a href='".$rutaIngresos."Ingresos_Ver.php' >INGRESOS</a></li>
 	
 <!-- Fin GESTIÓN DE INGRESOS -->
 
@@ -104,7 +78,7 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
 
 <!-- Inicio BBDD -->
 
-  <li><a href='".$rutaUpBbdd."bbdd.php'>BACkUP BBDD</a></li>
+  <li><a href='".$rutaUpBbdd."export_bbdd_backups.php'>BACkUP BBDD</a></li>
 	
 <!-- Fin BBDD -->
 

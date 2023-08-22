@@ -4,7 +4,14 @@
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	require 'FormatNumber.php';
+	require 'FormatNumber.php'; 
+
+	global $civae;
+	$civae = $factpvp * ($fiva / 100);
+	$civae = floatval($civae);
+    $civae = number_format($civae,2,".","");
+	//$civae = number_format($civae,2,".","");
+    //echo "*** ".$civae."<br>";
 
 	if(trim($factivae) != trim($civae)){
 		$errors [] = "IMPUESTOS € <font color='#FF0000'>CANTIDAD CORRECTA => </font> ".$civae." €";
@@ -19,7 +26,7 @@
 		$errors [] = "RETENCIONES € <font color='#FF0000'>CANTIDAD CORRECTA => </font> ".$crete." €";
 	}
 	
-	$cftot = ($factpvp + $civae) - $factrete;
+	$cftot = ($factpvp + $civae) + $factrete;
 	$cftot = floatval($cftot);
 	$cftot = number_format($cftot,2,".","");
 	if(trim($factpvptot) != trim($cftot)){

@@ -18,7 +18,7 @@ session_start();
 		if(isset($_POST['grafico2'])){	a();
 										process_form();
 										info();	
-										} 
+											} 
 	} else { require '../Inclu/table_permisos.php'; }
 
 //////////////////////////////////////////////////////////////////////////////////////////////

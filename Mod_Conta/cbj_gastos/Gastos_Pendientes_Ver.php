@@ -203,7 +203,7 @@ $_SESSION['usuarios'] = '';
 		if(mysqli_num_rows($qc) == 0){
 					print ("<table style='text-align:center; margin: auto;' >
 								<tr>
-						<td><font color='#FF0000'>NO HAY DATOS</font></td>
+						<th><font color='#FF0000'>NO HAY DATOS</font></th>
 								</tr>
 								<tr>
 							<th class='BorderInf'>
@@ -605,7 +605,7 @@ function gt2(){
 			if(mysqli_num_rows($qb) == 0){
 					print ("<table style='text-align:center; margin: auto;' >
 								<tr>
-						<td><font color='#FF0000'>NO HAY DATOS</font></td>
+						<th><font color='#FF0000'>NO HAY DATOS</font></th>
 								</tr>
 								<tr>
 							<th class='BorderInf'>

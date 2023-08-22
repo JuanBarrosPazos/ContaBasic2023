@@ -17,7 +17,7 @@ session_start();
 				
 		if(isset($_POST['graficob2'])){	a();
 										process_form();
-										info();
+										info();			
 											} 
 	} else { require '../Inclu/table_permisos.php'; }
 
@@ -135,7 +135,7 @@ function process_form(){
 	
 	//$bplot1->SetShadow();
 	$graph->legend->SetPos(0.5,0.96,'center','bottom');
-	
+
 	$graph->Stroke();	
 		
 		}

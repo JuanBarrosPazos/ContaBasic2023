@@ -20,17 +20,19 @@ session_start();
 		if(isset($_POST['oculto2'])){	info_01();
 										show_form();
 		} elseif(isset($_POST['oculto'])){
-					// SI NO HA COBRADO LA FACTURA.
-					if(strlen($_POST['xl']) == 0){
-							print("* HA DE MARCAR LA CASILLA DE CONFIRMACIÓN.");
+				// SI NO HA COBRADO LA FACTURA.
+				if(!isset($_POST['xl'])){
+						print("<div style='text-align:center; margin:auto;'>
+									* HA DE MARCAR LA CASILLA DE CONFIRMACIÓN
+								</div>");
 							show_form();
-					} elseif(strlen($_POST['xl']) != 0){
-								//print("* SI SELECCIONADO");
-								process_form_2();
+				}elseif(isset($_POST['xl'])){
+							//print("* SI SELECCIONADO");
+							process_form_2();
 									}
-		} else {show_form();}
+		}else{show_form();}
 							
-	}else { require '../Inclu/table_permisos.php';} 
+	}else{ require '../Inclu/table_permisos.php'; } 
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -57,76 +59,42 @@ session_start();
 
 	require 'FormatNumber.php';
 
-	$tabla = "<table align='center' style='margin-top:10px' width='700px'>
-					<tr>
-						<th colspan=4 class='BorderInf'>
-							SE HA MODIFICADO EN ".strtoupper($vname)."
-						</th>
-					</tr>
-					<tr>
-						<td>NUMERO</td>
-						<td>".$_POST['factnum']."</td>
-						<td>FECHA</td>
-						<td>20"/*.$iniy*/.$factdate."</td>
-					</tr>
-					<tr>
-						<td>RAZON SOCIAL</td>
-						<td>".$_POST['factnom']."</td>
-						<td>NIF/CIF</td>
-						<td>".$_POST['factnif']."</td>
-					</tr>
-					<tr>
-						<td>IMP %</td>
-						<td>".$_POST['factiva']."</td>
-						<td>IMP €</td>
-						<td>".$factivae."</td>
-					</tr>
-					<tr>
-						<td>RETENCIONES %</td>
-						<td>".$_POST['factret']."</td>
-						<td>RETENCIONES €</td>
-						<td width=250px>".$factrete."</td>
-					</tr>
-					<tr>
-						<td>SUBTOTAL</td>
-						<td>".$factpvp."</td>
-						<td>TOTAL</td>
-						<td>".$factpvptot."</td>
-					</tr>
-					<tr>
-						<td>DESCRIPCION</td>
-						<td colspan='3'>".$_POST['coment']."</td>
-					</tr>
-				</table>";	
+	global $title;	$title = 'SE HA BORRADO EL GASTO PENDIENTE EN ';
+	global $link1; 	
+	$link1 = "<a href='Gastos_Pendientes_Ver.php' class='botonazul' style='color:#343434 !important' >INICIO GASTOS PENDIENTES</a>";
+	global $link2;
+	$link2 = "<a href='Gastos_Pendiente_Crear.php' class='botonazul' style='color:#343434 !important' >CREAR NUEVO GASTO PENDIENTE</a>";
+
+	require 'TableFormResult.php';
 
 		global $rutaold;
 		global $rutanew;
 		$rutaold = "../cbj_Docs/docgastos_pendientes/";
 		$rutanew = "../cbj_Docs/docgastos_20".$dynew."/";
 		
-		if(file_exists($rutaold.$_SESSION['myimg1b']) ){
-					copy($rutaold.$_SESSION['myimg1b'], $rutanew.$_SESSION['myimg1b']);
-					unlink($rutaold.$_SESSION['myimg1b']);
+		if(file_exists($rutaold.$_SESSION['myimg1']) ){
+					copy($rutaold.$_SESSION['myimg1'], $rutanew.$_SESSION['myimg1']);
+					unlink($rutaold.$_SESSION['myimg1']);
 			/*		print(" <br/>* CHANGE YEAR FACT: 20".$_SESSION['yold']." X 20".$dynew."
 							<br/>- Ok Copy & Unlink Img Name 1.");
 			*/
 										}else{print("<br/>- No Ok Copy & Unlink Img Name 1.");}
 										
-		if(file_exists($rutaold.$_SESSION['myimg2b']) ){
-								copy($rutaold.$_SESSION['myimg2b'], $rutanew.$_SESSION['myimg2b']);
-								unlink($rutaold.$_SESSION['myimg2b']);
+		if(file_exists($rutaold.$_SESSION['myimg2']) ){
+								copy($rutaold.$_SESSION['myimg2'], $rutanew.$_SESSION['myimg2']);
+								unlink($rutaold.$_SESSION['myimg2']);
 						/*		print("<br/>- Ok Copy & Unlink Img Name 2.");	*/
 										}else{print("<br/>- No Ok Copy & Unlink Img Name 2.");}
 										
-		if(file_exists($rutaold.$_SESSION['myimg3b']) ){
-								copy($rutaold.$_SESSION['myimg3b'], $rutanew.$_SESSION['myimg3b']);
-								unlink($rutaold.$_SESSION['myimg3b']);
+		if(file_exists($rutaold.$_SESSION['myimg3']) ){
+								copy($rutaold.$_SESSION['myimg3'], $rutanew.$_SESSION['myimg3']);
+								unlink($rutaold.$_SESSION['myimg3']);
 						/*		print("<br/>- Ok Copy & Unlink Img Name 3.");	*/
 										}else{print("<br/>- No Ok Copy & Unlink Img Name 3.");}
 										
-		if(file_exists($rutaold.$_SESSION['myimg4b']) ){
-								copy($rutaold.$_SESSION['myimg4b'], $rutanew.$_SESSION['myimg4b']);
-								unlink($rutaold.$_SESSION['myimg4b']);
+		if(file_exists($rutaold.$_SESSION['myimg4']) ){
+								copy($rutaold.$_SESSION['myimg4'], $rutanew.$_SESSION['myimg4']);
+								unlink($rutaold.$_SESSION['myimg4']);
 						/*		print("<br/>- Ok Copy & Unlink Img Name 4.");	*/
 										}else{print("<br/>- No Ok Copy & Unlink Img Name 4.");}
 										
@@ -136,7 +104,7 @@ session_start();
 	$_SESSION['vname'] = $vname;
 	
 	global $sent;								
-	$sent = "INSERT INTO `$db_name`.$vname (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveedores]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1b]', '$_SESSION[myimg2b]', '$_SESSION[myimg3b]', '$_SESSION[myimg4b]')";
+	$sent = "INSERT INTO `$db_name`.$vname (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]')";
 		
 		if(mysqli_query($db, $sent)){ //	print("<br/>* OK DELETE DATA."); 
 										print($tabla); 
@@ -172,281 +140,181 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function show_form($errors=[]){
+	function show_form($errors=[]){
 
-	global $db; 	global $db_name;
-	
-	global $sesionref; 		$sesionref = "`".$_SESSION['clave']."clientes`";
-	
-	$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveedores]'";
-	$qx = mysqli_query($db, $sqlx);
-	$rowprovee = mysqli_fetch_assoc($qx);
-	$_rsocial = $rowprovee['rsocial'];
-	$_ref = $rowprovee['ref'];
-	$_dni = $rowprovee['dni'];
-	$_ldni = $rowprovee['ldni'];
-	global $_dnil;
-	$_dnil = $_dni.$_ldni;
-	
-	$_SESSION['idx'] = $_POST['id'];
-
-	if(isset($_POST['oculto2'])){
+		global $db; 	global $db_name;
 		
-		$datex = $_POST['factdate'];
-		$dyx = substr($_POST['factdate'],0,2);
-		$dmx = substr($_POST['factdate'],3,2);
-		$ddx = substr($_POST['factdate'],-2,2);
-
-		$_SESSION['yold'] = $dyx;
-		$_SESSION['mold'] = $dmx;
-		$_SESSION['dold'] = $ddx;
-	
-		$_SESSION['myimg1b'] = $_POST['myimg1'];
-		$_SESSION['myimg2b'] = $_POST['myimg2'];
-		$_SESSION['myimg3b'] = $_POST['myimg3'];
-		$_SESSION['myimg4b'] = $_POST['myimg4'];
-
-		$ivae = strlen(trim($_POST['factivae']));
-		$ivae = $ivae - 3;
-		$ivaex = $_POST['factivae'];
-		$ivae1 = substr($_POST['factivae'],0,$ivae);
-		$ivae2 = substr($_POST['factivae'],-2,2);
-		$_SESSION['ivae1'] = $ivae1;
-		$_SESSION['ivae2'] = $ivae2;
-
-		$rete = strlen(trim($_POST['factrete']));
-		$rete = $rete - 3;
-		$retex = $_POST['factrete'];
-		$rete1 = substr($_POST['factrete'],0,$rete);
-		$rete2 = substr($_POST['factrete'],-2,2);
-		$_SESSION['rete1'] = $rete1;
-		$_SESSION['rete2'] = $rete2;
-
-		$factpvp = strlen(trim($_POST['factpvp']));
-		$factpvp = $factpvp - 3;
-		$factpvpx = $_POST['factpvp'];
-		$factpvp1 = substr($_POST['factpvp'],0,$factpvp);
-		$factpvp2 = substr($_POST['factpvp'],-2,2);
-		$_SESSION['factpvp1'] = $factpvp1;
-		$_SESSION['factpvp2'] = $factpvp2;
+		global $sesionref; 		$sesionref = "`".$_SESSION['clave']."clientes`";
 		
-		$factpvptot = strlen(trim($_POST['factpvptot']));
-		$factpvptot = $factpvptot - 3;
-		$factpvptotx = $_POST['factpvptot'];
-		$factpvptot1 = substr($_POST['factpvptot'],0,$factpvptot);
-		$factpvptot2 = substr($_POST['factpvptot'],-2,2);
-		$_SESSION['factpvptot1'] = $factpvptot1;
-		$_SESSION['factpvptot2'] = $factpvptot2;
-		
-		$dnie = strlen(trim($_POST['factnif']));
-		$dnie = $dnie - 1;
-		$dnix = $_POST['factnif'];
-		$dninx = substr($_POST['factnif'],0,$dnie);
-		$dnilx = substr($_POST['factnif'],-1,1);
-		$dninx = trim($dninx);
-		$dnilx = trim($dnilx);
-		$fil1 = "%".$dninx."%";
-		$fil2 = "%".$dnilx."%";
+		if(isset($_POST['provegastos'])){
 
-		$_SESSION['fnold'] = $_POST['factnum'];
+			$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveedores]'";
+			$qx = mysqli_query($db, $sqlx);
+			$rowprovee = mysqli_fetch_assoc($qx);
+			$_rsocial = $rowprovee['rsocial'];
+			$_ref = $rowprovee['ref'];
+			$_dni = $rowprovee['dni'];
+			$_ldni = $rowprovee['ldni'];
+			global $_dnil;
+			$_dnil = $_dni.$_ldni;
 
-		$sx =  "SELECT * FROM $sesionref WHERE `dni` LIKE '$fil1' LIMIT 1 ";
-		$qx = mysqli_query($db, $sx);
-		$rowpv = mysqli_fetch_assoc($qx);
-		$_rsocial = $rowpv['rsocial'];
-		$_ref = $rowpv['ref'];
-		$_dni = $rowpv['dni'];
-		$_ldni = $rowpv['ldni'];
-		global $_dnil;
-		$_dnil = $_dni.$_ldni;
-		
-		$_POST['proveedores'] = $_POST['refprovee'];
-		
-				$defaults = array ( 'id' => $_POST['id'],
-									'proveedores' => $_POST['refprovee'],
-								   	'refprovee' => $_POST['refprovee'],
-								   	'xl' => $_POST['xl'],
-									'dy' => $dyx,
-									'dm' => $dmx,
-									'dd' => $ddx,
-									'factnum' => strtoupper($_POST['factnum']),
-								//	'factdate' => $_POST['factdate'],
-								   	'factnom' => $_POST['factnom'],
-								   	'factnif' => $_POST['factnif'],
-								   	'factiva' => $_POST['factiva'],
-									'factivae1' => $ivae1,	
-									'factivae2' => $ivae2,	
-								   	'factret' => $_POST['factret'],
-									'factrete1' => $rete1,	
-									'factrete2' => $rete2,	
-									'factpvp1' => $factpvp1,	
-									'factpvp2' => $factpvp2,	
-									'factpvptot1' => $factpvptot1,	
-									'factpvptot2' => $factpvptot2,	
-									'coment' => $_POST['coment']);
-								}
-
-	elseif(isset($_POST['oculto'])){
-				$defaults = $_POST;
-	}elseif(isset($_POST['oculto1'])) {
-				$defaults = array (	'id' => $_SESSION['idx'],
-									'proveedores' => $_POST['proveedores'],
-								   	'refprovee' => $_POST['refprovee'],
-									'xl' => $_POST['xl'],
-									'dy' => $_POST['dy'],
-									'dm' => $_POST['dm'],
-									'dd' => $_POST['dd'],
-									'factnum' => strtoupper($_POST['factnum']),
-								//	'factdate' => $_POST['factdate'],
-								   	'refprovee' => $rowprovee['ref'],
-								   	'factnom' => $rowprovee['rsocial'],
-								   	'factnif' => $_dnil,
-								   	'factiva' => $_POST['factiva'],
-									'factivae1' => $_POST['factivae1'],	
-									'factivae2' => $_POST['factivae2'],	
-								   	'factret' => $_POST['factret'],
-									'factrete1' => $_POST['factrete1'],	
-									'factrete2' => $_POST['factrete2'],	
-									'factpvp1' => $_POST['factpvp1'],	
-									'factpvp2' => $_POST['factpvp2'],	
-									'factpvptot1' => $_POST['factpvptot1'],	
-									'factpvptot2' => $_POST['factpvptot2'],	
-									'coment' => $_POST['coment']);
-							}
-
-	require 'TablaIfErrors.php';
-
-	require 'ArrayMesDia.php';
-				
-	////////////////////
-
-	print("<table align='center' style=\"margin-top:10px\">
-				<tr>
-					<th colspan=2 class='BorderInf'>
-								MARCAR COMO COBRADO GASTO PENDIENTE					
-					</th>
-				</tr>
-				<tr>
-					<td>REF. CLIENTE</td>
-					<td>".$defaults['proveedores']."</td>
-			</tr>"); 
-			
-	if($_POST['proveedores'] != '') {
-
-	print("	<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
-
-				<input type='hidden' name='proveedores' value='".$defaults['proveedores']."' />
-				<input type='hidden' name='refprovee' value='".$defaults['refprovee']."' />
-				<input type='hidden' name='id' value='".$defaults['id']."' />
-			<tr>
-				<td colspan='2'>
-					SI SE HA PAGADO LA FACTURA MARQUE LA CASILLA: &nbsp; 
-			<input type='checkbox' name='xl' value='yes' ");
-			if($defaults['xl'] == 'yes') {print(" checked=\"checked\"");}
-			print(" />
-					</td>
-				</tr>
-				<tr>
-					<td>NUMERO</td>
-					<td>
-		<input type='hidden' name='factnum' value='".$defaults['factnum']."' />".strtoupper($defaults['factnum'])."
-					</td>
-				</tr>
-				<tr>
-					<td>FECHA</td>
-					<td>
-						<div style='float:left'>
-			<input type='hidden' name='dy' value='".$defaults['dy']."' />20".$defaults['dy']."
-						</div>
-						<div style='float:left'>
-			<input type='hidden' name='dm' value='".$defaults['dm']."' />/".$defaults['dm']."
-						</div>
-						<div style='float:left'>
-			<input type='hidden' name='dd' value='".$defaults['dd']."' />/".$defaults['dd']."
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>RAZON SOCIAL</td>
-					<td>
-		<input type='hidden' name='factnom' value='".$defaults['factnom']."' />".$defaults['factnom']."
-					</td>
-				</tr>
-				<tr>
-					<td>NIF/CIF</td>
-					<td>
-		<input type='hidden' name='factnif'value='".$defaults['factnif']."' />".$defaults['factnif']."
-					</td>
-				</tr>
-				<tr>
-					<td>IMPUESTOS %</td>
-					<td>
-						<div style='float:left'>
-		<input type='hidden' name='factiva' value='".$defaults['factiva']."' />".$defaults['factiva']." %
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>IMPUESTOS €</td>
-					<td>
-		<input type='hidden' name='factivae1' value='".$defaults['factivae1']."' />".$defaults['factivae1']."
-			,
-		<input type='hidden' name='factivae2' value='".$defaults['factivae2']."' />".$defaults['factivae2']."
-			€
-					</td>
-				</tr>
-				<tr>
-					<td>RETENCIONES %</td>
-					<td>
-						<div style='float:left'>
-		<input type='hidden' name='factret' value='".$defaults['factret']."' />".$defaults['factret']." %
-						</div>
-					</td>
-				</tr>
-				<tr>
-					<td>RETENCIONES €</td>
-					<td>
-		<input type='hidden' name='factrete1' value='".$defaults['factrete1']."' />".$defaults['factrete1']."
-			,
-		<input type='hidden' name='factrete2' value='".$defaults['factrete2']."' />".$defaults['factrete2']."
-		€
-					</td>
-				</tr>
-				<tr>
-					<td>SUBTOTAL €</td>
-					<td>
-		<input type='hidden' name='factpvp1' value='".$defaults['factpvp1']."' />".$defaults['factpvp1']."
-			,
-		<input type='hidden' name='factpvp2' value='".$defaults['factpvp2']."' />".$defaults['factpvp2']."
-		€
-					</td>
-				</tr>
-				<tr>
-					<td>TOTAL €</td>
-					<td>
-		<input type='hidden' name='factpvptot1' value='".$defaults['factpvptot1']."' />".$defaults['factpvptot1']."
-			,
-		<input type='hidden' name='factpvptot2' value='".$defaults['factpvptot2']."' />".$defaults['factpvptot2']."
-			€
-					</td>
-				</tr>
-				<tr>
-					<td>DESCRIPCIÓN</td>
-					<td>
-		<input type='hidden' name='coment' id='coment' value='".$defaults['coment']."'>".$defaults['coment']."
-					</td>
-				</tr>
-				<tr>
-					<td colspan='2' align='right' valign='middle'  class='BorderSup'>
-						<input type='submit' value='COBRAR GASTO PENDIENTE' />
-						<input type='hidden' name='oculto' value=1 />
-				</form>														
-					</td>
-				</tr>
-			
-			</table>"); 
-			}
 		}
+		
+		$_SESSION['idx'] = $_POST['id'];
+
+		if(isset($_POST['oculto2'])){
+			
+			$datex = $_POST['factdate'];
+			$dyx = substr($_POST['factdate'],0,2);
+			$dmx = substr($_POST['factdate'],3,2);
+			$ddx = substr($_POST['factdate'],-2,2);
+
+			$_SESSION['yold'] = $dyx;
+			$_SESSION['mold'] = $dmx;
+			$_SESSION['dold'] = $ddx;
+		
+			$_SESSION['myimg1'] = $_POST['myimg1'];
+			$_SESSION['myimg2'] = $_POST['myimg2'];
+			$_SESSION['myimg3'] = $_POST['myimg3'];
+			$_SESSION['myimg4'] = $_POST['myimg4'];
+
+			$ivae = strlen(trim($_POST['factivae']));
+			$ivae = $ivae - 3;
+			$ivaex = $_POST['factivae'];
+			$ivae1 = substr($_POST['factivae'],0,$ivae);
+			$ivae2 = substr($_POST['factivae'],-2,2);
+			$_SESSION['ivae1'] = $ivae1;
+			$_SESSION['ivae2'] = $ivae2;
+
+			$rete = strlen(trim($_POST['factrete']));
+			$rete = $rete - 3;
+			$retex = $_POST['factrete'];
+			$rete1 = substr($_POST['factrete'],0,$rete);
+			$rete2 = substr($_POST['factrete'],-2,2);
+			$_SESSION['rete1'] = $rete1;
+			$_SESSION['rete2'] = $rete2;
+
+			$factpvp = strlen(trim($_POST['factpvp']));
+			$factpvp = $factpvp - 3;
+			$factpvpx = $_POST['factpvp'];
+			$factpvp1 = substr($_POST['factpvp'],0,$factpvp);
+			$factpvp2 = substr($_POST['factpvp'],-2,2);
+			$_SESSION['factpvp1'] = $factpvp1;
+			$_SESSION['factpvp2'] = $factpvp2;
+			
+			$factpvptot = strlen(trim($_POST['factpvptot']));
+			$factpvptot = $factpvptot - 3;
+			$factpvptotx = $_POST['factpvptot'];
+			$factpvptot1 = substr($_POST['factpvptot'],0,$factpvptot);
+			$factpvptot2 = substr($_POST['factpvptot'],-2,2);
+			$_SESSION['factpvptot1'] = $factpvptot1;
+			$_SESSION['factpvptot2'] = $factpvptot2;
+			
+			$dnie = strlen(trim($_POST['factnif']));
+			$dnie = $dnie - 1;
+			$dnix = $_POST['factnif'];
+			$dninx = substr($_POST['factnif'],0,$dnie);
+			$dnilx = substr($_POST['factnif'],-1,1);
+			$dninx = trim($dninx);
+			$dnilx = trim($dnilx);
+			$fil1 = "%".$dninx."%";
+			$fil2 = "%".$dnilx."%";
+
+			$_SESSION['fnold'] = $_POST['factnum'];
+
+			$sx =  "SELECT * FROM $sesionref WHERE `dni` LIKE '$fil1' LIMIT 1 ";
+			$qx = mysqli_query($db, $sx);
+			$rowpv = mysqli_fetch_assoc($qx);
+			$_rsocial = @$rowpv['rsocial'];
+			$_ref = @$rowpv['ref'];
+			$_dni = @$rowpv['dni'];
+			$_ldni = @$rowpv['ldni'];
+			global $_dnil;
+			$_dnil = $_dni.$_ldni;
+			
+			$_POST['proveegastos'] = $_POST['refprovee'];
+		
+			$defaults = array ( 'id' => $_POST['id'],
+								'proveegastos' => $_POST['refprovee'],
+							   	'refprovee' => $_POST['refprovee'],
+							   	'xl' => @$_POST['xl'],
+								'dy' => $dyx,
+								'dm' => $dmx,
+								'dd' => $ddx,
+								'factnum' => strtoupper($_POST['factnum']),
+							//	'factdate' => $_POST['factdate'],
+							   	'factnom' => $_POST['factnom'],
+							   	'factnif' => $_POST['factnif'],
+							   	'factiva' => $_POST['factiva'],
+								'factivae1' => $ivae1,	
+								'factivae2' => $ivae2,	
+							   	'factret' => $_POST['factret'],
+								'factrete1' => $rete1,	
+								'factrete2' => $rete2,	
+								'factpvp1' => $factpvp1,	
+								'factpvp2' => $factpvp2,	
+								'factpvptot1' => $factpvptot1,	
+								'factpvptot2' => $factpvptot2,	
+								'coment' => $_POST['coment'],
+								'myimg1' => $_POST['myimg1'],	
+								'myimg2' => $_POST['myimg2'],	
+								'myimg3' => $_POST['myimg3'],	
+								'myimg4' => $_POST['myimg4']);
+						}
+
+		elseif(isset($_POST['oculto'])){
+					$defaults = $_POST;
+		}elseif(isset($_POST['oculto1'])) {
+			$defaults = array (	'id' => $_SESSION['idx'],
+								'proveegastos' => $_POST['proveegastos'],
+							   	'refprovee' => $_POST['refprovee'],
+								'xl' => $_POST['xl'],
+								'dy' => $_POST['dy'],
+								'dm' => $_POST['dm'],
+								'dd' => $_POST['dd'],
+								'factnum' => strtoupper($_POST['factnum']),
+							//	'factdate' => $_POST['factdate'],
+							   	'refprovee' => $rowprovee['ref'],
+							   	'factnom' => $rowprovee['rsocial'],
+							   	'factnif' => $_dnil,
+							   	'factiva' => $_POST['factiva'],
+								'factivae1' => $_POST['factivae1'],	
+								'factivae2' => $_POST['factivae2'],	
+							   	'factret' => $_POST['factret'],
+								'factrete1' => $_POST['factrete1'],	
+								'factrete2' => $_POST['factrete2'],	
+								'factpvp1' => $_POST['factpvp1'],	
+								'factpvp2' => $_POST['factpvp2'],	
+								'factpvptot1' => $_POST['factpvptot1'],	
+								'factpvptot2' => $_POST['factpvptot2'],	
+								'coment' => $_POST['coment']);
+						}
+
+		require 'TablaIfErrors.php';
+
+		require 'ArrayMesDia.php';
+				
+		////////////////////
+
+		if($_POST['proveegastos'] != '') {
+
+		global $checked;
+		if(@$defaults['xl'] == 'yes') { $checked = "checked='checked'";}else{ $checked = ""; }
+		global $Checkbox;
+		$Checkbox = "<tr>
+						<td colspan='2' style='text-align:center;' >
+							SI SE HA PAGADO LA FACTURA MARQUE LA CASILLA: &nbsp; 
+							<input type='checkbox' name='xl' value='yes' ".$checked."/>
+						</td>
+					</tr>";
+
+		global $titulo; $titulo = "MARCAR COMO COBRADO ESTE GASTO PENDIENTE";
+
+		require 'TableBorrar2.php';
+
+		}
+
+	}
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
