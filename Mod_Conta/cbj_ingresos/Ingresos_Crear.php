@@ -52,21 +52,10 @@ session_start();
 
 	function process_form(){
 	
-	global $db; 		global $db_name;		global $vname;	
+	global $db; 		global $db_name;
 	global $dyt1; 		global $dm1;
 
-	if($_POST['dy'] == ''){ $dy1 = '';
-							 $dyt1 = date('Y');	} else {$dy1 = $_POST['dy'];
-														$dy1 = $dy1;
-														$dyt1 = "20".$_POST['dy'];
-																		}
-	if($_POST['dm'] == ''){ $dm1 = '';} else {$dm1 = $_POST['dm'];
-												$dm1 = "/".$dm1."/";}
-	if($_POST['dd'] == ''){ $dd1 = '';} else {$dd1 = $_POST['dd'];
-												$dd1 = $dd1;}
-
-	global $factdate;
-	$factdate = $_POST['dy']."/".$_POST['dm']."/".$_POST['dd'];
+	require 'Ingresos_factdate.php';
 
 	require 'FormatNumber.php';
 

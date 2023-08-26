@@ -70,7 +70,7 @@ session_start();
 		global $db_name; 		
 		$vname = "`".$_SESSION['clave']."ingresos_".date('Y')."`";
 		
-		$tv = "CREATE TABLE `$db_name`.$vname (
+		$tv = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname (
 	`id` int(4) NOT NULL auto_increment,
 	`factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
 	`factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -133,7 +133,7 @@ session_start();
 		global $vname;		
 		$vname = "`".$_SESSION['clave']."gastos_".date('Y')."`";
 		
-		$tg = "CREATE TABLE `$db_name`.$vname (
+		$tg = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname (
 	`id` int(4) NOT NULL auto_increment,
 	`factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
 	`factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,

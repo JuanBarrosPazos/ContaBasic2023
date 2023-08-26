@@ -173,7 +173,7 @@ function validate_form(){
 			
 		global $vname1;		 $vname1 = "`".$_SESSION['clave']."ingresos_".$year."`";
 			
-		$tv = "CREATE TABLE `$db_name`.$vname1 (
+		$tv = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname1 (
 		`id` int(4) NOT NULL auto_increment,
 		`factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
 		`factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -224,7 +224,7 @@ function validate_form(){
 
 			global $vname2; 		$vname2 = "`".$_SESSION['clave']."gastos_".$year."`";
 			
-			$tg = "CREATE TABLE `$db_name`.$vname2 (
+			$tg = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname2 (
 			`id` int(4) NOT NULL auto_increment,
 			`factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
 			`factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,

@@ -38,12 +38,9 @@ function ver_todo(){
 			print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
 	} else {
 			if(mysqli_num_rows($qb) == 0){
-				print ("<table align='center'>
-							<tr>
-								<td><font color='#FF0000'>NO HAY DATOS</font></td>
-							</tr>
-						</table>");
 
+				require 'Impuestos_NoData.php';
+				
 			} else { 
 				print ("<table align='center'>
 						<tr>

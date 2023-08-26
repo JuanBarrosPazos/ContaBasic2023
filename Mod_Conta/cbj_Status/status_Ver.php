@@ -36,12 +36,10 @@ session_start();
 			
 		} else {
 			if(mysqli_num_rows($qb) == 0){
-				print ("<table align='center'>
-						<tr>
-							<td><font color='#FF0000'>NO HAY DATOS</font></td>
-						</tr>
-						</table>");
-	}else{
+
+				require 'status_NoData.php';
+				
+			}else{
 		print ("<table align='center'>
 				<tr>
 					<th colspan=7 class='BorderInf'>

@@ -9,7 +9,7 @@
 	global $tableAdmin;
 	$tableAdmin = "`".$_SESSION['clave']."admin`";	
 
-	$admin = "CREATE TABLE `$db_name`.$tableAdmin (
+	$admin = "CREATE TABLE IF NOT EXISTS `$db_name`.$tableAdmin (
   `id` int(4) NOT NULL auto_increment,
   `ref` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `Nivel` varchar(8) collate utf8_spanish2_ci NOT NULL default 'amd',
@@ -47,7 +47,7 @@
 	global $tableVisitasAdmin;
 	$tableVisitasAdmin = "`".$_SESSION['clave']."visitasadmin`";	
 
-	$visitas = "CREATE TABLE `$db_name`.$tableVisitasAdmin (
+	$visitas = "CREATE TABLE IF NOT EXISTS `$db_name`.$tableVisitasAdmin (
   `idv` int(2) NOT NULL,
   `visita` int(10) NOT NULL,
   `admin` int(10) NOT NULL,
@@ -78,7 +78,7 @@
 	global $vname1b;
 	$vname1b = "`".$_SESSION['clave']."gastos_pendientes`";
 	
-	$tgb = "CREATE TABLE `$db_name`.$vname1b (
+	$tgb = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname1b (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -113,7 +113,7 @@
 	global $vname3b;
 	$vname3b = "`".$_SESSION['clave']."ingresos_pendientes`";
 	
-	$tib = "CREATE TABLE `$db_name`.$vname3b (
+	$tib = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname3b (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -148,7 +148,7 @@
 	global $vname5;
 	$vname5 = "`".$_SESSION['clave']."proveedores`";
 	
-	$provee = "CREATE TABLE `$db_name`.$vname5 (
+	$provee = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname5 (
   `id` int(4) NOT NULL auto_increment,
   `ref` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `rsocial` varchar(30) collate utf8_spanish2_ci NOT NULL,
@@ -189,7 +189,7 @@
 	global $vname6;
 	$vname6 = "`".$_SESSION['clave']."clientes`";
 	
-	$provei = "CREATE TABLE `$db_name`.$vname6 (
+	$provei = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname6 (
   `id` int(4) NOT NULL auto_increment,
   `ref` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `rsocial` varchar(30) collate utf8_spanish2_ci NOT NULL,
@@ -230,7 +230,7 @@
 	global $vname10;
 	$vname10 = "`".$_SESSION['clave']."impuestos`";
 
-	$impuestos = "CREATE TABLE `$db_name`.$vname10 (
+	$impuestos = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname10 (
 				  `id` int(2) NOT NULL auto_increment,
   				  `iva` decimal(10,2) UNSIGNED NOT NULL DEFAULT '0.00',
   				  `name` varchar(12) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'NAME %',
@@ -266,7 +266,7 @@ $impuestos2 = "INSERT INTO `$db_name`.$vname10 (`id`, `iva`, `name`) VALUES
 	global $vname11;
 	$vname11 = "`".$_SESSION['clave']."status`";
 
-	$status = "CREATE TABLE `$db_name`.$vname11 (
+	$status = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname11 (
 				  `id` int(2) NOT NULL auto_increment,
   				  `year` int(4) NOT NULL,
    				  `ycod` int(2) NOT NULL,
@@ -305,7 +305,7 @@ $status2 = "INSERT INTO `$db_name`.$vname11 (`id`, `year`, `ycod`, `stat`, `hidd
 	global $vname12;
 	$vname12 = "`".$_SESSION['clave']."statusfeedback`";
 
-	$statusfeedback = "CREATE TABLE `$db_name`.$vname12 (
+	$statusfeedback = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname12 (
 				  `id` int(2) NOT NULL auto_increment,
   				  `year` int(4) NOT NULL,
    				  `ycod` int(2) NOT NULL,
@@ -328,7 +328,7 @@ $status2 = "INSERT INTO `$db_name`.$vname11 (`id`, `year`, `ycod`, `stat`, `hidd
 	global $vname13;
 	$vname13 = "`".$_SESSION['clave']."retencion`";
 
-	$retencion = "CREATE TABLE `$db_name`.$vname13 (
+	$retencion = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname13 (
 				  `id` int(2) NOT NULL auto_increment,
   				  `ret` decimal(10,2) UNSIGNED NOT NULL DEFAULT '0.00',
   				  `name` varchar(12) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'NAME %',

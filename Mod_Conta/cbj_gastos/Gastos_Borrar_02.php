@@ -33,22 +33,11 @@ session_start();
 
 		global $dyt1;
 		
-		if($_POST['dy'] == ''){ $dy1 = '';
-								$dyt1 = date('Y');	} else {$dy1 = $_POST['dy'];
-															$dy1 = $dy1;
-															$dyt1 = "20".$_POST['dy'];
-																			}
-		if($_POST['dm'] == ''){ $dm1 = '';} else {$dm1 = $_POST['dm'];
-													$dm1 = "/".$dm1."/";}
-		if($_POST['dd'] == ''){ $dd1 = '';} else {$dd1 = $_POST['dd'];
-													$dd1 = $dd1;}
+		require 'Gastos_factdate.php';
 
-	global $factdate;
-	$factdate = $_POST['dy']."/".$_POST['dm']."/".$_POST['dd'];
-	
-	global $db; 		global $db_name;
+		global $db; 		global $db_name;
 
-	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
  
 		require 'FormatNumber.php';
 

@@ -36,20 +36,8 @@ session_start();
 			print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
 		} else {
 			if(mysqli_num_rows($qb) == 0){
-				print ("<table>
-						<tr>
-							<th align='center'>
-								EJERCICIO / STATUS PAPELERA
-								<br><br>
-								<font color='#FF0000'>NO HAY DATOS</font>
-							</tH>
-						</tr>
-						<tr>
-							<td colspan='2' style='text-align:center;' >
-								<a href='status_Ver.php' class='botonverde'>INICIO EJERCICOS STATUS</a>
-							</td>
-						</tr>
-					</table>");
+
+				require 'status_NoData.php';
 
 			}else{ print ("<table align='center'>
 							<tr>

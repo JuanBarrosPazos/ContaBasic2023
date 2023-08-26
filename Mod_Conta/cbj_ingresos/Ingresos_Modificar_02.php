@@ -52,24 +52,12 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 	function process_form(){
 	
-	global $db; 		global $db_name;	
-	global $dyt1; 		global $dynew;
-	
-	if($_POST['dy'] == ''){ $dy1 = '';
-							 $dynew = date('y');
-							 $dyt1 = date('Y');} else { $dy1 = $_POST['dy'];
-														$dynew = $_POST['dy'];
-														$dyt1 = "20".$_POST['dy'];
-																		}
-	if($_POST['dm'] == ''){ $dm1 = '';} else { $dm1 = $_POST['dm'];
-												$dm1 = "/".$dm1."/";}
-	if($_POST['dd'] == ''){ $dd1 = '';} else { $dd1 = $_POST['dd'];
-												$dd1 = $dd1;}
+		global $db; 		global $db_name;	
+		global $dyt1; 		global $dynew;
+		
+		require 'Ingresos_factdate.php';
 
-	global $factdate;
-	$factdate = $_POST['dy']."/".$_POST['dm']."/".$_POST['dd'];
-
-	require 'FormatNumber.php';
+		require 'FormatNumber.php';
 	
 	//////////////
 		//////////////

@@ -184,18 +184,9 @@ session_start();
 			print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
 		} else {
 			if(mysqli_num_rows($qb) == 0){
-				print ("<table align='center'>
-							<tr>
-								<td>
-						<font color='#FF0000'>NO HAY DATOS ".strtolower($vname)."</font>
-								</td>
-							</tr>
-							<tr>
-								<td style='text-align:center;'' class='BorderSup'>
-						<a href='status_Ver.php' class='botonverde'>INICIO EJERCICOS STATUS</a>
-								</td>
-							</tr>
-						</table>");
+
+				require 'status_NoData.php';
+
 			} else { print ("<table align='center'>
 								<tr>
 									<th colspan=6 class='BorderInf'>
@@ -246,18 +237,8 @@ function ver_feedback(){
 			print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
 	} else {
 		if(mysqli_num_rows($qb) == 0){
-			print ("<table align='center'>
-					<tr>
-						<td>
-					<font color='#FF0000'>NO HAY DATOS ".strtolower($vname)."</font>
-						</td>
-					</tr>
-					<tr>
-						<td style='text-align:center;'' class='BorderSup'>
-				<a href='status_Ver.php' class='botonverde'>INICIO EJERCICOS STATUS</a>
-						</td>
-					</tr>
-				</table>");
+			
+			require 'status_NoData.php';
 
 		} else { print ("<table align='center'>
 							<tr>

@@ -43,29 +43,17 @@ session_start();
 		global $db; 		global $db_name;
 		global $vname; 		global $dyt1; 		global $dynew;
 		
-		if($_POST['dy'] == ''){ $dy1 = '';
-								$dynew = date('y');
-								$dyt1 = date('Y');} else { $dy1 = $_POST['dy'];
-															$dynew = $_POST['dy'];
-															$dyt1 = "20".$_POST['dy'];
-																			}
-		if($_POST['dm'] == ''){ $dm1 = '';} else { $dm1 = $_POST['dm'];
-													$dm1 = "/".$dm1."/";}
-		if($_POST['dd'] == ''){ $dd1 = '';} else { $dd1 = $_POST['dd'];
-													$dd1 = $dd1;}
+		require 'Ingresos_factdate.php';
 
-	global $factdate;
-	$factdate = $_POST['dy']."/".$_POST['dm']."/".$_POST['dd'];
+		require 'FormatNumber.php';
 
-	require 'FormatNumber.php';
+		global $title;	$title = 'SE HA BORRADO EL INGRESO PENDIENTE EN ';
+		global $link1; 	
+		$link1 = "<a href='Ingresos_Pendientes_Ver.php' class='botonazul' style='color:#343434 !important' >INICIO INGRESOS PENDIENTES</a>";
+		global $link2;
+		$link2 = "<a href='Ingresos_Pendiente_Crear.php' class='botonazul' style='color:#343434 !important' >CREAR NUEVO INGRESO PENDIENTE</a>";
 
-	global $title;	$title = 'SE HA BORRADO EL INGRESO PENDIENTE EN ';
-	global $link1; 	
-	$link1 = "<a href='Ingresos_Pendientes_Ver.php' class='botonazul' style='color:#343434 !important' >INICIO INGRESOS PENDIENTES</a>";
-	global $link2;
-	$link2 = "<a href='Ingresos_Pendiente_Crear.php' class='botonazul' style='color:#343434 !important' >CREAR NUEVO INGRESO PENDIENTE</a>";
-
-	require 'TableFormResult.php';
+		require 'TableFormResult.php';
 
 		global $rutaold;
 		global $rutanew;

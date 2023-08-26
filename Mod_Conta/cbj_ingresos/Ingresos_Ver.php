@@ -57,31 +57,7 @@ $_SESSION['usuarios'] = '';
 		show_form();
 
 		global $dyt1;
-		
-		if($_POST['dy'] == ''){ $dy1 = '';
-								$dyt1 = date('Y');	
-								$_SESSION['gyear'] = date('Y');} 
-												else {	$dy1 = $_POST['dy'];
-														$dyt1 = "20".$_POST['dy'];
-														$_SESSION['gyear'] = "20".$_POST['dy'];									
-														}
-		if($_POST['dm'] == ''){ $dm1 = '';
-								$_SESSION['gtime'] = '';} 
-												else {	$dm1 = "/".$_POST['dm']."/";
-														$_SESSION['gtime'] = $_POST['dm'];	
-														}
-		if($_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];
-																		}
-		
-	// print("* ".$dy1.$dm1.$dd1.". TU PUTA MADRE");
-	
-	global $fil;
-	$fil = "%".$dy1.$dm1.$dd1."%";
-	if (($_POST['dm'] == '')&&($_POST['dd'] != '')){$dm1 = '';
-													$dd1 = $_POST['dd'];
-													global $fil;
-													$fil = "%".$dy1."/%".$dm1."%/".$dd1."%";
-																					}
+		require 'Ingresos_factdate.php';
 
 	//////////////////////
 
@@ -201,21 +177,8 @@ $_SESSION['usuarios'] = '';
 					Se ha producido un error: </font>".mysqli_error($db)."</br>");
 	} else {
 		if(mysqli_num_rows($qc) == 0){
-					print ("<table align='center'>
-								<tr>
-									<th><font color='#FF0000'>NO HAY DATOS</font></th>
-								</tr>
-								<tr>
-							<th class='BorderInfDch'>
-			<a href='Ingresos_Crear.php' class='botonverde' style='color:#343434 !important;'>
-				CREAR NUEVO INGRESO
-			</a>
-			<a href='Ingresos_Pendientes_Ver.php' class='botonverde' style='color:#343434 !important;'>
-				VER INGRESOS PENDIENTES
-			</a>
-							</th>
-								</tr>
-							</table>");
+
+			require 'Ingresos_NoData.php';
 
 		}else{ 
 			print ("<table align='center'>
@@ -353,38 +316,9 @@ function gt2(){
 
 	global $db; 	global $dyt1;
 
-	if($_POST['dy'] == ''){ $dy1 = '';
-							 $dyt1 = date('Y');} 
-							 			else {	$dy1 = $_POST['dy'];
-												$dyt1 = "20".$_POST['dy'];}
-	if($_POST['dm'] == ''){ $dm1 = '';} else {	$dm1 = "/".$_POST['dm']."/";}
-	if($_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];}
+	require 'Ingresos_factdate.php';
 
-	global $fil;
-	$fil = "%".$dy1.$dm1.$dd1."%";
-	if (($_POST['dm'] == '')&&($_POST['dd'] != '')){$dm1 = '';
-													$dd1 = $_POST['dd'];
-													global $fil;
-													$fil = "%".$dy1."/%".$dm1."%/".$dd1."%";
-																					}
-
-		global $orden;
-		if(isset($_POST['Orden'])){
-			$orden = $_POST['Orden'];
-		}else{ $orden = '`id` ASC'; }
-
-	// RAZON SOCIAL
-	if($_POST['factnom'] == ''){$fnom = 'ññ';}
-	else{$fnom = $_POST['factnom'];}
-	global $factnom; 	$factnom = $_POST['factnom'];
-	// NIF
-	if($_POST['factnif'] == ''){$fnif = 'ññ';}
-	else{$fnif = $_POST['factnif'];}
-	global $factnif; 	$factnif = $_POST['factnif'];
-	// FACTURA Nº
-	if($_POST['factnum'] == ''){$fnum = 'ññ';}
-	else{$fnum = $_POST['factnum'];}
-	global $factnum; 	$factnum = $_POST['factnum'];
+	require 'Ingresos_ConsultaLogica.php'	;
 	
 	global $vname; 		$vname = "`".$_SESSION['clave']."ingresos_".$dyt1."`";
 
@@ -443,20 +377,7 @@ function gt2(){
 	}else{ $orden = '`id` ASC'; }
 
 	global $dyt1;
-	if($_POST['dy'] == ''){ $dy1 = '';
-							 $dyt1 = date('Y');} 
-										 else {	$dy1 = $_POST['dy'];
-												$dyt1 = "20".$_POST['dy'];}
-	if($_POST['dm'] == ''){ $dm1 = '';} else {	$dm1 = "/".$_POST['dm']."/";}
-	if($_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];}
-
-	global $fil;												
-	$fil = "%".$dy1.$dm1.$dd1."%";
-	if (($_POST['dm'] == '')&&($_POST['dd'] != '')){$dm1 = '';
-													$dd1 = $_POST['dd'];
-													global $fil;
-													$fil = "%".$dy1."/%".$dm1."%/".$dd1."%";
-																					}
+	require 'Ingresos_factdate.php';
 
 	global $vname; 	$vname = "`".$_SESSION['clave']."ingresos_".$dyt1."`";
 	$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
@@ -514,27 +435,8 @@ function gt2(){
 		}else{ $orden = '`id` ASC'; }
 
 		global $dyt1;
-		if(@$_POST['dy'] == ''){ $dy1 = '';
-								$dyt1 = date('Y');	
-								$_SESSION['gyear'] = date('Y');} 
-												else {	$dy1 = $_POST['dy'];
-														$dyt1 = "20".$_POST['dy'];
-														$_SESSION['gyear'] = "20".$_POST['dy'];									
-														}
-		if(@$_POST['dm'] == ''){ $dm1 = '';
-								$_SESSION['gtime'] = '';} 
-												else {	$dm1 = "/".$_POST['dm']."/";
-														$_SESSION['gtime'] = $_POST['dm'];	
-														}
-		if(@$_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];}
-		
-		global $fil;												
-		$fil = "%".$dy1.$dm1.$dd1."%";
-		if((@$_POST['dm'] == '')&&(@$_POST['dd'] != '')){$dm1 = '';
-														 $dd1 = $_POST['dd'];
-														 global $fil;
-														 $fil = "%".$dy1."/%".$dm1."%/".$dd1."%";
-																						}
+		require 'Ingresos_factdate.php';
+
 		global $vname; 		$vname = "`".$_SESSION['clave']."ingresos_".$dyt1."`";
 
 		$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden $limit ";
@@ -599,21 +501,8 @@ function gt2(){
 				print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
 		} else {
 			if(mysqli_num_rows($qb) == 0){
-					print ("<table align='center'>
-								<tr>
-									<th><font color='#FF0000'>NO HAY DATOS</font></th>
-								</tr>
-								<tr>
-							<th class='BorderInfDch'>
-			<a href='Ingresos_Crear.php' class='botonverde' style='color:#343434 !important;'>
-				CREAR NUEVO INGRESO
-			</a>
-			<a href='Ingresos_Pendientes_Ver.php' class='botonverde' style='color:#343434 !important;'>
-				VER INGRESOS PENDIENTES
-			</a>
-							</th>
-								</tr>
-							</table>");
+
+				require 'Ingresos_NoData.php';
 
 			} else { print ("<table align='center'>
 							<th colspan=15 class='BorderInf'>".mysqli_num_rows($qb)." RESULTADOS</th>

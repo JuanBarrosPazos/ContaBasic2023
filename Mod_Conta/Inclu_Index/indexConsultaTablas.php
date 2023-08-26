@@ -492,13 +492,14 @@
 	$sumapvptotd  = number_format($sumapvptotd ,2,".","");
 	//if($sumapvptotd == ""){$sumapvptotd = "0.00"; }else{ }
 
+	/* CALCULO DIFERENCIA RETENCIONES IVA */
 	$sumareted = $sumaretei - $sumareteg;
 	$sumareted  = number_format($sumareted ,2,".","");
 	//if($sumareted == ""){ $sumareted = "0.00";}else{ }
 
 	$sumaivaed = $sumaivaei - $sumaivaeg;
 	$sumaivaed  = number_format($sumaivaed ,2,".","");
-
+	
 	global $sumapvptotd;
 	
 	if($sumapvptotd > 0){
@@ -515,12 +516,26 @@
 		}
 	}else{ $TotEd1 = 0.00;		$TotEd2 = 0.00;		$TotEd3 = 0.00;}
 
+	global $sumapvptoti;
+	if($sumapvptoti > 0){
+		$TotEd4 = (abs($sumapvptoti)*100)/$sumapvptoti;
+	}else{
+		$TotEd4 = 0.00;
+	}
+	global $sumapvptotg;
+	if($sumapvptotg > 0){
+		$TotEd5 = (abs($sumapvptotg)*100)/$sumapvptoti;
+	}else{
+		$TotEd5 = 0.00;
+	}
+
+
 	global $bgRed;
 	if(	$sumaivaed >= 0){ $bgivaed = ""; }else{ $bgivaed = "style='background: #ff5e00 !important;'"; }
 	if(	$sumareted >= 0){ $bgreted = ""; }else{ $bgreted = "style='background: #ff5e00 !important;'"; }
 	if(	$sumapvptotd >= 0){ $bgpvptotd = ""; }else{ $bgpvptotd = "style='background: #ff5e00 !important;'"; }
 
-	if(($TotEd1 == 0.00)&&($TotEd2 == 0.00)&&($TotEd3 == 0.00)){			
+	if(($TotEd1 == 0.00)&&($TotEd2 == 0.00)&&($TotEd3 == 0.00)&&($TotEd4 == 0.00)&&($TotEd5 == 0.00)){			
 				print ("<table class='tabla' >
 					<tr>
 						<th colspan='3' class='BorderInf resultadosd'>
@@ -572,21 +587,33 @@
 					<td colspan=6 class='BorderInf'>
 						<div class='section'>
 				<ul class='timeline'>
-					<li>
+					<li class='TimeLine2'>
 						<a href='#' title='IMPUESTOS DIFER ".$sumaivaed." €'>
 				<span class='label' ".$bgivaed.">IMP <br>".$sumaivaed."</span>
-				<span class='count bgcolord' style='height: ".$TotEd1."%;'>(".$TotEd1.")</span>
+				<span class='count bgcolorir' style='height: ".$TotEd1."%;'>(".$TotEd1.")</span>
 						</a>
 					</li>	
-					<li>
+					<li class='TimeLine2'>
 						<a href='#' title='RETENCION DIFER ".$sumareted." €'>
 				<span class='label' ".$bgreted.">RET <br>".$sumareted."</span>
-				<span class='count bgcolord' style='height: ".$TotEd2."%;'>(".$TotEd2.")</span>
+				<span class='count bgcolorir' style='height: ".$TotEd2."%;'>(".$TotEd2.")</span>
 						</a>
 					</li>	
-					<li>
-						<a href='#' title='TOTAL ".$sumapvptotd." €'>
-				<span class='label' ".$bgpvptotd.">TOTAL <br>".$sumapvptotd."</span>
+					<li class='TimeLine2' >
+						<a href='#' title='TOTAL INGRESOS ".$sumapvptoti." €'>
+				<span class='label' >IN <br>".$sumapvptoti."</span>
+				<span class='count bgcolori' style='height: ".$TotEd4."%;'>(".$TotEd4.")</span>
+						</a>
+					</li>	
+					<li class='TimeLine2' >
+						<a href='#' title='TOTAL GASTOS ".$sumapvptotg." €'>
+				<span class='label' >OUT <br>".$sumapvptotg."</span>
+				<span class='count bgcolorg' style='height: ".$TotEd5."%;'>(".$TotEd5.")</span>
+						</a>
+					</li>	
+					<li class='TimeLine2' >
+						<a href='#' title='TOTAL DIFERENCIA ".$sumapvptotd." €'>
+				<span class='label' ".$bgpvptotd.">DIF <br>".$sumapvptotd."</span>
 				<span class='count bgcolord' style='height: ".$TotEd3."%;'>(".$TotEd3.")</span>
 						</a>
 					</li>	

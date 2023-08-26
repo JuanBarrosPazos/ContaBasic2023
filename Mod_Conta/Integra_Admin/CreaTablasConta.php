@@ -123,7 +123,7 @@ function config_one_cbj(){
 	global $vname5;
 	$vname5 = "`".$_SESSION['clave']."proveedores`";
 	
-	$provee = "CREATE TABLE `$db_name`.$vname5 (
+	$provee = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname5 (
   `id` int(4) NOT NULL auto_increment,
   `ref` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `rsocial` varchar(30) collate utf8_spanish2_ci NOT NULL,
@@ -163,7 +163,7 @@ function config_one_cbj(){
 	global $vname5f;
 	$vname5f = "`".$_SESSION['clave']."proveedoresfeed`";
 	
-	$provee = "CREATE TABLE `$db_name`.$vname5f (
+	$provee = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname5f (
   `id` int(4) NOT NULL auto_increment,
   `ref` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `rsocial` varchar(30) collate utf8_spanish2_ci NOT NULL,
@@ -193,7 +193,7 @@ function config_one_cbj(){
 	global $vname1b;
 	$vname1b = "`".$_SESSION['clave']."gastos_pendientes`";
 	
-	$tgb = "CREATE TABLE `$db_name`.$vname1b (
+	$tgb = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname1b (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -231,7 +231,7 @@ function config_one_cbj(){
 	global $vname6;
 	$vname6 = "`".$_SESSION['clave']."clientes`";
 	
-	$provei = "CREATE TABLE `$db_name`.$vname6 (
+	$provei = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname6 (
   `id` int(4) NOT NULL auto_increment,
   `ref` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `rsocial` varchar(30) collate utf8_spanish2_ci NOT NULL,
@@ -270,7 +270,7 @@ function config_one_cbj(){
 	global $vname6f;
 	$vname6f = "`".$_SESSION['clave']."clientesfeed`";
 	
-	$provee = "CREATE TABLE `$db_name`.$vname6f (
+	$provee = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname6f (
   `id` int(4) NOT NULL auto_increment,
   `ref` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `rsocial` varchar(30) collate utf8_spanish2_ci NOT NULL,
@@ -300,7 +300,7 @@ function config_one_cbj(){
 	global $vname3b;
 	$vname3b = "`".$_SESSION['clave']."ingresos_pendientes`";
 	
-	$tib = "CREATE TABLE `$db_name`.$vname3b (
+	$tib = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname3b (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -337,7 +337,7 @@ function config_one_cbj(){
 	global $vname11;
 	$vname11 = "`".$_SESSION['clave']."status`";
 
-	$status = "CREATE TABLE `$db_name`.$vname11 (
+	$status = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname11 (
 				  `id` int(2) NOT NULL auto_increment,
   				  `year` int(4) NOT NULL,
    				  `ycod` int(2) NOT NULL,
@@ -374,7 +374,7 @@ $status2 = "INSERT INTO `$db_name`.$vname11 (`id`, `year`, `ycod`, `stat`, `hidd
 	global $vname12;
 	$vname12 = "`".$_SESSION['clave']."statusfeedback`";
 
-	$statusfeedback = "CREATE TABLE `$db_name`.$vname12 (
+	$statusfeedback = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname12 (
 				  `id` int(2) NOT NULL auto_increment,
   				  `year` int(4) NOT NULL,
    				  `ycod` int(2) NOT NULL,
@@ -396,7 +396,7 @@ $status2 = "INSERT INTO `$db_name`.$vname11 (`id`, `year`, `ycod`, `stat`, `hidd
 	global $vname13;
 	$vname13 = "`".$_SESSION['clave']."retencion`";
 
-	$retencion = "CREATE TABLE `$db_name`.$vname13 (
+	$retencion = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname13 (
 				  `id` int(2) NOT NULL auto_increment,
   				  `ret` decimal(10,2) UNSIGNED NOT NULL DEFAULT '0.00',
   				  `name` varchar(12) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'NAME %',
@@ -463,7 +463,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	global $vname1;
 	$vname1 = "`".$_SESSION['clave']."gastos_".date('Y')."`";
 	
-	$tg = "CREATE TABLE `$db_name`.$vname1 (
+	$tg = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname1 (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -514,7 +514,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	global $vname2;
 	$vname2 = "`".$_SESSION['clave']."gastos_".(date('Y')-1)."`";
 	
-	$tg2 = "CREATE TABLE `$db_name`.$vname2 (
+	$tg2 = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname2 (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -568,7 +568,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	global $vname3;
 	$vname3 = "`".$_SESSION['clave']."ingresos_".date('Y')."`";
 	
-	$ti = "CREATE TABLE `$db_name`.$vname3 (
+	$ti = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname3 (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -619,7 +619,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	global $vname4;
 	$vname4 = "`".$_SESSION['clave']."ingresos_".(date('Y')-1)."`";
 	
-	$ti2 = "CREATE TABLE `$db_name`.$vname4 (
+	$ti2 = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname4 (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,

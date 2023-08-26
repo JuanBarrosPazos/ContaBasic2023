@@ -101,7 +101,7 @@
       height: 12em; 
       width: max-content;
       margin: auto;
-      padding: 0.1em 1.2em 0.8em 1.2em;
+      padding: 0.1em 0.4em 0.1em 0.4em;
       /*border: 1px solid green;*/
     }
     .timeline li { 
@@ -112,6 +112,12 @@
       height: 9.8em; 
       /*border: 1px solid yellow;*/
     }
+    
+    .TimeLine2 { 
+      width: 3.8em !important; 
+      font-size: 0.9em !important;
+    }
+
     .timeline li a { 
       display: block;
       height: 50%;  
@@ -147,8 +153,12 @@
       background: #f1bd2d !important;
     }
     .bgcolord{
+      background: #90e5ff !important;
+    }
+    .bgcolorir{
       background: #cc5fe7 !important;
     }
+
     .timeline li:hover { 
       background: #343434; 
     }

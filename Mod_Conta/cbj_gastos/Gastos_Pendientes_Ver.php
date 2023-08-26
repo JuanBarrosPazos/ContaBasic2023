@@ -58,86 +58,61 @@ $_SESSION['usuarios'] = '';
 
 		global $dyt1;
 		
-		if($_POST['dy'] == ''){ $dy1 = '';
-								$dyt1 = date('Y');	
-								$_SESSION['gyear'] = date('Y');} 
-												else {	$dy1 = $_POST['dy'];
-														$dyt1 = "20".$_POST['dy'];
-														$_SESSION['gyear'] = "20".$_POST['dy'];									
-														}
-		if($_POST['dm'] == ''){ $dm1 = '';
-								$_SESSION['gtime'] = '';} 
-												else {	$dm1 = "/".$_POST['dm']."/";
-														$_SESSION['gtime'] = $_POST['dm'];	
-														}
-		if($_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];
-																		}
+		require 'Gastos_factdate.php';
+
+		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
+		global $sqlc; 		$sqlc =  "SELECT * FROM $vname WHERE 1 ";
+
+		// FACTURA Nº
+		global $fnum;		global $or1;	global $or2;	
+		if(strlen(trim($_POST['factnum'])) == 0){
+			$fnum = '';
+			$sqlc .= " AND (";
+			$or1 = '';
+		}else{
+			$fnum = $_POST['factnum'];
+			$or1 = 'OR';
+			$sqlc .= " AND (`factnum` = '$fnum' ";
+		}
+		global $factnum; 	$factnum = $_POST['factnum'];
 		
-	// print("* ".$dy1.$dm1.$dd1.". TU PUTA MADRE");
-	
-	global $fil;
-	$fil = "%".$dy1.$dm1.$dd1."%";
-	if (($_POST['dm'] == '')&&($_POST['dd'] != '')){$dm1 = '';
-													$dd1 = $_POST['dd'];
-													global $fil;
-													$fil = "%".$dy1."/%".$dm1."%/".$dd1."%";
-																					}
+		// NIF
+		global $fnif;		
+		if(strlen(trim($_POST['factnif'])) == 0){
+			$fnif = '';
+			if($or1 == ''){ $or2 = ''; } else { $or2 = 'OR'; }
+			$sqlc .= "";
+		}else{
+			$fnif = $_POST['factnif'];
+			$or2 = 'OR';
+			$sqlc .= " $or1 `factnif` = '$fnif' ";
+		}
+		global $factnif; 	$factnif = $_POST['factnif'];
+		
+		// RAZON SOCIAL
+		global $fnom;
+		if(strlen(trim($_POST['factnom'])) == 0){
+			$fnom = '';
+			$sqlc .= "";
+		}else{
+			$fnom = $_POST['factnom'];
+			$sqlc .= " $or2 `refprovee` = '$fnom' ";
+		}
+		global $factnom; 	$factnom = $_POST['factnom'];
+		
+		if($fil == "%%"){
+			$sqlc .= ")";
+		}else{
+			$sqlc .= ") AND  (`factdate` LIKE '$fil')";
+		}
+			//$sqlc .= "OR  `factdate` LIKE '$fil' ";
 
-	//////////////////////
+		global $orden;
+		if(isset($_POST['Orden'])){
+			$orden = $_POST['Orden'];
+		}else{ $orden = '`id` ASC'; }
 
-	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
-	global $sqlc; 		$sqlc =  "SELECT * FROM $vname WHERE 1 ";
-
-	// FACTURA Nº
-	global $fnum;		global $or1;	global $or2;	
-	if(strlen(trim($_POST['factnum'])) == 0){
-		$fnum = '';
-		$sqlc .= " AND (";
-		$or1 = '';
-	}else{
-		$fnum = $_POST['factnum'];
-		$or1 = 'OR';
-		$sqlc .= " AND (`factnum` = '$fnum' ";
-	}
-	global $factnum; 	$factnum = $_POST['factnum'];
-	
-	// NIF
-	global $fnif;		
-	if(strlen(trim($_POST['factnif'])) == 0){
-		$fnif = '';
-		if($or1 == ''){ $or2 = ''; } else { $or2 = 'OR'; }
-		$sqlc .= "";
-	}else{
-		$fnif = $_POST['factnif'];
-		$or2 = 'OR';
-		$sqlc .= " $or1 `factnif` = '$fnif' ";
-	}
-	global $factnif; 	$factnif = $_POST['factnif'];
-	
-	// RAZON SOCIAL
-	global $fnom;
-	if(strlen(trim($_POST['factnom'])) == 0){
-		$fnom = '';
-		$sqlc .= "";
-	}else{
-		$fnom = $_POST['factnom'];
-		$sqlc .= " $or2 `refprovee` = '$fnom' ";
-	}
-	global $factnom; 	$factnom = $_POST['factnom'];
-	
-	if($fil == "%%"){
-		$sqlc .= ")";
-	}else{
-		$sqlc .= ") AND  (`factdate` LIKE '$fil')";
-	}
-		//$sqlc .= "OR  `factdate` LIKE '$fil' ";
-
-	global $orden;
-	if(isset($_POST['Orden'])){
-		$orden = $_POST['Orden'];
-	}else{ $orden = '`id` ASC'; }
-
-		$sqlc .= " ORDER BY $orden ";
+			$sqlc .= " ORDER BY $orden ";
 
 	/*	
 	$sqlc =  "SELECT * FROM $vname WHERE (`factnum` = '$fnum' OR `factnif` = '$fnif' OR `refprovee` = '$fnom') AND  (`factdate` LIKE '$fil') ORDER BY $orden ";
@@ -201,21 +176,8 @@ $_SESSION['usuarios'] = '';
 					Se ha producido un error: </font>".mysqli_error($db)."</br>");
 	} else {
 		if(mysqli_num_rows($qc) == 0){
-					print ("<table style='text-align:center; margin: auto;' >
-								<tr>
-						<th><font color='#FF0000'>NO HAY DATOS</font></th>
-								</tr>
-								<tr>
-							<th class='BorderInf'>
-			<a href='Gastos_Pendientes_Crear.php' class='botonverde' style='color:#343434 !important;'>
-				CREAR NUEVO GASTO PENDIENTE
-			</a>
-			<a href='Gastos_Ver.php' class='botonverde' style='color:#343434 !important;'>
-				VER GASTOS
-			</a>
-							</th>
-								</tr>
-							</table>");
+
+			require 'Gastos_NoData.php';
 
 		}else{ 
 			print ("<table align='center'>
@@ -357,38 +319,9 @@ function gt2(){
 
 	global $db; 	global $dyt1;
 
-	if($_POST['dy'] == ''){ $dy1 = '';
-							 $dyt1 = date('Y');} 
-							 			else {	$dy1 = $_POST['dy'];
-												$dyt1 = "20".$_POST['dy'];}
-	if($_POST['dm'] == ''){ $dm1 = '';} else {	$dm1 = "/".$_POST['dm']."/";}
-	if($_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];}
+	require 'Gastos_factdate.php';
 
-	global $fil;
-	$fil = "%".$dy1.$dm1.$dd1."%";
-	if (($_POST['dm'] == '')&&($_POST['dd'] != '')){$dm1 = '';
-													$dd1 = $_POST['dd'];
-													global $fil;
-													$fil = "%".$dy1."/%".$dm1."%/".$dd1."%";
-																					}
-
-		global $orden;
-		if(isset($_POST['Orden'])){
-			$orden = $_POST['Orden'];
-		}else{ $orden = '`id` ASC'; }
-
-	// RAZON SOCIAL
-	if($_POST['factnom'] == ''){$fnom = 'ññ';}
-	else{$fnom = $_POST['factnom'];}
-	global $factnom; 	$factnom = $_POST['factnom'];
-	// NIF
-	if($_POST['factnif'] == ''){$fnif = 'ññ';}
-	else{$fnif = $_POST['factnif'];}
-	global $factnif; 	$factnif = $_POST['factnif'];
-	// FACTURA Nº
-	if($_POST['factnum'] == ''){$fnum = 'ññ';}
-	else{$fnum = $_POST['factnum'];}
-	global $factnum; 	$factnum = $_POST['factnum'];
+	require 'Gastos_ConsultaLogica.php';
 	
 	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
 
@@ -446,21 +379,7 @@ function gt2(){
 		$orden = $_POST['Orden'];
 	}else{ $orden = '`id` ASC'; }
 
-	global $dyt1;
-	if($_POST['dy'] == ''){ $dy1 = '';
-							 $dyt1 = date('Y');} 
-										 else {	$dy1 = $_POST['dy'];
-												$dyt1 = "20".$_POST['dy'];}
-	if($_POST['dm'] == ''){ $dm1 = '';} else {	$dm1 = "/".$_POST['dm']."/";}
-	if($_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];}
-
-	global $fil;												
-	$fil = "%".$dy1.$dm1.$dd1."%";
-	if (($_POST['dm'] == '')&&($_POST['dd'] != '')){$dm1 = '';
-													$dd1 = $_POST['dd'];
-													global $fil;
-													$fil = "%".$dy1."/%".$dm1."%/".$dd1."%";
-																					}
+	require 'Gastos_factdate.php';
 
 	global $vname; 	$vname = "`".$_SESSION['clave']."gastos_pendientes`";
 	$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
@@ -512,33 +431,15 @@ function gt2(){
 		
 		global $db; 		global $db_name;		global $limit;
 
+		global $dyt1;
+		
+		require 'Gastos_factdate.php';
+
 		global $orden;
 		if(isset($_POST['Orden'])){
 			$orden = $_POST['Orden'];
 		}else{ $orden = '`id` ASC'; }
 
-		global $dyt1;
-		if(@$_POST['dy'] == ''){ $dy1 = '';
-								$dyt1 = date('Y');	
-								$_SESSION['gyear'] = date('Y');} 
-												else {	$dy1 = $_POST['dy'];
-														$dyt1 = "20".$_POST['dy'];
-														$_SESSION['gyear'] = "20".$_POST['dy'];									
-														}
-		if(@$_POST['dm'] == ''){ $dm1 = '';
-								$_SESSION['gtime'] = '';} 
-												else {	$dm1 = "/".$_POST['dm']."/";
-														$_SESSION['gtime'] = $_POST['dm'];	
-														}
-		if(@$_POST['dd'] == ''){ $dd1 = '';} else {	$dd1 = $_POST['dd'];}
-		
-		global $fil;												
-		$fil = "%".$dy1.$dm1.$dd1."%";
-		if((@$_POST['dm'] == '')&&(@$_POST['dd'] != '')){$dm1 = '';
-														 $dd1 = $_POST['dd'];
-														 global $fil;
-														 $fil = "%".$dy1."/%".$dm1."%/".$dd1."%";
-																						}
 		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
 
 		$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden $limit ";
@@ -603,21 +504,8 @@ function gt2(){
 				print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
 		} else {
 			if(mysqli_num_rows($qb) == 0){
-					print ("<table style='text-align:center; margin: auto;' >
-								<tr>
-						<th><font color='#FF0000'>NO HAY DATOS</font></th>
-								</tr>
-								<tr>
-							<th class='BorderInf'>
-			<a href='Gastos_Pendientes_Crear.php' class='botonverde' style='color:#343434 !important;'>
-				CREAR NUEVO GASTO PENDIENTE
-			</a>
-			<a href='Gastos_Ver.php' class='botonverde' style='color:#343434 !important;'>
-				VER GASTOS
-			</a>
-							</th>
-								</tr>
-							</table>");
+
+				require 'Gastos_NoData.php';
 
 			} else { print ("<table align='center'>
 							<th colspan=16 class='BorderInf'>".mysqli_num_rows($qb)." RESULTADOS</th>

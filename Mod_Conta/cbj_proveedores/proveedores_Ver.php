@@ -43,23 +43,8 @@ session_start();
 		
 		show_form();
 		
-		if($_POST['rsocial'] == ''){$rso = 'ññ';}
-		else{$rso = "%".$_POST['rsocial']."%";}
-		global $rsocial; 		$rsocial = $_POST['rsocial'];
-		
-		if($_POST['dni'] == ''){$dni = 'ññ';}
-		else{$dni = $_POST['dni'];}
-		global $dnie; 		$dnie = $_POST['dni'];
-		
-		if($_POST['ref'] == ''){$ref = 'ññ';}
-		else{$ref = $_POST['ref'];}
-		global $refer; 		$refer = $_POST['ref'];
-		
-		global $orden;
-		if(isset($_POST['Orden'])){
-			$orden = $_POST['Orden'];
-		}else{ $orden = '`id` ASC'; }
-			
+		require 'proveedores_ConsultaLogica.php'			;
+
 		global $vname; 		$vname = "`".$_SESSION['clave']."proveedores`";
 
 		$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `ref` = '$ref' OR `dni` = '$dni' OR `rsocial` LIKE '$rso' ORDER BY $orden ";
@@ -72,17 +57,9 @@ session_start();
 		} else {
 				
 			if(mysqli_num_rows($qc)== 0){
-					print ("<table align='center' style=\"border:0px\">
-								<tr>
-									<td align='center'>
-										<font color='#FF0000'>
-								NINGÚN DATO SE CIÑE A ESTOS CRITERIOS.
-									</br>
-								INTENTELO CON OTROS PARÁMETROS.
-										</font>
-									</td>
-								</tr>
-							</table>");
+
+				require 'proveedores_NoData.php';
+
 			} else { 	
 				print ("<table align='center'>
 						<tr>
@@ -245,14 +222,9 @@ session_start();
 		} else {
 				
 			if(mysqli_num_rows($qb)<= 1){
-					print ("<table align='center'>
-								<tr>
-									<td>
-										<font color='#FF0000'>NO HAY DATOS</font>
-									</td>
-								</tr>
-							</table>");
-										
+
+				require 'proveedores_NoData.php';
+				
 			} else { print ("<table align='center'>
 							<tr>
 								<th colspan=10 class='BorderInf'>PROVEEDORES ".(mysqli_num_rows($qb)-1)."</th>
