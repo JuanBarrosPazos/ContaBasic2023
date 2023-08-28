@@ -136,8 +136,8 @@ function validate_form(){
 					<td style='text-align:left;'>HIDDEN</td><td>".$hidden."</td>
 				</tr>
 				<tr>
-					<td colspan='2' style='text-align:center;'' class='BorderSup'>
-						<a href='status_Ver.php' class='botonverde'>INICIO EJERCICOS STATUS</a>
+					<td colspan='2' style='text-align:center;' >
+			<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
 					</td>
 				</tr>
 			</table>";	
@@ -344,8 +344,8 @@ function validate_form(){
 					</td>
 				</tr>
 				<tr>
-					<td colspan='2' align='center' class='BorderSup'>
-						<a href='status_Ver.php' class='botonverde'>INICIO EJERCICOS STATUS</a>
+					<td colspan='2' align='center' >
+			<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
 					</td>
 				</tr>
 			</table>"); 

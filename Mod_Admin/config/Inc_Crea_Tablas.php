@@ -166,22 +166,39 @@
 
 	/************	COMPROBAMOS LAS TABLAS AGENDA	*****************/
 
-	global $tablasAgendaLog; 
+		global $tablasAgendaLog; 
 	if(file_exists("../Mod_Agenda/Integra_Admin/CreaTablasAgenda.php")){
 		require "../Mod_Agenda/Integra_Admin/CreaTablasAgenda.php";
-	} else { $tablasAgendaLog = ""; }
+	} else { $tablasAgendaLog = "\tNO EXISTE EL MODULO AGENDA\n"; }
 
-	/************	COMPROBAMOS LAS TABLAS CONTA JUAN	*****************/
+	/************	COMPROBAMOS LAS TABLAS CONTACTO	*****************/
 
-		global $tablasContaLog; 
+		global $tablasContactoLog; 
+	if(file_exists("../Mod_Contacto/Integra_Admin/CreaTablasContacto.php")){
+		require "../Mod_Contacto/Integra_Admin/CreaTablasContacto.php";
+	} else { $tablasContactoLog = "\tNO EXISTE EL MODULO CONTACTO\n"; }
+
+	/************	COMPROBAMOS LAS TABLAS CONTA BASIC	*****************/
+
+		global $tablasContaLog;
 	if(file_exists("../Mod_Conta/Integra_Admin/CreaTablasConta.php")){
 		require "../Mod_Conta/Integra_Admin/CreaTablasConta.php";
-		$tablasContaLog = "\t** SE CREAN LOS LOG DEL CBJ EN: ../Mod_Conta/config/logs/".PHP_EOL;
-	} else { $tablasContaLog = ""; } 
+		global $text;
+		$tablasContaLog = "\t** SE CREAN LOS LOG DEL CBJ EN: ../Mod_Conta/config/logs/".PHP_EOL.$text.PHP_EOL;
+	} else { $tablasContaLog = "\tNO EXISTE EL MODULO CONTA BASIC\n"; } 
+
+	/************	SI EXISTE EL CONSTRUCTOR DE TABLAS ARTICULOS	*****************/
+	
+		global $tblArtic;		
+	if(file_exists('../Mod_Contenidos/Integra_Admin/CreaTablasContenido.php')){
+		require '../Mod_Contenidos/Integra_Admin/CreaTablasContenido.php';
+		global $text;
+		$tblArtic = $text.PHP_EOL;
+	}else{ /* NO EXISTE EL ARCHIVO */ $tblArtic = "\tNO EXISTE EL MODULO ARTICULOS\n";}
 
 	/************	PASAMOS LOS PARAMETROS A .LOG	*****************/
 
-		$text = $tablasAgendaLog.$tablasContaLog;
+		$text = $tablasAgendaLog.$tablasContactoLog.$tablasContaLog.$tblArtic.PHP_EOL;
 
 		ini_log();
 		

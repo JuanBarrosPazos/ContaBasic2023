@@ -43,8 +43,8 @@ function process_form(){
 
 	$tabla = "<table align='center' style='margin-top:10px'>
 				<tr>
-					<td colspan=4 class='BorderInf' style='text-align:center;'>
-						<a href='retencion_Ver.php' class='botonverde'>INICIO RETENCION</a>
+					<td colspan=4 style='text-align:center;'>
+			<a href='retencion_Ver.php' class='botonverde' style='color:#343434;'>INICIO RETENCION</a>
 					</td>
 				</tr>
 				<tr>
@@ -55,8 +55,8 @@ function process_form(){
 					<td>NAME</td><td>".$name."</td>
 				</tr>
 				<tr>
-					<td colspan=4 class='BorderSup' style='text-align:center;'>
-						<a href='retencion_Ver.php' class='botonverde'>INICIO RETENCION</a>
+					<td colspan=4 style='text-align:center;'>
+			<a href='retencion_Ver.php' class='botonverde' style='color:#343434;'>INICIO RETENCION</a>
 					</td>
 				</tr>
 			</table>";	
@@ -105,8 +105,8 @@ function show_form($errors=[]){
 
 	print("<table align='center' style=\"margin-top:10px\">
 				<tr>
-					<td colspan=2 class='BorderInf' style='text-align:center;'>
-						<a href='retencion_Ver.php' class='botonverde'>INICIO RETENCION</a>
+					<td colspan=2 style='text-align:center;'>
+			<a href='retencion_Ver.php' class='botonverde' style='color:#343434;'>INICIO RETENCION</a>
 					</td>
 				</tr>
 				<tr>
@@ -128,8 +128,8 @@ function show_form($errors=[]){
 					</td>
 				</tr>
 				<tr>
-					<td colspan=2 class='BorderSup' style='text-align:center;'>
-						<a href='retencion_Ver.php' class='botonverde'>INICIO RETENCION</a>
+					<td colspan=2 style='text-align:center;'>
+			<a href='retencion_Ver.php' class='botonverde' style='color:#343434;'>INICIO RETENCION</a>
 					</td>
 				</tr>
 			</table>"); 

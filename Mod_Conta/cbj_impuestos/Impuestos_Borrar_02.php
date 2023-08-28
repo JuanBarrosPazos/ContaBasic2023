@@ -44,7 +44,7 @@ function process_form(){
 	$tabla = "<table align='center' style='margin-top:10px'>
 				<tr>
 					<td colspan=4 class='BorderInf' style='text-align:center;'>
-						<a href='Impuestos_Ver.php' class='botonverde'>INICIO IMPUESTOS</a>
+						<a href='Impuestos_Ver.php' class='botonverde' style='color:#343434;'>INICIO IMPUESTOS</a>
 					</td>
 				</tr>
 				<tr>
@@ -56,7 +56,7 @@ function process_form(){
 				</tr>
 				<tr>
 					<td colspan=4 class='BorderSup' style='text-align:center;'>
-						<a href='Impuestos_Ver.php' class='botonverde'>INICIO IMPUESTOS</a>
+						<a href='Impuestos_Ver.php' class='botonverde' style='color:#343434;'>INICIO IMPUESTOS</a>
 					</td>
 				</tr>
 			</table>";	
@@ -106,7 +106,7 @@ function show_form($errors=[]){
 	print("<table align='center' style=\"margin-top:10px\">
 				<tr>
 					<td colspan=2 class='BorderInf' style='text-align:center;'>
-						<a href='Impuestos_Ver.php' class='botonverde'>INICIO IMPUESTOS</a>
+						<a href='Impuestos_Ver.php' class='botonverde' style='color:#343434;'>INICIO IMPUESTOS</a>
 					</td>
 				</tr>
 				<tr>
@@ -129,7 +129,7 @@ function show_form($errors=[]){
 				</tr>
 				<tr>
 					<td colspan=2 class='BorderSup' style='text-align:center;'>
-						<a href='Impuestos_Ver.php' class='botonverde'>INICIO IMPUESTOS</a>
+						<a href='Impuestos_Ver.php' class='botonverde' style='color:#343434;'>INICIO IMPUESTOS</a>
 					</td>
 				</tr>
 			</table>"); 

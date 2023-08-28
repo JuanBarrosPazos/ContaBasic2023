@@ -4,7 +4,7 @@
 	if($_POST['v']=='g'){
 		$vname = "`".$_SESSION['clave']."proveedores`";
 	} elseif($_POST['v']=='i'){
-		$vname = "`".$_SESSION['clave']."clientes`";
+		$vname = "`".$_SESSION['clave']."proveedores`";
 	}
 
 	$errors = array();
@@ -44,9 +44,9 @@
 	// VALIDO LA REFERENCIA
 	if(isset($_POST['id'])){
 		if($_POST['id'] == @$rowdni['id']){ }
-		elseif($cprove > 0){$errors [] = "EL CLIENTE <font color='#FF0000'> YA EXISTE ".$rf.".</font>";}
+		elseif($cprove > 0){$errors [] = "EL PROVEEDOR <font color='#FF0000'> YA EXISTE ".$rf.".</font>";}
 	} else { 
-		if($cprove > 0){$errors [] = "EL CLIENTE <font color='#FF0000'> YA EXISTE ".$rf.".</font>";}
+		if($cprove > 0){$errors [] = "EL PROVEEDOR <font color='#FF0000'> YA EXISTE ".$rf.".</font>";}
 	}
 		
 				   ////////////////////				   ////////////////////

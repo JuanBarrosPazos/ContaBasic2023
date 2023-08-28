@@ -53,7 +53,7 @@ session_start();
 					<th class='BorderInfDch'>STATE</th>	
 					<th class='BorderInfDch'>HIDDEN</th>
 					<th colspan=2 class='BorderInf'>
-			<a href='status_Crear.php' title='CREAR NUEVO EJERCICIO' class='botonverde'>CREAR NUEVO EJERCICIO</a>
+			<a href='status_Crear.php' title='CREAR NUEVO EJERCICIO' class='botonverde' style='color:#343434;' >CREAR NUEVO EJERCICIO</a>
 			<button type='submit' title='PAPELERA EJERCICIO' class='botonverde imgDelete DeleteGrey'>
 				<a href='status_feedback_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
 			</button>
@@ -133,7 +133,7 @@ function info(){
 	global $nombre;		$nombre = "STATUS TODOS LOS EJERCICIOS";
 	
 		global $orden;
-		if(isset($_POST['Orden'])){
+		if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
 			$orden = $_POST['Orden'];
 		}else{ $orden = '`id` ASC'; }
 

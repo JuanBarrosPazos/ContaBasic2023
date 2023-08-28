@@ -66,6 +66,13 @@ table {
 	border: 1px solid #CCC;
 	margin: 0.4em auto 0.4em auto;
 }
+.tableForm{
+	margin: 0.8em auto 0.8em auto;
+	border-radius: 12px;
+}
+.tableForm img{
+	border-radius: 8px;
+}
 
 .BorderInf {
 	border-bottom-width: 1px;
@@ -374,6 +381,8 @@ a:hover  img {
 	font-weight: bolder;
 }
 
+/* ICONOS APP */
+
 .DeleteBlack{
 	background-image: url(../cbj_Images/delete_black.png);
 }
@@ -384,9 +393,167 @@ a:hover  img {
 	background-image: url(../cbj_Images/delete_white.png);
 }
 .DeleteBlack:hover, .DeleteGrey:hover, .DeleteWhite:hover{
-	background-image: url(../cbj_Images/delete_black.png);
+	background-image: url(../cbj_Images/delete_grey.png);
 }
-.imgDelete{
+
+.DetalleBlack{
+	background-image: url(../cbj_Images/detalle_black_.png);
+}
+.DetalleGrey{
+	background-image: url(../cbj_Images/detalle_grey.png);
+}
+.DetalleWhite{
+	background-image: url(../cbj_Images/detalle_white.png);
+}
+.DetalleBlack:hover, .DetalleGrey:hover, .DetalleWhite:hover{
+	background-image: url(../cbj_Images/detalle_grey.png);
+}
+
+.BuscaBlack{
+	background-image: url(../cbj_Images/busca_black.png);
+}
+.BuscaGrey{
+	background-image: url(../cbj_Images/busca_grey.png);
+}
+.BuscaWhite{
+	background-image: url(../cbj_Images/busca_white.png);
+}
+.BuscaBlack:hover, .BuscaGrey:hover, .BuscaWhite:hover{
+	background-image: url(../cbj_Images/busca_black.png);
+}
+
+.PersonAddBlack{
+	background-image: url(../cbj_Images/person_add_black.png);
+}
+.PersonAddGrey{
+	background-image: url(../cbj_Images/person_add_grey.png);
+}
+.PersonAddWhite{
+	background-image: url(../cbj_Images/person_add_white.png);
+}
+.PersonAddBlack:hover, .PersonAddGrey:hover, .PersonAddWhite:hover{
+	background-image: url(../cbj_Images/person_add_grey.png);
+}
+
+.PersonsBlack{
+	background-image: url(../cbj_Images/people_black.png);
+}
+.PersonsGrey{
+	background-image: url(../cbj_Images/people_grey.png);
+}
+.PersonsWhite{
+	background-image: url(../cbj_Images/people_white.png);
+}
+.PersonsBlack:hover, .PersonsGrey:hover, .PersonsWhite:hover{
+	background-image: url(../cbj_Images/people_grey.png);
+}
+
+.FotoBlack{
+	background-image: url(../cbj_Images/foto_black.png);
+}
+.FotoGrey{
+	background-image: url(../cbj_Images/foto_grey.png);
+}
+.FotoWhite{
+	background-image: url(../cbj_Images/foto_white.png);
+}
+.FotoBlack:hover, .FotoGrey:hover, .FotoWhite:hover{
+	background-image: url(../cbj_Images/foto_grey.png);
+}
+
+.DatosBlack{
+	background-image: url(../cbj_Images/datos_black.png);
+}
+.DatosGrey{
+	background-image: url(../cbj_Images/datos_grey.png);
+}
+.DatosWhite{
+	background-image: url(../cbj_Images/datoswhite.png);
+}
+.DatosBlack:hover, .DatosGrey:hover, .DatosWhite:hover{
+	background-image: url(../cbj_Images/datos_grey.png);
+}
+
+.InicioBlack{
+	background-image: url(../cbj_Images/inicio_black.png);
+}
+.InicioGrey{
+	background-image: url(../cbj_Images/inicio_grey.png);
+}
+.InicioWhite{
+	background-image: url(../cbj_Images/inicio_white.png);
+}
+.InicioBlack:hover, .InicioGrey:hover, .InicioWhite:hover{
+	background-image: url(../cbj_Images/inicio_grey.png);
+}
+
+.CancelBlack{
+	background-image: url(../cbj_Images/cancel_black.png);
+}
+.CancelGrey{
+	background-image: url(../cbj_Images/cancel_grey.png);
+}
+.CancelWhite{
+	background-image: url(../cbj_Images/cancel_white.png);
+}
+.CancelBlack:hover, .CancelGrey:hover, .CancelWhite:hover{
+	background-image: url(../cbj_Images/cancel_grey.png);
+}
+
+.SaveBlack{
+	background-image: url(../cbj_Images/save_black.png);
+}
+.SaveGrey{
+	background-image: url(../cbj_Images/save_grey.png);
+}
+.SaveWhite{
+	background-image: url(../cbj_Images/save_white.png);
+}
+.SaveBlack:hover, .SaveGrey:hover, .SaveWhite:hover{
+	background-image: url(../cbj_Images/save_grey.png);
+}
+
+.RestoreBlack{
+	background-image: url(../cbj_Images/restore_black.png);
+}
+.RestoreGrey{
+	background-image: url(../cbj_Images/restore_grey.png);
+}
+.RestoreWhite{
+	background-image: url(../cbj_Images/restore_black.png);
+}
+.RestoreBlack:hover, .RestoreGrey:hover, .RestoreWhite:hover{
+	background-image: url(../cbj_Images/restore_grey.png);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.imgDelete, .imgDetalle{
 	width: 2.1em !important;
 	height: 2.1em !important;
 	margin: 0.1em;
@@ -395,3 +562,4 @@ a:hover  img {
 	background-position: center;
 	background-size: contain;
 }
+

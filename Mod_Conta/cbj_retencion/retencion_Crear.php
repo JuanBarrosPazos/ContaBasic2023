@@ -109,8 +109,8 @@ function process_form(){
 
 	$tabla = "<table align='center' style='margin-top:10px'>
 				<tr>
-					<td colspan=4 class='BorderInf' style='text-align:center;'>
-						<a href='retencion_Crear.php' class='botonverde'>CREAR NUEVO RETENCION</a>
+					<td colspan=4 style='text-align:center;'>
+			<a href='retencion_Crear.php' class='botonverde' style='color:#343434;'>CREAR NUEVO RETENCION</a>
 					</td>
 				</tr>
 				<tr>
@@ -121,8 +121,8 @@ function process_form(){
 					<td>NAME</td><td>".$name."</td>
 				</tr>
 				<tr>
-					<td colspan=4 class='BorderSup' style='text-align:center;'>
-						<a href='retencion_Ver.php' class='botonazul'>INICIO RETENCION</a>
+					<td colspan=4 style='text-align:center;'>
+			<a href='retencion_Ver.php' class='botonazul' style='color:#343434;'>INICIO RETENCION</a>
 					</td>
 				</tr>
 			</table>";	
@@ -196,8 +196,8 @@ function process_form(){
 					</th>
 				</tr>
 				<tr>
-					<td colspan=2 class='BorderInf' style='text-align:center;'>
-				<a href='retencion_Ver.php' class='botonazul'>INICIO RETENCION</a>
+					<td colspan=2 style='text-align:center;'>
+			<a href='retencion_Ver.php' class='botonazul' style='color:#343434;'>INICIO RETENCION</a>
 					</td>
 				</tr>
 		</form>														

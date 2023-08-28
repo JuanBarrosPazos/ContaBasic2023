@@ -171,62 +171,65 @@ function process_form(){
 		global $dudas; 		$dudas = $_SESSION['dudas']; 	$dudas = trim($dudas);
 	//	print("** ".$rowpimg['myimg']);
 
-		print("<table align='center' style='margin-top:10px'>
+		print("<table class='tableForm'>
 				<tr>
 					<th colspan=3 class='BorderInf'>HA MODIFICADO EL PROVEEDOR</th>
 				</tr>
 				<tr>
-					<td style='width: 120px; text-align: right;'>RAZON SOCIAL</td>
-					<td style='width: 120px;'>".$_POST['rsocial']."</td>
-					<td rowspan='4' align='center' width='100px'>
+					<td style='width: 120px; text-align: right;' >RAZON SOCIAL</td>
+					<td style='width: 120px;' >".$_POST['rsocial']."</td>
+					<td rowspan='4' style='width: 100px; text-align: center;' >
 			<img src='../cbj_Docs/img_proveedores/".$dudas."' height='120px' width='90px' />
 					</td>
 				</tr>
 				<tr>
-					<td style='text-align: right;'>DOCUMENTO</td><td>".$_POST['doc']."</td>
+					<td style='text-align: right;' >DOCUMENTO</td><td>".$_POST['doc']."</td>
 				</tr>				
 				<tr>
-					<td style='text-align: right;'>NUMERO</td><td>".$_POST['dni']."</td>
+					<td style='text-align: right;' >NUMERO</td><td>".$_POST['dni']."</td>
 				</tr>				
 				<tr>
-					<td style='text-align: right;'>CONTROL</td><td>".$_POST['ldni']."</td>
+					<td style='text-align: right;' >CONTROL</td><td>".$_POST['ldni']."</td>
 				</tr>				
 				<tr>
-					<td style='text-align: right;'>MAIL</td><td colspan='2'>".$_POST['Email']."</td>
+					<td style='text-align: right;' >MAIL</td><td colspan='2'>".$_POST['Email']."</td>
 				</tr>
 				<tr>
-					<td style='text-align: right;'>REFERENCIA</td><td colspan='2'>".$rf."</td>
+					<td style='text-align: right;' >REFERENCIA</td><td colspan='2'>".$rf."</td>
 				</tr>
 				<tr>
-					<td style='text-align: right;'>PAIS</td><td colspan='2'>".$_POST['Direccion']."</td>
+					<td style='text-align: right;' >PAIS</td><td colspan='2'>".$_POST['Direccion']."</td>
 				</tr>
 				<tr>
-					<td style='text-align: right;'>TELEFONO 1</td><td colspan='2'>".$_POST['Tlf1']."</td>
+					<td style='text-align: right;' >TELEFONO 1</td><td colspan='2'>".$_POST['Tlf1']."</td>
 				</tr>
 				<tr>
-					<td style='text-align: right;'>TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
+					<td style='text-align: right;' >TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
 				</tr>
 				<tr>
-					<td colspan='3' align='center'>
-						<a href='proveedores_Ver.php' class='botonverde'>INICIO PROVEEDORES</a>
-					</td>
+					<td colspan='3' style='text-align: right;' >
+					<button type='submit' title='VER TODOS LOS PROVEEDORES' class='botonverde imgDelete PersonsBlack' >
+						<a href='proveedores_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+					</button>
+						</td>
 				</tr>
 			</table>");
-			global $redir;
-			$redir = "<script type='text/javascript'>
-							function redir(){
-							window.location.href='proveedores_Ver.php';
-						}
-						setTimeout('redir()',4000);
-						</script>";
-			print ($redir);
 	
 		} else { print("</br><font color='#FF0000'>* ERROR L. 114/133: </font></br> ".mysqli_error($db))."</br>";
 					show_form ();
 					//global $texerror;
 					//$texerror = $texerror1.$texerror2.$texerror3.$texerror4."\n";
 				}
-	
+
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='proveedores_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
+
 	} // FIN function process_form()
 
 				   ////////////////////				   ////////////////////
@@ -273,30 +276,15 @@ function show_form($errors=[]){
 	} else { $defaults = $_POST; }
 		
 	if ($errors){
-		print("	<div style='margin: auto; width: fit-content;'>
-					<table align='left' style='border:none'>
-						<tr>
-							<th style='text-align:left'>
-								<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-							</th>
-						</tr>
-						<tr>
-							<td style='text-align:left'>");
-			
-		for($a=0; $c=count($errors), $a<$c; $a++){
-			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
-			}
-		print("</td>
-				</tr>
-				</table>
-				</div>
-				<div style='clear:both'></div>");
-		}
+		require 'tablaErrors.php';
+	} // FIN ERRORS
 	
-	$doctype = array (	'DNI' => 'DNI/NIF Espa&ntilde;oles',
+	$doctype = array (	'' => 'TIPO DE IDENTIFICADOR',
+						'DNI' => 'DNI/NIF Espa&ntilde;oles',
 						'NIE' => 'NIE/NIF Extranjeros',
 						'NIFespecial' => 'NIF Persona F&iacute;sica Especial',
 						'NIFsa' => 'NIF Sociedad An&oacute;nima',
+						/*
 						'NIFsrl' => 'NIF Sociedad Responsabilidad Limitada',
 						'NIFscol' => 'NIF Sociedad Colectiva',
 						'NIFscom' => 'NIF Sociedad Comanditaria',
@@ -313,8 +301,8 @@ function show_form($errors=[]){
 						'NIFute' => 'NIF Uniones Temporales de Empresas',
 						'NIFotnd' => 'NIF Otros Tipos no Definidos',
 						'NIFepenr' => 'NIF Establecimientos Permanentes Entidades no Residentes',
-						'UNDEFINE' => 'Sin Validación Definida...',
-										);
+						*/
+						'UNDEFINE' => 'Sin Validación Definida...');
 	
 	global $rf1;	global $rf2;
 
@@ -328,29 +316,29 @@ function show_form($errors=[]){
 	$rf = strtolower($rf1.$rf2.$_POST['dni'].$_POST['ldni']);
 	$rf = trim($rf);
 
-	print("<table align='center' style=\"margin-top:10px\">
+	print("<table class='tableForm'>
 				<tr>
-					<th colspan=2 class='BorderInf'>NUEVOS DATOS DEL PROVEEDOR</th>
+					<th colspan=2 >NUEVOS DATOS DEL PROVEEDOR</th>
 				</tr>
 	<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'  enctype='multipart/form-data'>
 			<input type='hidden' name='id' value='".$defaults['id']."' />
 			<input type='hidden' name='myimg' value='".$defaults['myimg']."' />
 				<tr>
-					<td width=180px>	
+					<td style='width:120px; text-align:right;' >	
 						<font color='#FF0000'>*</font>REFERENCIA
 					</td>
-					<td width=360px>".$rf."</td>
+					<td>".$rf."</td>
 				</tr>
 				<tr>
-					<td width=180px>	
+					<td style='text-align:right;' >	
 						<font color='#FF0000'>*</font>RAZON SOCIAL
 					</td>
-					<td width=360px>
+					<td>
 		<input type='text' name='rsocial' size=30 maxlength=30 value='".$defaults['rsocial']."' />
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td style='text-align:right;' >
 						<font color='#FF0000'>*</font>DOCUMENTO
 					</td>
 					<td>
@@ -365,7 +353,7 @@ function show_form($errors=[]){
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td style='text-align:right;' >
 						<font color='#FF0000'>*</font>NÚMERO
 					</td>
 					<td>
@@ -373,7 +361,7 @@ function show_form($errors=[]){
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td style='text-align:right;' >
 						<font color='#FF0000'>*</font>CONTROL
 					</td>
 					<td>
@@ -381,23 +369,23 @@ function show_form($errors=[]){
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td style='text-align:right;' >
 						<font color='#FF0000'>*</font>MAIL
 					</td>
 					<td>
-		<input type='text' name='Email' size=52 maxlength=50 value='".$defaults['Email']."' />
+		<input type='text' name='Email' size=42 maxlength=50 value='".$defaults['Email']."' />
 					</td>
 				</tr>	
 				<tr>
-					<td>
+					<td style='text-align:right;' >
 						<font color='#FF0000'>*</font>DIRECCIÓN
 					</td>
 					<td>
-	<input type='text' name='Direccion' size=52 maxlength=60 value='".$defaults['Direccion']."' />
+	<input type='text' name='Direccion' size=42 maxlength=60 value='".$defaults['Direccion']."' />
 					</td>
 				</tr>
 				<tr>
-					<td>
+					<td style='text-align:right;' >
 						<font color='#FF0000'>*</font>TELÉFONO 1
 					</td>
 					<td>
@@ -406,7 +394,7 @@ function show_form($errors=[]){
 				</tr>
 				<tr>
 					<tr>
-					<td>
+					<td style='text-align:right;' >
 						<font color='#FF0000'>&nbsp;</font>TELÉFONO 2
 					</td>
 					<td>
@@ -414,16 +402,20 @@ function show_form($errors=[]){
 					</td>
 				</tr>
 				<tr>
-					<td colspan='2'  align='right' valign='middle'>
+					<td colspan='2' align='right' valign='middle'>
+					<!--
 						<input type='submit' value='MODIFICAR DATOS' class='botonazul' />
+					-->
+						<button type='submit' title='MODIFICAR DATOS' class='botonazul imgDelete SaveBlack' >
+						</button>
+
 						<input type='hidden' name='modifica' value=1 />
-						<input type='hidden' name='v' value='g' />
-					</td>
-				</tr>
-		</form>														
-				<tr>
-					<td colspan='2' align='center'>
-						<a href='proveedores_Ver.php' class='botonverde'>INICIO PROVEEDORES</a>
+						<input type='hidden' name='v' value='i' />
+				</form>
+				<button type='submit' title='VER TODOS LOS PROVEEDORES' class='botonverde imgDelete PersonsBlack' style='vertical-align:top;' >
+					<a href='proveedores_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+				</button>
+											
 					</td>
 				</tr>
 			</table>"); /* Fin del print */

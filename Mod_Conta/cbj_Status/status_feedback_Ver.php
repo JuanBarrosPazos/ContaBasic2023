@@ -53,7 +53,7 @@ session_start();
 								<th class='BorderInfDch'>HIDDEN</th>
 								<th class='BorderInfDch'>DATE</th>
 								<th colspan=2 class='BorderInf'>
-						<a href='status_Ver.php' class='botonverde'>INICIO EJERCICOS STATUS</a>
+				<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
 								</th>
 							</tr>");
 			
@@ -132,7 +132,7 @@ session_start();
 		global $nombre;		$nombre = "STATUS TODOS LOS EJERCICIOS";
 		
 		global $orden;
-		if(isset($_POST['Orden'])){
+		if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
 			$orden = $_POST['Orden'];
 		}else{ $orden = '`id` ASC'; }
 

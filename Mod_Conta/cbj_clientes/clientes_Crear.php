@@ -142,56 +142,70 @@ function process_form(){
 		global $dudas; 		$dudas = $_SESSION['dudas']; 	$dudas = trim($dudas);
 	//	print("** ".$rowpimg['myimg']);
 
-		print("<table align='center' style='margin-top:10px'>
+		print("<table class='tableForm'>
 				<tr>
-					<th colspan=3 class='BorderInf'>HA REGISTRADO UN NUEVO CLIENTE</th>
+					<th colspan=3 >HA REGISTRADO UN NUEVO CLIENTE</th>
 				</tr>
 				<tr>
-					<td width=150px>RAZON SOCIAL</td>
-					<td width=200px>".$_POST['rsocial']."</td>
-					<td rowspan='5' align='center' width='100px'>
-	<img src='../cbj_Docs/img_clientes/".$dudas."' height='120px' width='90px' />
+					<td style='width:120px; text-align:right;' >RAZON SOCIAL</td>
+					<td  style='width:120px;' ".$_POST['rsocial']."</td>
+					<td rowspan='5'  style='width:100px; text-align:center;' >
+			<img src='../cbj_Docs/img_clientes/".$dudas."' height='120px' width='90px' />
 					</td>
 				</tr>
 				<tr>
-					<td>DOCUMENTO</td><td>".$_POST['doc']."</td>
+					<td style='text-align:right;' >DOCUMENTO</td><td>".$_POST['doc']."</td>
 				</tr>				
 				<tr>
-					<td>NUMERO</td><td>".$_POST['dni']."</td>
+					<td style='text-align:right;' >NUMERO</td><td>".$_POST['dni']."</td>
 				</tr>				
 				<tr>
-					<td>CONTROL</td><td>".$_POST['ldni']."</td>
+					<td style='text-align:right;' >CONTROL</td><td>".$_POST['ldni']."</td>
 				</tr>				
 				<tr>
-					<td>MAIL</td><td colspan='2'>".$_POST['Email']."</td>
+					<td style='text-align:right;' >MAIL</td><td colspan='2'>".$_POST['Email']."</td>
 				</tr>
 				<tr>
-					<td>REFERENCIA</td><td>".$rf."</td>
+					<td style='text-align:right;' >REFERENCIA</td><td>".$rf."</td>
 				</tr>
 				<tr>
-					<td>PAIS</td>
+					<td style='text-align:right;' >PAIS</td>
 					<td colspan='2'>".$_POST['Direccion']."</td>
 				</tr>
 				<tr>
-					<td>TELEFONO 1</td><td colspan='2'>".$_POST['Tlf1']."</td>
+					<td style='text-align:right;' >TELEFONO 1</td><td colspan='2'>".$_POST['Tlf1']."</td>
 				</tr>
 				<tr>
-					<td>TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
+					<td style='text-align:right;' >TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
 				</tr>
 				<tr>
-					<td colspan='3' align='center'>
-						<a href='clientes_Crear.php' class='botonverde' >CREAR NUEVO CLIENTE</a>
-						<a href='clientes_Ver.php' class='botonverde' >INICIO CLIENTES</a>
-					</td>
+					<td colspan='3' style='text-align:center;' >
+					<button type='submit' title='CREAR NUEVO CLIENTE' class='botonverde imgDelete PersonAddBlack' style='margin-right:1.2em;'>
+						<a href='clientes_Crear.php' >&nbsp;&nbsp;&nbsp;</a>
+					</button>
+					<button type='submit' title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' >
+						<a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+					</button>
+							</td>
 				</tr>
 			</table>" );
-	} else { 
-		print("</br><font color='#FF0000'>
-				* MODIFIQUE LA ENTRADA 146: </font></br> ".mysqli_error($db))."</br>";
-				show_form ();
-				global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
-			}
-	
+
+		} else { 
+			print("</br><font color='#FF0000'>
+					* MODIFIQUE LA ENTRADA 146: </font></br> ".mysqli_error($db))."</br>";
+					show_form ();
+					global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
+				}
+
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='clientes_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
+
 	} /* Final process_form(); */
 
 				   ////////////////////				   ////////////////////
@@ -219,25 +233,8 @@ function show_form($errors=[]){
 	$texerror = "ERROR EN CAMPO DEL FORMULARIO.";
 			
 	if ($errors){
-		print("	<div style='margin: auto; width: fit-content;'>
-					<table align='left' style='border:none'>
-						<tr>
-							<th style='text-align:left'>
-								<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-							</th>
-						</tr>
-						<tr>
-							<td style='text-align:left'>");
-			
-		for($a=0; $c=count($errors), $a<$c; $a++){
-				print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
-			}
-		print("</td>
-				</tr>
-				</table>
-				</div>
-				<div style='clear:both'></div>");
-		} // FIN ERRORS
+		require 'tablaErrors.php';
+	} // FIN ERRORS
 	
 	$doctype = array (	'' => 'TIPO DE IDENTIFICADOR',
 						'DNI' => 'DNI/NIF Espa&ntilde;oles',
@@ -274,9 +271,9 @@ function show_form($errors=[]){
 	$rf = strtolower($rf1.$rf2.@$_POST['dni'].@$_POST['ldni']);
 	$rf = trim($rf);
 
-	print("<table align='center' style=\"margin-top:10px\">
+	print("<table class='tableForm'>
 				<tr>
-					<th colspan=2 class='BorderInf'>
+					<th colspan=2 >
 							DATOS DEL NUEVO CLIENTE
 					</th>
 				</tr>
@@ -321,13 +318,13 @@ function show_form($errors=[]){
 				<tr> 
 					<td style='text-align:right;'>MAIL<font color='#FF0000'> *</font></td>
 					<td>
-		<input type='mail' name='Email' size=52 maxlength=50 placeholder='miemail@enminusculas' value='".$defaults['Email']."'/>
+		<input type='mail' name='Email' size=42 maxlength=50 placeholder='miemail@enminusculas' value='".$defaults['Email']."'/>
 					</td>
 				</tr>	
 				<tr>
 					<td style='text-align:right;'>DIRECCIÓN<font color='#FF0000'> *</font></td>
 					<td>
-	<input type='text' name='Direccion' size=52 maxlength=60 placeholder='MI DIRECCION' value='".$defaults['Direccion']."' required />
+	<input type='text' name='Direccion' size=42 maxlength=60 placeholder='MI DIRECCION' value='".$defaults['Direccion']."' required />
 					</td>
 				</tr>
 				<tr>
@@ -345,20 +342,23 @@ function show_form($errors=[]){
 				<tr>
 					<td style='text-align:right;'>FOTOGRAFIA<font color='#FF0000'>&nbsp;&nbsp;</font></td>
 					<td>
-		<input type='file' name='myimg' value='".@$defaults['myimg']."' />						
+		<input type='file' name='myimg' value='".@$defaults['myimg']."' style='color:#fff;' />						
 					</td>
 				</tr>
 				<tr>
-					<td colspan='2'  align='right' valign='middle'  class='BorderSup'>
-						<input type='submit' value='REGISTRAR ESTOS DATOS' class='botonazul'  />
+					<td colspan='2' style='text-align:right;'>
+					<!--
+						<input type='submit' value='REGISTRAR ESTOS DATOS' class='botonazul' />
+					-->
+						<button type='submit' title='REGISTRAR ESTOS DATOS' class='botonazul imgDelete SaveBlack' >
+						</button>
+
 						<input type='hidden' name='oculto' value=1 />
 						<input type='hidden' name='v' value='i' />
 			</form>														
-					</td>
-				</tr>
-				<tr>
-					<td colspan='3' align='center'>
-						<a href='clientes_Ver.php' class='botonverde'>INICIO CLIENTES</a>
+				<button title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' style='vertical-align:top;' >
+						<a href='clientes_Ver.php' style='margin-top: -1.8em !important;' >&nbsp;&nbsp;&nbsp;</a>
+					</button>
 					</td>
 				</tr>
 			</table>"); /* Fin del print */

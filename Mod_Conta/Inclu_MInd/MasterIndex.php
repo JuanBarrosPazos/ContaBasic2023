@@ -74,34 +74,17 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
 
 	<li><a href='".$rutaStatus."status_Ver.php'>STATUS EJERCICIOS</a></li>
 	
-<!-- Fin STATUS EJERCICIO -->
+<!-- Fin STATUS EJERCICIO -->"); // FIN DEL PRINT
 
-<!-- Inicio BBDD -->
+	global $rutDir;	$rutDir = $rutaIndex."../Mod_Admin/index.php";
+	if(!file_exists($rutDir)) {
+		print("<!-- Inicio BBDD -->
+					<li><a href='".$rutaUpBbdd."export_bbdd_backups.php'>BACKUP BBDD</a></li>
+				<!-- Fin BBDD -->");
+				echo $rutDir;
+	}else{ }
 
-  <li><a href='".$rutaUpBbdd."export_bbdd_backups.php'>BACkUP BBDD</a></li>
-	
-<!-- Fin BBDD -->
-
- <!-- Inicio NOTIFICACIONES
-
-  <li><a href='#' class='MenuBarItemSubmenu'>NOTIFICACIONES</a>
-    <ul>
-		<li>
-			<a href='Mail_Php/index.php' target='_blank'>
-				NOTIFICAR UN ERROR
-			</a>
-		</li>
- 		<li>
-			<a href='Mail_Php/index.php' target='_blank'>
-				AGRADECIMIENTOS
-			</a>
-		</li>
-     </ul> 
-    </li>
--->
-<!-- Fin NOTIFICACIONES -->
-
-  	</ul>
+print("</ul>
   	</li>
   
 <!-- FIN MENU ADMINISTRADORES -->
@@ -116,7 +99,6 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
 	</ul>
 	
 <!-- FIN UL GLOBAL -->
- 
 
 <script type='text/javascript'>
 <!--

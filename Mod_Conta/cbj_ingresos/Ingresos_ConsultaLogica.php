@@ -14,7 +14,7 @@
 	global $factnum; 	$factnum = $_POST['factnum'];
 	// ORDEN
 	global $orden;
-	if(isset($_POST['Orden'])){
+	if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
 		$orden = $_POST['Orden'];
 	}else{ $orden = '`id` ASC'; }
 

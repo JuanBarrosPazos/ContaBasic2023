@@ -35,49 +35,57 @@ function process_form(){
 	global $sesionref; 		$sesionref = $_SESSION['ref'];
 	$sesionref = strtolower($sesionref);
 	
-	print("<table align='center' width=490px>
-				<tr>
-					<th colspan=3  class='BorderInf'>PAPELERA DATOS DEL PROVEEDOR</th>
-				</tr>
-				<tr>
-					<td width=140px>ID</td><td>".$_POST['id']."</td>
-					<td rowspan='5' align='center' width='180px'>
+	print("<table class='tableForm' style='margin-top: 1.6em !important;' >
+			<tr>
+				<th colspan=3 >PAPELERA DATOS DEL PROVEEDOR</th>
+			</tr>
+			<tr>
+				<td style='width:120px; text-align:right;' >ID</td>
+				<td style='width:120px;' >".$_POST['id']."</td>
+				<td rowspan='5' style='width:140px;' >
 		<img src='../cbj_Docs/img_proveedores/".$_POST['myimg']."' height='120px' width='90px' />
-					</td>
-				</tr>
-				<tr>
-					<td>REFERENCIA</td><td>".$_POST['ref']."</td>
-				</tr>
-				<tr>
-					<td>RAZON SOCIAL</td><td>".$_POST['rsocial']."</td>
-				</tr>				
-				<tr>
-					<td>Tipo Documento:</td><td>".$_POST['doc']."</td>
-				</tr>				
-				<tr>
-					<td>N&uacute;mero:</td><td>".$_POST['dni']." ".$_POST['ldni']."</td>
-				</tr>				
-				<tr>
-					<td>MAIL</td><td colspan='2'>".$_POST['Email']."</td>
-				</tr>
-				<tr>
-					<td>Direcci&oacute;n:</td><td colspan='2'>".$_POST['Direccion']."</td>
-				</tr>
-				<tr>
-					<td>Tel&eacute;fono 1:</td><td colspan='2'>".$_POST['Tlf1']."</td>
-				</tr>
-				<tr>
-					<td>Tel&eacute;fono 2:</td><td colspan='2'>".$_POST['Tlf2']."</td>
-				</tr>
-				<tr>
-					<td colspan=3 align='right' class='BorderSup'>
-						<form name='closewindow' action='$_SERVER[PHP_SELF]'  onsubmit=\"window.close()\">
-							<input type='submit' value='CERRAR VENTANA' class='botonverde' />
-							<input type='hidden' name='oculto2' value=1 />
-						</form>
-					</td>
-				</tr>
-			</table>");
+				</td>
+			</tr>
+			<tr>
+				<td style='text-align:right;' >REFERENCIA</td><td>".$_POST['ref']."</td>
+			</tr>
+			<tr>
+				<td style='text-align:right;' >RAZON SOCIAL</td><td>".$_POST['rsocial']."</td>
+			</tr>				
+			<tr>
+				<td style='text-align:right;' >Tipo Documento</td><td>".$_POST['doc']."</td>
+			</tr>				
+			<tr>
+				<td style='text-align:right;' >N&uacute;mero</td><td>".$_POST['dni']." ".$_POST['ldni']."</td>
+			</tr>				
+			<tr>
+				<td style='text-align:right;' >MAIL</td><td colspan='2'>".$_POST['Email']."</td>
+			</tr>
+			<tr>
+				<td style='text-align:right;' >Direcci&oacute;n</td><td colspan='2'>".$_POST['Direccion']."</td>
+			</tr>
+			<tr>
+				<td style='text-align:right;' >Tel&eacute;fono 1</td><td colspan='2'>".$_POST['Tlf1']."</td>
+			</tr>
+			<tr>
+				<td style='text-align:right;' >Tel&eacute;fono 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
+			</tr>
+			<tr>
+				<td style='text-align:right;' >Fecha Borrado</td><td colspan='2'>".$_POST['borrado']."</td>
+			</tr>
+			<tr>
+				<td colspan=3 style='text-align:right;' >
+					<form name='closewindow' action='$_SERVER[PHP_SELF]'  onsubmit=\"window.close()\">
+						<!--
+						<input type='submit' value='CERRAR VENTANA' class='botonverde' />
+						-->
+				<button type='submit' title='CERRAR VENTANA' class='botonrojo imgDetalle CancelBlack'>
+				</button>
+						<input type='hidden' name='oculto2' value=1 />
+					</form>
+				</td>
+			</tr>
+		</table>");
 
 	} // FIN process_form()
 			

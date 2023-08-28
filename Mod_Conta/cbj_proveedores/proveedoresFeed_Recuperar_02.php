@@ -44,14 +44,14 @@ function process_form(){
 
 	if(mysqli_query($db, $sql)){
 		
-		print("<table align='center' style='margin-top:10px'>
+		print("<table class='tableForm' >
 				<tr>
-					<th colspan=3 class='BorderInf'>HA MODIFICADO EL PROVEEDOR</th>
+					<th colspan=3 >HA RECUPERADO EL PROVEEDOR</th>
 				</tr>
 				<tr>
-					<td style='width: 120px; text-align: right;'>RAZON SOCIAL</td>
-					<td style='width: 160px;'>".$_POST['rsocial']."</td>
-					<td rowspan='4' align='center' width='100px'>
+					<td style='width: 120px; text-align: right;' >RAZON SOCIAL</td>
+					<td style='width: 120px;'>".$_POST['rsocial']."</td>
+					<td rowspan='4' style='width: 120px; text-align: center;' >
 			<img src='../cbj_Docs/img_proveedores/".$_POST['myimg']."' height='120px' width='90px' />
 					</td>
 				</tr>
@@ -80,11 +80,21 @@ function process_form(){
 					<td style='text-align: right;'>TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
 				</tr>
 				<tr>
-					<td colspan='3' align='center'>
-						<a href='proveedoresFeed_Ver.php' class='botonverde'>PAPELERA PROVEEDORES</a>
+					<td style='text-align: right;'>BORRADO</td><td colspan='2'>".$_POST['borrado']."</td>
+				</tr>
+				<tr>
+					<td colspan='3' align='right' >
+						<button type='submit' title='VER TODOS LOS PROVEEDORES' class='botonverde imgDelete PersonsBlack' style='vertical-align:top;' >
+							<a href='proveedores_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						</button>
+				
+						<button type='submit' title='INICIO PAPELERA PROVEEDORES' class='botonverde imgDelete DeleteBlack' style='vertical-align:top;' >
+								<a href='proveedoresFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						</button>
 					</td>
 				</tr>
 			</table>");
+
 
 			global $vnamed; 		$vnamed = "`".$_SESSION['clave']."proveedoresfeed`";
 			$sqld = "DELETE FROM `$db_name`.$vnamed WHERE $vnamed.`id` = '$_POST[id]' LIMIT 1 ";
@@ -96,23 +106,23 @@ function process_form(){
 				show_form();
 				global $texerror; 		$texerror = "\n\t ".mysqli_error($db);
 			}
-			
 			/*	*/
-			global $redir;
-			$redir = "<script type='text/javascript'>
-							function redir(){
-							window.location.href='proveedoresFeed_Ver.php';
-						}
-						setTimeout('redir()',4000);
-						</script>";
-			print ($redir);
-			
-		} else { print("</br><font color='#FF0000'>* ERROR L.59: </font></br> ".mysqli_error($db))."</br>";
+		} else { 
+			print("</br><font color='#FF0000'>* ERROR L.59: </font></br> ".mysqli_error($db))."</br>";
 					show_form ();
 					//global $texerror;
 					//$texerror = $texerror1.$texerror2.$texerror3.$texerror4."\n";
 				}
-	
+
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='proveedoresFeed_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
+		
 	} // FIN function process_form()
 
 				   ////////////////////				   ////////////////////
@@ -133,7 +143,8 @@ function show_form(){
 						'Email' => $_POST['Email'],
 						'Direccion' => $_POST['Direccion'],
 						'Tlf1' => $_POST['Tlf1'],
-						'Tlf2' => $_POST['Tlf2']);
+						'Tlf2' => $_POST['Tlf2'],
+						'borrado' => $_POST['borrado']);
 
 	} elseif(isset($_POST['modifica'])){
 
@@ -147,14 +158,14 @@ function show_form(){
 							'Email' => $_POST['Email'],
 							'Direccion' => $_POST['Direccion'],
 							'Tlf1' => $_POST['Tlf1'],
-							'Tlf2' => $_POST['Tlf2']);
+							'borrado' => $_POST['borrado']);
 
 	} else { $defaults = $_POST; }
 		
 	
-	print("<table align='center' style='margin-top:10px'>
+	print("<table class='tableForm' >
 				<tr>
-					<th colspan=2 class='BorderInf'>RECUPERAR DATOS DEL PROVEEDOR</th>
+					<th colspan=2 >RECUPERAR DATOS DEL PROVEEDOR</th>
 				</tr>
 	<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
 		<input type='hidden' name='id' value='".$defaults['id']."' />
@@ -197,33 +208,45 @@ function show_form(){
 				<tr>
 					<td style='text-align: right;'>DIRECCIÓN</td>
 					<td>
-	<input type='hidden' name='Direccion' value='".$defaults['Direccion']."' />".$defaults['Direccion']."
+		<input type='hidden' name='Direccion' value='".$defaults['Direccion']."' />".$defaults['Direccion']."
 					</td>
 				</tr>
 				<tr>
 				<tr>
 					<td style='text-align: right;'>TELÉFONO 1</td>
 					<td>
-		<input type='hidden' name='Tlf1' size=12 maxlength=9 value='".$defaults['Tlf1']."' />".$defaults['Tlf1']."
+		<input type='hidden' name='Tlf1' value='".$defaults['Tlf1']."' />".$defaults['Tlf1']."
 					</td>
 				</tr>
 				<tr>
 					<td style='text-align: right;'>TELÉFONO 2</td>
 					<td>
-		<input type='hidden' name='Tlf2' size=12 maxlength=9 value='".$defaults['Tlf2']."' />".$defaults['Tlf2']."
+		<input type='hidden' name='Tlf2' value='".$defaults['Tlf2']."' />".$defaults['Tlf2']."
+					</td>
+				</tr>
+				<tr>
+					<td style='text-align: right;'>BORRADO</td>
+					<td>
+		<input type='hidden' name='borrado' value='".$defaults['borrado']."' />".$defaults['borrado']."
 					</td>
 				</tr>
 				<tr>
 					<td colspan='2'  align='right' valign='middle'>
-						<input type='submit' value='RECUPERAR DATOS' class='botonazul' />
+				<!--
+				<input type='submit' value='RECUPERAR DATOS' class='botonazul' />
+				-->
+				<button type='submit' title='RECUPERAR DATOS PROVEEDOR' class='botonnaranja imgDelete RestoreBlack' >
+				</button>
 						<input type='hidden' name='modifica' value=1 />
-						<input type='hidden' name='v' value='g' />
-					</td>
-				</tr>
-		</form>														
-				<tr>
-					<td colspan='2' align='center'>
-						<a href='proveedoresFeed_Ver.php' class='botonverde'>INICIO PAPELERA PROVEEDORES</a>
+						<input type='hidden' name='v' value='i' />
+		</form>
+		        <button type='submit' title='VER TODOS LOS PROVEEDORES' class='botonverde imgDelete PersonsBlack' style='vertical-align:top;' >
+					<a href='proveedores_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+				</button>
+		
+				<button type='submit' title='INICIO PAPELERA PROVEEDORES' class='botonverde imgDelete DeleteBlack' style='vertical-align:top;' >
+						<a href='proveedoresFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+				</button>
 					</td>
 				</tr>
 			</table>"); /* Fin del print */

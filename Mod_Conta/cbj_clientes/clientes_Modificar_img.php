@@ -135,9 +135,9 @@ function process_form_img(){
 
 			if(mysqli_query($db, $sqla)){
 					
-				print("<table align='center' style=\"margin-top:20px\">
+				print("<table class='tableForm' >
 						<tr>
-							<th colspan=3  class='BorderInf'>NUEVOS DATOS</th>
+							<th colspan=3 >NUEVOS DATOS</th>
 						</tr>
 						<tr>
 							<td style='width: 120px; text-align: right;'>RAZON SOCIAL</td>
@@ -171,8 +171,10 @@ function process_form_img(){
 							<td style='text-align: right;'>TELÉFONO 2</td><td colspan=2>".$_POST['Tlf2']."</td>
 						</tr>
 						<tr>
-							<td colspan=3 align='right' class='BorderSup'>
-						<a href='clientes_Ver.php' class='botonverde'>VER TODOS LOS CLIENTES</a>
+							<td colspan=3 align='right' >
+				<button type='submit' title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' >
+                <a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+        		</button>
 							</td>
 						</tr>
 					</table>");
@@ -180,15 +182,6 @@ function process_form_img(){
 					unset($_SESSION['myimgx']);
 					unset($_SESSION['refx']);
 					unset($_SESSION['idx']);
-		global $redir;
-		$redir = "<script type='text/javascript'>
-						function redir(){
-						window.location.href='clientes_Ver.php';
-					}
-					setTimeout('redir()',4000);
-					</script>";
-		print ($redir);
-	
 
 			} else { print("* ERROR ".mysqli_error($db));
 						show_form_img();
@@ -198,7 +191,16 @@ function process_form_img(){
 						
 		else {print("NO SE HA PODIDO GUARDAR EN ../imgpro/imgpro".$_SESSION['miseccion']."/");}
 
-			} // FIN function process_form_img()
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='clientes_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
+
+	} // FIN function process_form_img()
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -254,7 +256,7 @@ function show_form_img($errors=[]){
 							}
 	if ($errors){
 		print("	<div>
-					<table style='border:none; margin: 0.4em auto 0.4em auto; align:center;'>
+					<table class='tableForm'>
 					<th style='text-align:left'>
 					<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
 					</th>
@@ -273,7 +275,7 @@ function show_form_img($errors=[]){
 		
 	print("<table align='center' style='border:none;'>
 				<tr>
-					<th colspan=2 class='BorderInf'>SELECCIONE UNA NUEVA IMAGEN</th>
+					<th colspan=2 >MODIFICAR IMAGEN CLIENTE</th>
 				</tr>
 				<tr>
 					<th class='BorderInf'>LA IMAGEN ACTUAL DE : </br>".$defaults['rsocial']."</th>
@@ -285,7 +287,7 @@ function show_form_img($errors=[]){
 					<td colspan=2>
 					SELECCIONE UNA IMAGEN
 		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'  enctype='multipart/form-data'>
-			<input type='file' name='myimg' value='".$defaults['myimg']."' />						
+			<input type='file' name='myimg' value='".$defaults['myimg']."' style='color:#fff;' />
 					</td>
 				<tr>
 					<td colspan=2 style='text-align: right;'>
@@ -299,16 +301,18 @@ function show_form_img($errors=[]){
 						<input type='hidden' name='Direccion' value='".$defaults['Direccion']."' />
 						<input type='hidden' name='Tlf1' value='".$defaults['Tlf1']."' />
 						<input type='hidden' name='Tlf2' value='".$defaults['Tlf2']."' />
+						<!--
 						<input type='submit' value='MODIFICAR LA IMAGEN' class='botonverde'/>
+						-->
+				<button type='submit' title='MODIFICAR LA IMAGEN' class='botonverde imgDelete SaveBlack' >
+				</button>
 						<input type='hidden' name='imagenmodif' value=1 />
+				</form>														
 					</td>
 					<td align='right'>
-					</td>
-				</tr>
-		</form>														
-				<tr>
-					<td colspan=2 align='right' class='BorderSup'>
-				<a href='clientes_Ver.php' class='botonnaranja'>CANCELAR MODIFICAR IMAGEN</a>
+				<button type='submit' title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' >
+                <a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+        		</button>
 					</td>
 				</tr>
 			</table>");

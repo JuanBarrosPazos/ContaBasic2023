@@ -11,11 +11,13 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
+	global $KeyForm; 	$KeyForm = "feed";
+
 	if ($_SESSION['Nivel'] == 'admin'){
 
 		master_index();
 
-		require 'Inc_Logica_01.php';
+		require 'Logica_01.php';
 									
 	} else { require '../Inclu/table_permisos.php'; }
 
@@ -25,7 +27,7 @@ session_start();
 
 	function validate_form(){
 		
-		require 'Inc_Show_Form_01_Val.php';
+		require 'Show_Form_Val.php';
 		
 		return $errors;
 
@@ -43,12 +45,23 @@ session_start();
 		
 		show_form();
 		
-		require 'proveedores_ConsultaLogica.php'			;
-			
+		require 'proveedores_ConsultaLogica.php';
+
+		global $orden;
+		if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
+			$orden = $_POST['Orden'];
+		}else{ $orden = '`id` ASC'; }
+		
 		global $vname; 		$vname = "`".$_SESSION['clave']."proveedoresfeed`";
 
-		$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `ref` = '$ref' OR `dni` = '$dni' OR `rsocial` LIKE '$rso' ORDER BY $orden ";
-		
+		if ( (strlen(trim($_POST['ref'])) == 0) && (strlen(trim($_POST['rsocial'])) == 0) ){
+			$sqlc =  "SELECT * FROM `$db_name`.$vname ORDER BY $orden ";
+			//echo $sqlc;
+		}else{
+			$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `ref` = '$ref' OR `rsocial` LIKE '$rso' ORDER BY $orden ";
+			//echo $sqlc."<br>";
+		}
+
 		$qc = mysqli_query($db, $sqlc);
 		
 		if(!$qc){
@@ -59,92 +72,69 @@ session_start();
 			if(mysqli_num_rows($qc)== 0){
 
 				require 'proveedores_NoData.php';
-				
+
 			} else { 	
-				print ("<table align='center'>
+				print ("<table class='tableForm' >
 						<tr>
-							<th colspan=10 class='BorderInf'>PROVEEDORES ".(mysqli_num_rows($qc)-1)."</th>
+							<th colspan=11 class='BorderInf'>PAPELERA PROVEEDORES ".mysqli_num_rows($qc)."</th>
 						</tr>
 						<tr>
 							<th class='BorderInfDch'>ID</th>
 							<th class='BorderInfDch'>REFERENCIA</th>
 							<th class='BorderInfDch'>DNI</th>
 							<th class='BorderInfDch'>RAZON SOCIAL</th>
-							<th colspan='6' class='BorderInf'>
-							</th></tr>");
+							<th class='BorderInfDch'></th>
+							<th class='BorderInfDch'>DELETE</th>
+							<th colspan='5' class='BorderInf'>ACCIONES</th>
+					</tr>");
 				
-			while($rowc = mysqli_fetch_assoc($qc)){
+			while($rowb = mysqli_fetch_assoc($qc)){
 				
-			print (	"<tr align='center'>
+			print (	"<tr>
 										
-		<form name='ver' action='proveedoresFeed_Ver.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=550px,height=460px')\">
+		<form name='ver' action='proveedoresFeed_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=550px,height=460px')\">
 
-			<td align='left' class='BorderInfDch'>
-				<input name='id' type='hidden' value='".$rowc['id']."' />".$rowc['id']."
-			</td>
-
-			<td align='left' class='BorderInfDch'>
-				<input name='ref' type='hidden' value='".$rowc['ref']."' />".$rowc['ref']."
-			</td>
-								
-			<td align='left' class='BorderInfDch'>
-				<input name='dni' type='hidden' value='".$rowc['dni']."' />".$rowc['dni'].$rowc['ldni']."
-				<input name='ldni' type='hidden' value='".$rowc['ldni']."' />
-			</td>
-
-			<td align='left' class='BorderInfDch'>
-				<input name='rsocial' type='hidden' value='".$rowc['rsocial']."' />".$rowc['rsocial']."
-			</td>
-							
+			<td align='left' class='BorderInfDch'>".$rowb['id']."</td>
+			<td align='left' class='BorderInfDch'>".$rowb['ref']."</td>
+			<td align='left' class='BorderInfDch'>".$rowb['dni']."' />".$rowb['dni'].$rowb['ldni']."</td>
+			<td align='left' class='BorderInfDch'>".$rowb['rsocial']."</td>
 			<td class='BorderInfDch'>
-				<input name='myimg' type='hidden' value='".$rowc['myimg']."' />
-				<img src='../cbj_Docs/img_proveedores/".$rowc['myimg']."' height='40px' width='30px' />
+				<img src='../cbj_Docs/img_proveedores/".$rowb['myimg']."' height='40px' width='30px' />
 			</td>
-													
-			<input name='doc' type='hidden' value='".$rowc['doc']."' />
-			<input name='Email' type='hidden' value='".$rowc['Email']."' />
-			<input name='Direccion' type='hidden' value='".$rowc['Direccion']."' />
-			<input name='Tlf1' type='hidden' value='".$rowc['Tlf1']."' />
-			<input name='Tlf2' type='hidden' value='".$rowc['Tlf2']."' />
 
-			<td colspan=2 align='center' class='BorderInf'>
+			<td class='BorderInfDch'>".$rowb['borrado']."</td>");
+
+			require 'proveedores_rowTotal.php';
+
+		print("<td colspan=2 align='center' class='BorderInf'>
+					<!--
 						<input type='submit' value='VER DETALLES' class='botonverde' />
+					-->
+					<button type='submit' title='VER DETALLES' class='botonverde imgDetalle DetalleBlack'>
+					</button>
 						<input type='hidden' name='oculto2' value=1 />
 			</td>
 				</form>
 
 			<td align='center' class='BorderInf'>
-				<form name='modifica' action='proveedoresFeed_Recuperar_02.php' method='POST'>
-					<input name='id' type='hidden' value='".$rowc['id']."' />
-					<input name='ref' type='hidden' value='".$rowc['ref']."' />
-					<input name='rsocial' type='hidden' value='".$rowc['rsocial']."' />
-					<input name='myimg' type='hidden' value='".$rowc['myimg']."' />
-					<input name='doc' type='hidden' value='".$rowc['doc']."' />
-					<input name='dni' type='hidden' value='".$rowc['dni']."' />
-					<input name='ldni' type='hidden' value='".$rowc['ldni']."' />
-					<input name='Email' type='hidden' value='".$rowc['Email']."' />
-					<input name='Direccion' type='hidden' value='".$rowc['Direccion']."' />
-					<input name='Tlf1' type='hidden' value='".$rowc['Tlf1']."' />
-					<input name='Tlf2' type='hidden' value='".$rowc['Tlf2']."' />
-							<input type='submit' value='RECUPERAR DATOS' class='botonnaranja' />
+				<form name='modifica' action='proveedoresFeed_Recuperar_02.php' method='POST'>");
+
+				require 'proveedores_rowTotal.php';
+	
+		print("<!--
+				<input type='submit' value='RECUPERAR DATOS' class='botonnaranja' />
+				-->
+				<button type='submit' title='RECUPERAR DATOS PROVEEDOR' class='botonnaranja imgDelete RestoreBlack' >
+				</button>
 							<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td>	
-
 			<td align='center' class='BorderInf'>
-				<form name='modifica' action='proveedoresFeed_Borrar_02.php' method='POST'>
-					<input name='id' type='hidden' value='".$rowc['id']."' />
-					<input name='ref' type='hidden' value='".$rowc['ref']."' />
-					<input name='rsocial' type='hidden' value='".$rowc['rsocial']."' />
-					<input name='myimg' type='hidden' value='".$rowc['myimg']."' />
-					<input name='doc' type='hidden' value='".$rowc['doc']."' />
-					<input name='dni' type='hidden' value='".$rowc['dni']."' />
-					<input name='ldni' type='hidden' value='".$rowc['ldni']."' />
-					<input name='Email' type='hidden' value='".$rowc['Email']."' />
-					<input name='Direccion' type='hidden' value='".$rowc['Direccion']."' />
-					<input name='Tlf1' type='hidden' value='".$rowc['Tlf1']."' />
-					<input name='Tlf2' type='hidden' value='".$rowc['Tlf2']."' />
-					<!--
+				<form name='modifica' action='proveedoresFeed_Borrar_02.php' method='POST'>");
+
+				require 'proveedores_rowTotal.php';
+	
+			print("<!--
 						<input type='submit' value='BORRAR DATOS' class='botonrojo' />
 					-->
 					<button type='submit' title='BORRAR' class='botonrojo imgDelete DeleteWhite'></button>
@@ -170,16 +160,19 @@ session_start();
 	function show_form($errors=[]){
 		
 		global $titulo;
-		$titulo = "GESTIONAR PROVEEDORES";
-		global $LinkProvee1;
-		$LinkProvee1 = "<a href='proveedores_Crear.php' class='botonverde'>CREAR NUEVO PROVEEDOR</a>";
-		global $LinkProvee2;
-		$LinkProvee2 = "<a href='proveedores_Ver.php' class='botonverde'>LISTADO DE PROVEEDORES</a>";
+		$titulo = "PAPELERA PROVEEDORES";
+		global $LinkForm1 ;
+		$LinkForm1  = "<button type='submit' title='CREAR NUEVO PROVEEDOR' class='botonverde imgDelete PersonAddBlack' style='margin-right:1.2em;'>
+		<a href='proveedores_Crear.php' >&nbsp;&nbsp;&nbsp;</a>
+		</button>";
+		global $LinkForm2 ;
+		$LinkForm2  = "<button type='submit' title='VER TODOS LOS PROVEEDORES' class='botonverde imgDelete PersonsBlack' >
+		<a href='proveedores_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+		</button>";
 		global $titulo2;
 		$titulo2 = "PAPELERA PROVEEDORES VER TODO";
 
-
-		require 'Inc_Show_Form_01.php';
+		require 'Show_Form.php';
 	
 	}	/* Fin show_form(); */
 
@@ -192,7 +185,7 @@ session_start();
 		global $db; 		global $db_name;
 
 		global $orden;
-		if(isset($_POST['Orden'])){
+		if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
 			$orden = $_POST['Orden'];
 		}else{ $orden = '`id` ASC'; }
 
@@ -207,19 +200,21 @@ session_start();
 				
 		} else {
 			if(mysqli_num_rows($qb)<= 0){
-				
-				require 'proveedores_NoData.php';
+
+						require 'proveedores_NoData.php';
 										
-			} else { print ("<table align='center'>
+			} else { print ("<table class='tableForm' >
 							<tr>
-				<th colspan=10 class='BorderInf'>PROVEEDORES ".(mysqli_num_rows($qb)-1)."</th>
+				<th colspan=11 class='BorderInf'>PAPELERA PROVEEDORES ".mysqli_num_rows($qb)."</th>
 							</tr>
 							<tr>
 								<th class='BorderInfDch'>ID</th>
 								<th class='BorderInfDch'>REFERENCIA</th>
 								<th class='BorderInfDch'>DNI</th>
 								<th class='BorderInfDch'>RAZON SOCIAL</th>
-								<th colspan='6' class='BorderInf'></th>
+								<th class='BorderInfDch'></th>
+								<th class='BorderInfDch'>DELETE</th>
+								<th colspan='5' class='BorderInf'>ACCIONES</th>
 							</tr>");
 				
 			while($rowb = mysqli_fetch_assoc($qb)){
@@ -228,79 +223,54 @@ session_start();
 				print (	"<tr align='center'>
 										
 		<form name='ver' action='proveedoresFeed_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=550px,height=460px')\">
-
-			<td align='left' class='BorderInfDch'>
-				<input name='id' type='hidden' value='".$rowb['id']."' />".$rowb['id']."
-			</td>
-
-			<td align='left' class='BorderInfDch'>
-				<input name='ref' type='hidden' value='".$rowb['ref']."' />".$rowb['ref']."
-			</td>
-								
-			<td align='left' class='BorderInfDch'>
-				<input name='dni' type='hidden' value='".$rowb['dni']."' />".$rowb['dni'].$rowb['ldni']."
-				<input name='ldni' type='hidden' value='".$rowb['ldni']."' />
-			</td>
-
-			<td align='left' class='BorderInfDch'>
-				<input name='rsocial' type='hidden' value='".$rowb['rsocial']."' />".$rowb['rsocial']."
-			</td>
-							
+		
+			<td align='left' class='BorderInfDch'>".$rowb['id']."</td>
+			<td align='left' class='BorderInfDch'>".$rowb['ref']."</td>
+			<td align='left' class='BorderInfDch'>".$rowb['dni'].$rowb['ldni']."</td>
+			<td align='left' class='BorderInfDch'>".$rowb['rsocial']."</td>
 			<td class='BorderInfDch'>
-				<input name='myimg' type='hidden' value='".$rowb['myimg']."' />
 				<img src='../cbj_Docs/img_proveedores/".$rowb['myimg']."' height='40px' width='30px' />
 			</td>
-													
-				<input name='doc' type='hidden' value='".$rowb['doc']."' />
-				<input name='Email' type='hidden' value='".$rowb['Email']."' />
-				<input name='Direccion' type='hidden' value='".$rowb['Direccion']."' />
-				<input name='Tlf1' type='hidden' value='".$rowb['Tlf1']."' />
-				<input name='Tlf2' type='hidden' value='".$rowb['Tlf2']."' />
-							
-			<td colspan=2 align='center' class='BorderInf'>
-							<input type='submit' value='VER DETALLES' class='botonverde' />
-							<input type='hidden' name='oculto2' value=1 />
+			<td class='BorderInfDch'>".$rowb['borrado']."</td>");
+
+			require 'proveedores_rowTotal.php';
+
+		print("<td colspan=2 align='center' class='BorderInf'>
+					<!--
+						<input type='submit' value='VER DETALLES' class='botonverde' />
+					-->
+					<button type='submit' title='VER DETALLES' class='botonverde imgDetalle DetalleBlack'>
+					</button>
+						<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td>
 
 			<td align='center' class='BorderInf'>
-				<form name='modifica' action='proveedoresFeed_Recuperar_02.php' method='POST'>
-					<input name='id' type='hidden' value='".$rowb['id']."' />
-					<input name='ref' type='hidden' value='".$rowb['ref']."' />
-					<input name='rsocial' type='hidden' value='".$rowb['rsocial']."' />
-					<input name='myimg' type='hidden' value='".$rowb['myimg']."' />
-					<input name='doc' type='hidden' value='".$rowb['doc']."' />
-					<input name='dni' type='hidden' value='".$rowb['dni']."' />
-					<input name='ldni' type='hidden' value='".$rowb['ldni']."' />
-					<input name='Email' type='hidden' value='".$rowb['Email']."' />
-					<input name='Direccion' type='hidden' value='".$rowb['Direccion']."' />
-					<input name='Tlf1' type='hidden' value='".$rowb['Tlf1']."' />
-					<input name='Tlf2' type='hidden' value='".$rowb['Tlf2']."' />
-							<input type='submit' value='RECUPERAR DATOS' class='botonnaranja' />
-							<input type='hidden' name='oculto2' value=1 />
+				<form name='modifica' action='proveedoresFeed_Recuperar_02.php' method='POST'>");
+
+				require 'proveedores_rowTotal.php';
+
+		print("<!--
+				<input type='submit' value='RECUPERAR DATOS' class='botonnaranja' />
+				-->
+				<button type='submit' title='RECUPERAR DATOS PROVEEDOR' class='botonnaranja imgDelete RestoreBlack' >
+				</button>
+						<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td>	
 
 			<td align='center' class='BorderInf'>
-				<form name='modifica' action='proveedoresFeed_Borrar_02.php' method='POST'>
-					<input name='id' type='hidden' value='".$rowb['id']."' />
-					<input name='ref' type='hidden' value='".$rowb['ref']."' />
-					<input name='rsocial' type='hidden' value='".$rowb['rsocial']."' />
-					<input name='myimg' type='hidden' value='".$rowb['myimg']."' />
-					<input name='doc' type='hidden' value='".$rowb['doc']."' />
-					<input name='dni' type='hidden' value='".$rowb['dni']."' />
-					<input name='ldni' type='hidden' value='".$rowb['ldni']."' />
-					<input name='Email' type='hidden' value='".$rowb['Email']."' />
-					<input name='Direccion' type='hidden' value='".$rowb['Direccion']."' />
-					<input name='Tlf1' type='hidden' value='".$rowb['Tlf1']."' />
-					<input name='Tlf2' type='hidden' value='".$rowb['Tlf2']."' />
-					<!--
-						<input type='submit' value='BORRAR DATOS' class='botonrojo' />
-					-->
-					<button type='submit' title='BORRAR' class='botonrojo imgDelete DeleteWhite'></button>
+				<form name='modifica' action='proveedoresFeed_Borrar_02.php' method='POST'>");
+
+			require 'proveedores_rowTotal.php';
+
+		print("<!--
+				<input type='submit' value='BORRAR DATOS' class='botonrojo' />
+				-->
+				<button type='submit' title='BORRAR' class='botonrojo imgDelete DeleteWhite'></button>
 					<input type='hidden' name='oculto2' value=1 />
 				</form>
-			</td>
+			</td> 
 				</tr>");
 			}
 						
@@ -336,12 +306,12 @@ function info(){
 	global $db;
 
 	global $orden;
-	if(isset($_POST['Orden'])){
+	if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
 		$orden = $_POST['Orden'];
 	}else{ $orden = '`id` ASC'; }
 
 	if (isset($_POST['todo'])){$filtro = "\n\tFiltro => TODOS LOS PROVEEDORES ".$orden;}
-	else{$filtro = "\n\tFiltros: \n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].@$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".";}
+	else{$filtro = "\n\tFiltros: \n\tR. Social: ".$_POST['rsocial'].".\n\tReferencia: ".$_POST['ref'].".";}
 
 	$ActionTime = date('H:i:s');
 

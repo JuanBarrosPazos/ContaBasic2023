@@ -41,44 +41,53 @@ function process_form(){
 		
 		if(mysqli_query($db, $sql)){
 
-			print("<table align='center' style='margin-top:10px'>
+			print("<table class='tableForm' >
 				<tr>
-					<th colspan=3 class='BorderInf'>HA BORRADO AL CLIENTE</th>
+					<th colspan=3 >HA BORRADO AL CLIENTE</th>
 				</tr>
 				<tr>
-					<td>RAZON SOCIAL</td>
-					<td>".$_POST['rsocial']."</td>
-					<td rowspan='4'>
+					<td style='width: 120px; text-align: right;'>RAZON SOCIAL</td>
+					<td style='width: 120px;'>".$_POST['rsocial']."</td>
+					<td rowspan='6' style='width: 100px; text-align: center;'>
 			<img src='../cbj_Docs/temp/".$_POST['myimg']."' height='120px' width='90px' />
 					</td>
 				</tr>
 				<tr>
-					<td>DOCUMENTO</td><td>".$_POST['doc']."</td>
+					<td style='text-align: right;' >DOCUMENTO</td><td>".$_POST['doc']."</td>
 				</tr>				
 				<tr>
-					<td>NUMERO</td><td>".$_POST['dni']."</td>
+					<td style='text-align: right;' >NUMERO</td><td>".$_POST['dni']."</td>
 				</tr>				
 				<tr>
-					<td>CONTROL</td><td>".$_POST['ldni']."</td>
+					<td style='text-align: right;' >CONTROL</td><td>".$_POST['ldni']."</td>
 				</tr>				
 				<tr>
-					<td>MAIL</td><td colspan='2'>".$_POST['Email']."</td>
+					<td style='text-align: right;' >MAIL</td><td>".$_POST['Email']."</td>
 				</tr>
 				<tr>
-					<td>REFERENCIA</td><td colspan='2'>".$_POST['ref']."</td>
+					<td style='text-align: right;' >REFERENCIA</td><td>".$_POST['ref']."</td>
 				</tr>
 				<tr>
-					<td>PAIS</td><td colspan='2'>".$_POST['Direccion']."</td>
+					<td style='text-align: right;' >PAIS</td><td colspan='2'>".$_POST['Direccion']."</td>
 				</tr>
 				<tr>
-					<td>TELEFONO 1</td><td>".$_POST['Tlf1']."</td>
+					<td style='text-align: right;' >TELEFONO 1</td><td>".$_POST['Tlf1']."</td>
 				</tr>
 				<tr>
-					<td>TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
+					<td style='text-align: right;' >TELEFONO 2</td><td colspan='2'>".$_POST['Tlf2']."</td>
 				</tr>
 				<tr>
-					<td colspan='3' align='center'>
-						<a href='clientesFeed_Ver.php' class='botonverde'>INICIO PAPELERA CLIENTES</a>
+					<td style='text-align: right;' >BORRADO</td><td colspan='2'>".$_POST['borrado']."</td>
+				</tr>
+				<tr>
+					<td colspan='3'  style='text-align: right;' >
+				<button type='submit' title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' style='vertical-align:top;' >
+					<a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+				</button>
+		
+				<button type='submit' title='INICIO PAPELERA CLIENTES' class='botonverde imgDelete DeleteBlack' style='vertical-align:top;' >
+						<a href='clientesFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+				</button>
 					</td>
 				</tr>
 			</table>" );
@@ -90,21 +99,21 @@ function process_form(){
 			$destination_file = "../cbj_Docs/img_clientes/".$_POST['myimg'];
 			if( file_exists($destination_file)){unlink($destination_file);}
 			
-			/*	*/
-			global $redir;
-			$redir = "<script type='text/javascript'>
-							function redir(){
-							window.location.href='clientesFeed_Ver.php';
-						}
-						setTimeout('redir()',4000);
-						</script>";
-			print ($redir);
-
 		} else { print("</br><font color='#FF0000'>
 						* MODIFIQUE LA ENTRADA 82: </font></br> ".mysqli_error($db))."</br>";
 							show_form ();
 							global $texerror; 		$texerror = "\n\t ".mysqli_error($db);
 					}
+
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='clientesFeed_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
+
 	} // FIN function process_form()
 
 				   ////////////////////				   ////////////////////
@@ -149,85 +158,97 @@ function show_form(){
 	$_SESSION['xid'] = $_POST['id'];
 
 	print("
-			<table align='center' style=\"margin-top:10px\">
+			<table class='tableForm' >
 				<tr>
-					<th colspan=3 class='BorderInf'>BORRARÁ EL CLIENTE</th>
+					<th colspan=3 >BORRARÁ EL CLIENTE</th>
 				</tr>
 		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
 				<tr>
-					<td>ID</td>
-					<td>
+					<td style='width: 120px; text-align: right;' >ID</td>
+					<td style='width: 120px;'>
 			<input type='hidden' name='id' value='".$_POST['id']."' />".$_POST['id']."
 					</td>
-					<td rowspan='4' align='center'>
+					<td rowspan='6' style='width: 100px; text-align: center;' >
 			<input type='hidden' name='myimg' value='".$_POST['myimg']."' />
 			<img src='../cbj_Docs/img_clientes/".$_POST['myimg']."' height='120px' width='90px' />
 					</td>
 				</tr>
 				<tr>
-					<td>REFERENCIA</td>
+					<td style='text-align: right;' >REFERENCIA</td>
 					<td>
 			<input type='hidden' name='ref' value='".$_POST['ref']."' />".$_POST['ref']."
 					</td>
 				</tr>
 				<tr>
-					<td>RAZON SOCIAL</td>
+					<td style='text-align: right;' >RAZON SOCIAL</td>
 					<td>
 			<input type='hidden' name='rsocial' value='".$_POST['rsocial']."' />".$_POST['rsocial']."
 					</td>
 				</tr>
 				<tr>
-					<td>DOCUMENTO</td>
+					<td style='text-align: right;' >DOCUMENTO</td>
 					<td>
 			<input type='hidden' name='doc' value='".$_POST['doc']."' />".$_POST['doc']."
 					</td>
 				</tr>
 				<tr>
-					<td>NÚMERO</td>
-					<td colspan=2>
+					<td style='text-align: right;' >NÚMERO</td>
+					<td>
 			<input type='hidden' name='dni' value='".$_POST['dni']."' />".$_POST['dni']."
 					</td>
 				</tr>
 				<tr>
-					<td>CONTROL</td>
-					<td colspan=2>
+					<td style='text-align: right;' >CONTROL</td>
+					<td>
 			<input type='hidden' name='ldni' value='".$_POST['ldni']."' />".$_POST['ldni']."
 					</td>
 				</tr>
 				<tr>
-					<td>MAIL</td>
+					<td style='text-align: right;' >MAIL</td>
 					<td colspan=2>
 			<input type='hidden'' name='Email' value='".$_POST['Email']."' />".$_POST['Email']."
 					</td>
 				</tr>	
 				<tr>
-					<td>DIRECCIÓN</td>
+					<td style='text-align: right;' >DIRECCIÓN</td>
 					<td colspan=2>
 			<input type='hidden' name='Direccion' value='".$_POST['Direccion']."' />".$_POST['Direccion']."
 					</td>
 				</tr>
 				<tr>
-					<td>TELÉFONO 1</td>
+					<td style='text-align: right;' >TELÉFONO 1</td>
 					<td colspan=2>
 			<input type='hidden' name='Tlf1' value='".$_POST['Tlf1']."' />".$_POST['Tlf1']."
 					</td>
 				</tr>
 				<tr>
-					<td>TELEÉFONO 2</td>
+					<td style='text-align: right;' >TELÉFONO 2</td>
 					<td colspan=2>
 			<input type='hidden' name='Tlf2' value='".$_POST['Tlf2']."' />".$_POST['Tlf2']."
 					</td>
 				</tr>
 				<tr>
-					<td colspan='3' align='right' valign='middle' >
-						<input type='submit' value='BORRAR DATOS' class='botonrojo' />
-						<input type='hidden' name='borra' value=1 />
+					<td style='text-align: right;' >BORRADO</td>
+					<td colspan=2>
+			<input type='hidden' name='borrado' value='".$_POST['borrado']."' />".$_POST['borrado']."
 					</td>
 				</tr>
-		</form>														
 				<tr>
-					<td colspan='3' align='center'>
-						<a href='clientesFeed_Ver.php' class='botonverde'>INICIO PAPELERA CLIENTES</a>
+					<td colspan='3' align='right' valign='middle' >
+					<!--
+					<input type='submit' value='BORRAR DATOS' class='botonrojo' />
+					-->
+				<button type='submit' title='BORRAR DATOS CLIENTE' class='botonrojo imgDelete DeleteWhite'>
+				</button>
+						<input type='hidden' name='borra' value=1 />
+			</form>	
+				<button type='submit' title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' style='vertical-align:top;' >
+					<a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+				</button>
+		
+				<button type='submit' title='INICIO PAPELERA CLIENTES' class='botonverde imgDelete DeleteBlack' style='vertical-align:top;' >
+						<a href='clientesFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+				</button>
 					</td>
 				</tr>
 			</table>"); /* Fin del print */

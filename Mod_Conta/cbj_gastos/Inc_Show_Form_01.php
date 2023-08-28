@@ -2,7 +2,7 @@
 
 	global $cnt; 		$cnt = 0;
 
-	require 'ArrayMesDia.php';
+	require 'ArrayMesDia.php'; 
 	
 	require 'TablaIfErrors.php';
 

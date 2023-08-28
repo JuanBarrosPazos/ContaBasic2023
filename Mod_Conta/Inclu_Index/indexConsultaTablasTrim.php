@@ -663,7 +663,7 @@
 			print("<li>
 						<a href='#' title='".$rowd['factdate']." ".$rowd['factpvptot']." €'>
 							<span class='label' ".$bgRed.">".$rowd['factdate']."<br>".$rowd['factpvptot']."</span>
-							<span class='count bgcolord' style='height: ".$TotEd."%'>(".$TotEd.")</span>
+							<span class='count bgcolorir' style='height: ".$TotEd."%'>(".$TotEd.")</span>
 						</a>
 					</li>");
 

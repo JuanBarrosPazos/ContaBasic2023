@@ -110,7 +110,7 @@ function process_form(){
 	$tabla = "<table align='center' style='margin-top:10px'>
 				<tr>
 					<td colspan=4 class='BorderInf' style='text-align:center;'>
-						<a href='Impuestos_Crear.php' class='botonverde'>CREAR NUEVO IMPUESTO</a>
+						<a href='Impuestos_Crear.php' class='botonverde' style='color:#343434;'>CREAR NUEVO IMPUESTO</a>
 					</td>
 				</tr>
 				<tr>
@@ -122,7 +122,7 @@ function process_form(){
 				</tr>
 				<tr>
 					<td colspan=4 class='BorderSup' style='text-align:center;'>
-						<a href='Impuestos_Ver.php' class='botonazul'>INICIO IMPUESTOS</a>
+						<a href='Impuestos_Ver.php' class='botonazul' style='color:#343434;'>INICIO IMPUESTOS</a>
 					</td>
 				</tr>
 			</table>";	
@@ -197,7 +197,7 @@ function process_form(){
 				</tr>
 				<tr>
 					<td colspan=2 class='BorderInf' style='text-align:center;'>
-				<a href='Impuestos_Ver.php' class='botonazul'>INICIO IMPUESTOS</a>
+				<a href='Impuestos_Ver.php' class='botonazul' style='color:#343434;'>INICIO IMPUESTOS</a>
 					</td>
 				</tr>
 		</form>														

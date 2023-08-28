@@ -109,7 +109,7 @@ $_SESSION['usuarios'] = '';
 		//$sqlc .= "OR  `factdate` LIKE '$fil' ";
 
 	global $orden;
-	if(isset($_POST['Orden'])){
+	if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
 		$orden = $_POST['Orden'];
 	}else{ $orden = '`id` ASC'; }
 
@@ -379,7 +379,7 @@ function gt2(){
 	require 'Ingresos_factdate.php';
 
 	global $orden;
-	if(isset($_POST['Orden'])){
+	if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
 		$orden = $_POST['Orden'];
 	}else{ $orden = '`id` ASC'; }
 
@@ -437,7 +437,7 @@ function gt2(){
 		require 'Ingresos_factdate.php';
 
 		global $orden;
-		if(isset($_POST['Orden'])){
+		if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
 			$orden = $_POST['Orden'];
 		}else{ $orden = '`id` ASC'; }
 
@@ -638,7 +638,7 @@ function info(){
 	if($_POST['dy'] == ''){ $dy = date('Y');} else{$dy = "20".$_POST['dy'];}
 	
 	global $orden;
-	if(isset($_POST['Orden'])){
+	if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
 		$orden = $_POST['Orden'];
 	}else{ $orden = '`id` ASC'; }
 

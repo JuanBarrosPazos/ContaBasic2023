@@ -58,8 +58,8 @@ session_start();
 						<td  class='BorderInf'>".$hidden."</td>
 					</tr>
 					<tr>
-					<td colspan='4' style='text-align:center;'' class='BorderSup'>
-						<a href='status_Ver.php' class='botonverde'>INICIO EJERCICOS STATUS</a>
+					<td colspan='4' style='text-align:center;' >
+			<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
 					</td>
 				</tr>
 
@@ -211,8 +211,8 @@ session_start();
 						</td>
 					</tr>
 					<tr>
-						<td colspan='4' style='text-align:center;'' class='BorderSup'>
-							<a href='status_Ver.php' class='botonverde'>INICIO EJERCICOS STATUS</a>
+						<td colspan='4' style='text-align:center;' >
+				<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
 						</td>
 					</tr>
 				</table>"); 

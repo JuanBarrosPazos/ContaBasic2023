@@ -53,7 +53,7 @@ function ver_todo(){
 							<th class='BorderInfDch'>VALUE %</th>
 							<th class='BorderInfDch'>NAME</th>
 							<th colspan=2 class='BorderInf'>
-					<a href='Impuestos_Crear.php' class='botonverde'>CREAR IMPUESTO</a>
+					<a href='Impuestos_Crear.php' class='botonverde' style='color:#343434;'>CREAR IMPUESTO</a>
 							</th>
 						</tr>");
 			
@@ -123,7 +123,7 @@ function ver_todo(){
 		global $nombre; 	global $apellido;
 		
 		global $orden;
-		if(isset($_POST['Orden'])){
+		if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
 			$orden = $_POST['Orden'];
 		}else{ $orden = '`id` ASC'; }
 

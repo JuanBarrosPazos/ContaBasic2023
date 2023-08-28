@@ -62,8 +62,8 @@ session_start();
 						<td  class='BorderInf'>".$date."</td>
 					</tr>
 					<tr>
-						<td colspan='5' style='text-align:center;'' class='BorderSup'>
-				<a href='status_Ver.php' class='botonverde'>INICIO EJERCICOS STATUS</a>
+						<td colspan='5' style='text-align:center;' >
+				<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
 				<button type='submit' title='PAPELERA EJERCICIO' class='botonverde imgDelete DeleteGrey'>
 					<a href='status_feedback_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
 				</button>
@@ -255,8 +255,8 @@ session_start();
 					</td>
 				</tr>
 				<tr>
-					<td colspan='4' style='text-align:center;' class='BorderSup'>
-				<a href='status_Ver.php' class='botonverde'>INICIO EJERCICOS STATUS</a>
+					<td colspan='4' style='text-align:center;' >
+				<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
 				<button type='submit' title='PAPELERA EJERCICIO' class='botonverde imgDelete DeleteGrey'>
 					<a href='status_feedback_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
 				</button>
