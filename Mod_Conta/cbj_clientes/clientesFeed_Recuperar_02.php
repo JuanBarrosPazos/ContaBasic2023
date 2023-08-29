@@ -37,6 +37,11 @@ session_start();
 
 function process_form(){
 	
+	global $PersonsBlackTit;		$PersonsBlackTit = "VER TODOS LOS CLIENTES";
+	global $DeleteBlackTit;			$DeleteBlackTit = "INICIO PAPELERA CLIENTES";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	global $db; 		global $db_name;	
 	global $vname; 		$vname = "`".$_SESSION['clave']."clientes`";
 	
@@ -84,13 +89,11 @@ function process_form(){
 				</tr>
 				<tr>
 					<td colspan='3' align='right' >
-						<button type='submit' title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' style='vertical-align:top;' >
+						".$PersonsBlack."
 							<a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-						</button>
-				
-						<button type='submit' title='INICIO PAPELERA CLIENTES' class='botonverde imgDelete DeleteBlack' style='vertical-align:top;' >
-								<a href='clientesFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-						</button>
+						".$closeButton.$DeleteBlack."
+							<a href='clientesFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton."
 					</td>
 				</tr>
 			</table>");
@@ -161,8 +164,13 @@ function show_form(){
 							'borrado' => $_POST['borrado']);
 
 	} else { $defaults = $_POST; }
-		
 	
+		global $RestoreBlackTit;	$RestoreBlackTit = "RECUPERAR DATOS CLIENTE";
+		global $PersonsBlackTit;	$PersonsBlackTit = "VER TODOS LOS CLIENTES";
+		global $DeleteBlackTit;		$DeleteBlackTit = "INICIO PAPELERA CLIENTES";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 	print("<table class='tableForm' >
 				<tr>
 					<th colspan=2 >RECUPERAR DATOS DEL CLIENTE</th>
@@ -235,18 +243,14 @@ function show_form(){
 				<!--
 				<input type='submit' value='RECUPERAR DATOS' class='botonazul' />
 				-->
-				<button type='submit' title='RECUPERAR DATOS CLIENTE' class='botonnaranja imgDelete RestoreBlack' >
-				</button>
+				".$RestoreBlack.$closeButton."
 						<input type='hidden' name='modifica' value=1 />
-						<input type='hidden' name='v' value='i' />
 		</form>
-		        <button type='submit' title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' style='vertical-align:top;' >
-					<a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-				</button>
-		
-				<button type='submit' title='INICIO PAPELERA CLIENTES' class='botonverde imgDelete DeleteBlack' style='vertical-align:top;' >
-						<a href='clientesFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-				</button>
+						".$PersonsBlack."
+							<a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton.$DeleteBlack."
+							<a href='clientesFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton."
 					</td>
 				</tr>
 			</table>"); /* Fin del print */
@@ -276,8 +280,8 @@ function info_01(){
 	$orden = @$_POST['Orden'];
 		
 	$_SESSION['xid'] = $_POST['id'];
-	if (isset($_POST['todo'])){$filtro = "\n\tFiltro => TODOS LOS CLIENTES ".$orden;}
-	else{$filtro = "\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";}
+	if (isset($_POST['todo'])){$TitBut = "\n\tFiltro => TODOS LOS CLIENTES ".$orden;}
+	else{$TitBut = "\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";}
 
 	$ActionTime = date('H:i:s');
 
@@ -287,7 +291,7 @@ function info_01(){
 				}
 	
 	global $text;
-	$text = "\n- CLIENTES MODIFICAR SELECCIONADO ".$ActionTime.$filtro;
+	$text = "\n- CLIENTES MODIFICAR SELECCIONADO ".$ActionTime.$TitBut;
 
 	$logdocu = $_SESSION['ref'];
 	$logdate = date('Y-m-d');

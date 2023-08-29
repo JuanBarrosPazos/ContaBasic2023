@@ -634,8 +634,8 @@ function info(){
 		$orden = $_POST['Orden'];
 	}else{ $orden = '`id` ASC'; }
 
-	if(isset($_POST['todo'])){$filtro = "\n\tFiltro => TODOS LOS INGRESOS. ".$orden."\n\tDATE: ".$dy."/".$dm."/".$dd.".";}
-	else{$filtro = "\n\tFiltro => \n\tDATE: ".$dy."/".$dm."/".$dd.".\n\tR. Social: ".$_POST['factnom'].".\n\tDNI: ".$_POST['factnif'].".\n\tNº FACTURA: ".$_POST['factnum'].".";}
+	if(isset($_POST['todo'])){$TitBut = "\n\tFiltro => TODOS LOS INGRESOS. ".$orden."\n\tDATE: ".$dy."/".$dm."/".$dd.".";}
+	else{$TitBut = "\n\tFiltro => \n\tDATE: ".$dy."/".$dm."/".$dd.".\n\tR. Social: ".$_POST['factnom'].".\n\tDNI: ".$_POST['factnif'].".\n\tNº FACTURA: ".$_POST['factnum'].".";}
 
 	$ActionTime = date('H:i:s');
 
@@ -644,7 +644,7 @@ function info(){
 				$dir = "../cbj_Docs/log";
 				}
 	
-	global $text; 		$text = "\n- INGRESOS CONSULTAR ".$ActionTime.$filtro;
+	global $text; 		$text = "\n- INGRESOS CONSULTAR ".$ActionTime.$TitBut;
 	
 	$logdocu = $_SESSION['ref'];
 	$logdate = date('Y-m-d');

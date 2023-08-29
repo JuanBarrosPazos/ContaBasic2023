@@ -124,7 +124,7 @@ function process_form(){
 
 		$sql = "UPDATE `$db_name`.$vname SET  `ref`= '$rf', `rsocial` = '$_POST[rsocial]', `myimg` = '$new_name', `doc` = '$_POST[doc]', `dni` = '$_POST[dni]', `ldni` = '$_POST[ldni]', `Email` = '$_POST[Email]', `Direccion` = '$_POST[Direccion]', `Tlf1` = '$_POST[Tlf1]', `Tlf2` = '$tlf2' WHERE $vname.`id` = '$_POST[id]' LIMIT 1 ";
 	
-			/* ACTUALIZA EN CASACADA LAS TABLAS GASTOS CON EL NUEVO NIF, RAZON SOCIAL */
+			/* ACTUALIZA EN CASACADA LAS TABLAS gastos CON EL NUEVO NIF, RAZON SOCIAL */
 			global $tableName; 			$tableName = "`".$_SESSION['clave']."status`";
 			$a = "SELECT MIN(year) FROM `$db_name`.$tableName ";
 			$ra = mysqli_query($db, $a);
@@ -157,7 +157,7 @@ function process_form(){
 					 $texerror6 = "\n\t ".mysqli_error($db);
 						}
 
-			/* FIN ACTUALIZA EN CASACADA LAS TABLAS GASTOS CON EL NUEVO NIF, RAZON SOCIAL */
+			/* FIN ACTUALIZA EN CASACADA LAS TABLAS gastos CON EL NUEVO NIF, RAZON SOCIAL */
 	
 		} // FIN ELSE
 
@@ -170,6 +170,10 @@ function process_form(){
 		$_SESSION['dudas'] = $rowpimg['myimg'];
 		global $dudas; 		$dudas = $_SESSION['dudas']; 	$dudas = trim($dudas);
 	//	print("** ".$rowpimg['myimg']);
+
+		global $PersonsBlackTit;		$PersonsBlackTit = "VER TODOS LOS PROVEEDORES";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
 
 		print("<table class='tableForm'>
 				<tr>
@@ -208,9 +212,9 @@ function process_form(){
 				</tr>
 				<tr>
 					<td colspan='3' style='text-align: right;' >
-					<button type='submit' title='VER TODOS LOS PROVEEDORES' class='botonverde imgDelete PersonsBlack' >
+					".$PersonsBlack."
 						<a href='proveedores_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-					</button>
+					".$closeButton."
 						</td>
 				</tr>
 			</table>");
@@ -347,8 +351,13 @@ function show_form($errors=[]){
 					print ("<option value='".$option."' ");
 					if($option == $defaults['doc']){ print ("selected = 'selected'"); }
 													print ("> $label </option>");
-												}	
+												}
 
+		global $SaveBlackTit;			$SaveBlackTit = "MODIFICAR DATOS";
+		global $PersonsBlackTit;		$PersonsBlackTit = "VER TODOS LOS PROVEEDORES";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+									
 		print ("</select>
 					</td>
 				</tr>
@@ -406,15 +415,12 @@ function show_form($errors=[]){
 					<!--
 						<input type='submit' value='MODIFICAR DATOS' class='botonazul' />
 					-->
-						<button type='submit' title='MODIFICAR DATOS' class='botonazul imgDelete SaveBlack' >
-						</button>
-
+					".$SaveBlack.$closeButton."
 						<input type='hidden' name='modifica' value=1 />
-						<input type='hidden' name='v' value='i' />
 				</form>
-				<button type='submit' title='VER TODOS LOS PROVEEDORES' class='botonverde imgDelete PersonsBlack' style='vertical-align:top;' >
-					<a href='proveedores_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-				</button>
+					".$PersonsBlack."
+						<a href='proveedores_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+					".$closeButton."
 											
 					</td>
 				</tr>
@@ -446,8 +452,8 @@ function info_01(){
 	$orden = @$_POST['Orden'];
 		
 	$_SESSION['xid'] = $_POST['id'];
-	if (isset($_POST['todo'])){$filtro = "\n\tFiltro => TODOS LOS PROVEEDORES ".$orden;}
-	else{$filtro = "\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";}
+	if (isset($_POST['todo'])){$TitBut = "\n\tFiltro => TODOS LOS PROVEEDORES ".$orden;}
+	else{$TitBut = "\n\tID: ".$_SESSION['xid'].".\n\tR. Social: ".$_POST['rsocial'].".\n\tDNI: ".$_POST['dni'].$_POST['ldni'].".\n\tReferencia: ".$_POST['ref'].".\n\tEmail: ".$_POST['Email'].".\n\tDireccion: ".$_POST['Direccion'].".\n\tTlf 1: ".$_POST['Tlf1'].".\n\tTlf 2: ".$_POST['Tlf2'].".";}
 
 	$ActionTime = date('H:i:s');
 
@@ -457,7 +463,7 @@ function info_01(){
 				}
 	
 	global $text;
-	$text = "\n- PROVEEDORES MODIFICAR SELECCIONADO ".$ActionTime.$filtro;
+	$text = "\n- PROVEEDORES MODIFICAR SELECCIONADO ".$ActionTime.$TitBut;
 
 	$logdocu = $_SESSION['ref'];
 	$logdate = date('Y-m-d');
@@ -502,7 +508,7 @@ function info_02(){
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	//require '../Inclu/Conta_Footer.php';
+	require '../Inclu/Conta_Footer.php';
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

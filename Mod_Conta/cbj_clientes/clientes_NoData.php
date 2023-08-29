@@ -1,14 +1,18 @@
 <?php
 
-	global $KeyForm;        global $BotonPaelera;   global $estilo;    global $tituloLoc;
+        global $DeleteBlackTit;         $DeleteBlackTit = "INICIO PAPELERA CLIENTES";
+        global $PersonAddBlacktit;      $PersonAddBlacktit = "CREAR NUEVO CLIENTE";
+        global $PersonsBlackTit;        $PersonsBlackTit = "VER TODOS LOS CLIENTES";
+        require '../Inclu/BotoneraVar.php';
+        global $closeButton;
+
+	global $KeyForm;        global $BotonPapelera;   global $tituloLoc;
 
 	if($KeyForm == "feed"){
-                $BotonPaelera = "";
-                $estilo = "";
+                $BotonPapelera = "";
                 $tituloLoc = "PAPELERA CLIENTES<br><br>";
 	}else{
-                $BotonPaelera = "<button type='submit' title='INICIO PAPELERA CLIENTES' class='botonverde imgDelete DeleteBlack'><a href='clientesFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a> </button>";
-                $estilo = "style='margin-right:0.8em;'";
+                $BotonPapelera = $DeleteBlack."<a href='clientesFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a>".$closeButton;
                 $tituloLoc = "CLIENTES<br><br>";
 	}	
 
@@ -21,17 +25,13 @@
                 </tr>
                 <tr>
                         <th>
-
-                <button type='submit' title='CREAR NUEVO CLIENTE' class='botonverde imgDelete PersonAddBlack' style='margin-right:0.8em;'>
-                        <a href='clientes_Crear.php' >&nbsp;&nbsp;&nbsp;</a>
-                </button>
-
-                <button type='submit' title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' ".$estilo." >
+                                ".$PersonAddBlack."
+                                        <a href='clientes_Crear.php' >&nbsp;&nbsp;&nbsp;</a>
+                                ".$closeButton.$PersonsBlack."
                         <a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-                </button>
-                ".$BotonPaelera."
+                                ".$closeButton.$BotonPapelera."
                         </th>
                 </tr>
-                </table>");
+        </table>");
 
 ?>

@@ -33,8 +33,13 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function process_form(){
-	
+	function process_form(){
+
+		global $PersonsBlackTit;		$PersonsBlackTit = "VER TODOS LOS CLIENTES";
+		global $DeleteBlackTit;			$DeleteBlackTit = "INICIO PAPELERA CLIENTES";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		global $db; 		global $db_name;	
 		global $vname; 		$vname = "`".$_SESSION['clave']."clientesfeed`";
 		$sql = "DELETE FROM `$db_name`.$vname WHERE $vname.`id` = '$_POST[id]' LIMIT 1 ";
@@ -81,13 +86,11 @@ function process_form(){
 				</tr>
 				<tr>
 					<td colspan='3'  style='text-align: right;' >
-				<button type='submit' title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' style='vertical-align:top;' >
-					<a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-				</button>
-		
-				<button type='submit' title='INICIO PAPELERA CLIENTES' class='botonverde imgDelete DeleteBlack' style='vertical-align:top;' >
-						<a href='clientesFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-				</button>
+						".$PersonsBlack."
+							<a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton.$DeleteBlack."
+							<a href='clientesFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton."
 					</td>
 				</tr>
 			</table>" );
@@ -155,6 +158,12 @@ function process_form(){
 
 function show_form(){
 	
+	global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR DATOS CLIENTE";
+	global $PersonsBlackTit;	$PersonsBlackTit = "VER TODOS LOS CLIENTES";
+	global $DeleteBlackTit;		$DeleteBlackTit = "INICIO PAPELERA CLIENTES";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	$_SESSION['xid'] = $_POST['id'];
 
 	print("
@@ -238,17 +247,14 @@ function show_form(){
 					<!--
 					<input type='submit' value='BORRAR DATOS' class='botonrojo' />
 					-->
-				<button type='submit' title='BORRAR DATOS CLIENTE' class='botonrojo imgDelete DeleteWhite'>
-				</button>
-						<input type='hidden' name='borra' value=1 />
-			</form>	
-				<button type='submit' title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' style='vertical-align:top;' >
-					<a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-				</button>
-		
-				<button type='submit' title='INICIO PAPELERA CLIENTES' class='botonverde imgDelete DeleteBlack' style='vertical-align:top;' >
-						<a href='clientesFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-				</button>
+						".$DeleteWhite.$closeButton."
+							<input type='hidden' name='borra' value=1 />
+				</form>	
+						".$PersonsBlack."
+							<a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton.$DeleteBlack."
+							<a href='clientesFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton."
 					</td>
 				</tr>
 			</table>"); /* Fin del print */

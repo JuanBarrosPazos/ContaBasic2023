@@ -116,7 +116,7 @@
             <!--
             <input type='submit' value='BORRAR DATOS' />
             -->
-            <button type='submit' title='BORRAR FACTURA' class='botonrojo imgDelete DeleteWhite'>
+            <button type='submit' title='BORRAR FACTURA' class='botonrojo imgButIco DeleteWhite'>
             </button>
             <input type='hidden' name='oculto2' value=1 />
 	</form>

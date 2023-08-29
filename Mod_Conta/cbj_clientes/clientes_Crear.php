@@ -142,6 +142,11 @@ function process_form(){
 		global $dudas; 		$dudas = $_SESSION['dudas']; 	$dudas = trim($dudas);
 	//	print("** ".$rowpimg['myimg']);
 
+		global $PersonAddBlackTit;		$PersonAddBlackTit = "CREAR NUEVO CLIENTE";
+		global $PersonsBlackTit;		$PersonsBlackTit = "VER TODOS LOS CLIENTES";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		print("<table class='tableForm'>
 				<tr>
 					<th colspan=3 >HA REGISTRADO UN NUEVO CLIENTE</th>
@@ -180,12 +185,11 @@ function process_form(){
 				</tr>
 				<tr>
 					<td colspan='3' style='text-align:center;' >
-					<button type='submit' title='CREAR NUEVO CLIENTE' class='botonverde imgDelete PersonAddBlack' style='margin-right:1.2em;'>
+					".$PersonAddBlack."
 						<a href='clientes_Crear.php' >&nbsp;&nbsp;&nbsp;</a>
-					</button>
-					<button type='submit' title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' >
+					".$closeButton.$PersonsBlack."
 						<a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-					</button>
+					".$closeButton."
 							</td>
 				</tr>
 			</table>" );
@@ -299,8 +303,14 @@ function show_form($errors=[]){
 							print ("selected = 'selected'");
 													}
 									print ("> $label </option>");
-								}	
-	print ("</select>
+								}
+		
+		global $SaveBlackTit;		$SaveBlackTit = "REGISTRAR ESTOS DATOS";
+		global $PersonsBlackTit;	$PersonsBlackTit = "VER TODOS LOS CLIENTES";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
+		print ("</select>
 					</td>
 				</tr>
 				<tr>
@@ -342,7 +352,7 @@ function show_form($errors=[]){
 				<tr>
 					<td style='text-align:right;'>FOTOGRAFIA<font color='#FF0000'>&nbsp;&nbsp;</font></td>
 					<td>
-		<input type='file' name='myimg' value='".@$defaults['myimg']."' style='color:#fff;' />						
+		<input type='file' name='myimg' value='".@$defaults['myimg']."' style='color:#fff;' />
 					</td>
 				</tr>
 				<tr>
@@ -350,15 +360,12 @@ function show_form($errors=[]){
 					<!--
 						<input type='submit' value='REGISTRAR ESTOS DATOS' class='botonazul' />
 					-->
-						<button type='submit' title='REGISTRAR ESTOS DATOS' class='botonazul imgDelete SaveBlack' >
-						</button>
-
+					".$SaveBlack.$closeButton."
 						<input type='hidden' name='oculto' value=1 />
-						<input type='hidden' name='v' value='i' />
-			</form>														
-				<button title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' style='vertical-align:top;' >
-						<a href='clientes_Ver.php' style='margin-top: -1.8em !important;' >&nbsp;&nbsp;&nbsp;</a>
-					</button>
+			</form>	
+					".$PersonsBlack."											
+						<a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+					".$closeButton."
 					</td>
 				</tr>
 			</table>"); /* Fin del print */

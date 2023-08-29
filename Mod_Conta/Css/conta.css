@@ -318,30 +318,37 @@ a:hover  img {
 /* INICIO BOTONES */
 .botonverde {
 	background-color: #90faf5;
+	/* background-color: #01c493; */
 }
 .botonnaranja {
 	background-color: #f8cd41;
+  	/* background-color: #f1bd2d; */
 }
 .botonrojo {
 	background-color: #ff4d4d;
 }
-.botonazul {
+.botonlila {
 	background-color: #dd92fd;
+	/* background-color: #cc5fe7 ; */
+}
+.botonazul {
+	background-color: #59d4fa ;
 }
 
-.botonverde, .botonnaranja, .botonrojo, .botonazul, select, input, label {
+
+.botonverde, .botonnaranja, .botonrojo, .botonlila, .botonazul, select, input, label {
 	cursor: pointer;
 	border: none;
 	display: inline-block;
 	width: max-content;
 	/*vertical-align: text-bottom;*/
-	margin: 0.1em 0.3em;
+	margin: 0.1em 0.2em;
 	padding: 5px 5px 3px 5px !important;
 	border-radius: 4px;
 	font-weight: bold;
 	color: #343434; 
 }
-.botonverde:hover, .botonnaranja:hover, .botonrojo:hover, .botonazul:hover {
+.botonverde:hover, .botonnaranja:hover, .botonrojo:hover, .botonlila:hover, .botonazul:hover {
 	background-color: #fff1b4;
 }
 /* FIN BOTONES */
@@ -383,6 +390,45 @@ a:hover  img {
 
 /* ICONOS APP */
 
+.BuscaBlack{
+	background-image: url(../cbj_Images/busca_black.png);
+}
+.BuscaGrey{
+	background-image: url(../cbj_Images/busca_grey.png);
+}
+.BuscaWhite{
+	background-image: url(../cbj_Images/busca_white.png);
+}
+.BuscaBlack:hover, .BuscaGrey:hover, .BuscaWhite:hover{
+	background-image: url(../cbj_Images/busca_black.png);
+}
+
+.CancelBlack{
+	background-image: url(../cbj_Images/cancel_black.png);
+}
+.CancelGrey{
+	background-image: url(../cbj_Images/cancel_grey.png);
+}
+.CancelWhite{
+	background-image: url(../cbj_Images/cancel_white.png);
+}
+.CancelBlack:hover, .CancelGrey:hover, .CancelWhite:hover{
+	background-image: url(../cbj_Images/cancel_grey.png);
+}
+
+.DatosBlack{
+	background-image: url(../cbj_Images/datos_black.png);
+}
+.DatosGrey{
+	background-image: url(../cbj_Images/datos_grey.png);
+}
+.DatosWhite{
+	background-image: url(../cbj_Images/datoswhite.png);
+}
+.DatosBlack:hover, .DatosGrey:hover, .DatosWhite:hover{
+	background-image: url(../cbj_Images/datos_grey.png);
+}
+
 .DeleteBlack{
 	background-image: url(../cbj_Images/delete_black.png);
 }
@@ -409,17 +455,30 @@ a:hover  img {
 	background-image: url(../cbj_Images/detalle_grey.png);
 }
 
-.BuscaBlack{
-	background-image: url(../cbj_Images/busca_black.png);
+.FotoBlack{
+	background-image: url(../cbj_Images/foto_black.png);
 }
-.BuscaGrey{
-	background-image: url(../cbj_Images/busca_grey.png);
+.FotoGrey{
+	background-image: url(../cbj_Images/foto_grey.png);
 }
-.BuscaWhite{
-	background-image: url(../cbj_Images/busca_white.png);
+.FotoWhite{
+	background-image: url(../cbj_Images/foto_white.png);
 }
-.BuscaBlack:hover, .BuscaGrey:hover, .BuscaWhite:hover{
-	background-image: url(../cbj_Images/busca_black.png);
+.FotoBlack:hover, .FotoGrey:hover, .FotoWhite:hover{
+	background-image: url(../cbj_Images/foto_grey.png);
+}
+
+.InicioBlack{
+	background-image: url(../cbj_Images/inicio_black.png);
+}
+.InicioGrey{
+	background-image: url(../cbj_Images/inicio_grey.png);
+}
+.InicioWhite{
+	background-image: url(../cbj_Images/inicio_white.png);
+}
+.InicioBlack:hover, .InicioGrey:hover, .InicioWhite:hover{
+	background-image: url(../cbj_Images/inicio_grey.png);
 }
 
 .PersonAddBlack{
@@ -448,56 +507,17 @@ a:hover  img {
 	background-image: url(../cbj_Images/people_grey.png);
 }
 
-.FotoBlack{
-	background-image: url(../cbj_Images/foto_black.png);
+.RestoreBlack{
+	background-image: url(../cbj_Images/restore_black.png);
 }
-.FotoGrey{
-	background-image: url(../cbj_Images/foto_grey.png);
+.RestoreGrey{
+	background-image: url(../cbj_Images/restore_grey.png);
 }
-.FotoWhite{
-	background-image: url(../cbj_Images/foto_white.png);
+.RestoreWhite{
+	background-image: url(../cbj_Images/restore_black.png);
 }
-.FotoBlack:hover, .FotoGrey:hover, .FotoWhite:hover{
-	background-image: url(../cbj_Images/foto_grey.png);
-}
-
-.DatosBlack{
-	background-image: url(../cbj_Images/datos_black.png);
-}
-.DatosGrey{
-	background-image: url(../cbj_Images/datos_grey.png);
-}
-.DatosWhite{
-	background-image: url(../cbj_Images/datoswhite.png);
-}
-.DatosBlack:hover, .DatosGrey:hover, .DatosWhite:hover{
-	background-image: url(../cbj_Images/datos_grey.png);
-}
-
-.InicioBlack{
-	background-image: url(../cbj_Images/inicio_black.png);
-}
-.InicioGrey{
-	background-image: url(../cbj_Images/inicio_grey.png);
-}
-.InicioWhite{
-	background-image: url(../cbj_Images/inicio_white.png);
-}
-.InicioBlack:hover, .InicioGrey:hover, .InicioWhite:hover{
-	background-image: url(../cbj_Images/inicio_grey.png);
-}
-
-.CancelBlack{
-	background-image: url(../cbj_Images/cancel_black.png);
-}
-.CancelGrey{
-	background-image: url(../cbj_Images/cancel_grey.png);
-}
-.CancelWhite{
-	background-image: url(../cbj_Images/cancel_white.png);
-}
-.CancelBlack:hover, .CancelGrey:hover, .CancelWhite:hover{
-	background-image: url(../cbj_Images/cancel_grey.png);
+.RestoreBlack:hover, .RestoreGrey:hover, .RestoreWhite:hover{
+	background-image: url(../cbj_Images/restore_grey.png);
 }
 
 .SaveBlack{
@@ -513,50 +533,11 @@ a:hover  img {
 	background-image: url(../cbj_Images/save_grey.png);
 }
 
-.RestoreBlack{
-	background-image: url(../cbj_Images/restore_black.png);
-}
-.RestoreGrey{
-	background-image: url(../cbj_Images/restore_grey.png);
-}
-.RestoreWhite{
-	background-image: url(../cbj_Images/restore_black.png);
-}
-.RestoreBlack:hover, .RestoreGrey:hover, .RestoreWhite:hover{
-	background-image: url(../cbj_Images/restore_grey.png);
-}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-.imgDelete, .imgDetalle{
+.imgButIco{
 	width: 2.1em !important;
 	height: 2.1em !important;
-	margin: 0.1em;
+	margin: 0.1em 0.4em 0.1em 0.4em;
 	/*background-image: url(../cbj_Images/delete_white.png);*/
 	background-repeat: no-repeat;
 	background-position: center;

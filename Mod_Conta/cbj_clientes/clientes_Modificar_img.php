@@ -84,6 +84,10 @@ function validate_form_img(){
 
 function process_form_img(){
 	
+	global $PersonsBlackTit;		$PersonsBlackTit = "VER TODOS LOS CLIENTES";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	global $db;
 
 	global $vname;			$vname = "`".$_SESSION['clave']."clientes`";
@@ -172,9 +176,9 @@ function process_form_img(){
 						</tr>
 						<tr>
 							<td colspan=3 align='right' >
-				<button type='submit' title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' >
-                <a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-        		</button>
+								".$PersonsBlack."
+                					<a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+        						".$closeButton."
 							</td>
 						</tr>
 					</table>");
@@ -208,8 +212,12 @@ function process_form_img(){
 
 function show_form_img($errors=[]){
 	
+	global $SaveBlackTit;		$SaveBlackTit = "MODIFICAR LA IMAGEN";
+	global $PersonsBlackTit;	$PersonsBlackTit = "VER TODOS LOS CLIENTES";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	global $dt; 		global $db; 	
-	
 
 	global $sesionref; 		$sesionref = $_SESSION['ref'];
 
@@ -304,15 +312,14 @@ function show_form_img($errors=[]){
 						<!--
 						<input type='submit' value='MODIFICAR LA IMAGEN' class='botonverde'/>
 						-->
-				<button type='submit' title='MODIFICAR LA IMAGEN' class='botonverde imgDelete SaveBlack' >
-				</button>
-						<input type='hidden' name='imagenmodif' value=1 />
+						".$SaveBlack.$closeButton."
+							<input type='hidden' name='imagenmodif' value=1 />
 				</form>														
 					</td>
 					<td align='right'>
-				<button type='submit' title='VER TODOS LOS CLIENTES' class='botonverde imgDelete PersonsBlack' >
-                <a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-        		</button>
+						".$PersonsBlack."
+							<a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton."
 					</td>
 				</tr>
 			</table>");

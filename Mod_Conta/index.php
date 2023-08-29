@@ -375,8 +375,12 @@ session_start();
 			<form name='filtroBal' method='post' action='$_SERVER[PHP_SELF]' >
 					<tr>
 						<td align='center' class='BorderSup'>
-							<input type='submit' value='FILTRO BALANCES' class='botonazul' />
-							<input type='hidden' name='filtroBal' value=1 />
+							<!--
+						<input type='submit' value='FILTRO BALANCES' class='botonazul' />
+							-->
+					<button type='submit' title='FILTRO BALANCES' class='botonlila imgButIco BuscaWhite'>
+					</button>
+										<input type='hidden' name='filtroBal' value=1 />
 						</td>
 						<td class='BorderSup'>	
 						<div style='float:left'>

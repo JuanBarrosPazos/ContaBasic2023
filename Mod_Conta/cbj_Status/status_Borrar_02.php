@@ -64,7 +64,7 @@ session_start();
 					<tr>
 						<td colspan='5' style='text-align:center;' >
 				<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
-				<button type='submit' title='PAPELERA EJERCICIO' class='botonverde imgDelete DeleteGrey'>
+				<button type='submit' title='PAPELERA EJERCICIO' class='botonverde imgButIco DeleteGrey'>
 					<a href='status_feedback_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
 				</button>
 								</td>
@@ -257,7 +257,7 @@ session_start();
 				<tr>
 					<td colspan='4' style='text-align:center;' >
 				<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
-				<button type='submit' title='PAPELERA EJERCICIO' class='botonverde imgDelete DeleteGrey'>
+				<button type='submit' title='PAPELERA EJERCICIO' class='botonverde imgButIco DeleteGrey'>
 					<a href='status_feedback_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
 				</button>
 					</td>

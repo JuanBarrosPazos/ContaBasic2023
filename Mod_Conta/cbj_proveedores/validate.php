@@ -1,11 +1,6 @@
 <?php
 
-	global $vname;		
-	if($_POST['v']=='g'){
-		$vname = "`".$_SESSION['clave']."proveedores`";
-	} elseif($_POST['v']=='i'){
-		$vname = "`".$_SESSION['clave']."proveedores`";
-	}
+	global $vname; 		$vname = "`".$_SESSION['clave']."proveedores`";
 
 	$errors = array();
 	
@@ -36,17 +31,17 @@
 		global $sqldni; 	global $qdni;
 
 		global $vname;		
-		$prove =  "SELECT * FROM `$db_name`.$vname WHERE `ref` = '$rf'";
-		$qprove = mysqli_query($db, $prove);
-		$cprove = mysqli_num_rows($qprove);
-		$rowdni = mysqli_fetch_assoc($qprove);
+		$provee =  "SELECT * FROM `$db_name`.$vname WHERE `ref` = '$rf'";
+		$qprovee = mysqli_query($db, $provee);
+		$cprovee = mysqli_num_rows($qprovee);
+		$rowdni = mysqli_fetch_assoc($qprovee);
 	
 	// VALIDO LA REFERENCIA
 	if(isset($_POST['id'])){
 		if($_POST['id'] == @$rowdni['id']){ }
-		elseif($cprove > 0){$errors [] = "EL PROVEEDOR <font color='#FF0000'> YA EXISTE ".$rf.".</font>";}
+		elseif($cprovee > 0){$errors [] = "EL PROVEEDOR <font color='#FF0000'> YA EXISTE ".$rf.".</font>";}
 	} else { 
-		if($cprove > 0){$errors [] = "EL PROVEEDOR <font color='#FF0000'> YA EXISTE ".$rf.".</font>";}
+		if($cprovee > 0){$errors [] = "EL PROVEEDOR <font color='#FF0000'> YA EXISTE ".$rf.".</font>";}
 	}
 		
 				   ////////////////////				   ////////////////////

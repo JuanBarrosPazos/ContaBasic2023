@@ -85,7 +85,7 @@ function ver_todo(){
 					<!--
 						<input type='submit' class='botonrojo'  value='BORRAR % RETENCION' />
 					-->
-					<button type='submit' title='BORRAR' class='botonrojo imgDelete DeleteWhite'></button>
+					<button type='submit' title='BORRAR' class='botonrojo imgButIco DeleteWhite'></button>
 					<input type='hidden' name='oculto2' value=1 />
 						</form>
 								</td>

@@ -35,6 +35,10 @@ function process_form(){
 	global $sesionref; 		$sesionref = $_SESSION['ref'];
 	$sesionref = strtolower($sesionref);
 	
+	global $CancelBlackTit;		$CancelBlackTit = "CERRAR VENTANA";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	print("<table class='tableForm' style='margin-top: 1.6em !important;' >
 			<tr>
 				<th colspan=3 >PAPELERA DATOS DEL PROVEEDOR</th>
@@ -79,9 +83,8 @@ function process_form(){
 						<!--
 						<input type='submit' value='CERRAR VENTANA' class='botonverde' />
 						-->
-				<button type='submit' title='CERRAR VENTANA' class='botonrojo imgDetalle CancelBlack'>
-				</button>
-						<input type='hidden' name='oculto2' value=1 />
+						".$CancelBlack.$closeButton."
+							<input type='hidden' name='oculto2' value=1 />
 					</form>
 				</td>
 			</tr>

@@ -35,6 +35,10 @@ session_start();
 
 function process_form(){
 	
+	global $PersonsBlackTit;	$PersonsBlackTit = "VER TODOS LOS PROVEEDORES";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	print("<table class='tableForm' >
 			<tr>
 				<th colspan=3 >HA BORRADO AL PROVEEDOR</th>
@@ -72,9 +76,9 @@ function process_form(){
 			</tr>
 			<tr>
 				<td colspan='3' style='text-align: right;' >
-					<button type='submit' title='VER TODOS LOS PROVEEDORES' class='botonverde imgDelete PersonsBlack' >
-						<a href='proveedores_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-					</button>
+				".$PersonsBlack."
+					<a href='proveedores_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+				".$closeButton."
 	
 				</td>
 			</tr>
@@ -157,6 +161,11 @@ function show_form(){
 	
 	$_SESSION['xid'] = $_POST['id'];
 
+	global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR DATOS PROVEEDOR";
+	global $PersonsBlackTit;	$PersonsBlackTit = "VER TODOS LOS PROVEEDORES";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	print("
 			<table class='tableForm' >
 				<tr>
@@ -232,13 +241,12 @@ function show_form(){
 				<!--
 					<input type='submit' value='BORRAR DATOS' class='botonrojo' />
 				-->
-				<button type='submit' title='BORRAR DATOS PROVEEDOR' class='botonrojo imgDelete DeleteWhite'>
-				</button>
+				".$DeleteWhite.$closeButton."
 						<input type='hidden' name='borra' value=1 />
-		</form>														
-				<button type='submit' title='VER TODOS LOS PROVEEDORES' class='botonverde imgDelete PersonsBlack' style='vertical-align:top;' >
+		</form>	
+				".$PersonsBlack."													
 					<a href='proveedores_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-				</button>
+				".$closeButton."
 					</td>
 				</tr>
 			</table>"); /* Fin del print */

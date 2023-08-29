@@ -94,7 +94,7 @@ session_start();
 					<!--
 					<input type='submit' value='BORRAR FEEDBACK EJERCICIO' />
 					-->
-				<button type='submit' title='BORRAR' class='botonrojo imgDelete DeleteWhite'></button>
+				<button type='submit' title='BORRAR' class='botonrojo imgButIco DeleteWhite'></button>
 						<input type='hidden' name='oculto2' value=1 />
 				</form>
 						</td>

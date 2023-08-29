@@ -1,18 +1,18 @@
 <?php
 
 	global $db;			global $sqla;		global $sqlb;
-	global $KeyForm;	global $tabla1;		global $filtro;
+	global $KeyForm;	global $tabla1;		global $TitBut;
 
 	if($KeyForm == "feed"){
 		$tabla1 = "`".$_SESSION['clave']."proveedoresfeed`";
 		//$sqla =  "SELECT * FROM $tabla1 WHERE `ref` <> 'ANONIMO' ORDER BY `ref` ASC ";
 		//$sqlb =  "SELECT * FROM $tabla1 WHERE `rsocial` <> 'ANONIMO' ORDER BY `rsocial` ASC ";
-		$filtro = "FILTRO PAPELERA PROVEEDORES";
+		$TitBut = "FILTRO PAPELERA PROVEEDORES";
 	}else{
 		$tabla1 = "`".$_SESSION['clave']."proveedores`";
 		//$sqla =  "SELECT * FROM $tabla1 WHERE `ref` <> 'ANONIMO' ORDER BY `ref` ASC ";
 		//$sqlb =  "SELECT * FROM $tabla1 WHERE `rsocial` <> 'ANONIMO' ORDER BY `rsocial` ASC ";
-		$filtro = "FILTRO PROVEEDORES";
+		$TitBut = "FILTRO PROVEEDORES";
 	}	
 
 	if(isset($_POST['oculto'])){
@@ -42,6 +42,11 @@
 						'`id` ASC' => 'ID ASC',
 						'`id` DESC' => 'ID DESC');
 
+
+			global $BuscaWhiteTit;		$BuscaWhiteTit = $TitBut;
+			require '../Inclu/BotoneraVar.php';
+			global $closeButton;
+
 	print("<table align='center' style=\"border:0px;margin-top:4px\">
 				<tr>
 					<th class='BorderSup' colspan=4 width=100% >
@@ -54,12 +59,11 @@
 				<!--
 				<input type='submit' title='FILTRO PAPELERA PROVEEDORES' value='FILTRO' class='botonazul' />
 				-->
-				<button type='submit' title='".$filtro."' class='botonazul imgDetalle BuscaWhite'>
-				</button>
+				".$BuscaWhite.$closeButton."
 						<input type='hidden' name='oculto' value=1 />
 					</td>
 					<td>
-		<select name='Orden' title='ORDENAR PROVEEDORES POR...' class='botonazul'>");
+		<select name='Orden' title='ORDENAR PROVEEDORES POR...' class='botonverde'>");
 						
 		foreach($ordenar as $option => $label){
 			print ("<option value='".$option."' ");

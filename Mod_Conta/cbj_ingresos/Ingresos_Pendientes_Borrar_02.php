@@ -198,7 +198,7 @@ session_start();
 
 	global $db;
 	
-		$filtro = "\n\tFiltro => \n\tDATE: ".$_POST['factdate'].".\n\tR. Social: ".$_POST['factnom'].".\n\tDNI: ".$_POST['factnif'].".\n\tNº FACTURA: ".$_POST['factnum'].".";
+		$TitBut = "\n\tFiltro => \n\tDATE: ".$_POST['factdate'].".\n\tR. Social: ".$_POST['factnom'].".\n\tDNI: ".$_POST['factnif'].".\n\tNº FACTURA: ".$_POST['factnum'].".";
 
 		$ActionTime = date('H:i:s');
 
@@ -208,7 +208,7 @@ session_start();
 					}
 		
 		global $text;
-		$text = "\n- INGRESO SELECCIONADO MODIFICAR ".$ActionTime.$filtro;
+		$text = "\n- INGRESO SELECCIONADO MODIFICAR ".$ActionTime.$TitBut;
 		
 		$logdocu = $_SESSION['ref'];
 		$logdate = date('Y-m-d');

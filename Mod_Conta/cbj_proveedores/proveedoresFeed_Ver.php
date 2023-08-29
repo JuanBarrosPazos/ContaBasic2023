@@ -39,6 +39,12 @@ session_start();
 
 	function process_form(){
 		
+		global $DetalleBlackTit;	$DetalleBlackTit = "VER DETALLES";
+		global $RestoreBlackTit;	$RestoreBlackTit = "RECUPERAR DATOS PROVEEDOR";
+		global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		global $db; 		global $db_name;
 		global $nombre;		$nombre = @$_POST['Nombre'];
 		global $apellido;	$apellido = @$_POST['Apellidos'];
@@ -110,8 +116,7 @@ session_start();
 					<!--
 						<input type='submit' value='VER DETALLES' class='botonverde' />
 					-->
-					<button type='submit' title='VER DETALLES' class='botonverde imgDetalle DetalleBlack'>
-					</button>
+					".$DetalleBlack.$closeButton."
 						<input type='hidden' name='oculto2' value=1 />
 			</td>
 				</form>
@@ -124,9 +129,8 @@ session_start();
 		print("<!--
 				<input type='submit' value='RECUPERAR DATOS' class='botonnaranja' />
 				-->
-				<button type='submit' title='RECUPERAR DATOS PROVEEDOR' class='botonnaranja imgDelete RestoreBlack' >
-				</button>
-							<input type='hidden' name='oculto2' value=1 />
+					".$RestoreBlack.$closeButton."
+						<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td>	
 			<td align='center' class='BorderInf'>
@@ -134,11 +138,11 @@ session_start();
 
 				require 'proveedores_rowTotal.php';
 	
-			print("<!--
-						<input type='submit' value='BORRAR DATOS' class='botonrojo' />
-					-->
-					<button type='submit' title='BORRAR' class='botonrojo imgDelete DeleteWhite'></button>
-					<input type='hidden' name='oculto2' value=1 />
+		print("<!--
+					<input type='submit' value='BORRAR DATOS' class='botonrojo' />
+				-->
+					".$DeleteWhite.$closeButton."
+						<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td>
 		</tr>");
@@ -159,16 +163,17 @@ session_start();
 
 	function show_form($errors=[]){
 		
+		global $PersonAddBlackTit;		$PersonAddBlackTit = "CREAR NUEVO PROVEEDOR";
+		global $PersonsBlackTit;		$PersonsBlackTit = "VER TODOS LOS PROVEEDORES";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		global $titulo;
 		$titulo = "PAPELERA PROVEEDORES";
 		global $LinkForm1 ;
-		$LinkForm1  = "<button type='submit' title='CREAR NUEVO PROVEEDOR' class='botonverde imgDelete PersonAddBlack' style='margin-right:1.2em;'>
-		<a href='proveedores_Crear.php' >&nbsp;&nbsp;&nbsp;</a>
-		</button>";
+		$LinkForm1  = $PersonAddBlack."<a href='proveedores_Crear.php' >&nbsp;&nbsp;&nbsp;</a>".$closeButton;
 		global $LinkForm2 ;
-		$LinkForm2  = "<button type='submit' title='VER TODOS LOS PROVEEDORES' class='botonverde imgDelete PersonsBlack' >
-		<a href='proveedores_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-		</button>";
+		$LinkForm2  = $PersonsBlack."<a href='proveedores_Ver.php' >&nbsp;&nbsp;&nbsp;</a>".$closeButton;
 		global $titulo2;
 		$titulo2 = "PAPELERA PROVEEDORES VER TODO";
 
@@ -181,7 +186,13 @@ session_start();
 				 ////////////////////				  ///////////////////
 
 	function ver_todo(){
-			
+
+		global $DetalleBlackTit;		$DetalleBlackTit = "VER DETALLES";
+		global $RestoreBlackTit;		$RestoreBlackTit = "RECUPERAR DATOS PROVEEDOR";
+		global $DeleteWhiteTit;			$DeleteWhiteTit = "BORRAR";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		global $db; 		global $db_name;
 
 		global $orden;
@@ -239,8 +250,7 @@ session_start();
 					<!--
 						<input type='submit' value='VER DETALLES' class='botonverde' />
 					-->
-					<button type='submit' title='VER DETALLES' class='botonverde imgDetalle DetalleBlack'>
-					</button>
+					".$DetalleBlack.$closeButton."
 						<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td>
@@ -253,8 +263,7 @@ session_start();
 		print("<!--
 				<input type='submit' value='RECUPERAR DATOS' class='botonnaranja' />
 				-->
-				<button type='submit' title='RECUPERAR DATOS PROVEEDOR' class='botonnaranja imgDelete RestoreBlack' >
-				</button>
+					".$RestoreBlack.$closeButton."
 						<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td>	
@@ -267,8 +276,8 @@ session_start();
 		print("<!--
 				<input type='submit' value='BORRAR DATOS' class='botonrojo' />
 				-->
-				<button type='submit' title='BORRAR' class='botonrojo imgDelete DeleteWhite'></button>
-					<input type='hidden' name='oculto2' value=1 />
+					".$DeleteWhite.$closeButton."
+						<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td> 
 				</tr>");
@@ -310,8 +319,8 @@ function info(){
 		$orden = $_POST['Orden'];
 	}else{ $orden = '`id` ASC'; }
 
-	if (isset($_POST['todo'])){$filtro = "\n\tFiltro => TODOS LOS PROVEEDORES ".$orden;}
-	else{$filtro = "\n\tFiltros: \n\tR. Social: ".$_POST['rsocial'].".\n\tReferencia: ".$_POST['ref'].".";}
+	if (isset($_POST['todo'])){$TitBut = "\n\tFiltro => TODOS LOS PROVEEDORES ".$orden;}
+	else{$TitBut = "\n\tFiltros: \n\tR. Social: ".$_POST['rsocial'].".\n\tReferencia: ".$_POST['ref'].".";}
 
 	$ActionTime = date('H:i:s');
 
@@ -321,7 +330,7 @@ function info(){
 				}
 	
 	global $text;
-	$text = "\n- PROVEEDORES MODIFICAR BUSCAR ".$ActionTime.$filtro;
+	$text = "\n- PROVEEDORES MODIFICAR BUSCAR ".$ActionTime.$TitBut;
 
 	$logdocu = $_SESSION['ref'];
 	$logdate = date('Y-m-d');

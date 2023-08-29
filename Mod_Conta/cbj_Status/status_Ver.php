@@ -54,7 +54,7 @@ session_start();
 					<th class='BorderInfDch'>HIDDEN</th>
 					<th colspan=2 class='BorderInf'>
 			<a href='status_Crear.php' title='CREAR NUEVO EJERCICIO' class='botonverde' style='color:#343434;' >CREAR NUEVO EJERCICIO</a>
-			<button type='submit' title='PAPELERA EJERCICIO' class='botonverde imgDelete DeleteGrey'>
+			<button type='submit' title='PAPELERA EJERCICIO' class='botonverde imgButIco DeleteGrey'>
 				<a href='status_feedback_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
 			</button>
 					</th>
@@ -94,7 +94,7 @@ session_start();
 				<!--
 				<input type='submit' value='BORRAR FEEDBACK EJERCICIO' />
 				-->
-				<button type='submit' title='BORRAR' class='botonrojo imgDelete DeleteWhite'></button>
+				<button type='submit' title='BORRAR' class='botonrojo imgButIco DeleteWhite'></button>
 				<input type='hidden' name='oculto2' value=1 />
 		</form>
 			</td>

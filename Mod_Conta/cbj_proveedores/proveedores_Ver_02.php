@@ -28,6 +28,10 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 function process_form(){
 	
+	global $CancelBlackTit;		$CancelBlackTit = "CERRAR VENTANA";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	global $db;
 	
 	global $nombre;			$nombre = isset($_POST['Nombre']);
@@ -76,8 +80,7 @@ function process_form(){
 							<!--
 							<input type='submit' value='CERRAR VENTANA' class='botonverde' />
 							-->
-					<button type='submit' title='CERRAR VENTANA' class='botonrojo imgDetalle CancelBlack'>
-					</button>
+							".$CancelBlack.$closeButton."
 							<input type='hidden' name='oculto2' value=1 />
 						</form>
 					</td>
