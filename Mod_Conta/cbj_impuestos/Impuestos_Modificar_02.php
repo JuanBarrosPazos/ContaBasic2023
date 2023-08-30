@@ -86,8 +86,6 @@ function validate_form(){
 							}
 		}
 
-		////////////////////
-		
 		return $errors;
 
 	} 
@@ -98,6 +96,10 @@ function validate_form(){
 
 	function process_form(){
 		
+		global $InicioBlackTit;		$InicioBlackTit = "INICIO IMPUESTOS";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+	
 		global $db; 		global $db_name;	
 		global $dyt1; 		global $dm1;
 		
@@ -108,12 +110,7 @@ function validate_form(){
 		global $name; 		$name = $tiva." %";
 		global $vname; 		$vname = "`".$_SESSION['clave']."impuestos`";
 
-		$tabla = "<table align='center' style='margin-top:10px'>
-					<tr>
-						<td colspan=4 class='BorderInf' style='text-align:center;'>
-							<a href='Impuestos_Ver.php' class='botonverde' style='color:#343434;'>INICIO IMPUESTOS</a>
-						</td>
-					</tr>
+		$tabla = "<table class='tableForm' >
 					<tr>
 						<th colspan=4 >MODIFICADO EN ".strtoupper($vname)."</th>
 					</tr>
@@ -122,8 +119,10 @@ function validate_form(){
 						<td>NAME</td><td>".$name."</td>
 					</tr>
 					<tr>
-						<td colspan=4 class='BorderSup' style='text-align:center;'>
-							<a href='Impuestos_Ver.php' class='botonverde' style='color:#343434;'>INICIO IMPUESTOS</a>
+						<td colspan=4 style='text-align:right;'>
+							".$InicioBlack."
+								<a href='Impuestos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+							".$closeButton."
 						</td>
 					</tr>
 				</table>";	
@@ -139,8 +138,17 @@ function validate_form(){
 			show_form ();
 			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 					}
-					
-	}	
+		
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='Impuestos_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
+
+	} // FIN function process_form()
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -148,6 +156,11 @@ function validate_form(){
 
 	function show_form($errors=[]){
 	
+		global $InicioBlackTit;		$InicioBlackTit = "INICIO IMPUESTOS";
+		global $SaveBlackTit;		$SaveBlackTit = "MODIFICAR % IMPUESTO";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		global $db; 		global $db_name;
 	
 		if(isset($_POST['oculto2'])){$_SESSION['idx'] = $_POST['id'];
@@ -169,32 +182,12 @@ function validate_form(){
 										}
 
 		if ($errors){
-			print("<table style='border:none, margin: 0.4em auto 0.4em auto;'>
-					<tr>
-						<th style='text-align:left'>
-							<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-						</th>
-					</tr>
-					<tr>
-						<td style='text-align:left'>");
-				
-		for($a=0; $c=count($errors), $a<$c; $a++){
-			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
-			}
-		print("</td>
-				</tr>
-				</table>
-			<div style='clear:both'></div>");
+			require 'tablaErrors.php';
 		}
 
 ////////////////////
 
-	print("<table align='center' style=\"margin-top:10px\">
-				<tr>
-					<td colspan=2 class='BorderInf' style='text-align:center;'>
-						<a href='Impuestos_Ver.php' class='botonverde' style='color:#343434;'>INICIO IMPUESTOS</a>
-					</td>
-				</tr>
+	print("<table class='tableForm' >
 				<tr>
 					<th colspan=2 >MODIFICAR % IMPUESTOS</th>
 				</tr>
@@ -206,15 +199,13 @@ function validate_form(){
 					</td>
 				</tr>
 				<tr>
-					<th colspan='2' valign='middle' >
-						<input type='submit' class='botonazul' value='MODIFICAR % IMPUESTOS' />
+					<td colspan='2' style='text-align:right;' >
+							".$SaveBlack."".$closeButton."
 						<input type='hidden' name='oculto' value=1 />
 			</form>														
-					</td>
-				</tr>
-				<tr>
-					<td colspan=2 class='BorderSup' style='text-align:center;'>
-						<a href='Impuestos_Ver.php' class='botonverde' style='color:#343434;'>INICIO IMPUESTOS</a>
+							".$InicioBlack."
+								<a href='Impuestos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+							".$closeButton."
 					</td>
 				</tr>
 			</table>"); 

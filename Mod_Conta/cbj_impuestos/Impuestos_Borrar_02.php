@@ -31,6 +31,10 @@ session_start();
 
 function process_form(){
 	
+	global $InicioBlackTit;		$InicioBlackTit = "INICIO IMPUESTOS";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	global $db; 		global $db_name;	
 	global $dyt1; 		global $dm1;
 	
@@ -41,12 +45,7 @@ function process_form(){
 
 	global $vname; 		$vname = "`".$_SESSION['clave']."impuestos`";
 
-	$tabla = "<table align='center' style='margin-top:10px'>
-				<tr>
-					<td colspan=4 class='BorderInf' style='text-align:center;'>
-						<a href='Impuestos_Ver.php' class='botonverde' style='color:#343434;'>INICIO IMPUESTOS</a>
-					</td>
-				</tr>
+	$tabla = "<table class='tableForm' >
 				<tr>
 					<th colspan=4 >BORRADO EN ".strtoupper($vname)."</th>
 				</tr>
@@ -55,8 +54,10 @@ function process_form(){
 					<td>NAME</td><td>".$name."</td>
 				</tr>
 				<tr>
-					<td colspan=4 class='BorderSup' style='text-align:center;'>
-						<a href='Impuestos_Ver.php' class='botonverde' style='color:#343434;'>INICIO IMPUESTOS</a>
+					<td colspan=4 style='text-align:right;'>
+						".$InicioBlack."
+							<a href='Impuestos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton."
 					</td>
 				</tr>
 			</table>";	
@@ -72,8 +73,17 @@ function process_form(){
 					show_form ();
 					global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 						}
-					
-	}	
+
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='Impuestos_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
+			
+	} // FIN function process_fomr()
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -81,6 +91,12 @@ function process_form(){
 
 function show_form($errors=[]){
 	
+
+	global $InicioBlackTit;		$InicioBlackTit = "INICIO IMPUESTOS";
+	global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	global $db; 	global $db_name;
 	
 	if(isset($_POST['oculto2'])){
@@ -103,12 +119,7 @@ function show_form($errors=[]){
 								
 ////////////////////
 
-	print("<table align='center' style=\"margin-top:10px\">
-				<tr>
-					<td colspan=2 class='BorderInf' style='text-align:center;'>
-						<a href='Impuestos_Ver.php' class='botonverde' style='color:#343434;'>INICIO IMPUESTOS</a>
-					</td>
-				</tr>
+	print("<table class='tableForm' >
 				<tr>
 					<th colspan=2 >BORRAR % IMPUESTO</th>
 				</tr>
@@ -121,20 +132,18 @@ function show_form($errors=[]){
 					</td>
 				</tr>
 				<tr>
-					<th colspan='2' valign='middle' >
-						<input type='submit' class='botonrojo' value='BORRAR % IMPUESTO' />
-						<input type='hidden' name='oculto' value=1 />
-			</form>														
-					</td>
-				</tr>
-				<tr>
-					<td colspan=2 class='BorderSup' style='text-align:center;'>
-						<a href='Impuestos_Ver.php' class='botonverde' style='color:#343434;'>INICIO IMPUESTOS</a>
+					<td colspan='2' style='text-align:right;' >
+						".$DeleteWhite.$closeButton."
+							<input type='hidden' name='oculto' value=1 />
+			</form>	
+						".$InicioBlack."
+							<a href='Impuestos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton."
 					</td>
 				</tr>
 			</table>"); 
 	
-	}	
+	} // FIN function show_form()
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -142,9 +151,9 @@ function show_form($errors=[]){
 
 	function info_01(){
 
-		global $db;
+		global $db;			global $name;
 		
-		global $tiva; 		global $name;
+		global $tiva;
 
 		$ActionTime = date('H:i:s');
 

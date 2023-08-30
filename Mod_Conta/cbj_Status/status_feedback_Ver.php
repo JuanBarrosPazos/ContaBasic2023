@@ -25,6 +25,12 @@ session_start();
 
 	function ver_todo(){
 		
+		global $RestoreBlackTit;	$RestoreBlackTit = "RECUPERAR FEEDBACK EJERCICIO";
+		global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR STATUS EJERCICIO";
+		global $InicioBlackTit;		$InicioBlackTit = "INICIO STATUS EJERCICIOS";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		global $db; 		global $db_name;
 		
 		global $vname; 		$vname = "`".$_SESSION['clave']."statusfeedback`";
@@ -37,9 +43,10 @@ session_start();
 		} else {
 			if(mysqli_num_rows($qb) == 0){
 
+				global $titNoData;	$titNoData = "TABLA ".strtoupper($vname)."<br><br>";
 				require 'status_NoData.php';
 
-			}else{ print ("<table align='center'>
+			}else{ print ("<table class='tableForm' >
 							<tr>
 								<th colspan=8 class='BorderInf'>
 							RECUPERAR FEEDBACK EJERCCIOS ".mysqli_num_rows($qb)." RESULTADOS
@@ -53,7 +60,9 @@ session_start();
 								<th class='BorderInfDch'>HIDDEN</th>
 								<th class='BorderInfDch'>DATE</th>
 								<th colspan=2 class='BorderInf'>
-				<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
+									".$InicioBlack."
+										<a href='status_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+									".$closeButton."
 								</th>
 							</tr>");
 			
@@ -80,7 +89,7 @@ session_start();
 					<input name='date' type='hidden' value='".$rowb['date']."' />".$rowb['date']."
 						</td>
 						<td class='BorderInf' align='right'>
-					<input type='submit' value='RECUPERAR FEEDBACK EJERCICIO' class='botonverde' />
+							".$RestoreBlack.$closeButton."
 					<input type='hidden' name='oculto2' value=1 />
 				</form>
 						</td>
@@ -94,8 +103,8 @@ session_start();
 					<!--
 					<input type='submit' value='BORRAR FEEDBACK EJERCICIO' />
 					-->
-				<button type='submit' title='BORRAR' class='botonrojo imgButIco DeleteWhite'></button>
-						<input type='hidden' name='oculto2' value=1 />
+						".$DeleteWhite.$closeButton."
+							<input type='hidden' name='oculto2' value=1 />
 				</form>
 						</td>
 					</tr>");

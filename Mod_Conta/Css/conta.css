@@ -390,6 +390,20 @@ a:hover  img {
 
 /* ICONOS APP */
 
+.AddBlack{
+	background-image: url(../cbj_Images/add_black.png);
+}
+.AddGrey{
+	background-image: url(../cbj_Images/add_grey.png);
+}
+.AddWhite{
+	background-image: url(../cbj_Images/add_white.png);
+}
+.AddBlack:hover, .AddGrey:hover, .AddWhite:hover{
+	background-image: url(../cbj_Images/add_grey.png);
+}
+
+
 .BuscaBlack{
 	background-image: url(../cbj_Images/busca_black.png);
 }
@@ -402,6 +416,7 @@ a:hover  img {
 .BuscaBlack:hover, .BuscaGrey:hover, .BuscaWhite:hover{
 	background-image: url(../cbj_Images/busca_black.png);
 }
+
 
 .CancelBlack{
 	background-image: url(../cbj_Images/cancel_black.png);
@@ -416,6 +431,21 @@ a:hover  img {
 	background-image: url(../cbj_Images/cancel_grey.png);
 }
 
+
+.CachedBlack{
+	background-image: url(../cbj_Images/cached_black.png);
+}
+.CachedGrey{
+	background-image: url(../cbj_Images/cached_grey.png);
+}
+.CachedWhite{
+	background-image: url(../cbj_Images/cached_white.png);
+}
+.CachedBlack:hover, .CachedGrey:hover, .CachedWhite:hover{
+	background-image: url(../cbj_Images/cached_grey.png);
+}
+
+
 .DatosBlack{
 	background-image: url(../cbj_Images/datos_black.png);
 }
@@ -428,6 +458,7 @@ a:hover  img {
 .DatosBlack:hover, .DatosGrey:hover, .DatosWhite:hover{
 	background-image: url(../cbj_Images/datos_grey.png);
 }
+
 
 .DeleteBlack{
 	background-image: url(../cbj_Images/delete_black.png);
@@ -442,6 +473,7 @@ a:hover  img {
 	background-image: url(../cbj_Images/delete_grey.png);
 }
 
+
 .DetalleBlack{
 	background-image: url(../cbj_Images/detalle_black_.png);
 }
@@ -454,6 +486,7 @@ a:hover  img {
 .DetalleBlack:hover, .DetalleGrey:hover, .DetalleWhite:hover{
 	background-image: url(../cbj_Images/detalle_grey.png);
 }
+
 
 .FotoBlack{
 	background-image: url(../cbj_Images/foto_black.png);
@@ -468,6 +501,7 @@ a:hover  img {
 	background-image: url(../cbj_Images/foto_grey.png);
 }
 
+
 .InicioBlack{
 	background-image: url(../cbj_Images/inicio_black.png);
 }
@@ -480,6 +514,7 @@ a:hover  img {
 .InicioBlack:hover, .InicioGrey:hover, .InicioWhite:hover{
 	background-image: url(../cbj_Images/inicio_grey.png);
 }
+
 
 .PersonAddBlack{
 	background-image: url(../cbj_Images/person_add_black.png);
@@ -494,6 +529,7 @@ a:hover  img {
 	background-image: url(../cbj_Images/person_add_grey.png);
 }
 
+
 .PersonsBlack{
 	background-image: url(../cbj_Images/people_black.png);
 }
@@ -506,6 +542,7 @@ a:hover  img {
 .PersonsBlack:hover, .PersonsGrey:hover, .PersonsWhite:hover{
 	background-image: url(../cbj_Images/people_grey.png);
 }
+
 
 .RestoreBlack{
 	background-image: url(../cbj_Images/restore_black.png);
@@ -520,6 +557,7 @@ a:hover  img {
 	background-image: url(../cbj_Images/restore_grey.png);
 }
 
+
 .SaveBlack{
 	background-image: url(../cbj_Images/save_black.png);
 }
@@ -532,7 +570,6 @@ a:hover  img {
 .SaveBlack:hover, .SaveGrey:hover, .SaveWhite:hover{
 	background-image: url(../cbj_Images/save_grey.png);
 }
-
 
 .imgButIco{
 	width: 2.1em !important;

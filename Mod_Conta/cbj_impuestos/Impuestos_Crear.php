@@ -96,6 +96,11 @@ session_start();
 
 function process_form(){
 	
+	global $InicioBlackTit;		$InicioBlackTit = "INICIO IMPUESTOS";
+	global $AddBlackTit;		$AddBlackTit = "CREAR NUEVO TIPO IMPUESTO";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	global $db; 		global $db_name;	
 	global $dyt1; 		global $dm1;
 	
@@ -107,12 +112,7 @@ function process_form(){
 	global $name; 		$name = $tiva." %";
 	global $vname; 		$vname = "`".$_SESSION['clave']."impuestos`";
 
-	$tabla = "<table align='center' style='margin-top:10px'>
-				<tr>
-					<td colspan=4 class='BorderInf' style='text-align:center;'>
-						<a href='Impuestos_Crear.php' class='botonverde' style='color:#343434;'>CREAR NUEVO IMPUESTO</a>
-					</td>
-				</tr>
+	$tabla = "<table class='tableForm' >
 				<tr>
 					<th colspan=4 >GRABADO EN ".strtoupper($vname)."</th>
 				</tr>
@@ -121,16 +121,16 @@ function process_form(){
 					<td>NAME</td><td>".$name."</td>
 				</tr>
 				<tr>
-					<td colspan=4 class='BorderSup' style='text-align:center;'>
-						<a href='Impuestos_Ver.php' class='botonazul' style='color:#343434;'>INICIO IMPUESTOS</a>
+					<td colspan=4 style='text-align:right;'>
+								".$AddBlack."
+									<a href='Impuestos_Crear.php' >&nbsp;&nbsp;&nbsp;&nbsp</a>
+								".$closeButton.$InicioBlack."
+									<a href='Impuestos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+								".$closeButton."
 					</td>
 				</tr>
 			</table>";	
 		
-		/////////////
-
-		global $db;		global $db_name;
-
 		$sqla = "INSERT INTO `$db_name`.$vname (`iva`, `name`) VALUES ('$tiva', '$name')";
 		
 		if(mysqli_query($db, $sqla)){ print($tabla); 
@@ -139,7 +139,16 @@ function process_form(){
 			show_form ();
 			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 				}
-					
+			
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='Impuestos_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
+
 	} // FIN function process_form()	
 
 				   ////////////////////				   ////////////////////
@@ -148,6 +157,11 @@ function process_form(){
 
 	function show_form($errors=[]){
 	
+		global $InicioBlackTit;		$InicioBlackTit = "INICIO IMPUESTOS";
+		global $SaveBlackTit;		$SaveBlackTit = "GRABAR % IMPUESTOS";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		global $db; 		global $db_name;
 		
 		if(isset($_POST['oculto'])){
@@ -157,29 +171,14 @@ function process_form(){
 					}
 
 		if ($errors){
-			print("<table  style='text-align:center; margin: 0.4em auto 0.4em auto;border:none;'>
-							<tr>
-								<th style='text-align:left'>
-									<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-								</th>
-							</tr>
-							<tr>
-							<td style='text-align:left'>");
-				
-		for($a=0; $c=count($errors), $a<$c; $a++){
-			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
-			}
-		print("</td>
-				</tr>
-				</table>
-				<div style='clear:both'></div>");
+				require 'tablaErrors.php';
 		}
 		
 	////////////////////
 
-	print("<table align='center' style=\"margin-top:10px\">
+	print("<table class='tableForm' >
 				<tr>
-					<th colspan=2 class='BorderInf'>CREAR % IMPUESTOS</th>
+					<th colspan=2 >CREAR % IMPUESTOS</th>
 				</tr>
 		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
 				<tr>
@@ -190,17 +189,15 @@ function process_form(){
 					</td>
 				</tr>
 				<tr>
-					<th colspan='2' align='right' valign='middle'  class='BorderInf'>
-						<input type='submit' class='botonverde' value='GRABAR % IMPUESTOS' />
-						<input type='hidden' name='oculto' value=1 />
-					</th>
-				</tr>
-				<tr>
-					<td colspan=2 class='BorderInf' style='text-align:center;'>
-				<a href='Impuestos_Ver.php' class='botonazul' style='color:#343434;'>INICIO IMPUESTOS</a>
+					<td colspan='2' style='text-align:right;' >
+						".$SaveBlack."".$closeButton."
+							<input type='hidden' name='oculto' value=1 />
+			</form>														
+							".$InicioBlack."
+								<a href='Impuestos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+							".$closeButton."
 					</td>
 				</tr>
-		</form>														
 			</table>"); 
 	
 	}  // FIN function show_form($errors=[])

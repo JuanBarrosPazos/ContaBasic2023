@@ -29,44 +29,47 @@ session_start();
 
 	function process_form(){
 	
+		global $DeleteGreyTit;		$DeleteGreyTit = "PAPELERA STATUS EJERCICIOS";
+		global $InicioBlackTit;		$InicioBlackTit = "INICIO STATUS EJERCICIOS";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		global $db; 		global $db_name;	
-		global $date;
 			
 		global $vname; 		$vname = "`".$_SESSION['clave']."status`";
 
+		global $date;		$date = $_POST['date'];
 		global $id; 		$id = $_POST['id'];
-			
 		global $year; 		$year = $_POST['year'];
 		$ycod = substr(trim($_POST['year']),-2,2);
 		global $stat; 		$stat = $_POST['stat'];
 		global $hidden; 	$hidden = $_POST['hidden'];
 		
-		$tabla = "<table align='center' style='margin-top:10px'>
+		$tabla = "<table class='tableForm' >
 					<tr>
-						<th colspan=5 class='BorderInf'>
-							BORRADO EN ".strtoupper($vname)."
-						</th>
+						<th colspan=5 >RECUPERADO Y BORRADO EN ".strtoupper($vname)."</th>
 					</tr>
 					<tr align='center'>
-						<td class='BorderInfDch'>YEAR</td>
-						<td class='BorderInfDch'>CODE</td>
-						<td class='BorderInfDch'>STATUS</td>
-						<td class='BorderInfDch'>HIDDEN</td>
+						<td class='BorderInf'>YEAR</td>
+						<td class='BorderInf'>CODE</td>
+						<td class='BorderInf'>STATUS</td>
+						<td class='BorderInf'>HIDDEN</td>
 						<td class='BorderInf'>DATE</td>
 					</tr>
 					<tr align='center'>
-						<td  class='BorderInfDch'>".$year."</td>
-						<td  class='BorderInfDch'>".$ycod."</td>
-						<td  class='BorderInfDch'>".$stat."</td>
-						<td  class='BorderInfDch'>".$hidden."</td>
-						<td  class='BorderInf'>".$date."</td>
+						<td>".$year."</td>
+						<td>".$ycod."</td>
+						<td>".$stat."</td>
+						<td>".$hidden."</td>
+						<td>".$date."</td>
 					</tr>
 					<tr>
-						<td colspan='5' style='text-align:center;' >
-				<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
-				<button type='submit' title='PAPELERA EJERCICIO' class='botonverde imgButIco DeleteGrey'>
-					<a href='status_feedback_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-				</button>
+						<td colspan='5' style='text-align:right;' >
+							".$InicioBlack."
+								<a href='status_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+							".$closeButton.$DeleteGrey."
+								<a href='status_feedback_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+							".$closeButton."
 						</td>
 					</tr>
 				</table>";	
@@ -86,7 +89,16 @@ session_start();
 				show_form ();
 				global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 			}
-					
+
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='status_feedback_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
+		
 	} // FIN function process_form()
 
 				   ////////////////////				   ////////////////////
@@ -107,29 +119,28 @@ session_start();
 		} else {
 			if(mysqli_num_rows($qb) == 0){
 
+				global $titNoData;	$titNoData = "TABLA ".strtoupper($vname)."<br><br>";
 				require 'status_NoData.php';
 
-			}else{ print ("<table align='center'>
+			}else{ print ("<table class='tableForm' >
 							<tr>
-								<th colspan=6 class='BorderInf'>
-							EJERCICIOS STATUS ".mysqli_num_rows($qb).".
-								</th>
+								<th colspan=6 >EJERCICIOS STATUS ".mysqli_num_rows($qb)."</th>
 							</tr>
 							<tr align='center'>
-								<th class='BorderInfDch'>ID</th>
-								<th class='BorderInfDch'>YEAR</th>
-								<th class='BorderInfDch'>ICOD</th>
-								<th class='BorderInfDch'>STATE</th>
+								<th class='BorderInf'>ID</th>
+								<th class='BorderInf'>YEAR</th>
+								<th class='BorderInf'>ICOD</th>
+								<th class='BorderInf'>STATE</th>
 								<th class='BorderInf'>HIDDEN</th>
 							</tr>");
 			
 			while($rowb = mysqli_fetch_assoc($qb)){
 
 			print (	"<tr align='center'>
-						<td class='BorderInfDch' align='center'>".$rowb['id']."</td>
-						<td class='BorderInfDch' align='center'>".$rowb['year']."</td>
-						<td class='BorderInfDch' align='center'>".$rowb['ycod']."</td>
-						<td class='BorderInfDch' align='center'>".$rowb['stat']."</td>
+						<td class='BorderInf' align='center'>".$rowb['id']."</td>
+						<td class='BorderInf' align='center'>".$rowb['year']."</td>
+						<td class='BorderInf' align='center'>".$rowb['ycod']."</td>
+						<td class='BorderInf' align='center'>".$rowb['stat']."</td>
 						<td class='BorderInf' align='center'>".$rowb['hidden']."</td>
 					</tr>");
 				} /* Fin del while.*/ 
@@ -148,6 +159,12 @@ session_start();
 
 	function show_form(){
 	
+		global $RestoreBlackTit;	$RestoreBlackTit = "RECUPERAR FEEDBACK EJERCICIO";
+		global $DeleteGreyTit;		$DeleteGreyTit = "PAPELERA STATUS EJERCICIOS";
+		global $InicioBlackTit;		$InicioBlackTit = "INICIO STATUS EJERCICIOS";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		global $db; 		global $db_name;
 		
 		if(isset($_POST['oculto2'])){	
@@ -167,19 +184,17 @@ session_start();
 									'date' => $_POST['date']);
 								}
 
-		print("<table align='center' style=\"margin-top:10px\">
+		print("<table class='tableForm' >
 					<tr>
-						<th colspan=5 class='BorderInf'>
-								RECUPERAR STATUS EJERCICIO					
-						</th>
+						<th colspan=5 >RECUPERAR STATUS EJERCICIO</th>
 					</tr>
 		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
 				<tr>
-					<td align='center'>YEAR</td>
-					<td align='center'>CODE</td>
-					<td align='center'>STATUS</td>
-					<td align='center'>HIDDEN</td>
-					<td align='center'>DATE</td>
+					<td class='BorderInf' align='center'>YEAR</td>
+					<td class='BorderInf' align='center'>CODE</td>
+					<td class='BorderInf' align='center'>STATUS</td>
+					<td class='BorderInf' align='center'>HIDDEN</td>
+					<td class='BorderInf'align='center'>DATE</td>
 				</tr>
 				<tr>
 					<td>
@@ -200,18 +215,15 @@ session_start();
 						</td>
 					</tr>
 					<tr>
-						<td colspan='5' align='center' valign='middle' >
-				<input type='submit' value='RECUPERAR FEEDBACK EJERCICIO' class='botonnaranja' />
-				<input type='hidden' name='oculto' value=1 />
+						<td colspan='5' style='text-align:right;' >
+							".$RestoreBlack.$closeButton."
+								<input type='hidden' name='oculto' value=1 />
 			</form>														
-						</td>
-					</tr>
-					<tr>
-						<td colspan='5' style='text-align:center;' >
-				<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
-				<button type='submit' title='PAPELERA EJERCICIO' class='botonverde imgButIco DeleteGrey'>
-					<a href='status_feedback_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-				</button>
+							".$InicioBlack."
+								<a href='status_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+							".$closeButton.$DeleteGrey."
+								<a href='status_feedback_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+							".$closeButton."
 						</td>
 					</tr>
 				</table>"); 

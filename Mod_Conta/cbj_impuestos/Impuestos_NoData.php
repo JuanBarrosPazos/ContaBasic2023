@@ -1,19 +1,26 @@
 <?php
 
-print ("<table align='center'>
-            <tr>
-                <th><font color='#FF0000'>NO HAY DATOS</font></th>
-            </tr>
-            <tr>
-                <th class='BorderInfDch'>
-                    <a href='Impuestos_Crear.php' class='botonverde' style='color:#343434 !important;'>
-                        CREAR NUEVO IMPUESTO
-                    </a>
-                    <a href='Impuestos_Ver.php' class='botonverde' style='color:#343434 !important;'>
-                        VER IMPUESTOS
-                    </a>
-                </th>
-            </tr>
-        </table>");
+    global $AddBlackTit;		$AddBlackTit = "CREAR NUEVO TIPO IMPUESTO";
+    require '../Inclu/BotoneraVar.php';
+    global $closeButton;
+
+    global $titNoData;
+
+    print ("<table align='center'>
+                <tr>
+                    <th>
+                    ".$titNoData."
+                    <font color='#FF0000'>NO HAY DATOS</font>
+                    
+                    </th>
+                </tr>
+                <tr>
+                    <th class='BorderInfDch'>
+								".$AddBlack."
+									<a href='Impuestos_Crear.php' >&nbsp;&nbsp;&nbsp;&nbsp</a>
+								".$closeButton."
+                    </th>
+                </tr>
+            </table>");
 
 ?>

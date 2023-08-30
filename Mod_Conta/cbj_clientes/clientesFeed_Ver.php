@@ -77,6 +77,7 @@ session_start();
 				
 			if(mysqli_num_rows($qc)== 0){
 
+				global $titNoData;	$titNoData = "TABLA ".strtoupper($vname)."<br><br>";
 				require 'clientes_NoData.php';
 
 			} else { 	
@@ -212,7 +213,8 @@ session_start();
 		} else {
 			if(mysqli_num_rows($qb)<= 0){
 
-						require 'clientes_NoData.php';
+				global $titNoData;	$titNoData = "TABLA ".strtoupper($vname)."<br><br>";
+				require 'clientes_NoData.php';
 										
 			} else { print ("<table class='tableForm' >
 							<tr>

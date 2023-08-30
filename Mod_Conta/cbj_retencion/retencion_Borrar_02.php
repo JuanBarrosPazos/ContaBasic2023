@@ -31,32 +31,33 @@ session_start();
 
 function process_form(){
 	
+	global $InicioBlackTit;		$InicioBlackTit = "INICIO RETENCIONES";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	global $db; 		global $db_name;	
 	global $dyt1; 		global $dm1;
 	
-	$iva1 = $_POST['iva1'];
-	$iva2 = $_POST['iva2'];
-	global $tiva; 		$tiva = $iva1.".".$iva2; 		$tiva = trim($tiva);
-	global $name; 		$name = $tiva." %";
+	$ret1 = $_POST['ret1'];
+	$ret2 = $_POST['ret2'];
+	global $tret; 		$tret = $ret1.".".$ret2; 		$tret = trim($tret);
+	global $name; 		$name = $tret." %";
 
 	global $vname; 		$vname = "`".$_SESSION['clave']."retencion`";
 
-	$tabla = "<table align='center' style='margin-top:10px'>
-				<tr>
-					<td colspan=4 style='text-align:center;'>
-			<a href='retencion_Ver.php' class='botonverde' style='color:#343434;'>INICIO RETENCION</a>
-					</td>
-				</tr>
+	$tabla = "<table class='tableForm' >
 				<tr>
 					<th colspan=4 >BORRADO EN ".strtoupper($vname)."</th>
 				</tr>
 				<tr>
-					<td>RETENCION %</td><td>".$tiva."</td>
+					<td>RETENCION %</td><td>".$tret."</td>
 					<td>NAME</td><td>".$name."</td>
 				</tr>
 				<tr>
-					<td colspan=4 style='text-align:center;'>
-			<a href='retencion_Ver.php' class='botonverde' style='color:#343434;'>INICIO RETENCION</a>
+					<td colspan=4 style='text-align:right;'>
+						".$InicioBlack."
+							<a href='retencion_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton."
 					</td>
 				</tr>
 			</table>";	
@@ -72,8 +73,17 @@ function process_form(){
 					show_form ();
 					global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 						}
-					
-	}	
+
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='retencion_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
+			
+	} // FIN function process_fomr()
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -81,6 +91,12 @@ function process_form(){
 
 function show_form($errors=[]){
 	
+
+	global $InicioBlackTit;		$InicioBlackTit = "INICIO RETENCIONES";
+	global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	global $db; 	global $db_name;
 	
 	if(isset($_POST['oculto2'])){
@@ -88,27 +104,22 @@ function show_form($errors=[]){
 	
 		$ret = strlen(trim($_POST['ret']));
 		$ret = $ret - 3;
-		$ivax = $_POST['ret'];
-		$iva1 = substr($_POST['ret'],0,$ret);
-		$iva2 = substr($_POST['ret'],-2,2);
+		$retx = $_POST['ret'];
+		$ret1 = substr($_POST['ret'],0,$ret);
+		$ret2 = substr($_POST['ret'],-2,2);
 
-		$defaults = array (	'iva1' => $iva1,	
-							'iva2' => $iva2);
+		$defaults = array (	'ret1' => $ret1,	
+							'ret2' => $ret2);
 						}
 	elseif(isset($_POST['oculto'])){
 		$defaults = $_POST;
-	} else { $defaults = array ( 'iva1' => $_POST['iva1'],	
-								 'iva2' => $_POST['iva2']);
+	} else { $defaults = array ( 'ret1' => $_POST['ret1'],	
+								 'ret2' => $_POST['ret2']);
 						}
 								
 ////////////////////
 
-	print("<table align='center' style=\"margin-top:10px\">
-				<tr>
-					<td colspan=2 style='text-align:center;'>
-			<a href='retencion_Ver.php' class='botonverde' style='color:#343434;'>INICIO RETENCION</a>
-					</td>
-				</tr>
+	print("<table class='tableForm' >
 				<tr>
 					<th colspan=2 >BORRAR % RETENCION</th>
 				</tr>
@@ -116,25 +127,23 @@ function show_form($errors=[]){
 				<tr>
 					<td>RETENCION % TIPO</td>
 					<td>
-					".$defaults['iva1']."
-	<input style='text-align:right' type='hidden' name='iva1' size=4 maxlength=2 value='".$defaults['iva1']."' />,".$defaults['iva2']."<input  type='hidden' name='iva2' size=4 maxlength=2 value='".$defaults['iva2']."' />%
+					".$defaults['ret1']."
+	<input style='text-align:right' type='hidden' name='ret1' size=4 maxlength=2 value='".$defaults['ret1']."' />,".$defaults['ret2']."<input  type='hidden' name='ret2' size=4 maxlength=2 value='".$defaults['ret2']."' />%
 					</td>
 				</tr>
 				<tr>
-					<th colspan='2' valign='middle' >
-						<input type='submit' class='botonrojo' value='BORRAR % RETENCION' />
-						<input type='hidden' name='oculto' value=1 />
-			</form>														
-					</td>
-				</tr>
-				<tr>
-					<td colspan=2 style='text-align:center;'>
-			<a href='retencion_Ver.php' class='botonverde' style='color:#343434;'>INICIO RETENCION</a>
+					<td colspan='2' style='text-align:right;' >
+						".$DeleteWhite.$closeButton."
+							<input type='hidden' name='oculto' value=1 />
+			</form>	
+						".$InicioBlack."
+							<a href='retencion_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton."
 					</td>
 				</tr>
 			</table>"); 
 	
-	}	
+	} // FIN function show_form()
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -142,9 +151,9 @@ function show_form($errors=[]){
 
 	function info_01(){
 
-		global $db;
+		global $db;			global $name;
 		
-		global $tiva; 		global $name;
+		global $tret;
 
 		$ActionTime = date('H:i:s');
 
@@ -174,7 +183,7 @@ function show_form($errors=[]){
 
 		global $db;
 		
-		global $tiva; 		global $name;
+		global $tret; 		global $name;
 
 		$ActionTime = date('H:i:s');
 
@@ -184,7 +193,7 @@ function show_form($errors=[]){
 					}
 	
 		global $text;
-		$text = "\n- RETENCION BORRADO ".$ActionTime.".\n\t ID: ".$_SESSION['idx'].".\n\t % TIPO RETENCION: ".$tiva.".\n\t NOMBRE: ".$name.".";
+		$text = "\n- RETENCION BORRADO ".$ActionTime.".\n\t ID: ".$_SESSION['idx'].".\n\t % TIPO RETENCION: ".$tret.".\n\t NOMBRE: ".$name.".";
 
 		$logdocu = $_SESSION['ref'];
 		$logdate = date('Y-m-d');

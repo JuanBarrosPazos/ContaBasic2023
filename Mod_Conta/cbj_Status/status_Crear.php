@@ -109,6 +109,10 @@ function validate_form(){
 
 	function process_form(){
 	
+		global $InicioBlackTit;		$InicioBlackTit = "INICIO STATUS EJERCICIOS";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		global $db; 		global $db_name;	
 		global $vname; 		$vname = "`".$_SESSION['clave']."status`";
 
@@ -117,41 +121,52 @@ function validate_form(){
 		$stat = 'open';
 		$hidden = 'no';
 		
-		$tabla = "<table align='center' style='margin-top:10px'>
+		$tabla = "<table class='tableForm' >
 					<tr>
-						<th colspan=2 class='BorderInf'>
+						<th colspan=2 >
 							NUEVO EJERCICIO<br/>GRABADO EN ".strtoupper($vname)."
 						</th>
 					</tr>
-				<tr>
-					<td style='text-align:left;'>EJERCICIO</td><td>".$year."</td>
-				</tr>
-				<tr>
-					<td style='text-align:left;'>CODE</td><td>".$ycod."</td>
-				</tr>
-				<tr>
-					<td style='text-align:left;'>STATE</td><td>".$stat."</td>
-				</tr>
-				<tr>
-					<td style='text-align:left;'>HIDDEN</td><td>".$hidden."</td>
-				</tr>
-				<tr>
-					<td colspan='2' style='text-align:center;' >
-			<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
-					</td>
-				</tr>
+					<tr>
+						<td style='text-align:left;'>EJERCICIO</td><td>".$year."</td>
+					</tr>
+					<tr>
+						<td style='text-align:left;'>CODE</td><td>".$ycod."</td>
+					</tr>
+					<tr>
+						<td style='text-align:left;'>STATE</td><td>".$stat."</td>
+					</tr>
+					<tr>
+						<td style='text-align:left;'>HIDDEN</td><td>".$hidden."</td>
+					</tr>
+					<tr>
+						<td colspan='2' style='text-align:right;' >
+							".$InicioBlack."
+								<a href='status_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+							".$closeButton."
+						</td>
+					</tr>
 			</table>";	
 		
 		/////////////
 	
-	$sqla = "INSERT INTO `$db_name`.$vname (`year`, `ycod`, `stat`, `hidden`) VALUES ('$year', '$ycod', '$stat', '$hidden')";
-		
-	if(mysqli_query($db, $sqla)){ print($tabla); 
-								  crear_tablas();
-	} else { print("* MODIFIQUE LA ENTRADA 207: ".mysqli_error($db));
-			 show_form ();
-			 global $texerror; 		$texerror = "\n\t ".mysqli_error($db);
+		$sqla = "INSERT INTO `$db_name`.$vname (`year`, `ycod`, `stat`, `hidden`) VALUES ('$year', '$ycod', '$stat', '$hidden')";
+			
+		if(mysqli_query($db, $sqla)){ print($tabla); 
+									crear_tablas();
+		} else { print("* MODIFIQUE LA ENTRADA 207: ".mysqli_error($db));
+				show_form ();
+				global $texerror; 		$texerror = "\n\t ".mysqli_error($db);
 		}
+
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='status_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
 					
 	} // FIN function process_form()
 
@@ -299,35 +314,25 @@ function validate_form(){
 
 	function show_form($errors=[]){
 	
+		global $InicioBlackTit;		$InicioBlackTit = "INICIO STATUS EJERCICIOS";
+		global $SaveBlackTit;		$SaveBlackTit = "CREAR NUEVO EJERCICIO";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		if(isset($_POST['oculto'])){
 							$defaults = $_POST;
 		} else {$defaults = array (	'year' => @$_POST['year']);
 							}
 
 		if ($errors){
-			print("<table style='border:none; margin: 0.4em auto 0.4em auto;'>
-					<tr>
-						<th style='text-align:left'>
-							<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-						</th>
-					</tr>
-					<tr>
-						<td style='text-align:left'>");
-			
-		for($a=0; $c=count($errors), $a<$c; $a++){
-			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
-			}
-		print("</td>
-				</tr>
-				</table>
-				<div style='clear:both'></div>");
+			require 'tablaErrors.php';
 		}
 		
 ////////////////////
 
-		print("<table style='margin-top:10px;'>
+		print("<table class='tableForm' >
 				<tr>
-					<th colspan=2 class='BorderInf'>CREAR NUEVO AÑO / EJERCICIO</th>
+					<th colspan=2 >CREAR NUEVO AÑO / EJERCICIO</th>
 				</tr>
 			<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
 				<tr>
@@ -337,15 +342,13 @@ function validate_form(){
 					</td>
 				</tr>
 				<tr>
-					<td colspan='2' align='center' valign='middle' >
-						<input type='submit' value='CREAR NUEVO EJERCICIO' class='botonverde' />
-						<input type='hidden' name='oculto' value=1 />
+					<td colspan='2' style='text-align:right;' >
+						".$SaveBlack.$closeButton."
+							<input type='hidden' name='oculto' value=1 />
+						".$InicioBlack."
+							<a href='status_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton."
 			</form>														
-					</td>
-				</tr>
-				<tr>
-					<td colspan='2' align='center' >
-			<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
 					</td>
 				</tr>
 			</table>"); 

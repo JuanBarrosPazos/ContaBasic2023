@@ -4,6 +4,17 @@
 
 global $closeButton;    $closeButton = "</button>";
 
+global $AddBlack;     global $AddBlackTit;
+$AddBlack ="<button type='submit' title='".$AddBlackTit."' class='botonverde imgButIco AddBlack' style='vertical-align:top;' >";
+
+global $AddGrey;      global $AddGreyTit;
+$AddGrey ="<button type='submit' title='".$AddGreyTit."' class='botonverde imgButIco AddGrey' style='vertical-align:top;' >";
+
+global $AddWhite;     global $AddWhiteTit;
+$AddWhite ="<button type='submit' title='".$AddWhiteTit."' class='botonverde imgButIco AddWhite' style='vertical-align:top;' >";
+
+
+
 global $BuscaBlack;     global $BuscaBlackTit;
 $BuscaBlack ="<button type='submit' title='".$BuscaBlackTit."' class='botonlila imgButIco BuscaBlack' style='vertical-align:top;' >";
 
@@ -12,6 +23,17 @@ $BuscaGrey ="<button type='submit' title='".$BuscaGreyTit."' class='botonlila im
 
 global $BuscaWhite;     global $BuscaWhiteTit;
 $BuscaWhite ="<button type='submit' title='".$BuscaWhiteTit."' class='botonlila imgButIco BuscaWhite' style='vertical-align:top;' >";
+
+
+
+global $CachedBlack;     global $CachedBlackTit;
+$CachedBlack ="<button type='submit' title='".$CachedBlackTit."' class='botonnaranja imgButIco CachedBlack' style='vertical-align:top;' >";
+
+global $CachedGrey;      global $CachedGreyTit;
+$CachedGrey ="<button type='submit' title='".$CachedGreyTit."' class='botonnaranja imgButIco CachedGrey' style='vertical-align:top;' >";
+
+global $CachedWhite;     global $CachedWhiteTit;
+$CachedWhite ="<button type='submit' title='".$CachedWhiteTit."' class='botonnaranja imgButIco CachedWhite' style='vertical-align:top;' >";
 
 
 

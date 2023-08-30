@@ -39,30 +39,30 @@ function validate_form(){
 
 	$errors = array();
 	
-	/* VALIDAMOS EL CAMPO factivae */
+	/* VALIDAMOS EL CAMPO factrete */
 	
-		if(strlen(trim($_POST['iva1'])) == ''){
-			$errors [] = "RETENCION % <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
+		if(strlen(trim($_POST['ret1'])) == ''){
+			$errors [] = "RETENCIONES % <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
 			}
 		
-		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['iva1'])){
-			$errors [] = "RETENCION % <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
+		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['ret1'])){
+			$errors [] = "RETENCIONES % <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
 			}
 			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['iva1'])){
-			$errors [] = "RETENCION % <font color='#FF0000'>SOLO NUMEROS</font>";
+		elseif (!preg_match('/^[0-9]+$/',$_POST['ret1'])){
+			$errors [] = "RETENCIONES % <font color='#FF0000'>SOLO NUMEROS</font>";
 			}
 
-		elseif(strlen(trim($_POST['iva2'])) == ''){
-			$errors [] = "RETENCION % <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
+		elseif(strlen(trim($_POST['ret2'])) == ''){
+			$errors [] = "RETENCIONES % <font color='#FF0000'>CAMPO OBLIGATORIO</font>";
 			}
 		
-		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['iva2'])){
-			$errors [] = "RETENCION % <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
+		elseif (!preg_match('/^[^@´`\'áéíóú#$&%<>:´"·\(\)=¿?!¡\[\]\{\};,:\*\']+$/',$_POST['ret2'])){
+			$errors [] = "RETENCIONES % <font color='#FF0000'>CARACTERES NO VALIDOS.</font>";
 			}
 			
-		elseif (!preg_match('/^[0-9]+$/',$_POST['iva2'])){
-			$errors [] = "RETENCION % <font color='#FF0000'>SOLO NUMEROS</font>";
+		elseif (!preg_match('/^[0-9]+$/',$_POST['ret2'])){
+			$errors [] = "RETENCIONES % <font color='#FF0000'>SOLO NUMEROS</font>";
 			}
 
 	////////////////
@@ -71,7 +71,7 @@ function validate_form(){
 
 		global $db; 		global $db_name;
 		
-		$a = $_POST['iva1'].".".$_POST['iva2'];
+		$a = $_POST['ret1'].".".$_POST['ret2'];
 		$a = trim($a);
 																		
 		global $vname; 		$vname = "`".$_SESSION['clave']."retencion`";
@@ -82,12 +82,10 @@ function validate_form(){
 		$rowsx = mysqli_fetch_assoc($qx);
 			
 		global $exist;	
-		if($countx > 0){$errors [] = "<font color='#FF0000'>YA EXISTE ESTE % RETENCION</font>";
+		if($countx > 0){$errors [] = "<font color='#FF0000'>YA EXISTE ESTE % RETENCIONES</font>";
 							}
 		}
 
-		////////////////////
-		
 		return $errors;
 
 	} 
@@ -98,32 +96,33 @@ function validate_form(){
 
 	function process_form(){
 		
+		global $InicioBlackTit;		$InicioBlackTit = "INICIO RETENCIONES";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+	
 		global $db; 		global $db_name;	
 		global $dyt1; 		global $dm1;
 		
-		$iva1 = $_POST['iva1'];
-		$iva2 = $_POST['iva2'];
-		global $tiva; 		$tiva = $iva1.".".$iva2; 	$tiva = trim($tiva);
+		$ret1 = $_POST['ret1'];
+		$ret2 = $_POST['ret2'];
+		global $tret; 		$tret = $ret1.".".$ret2; 	$tret = trim($tret);
 
-		global $name; 		$name = $tiva." %";
+		global $name; 		$name = $tret." %";
 		global $vname; 		$vname = "`".$_SESSION['clave']."retencion`";
 
-		$tabla = "<table align='center' style='margin-top:10px'>
-					<tr>
-						<td colspan=4 style='text-align:center;'>
-				<a href='retencion_Ver.php' class='botonverde' style='color:#343434;'>INICIO RETENCION</a>
-						</td>
-					</tr>
+		$tabla = "<table class='tableForm' >
 					<tr>
 						<th colspan=4 >MODIFICADO EN ".strtoupper($vname)."</th>
 					</tr>
 					<tr>
-						<td>RETENCION %</td><td>".$tiva."</td>
+						<td>RETENCIONES %</td><td>".$tret."</td>
 						<td>NAME</td><td>".$name."</td>
 					</tr>
 					<tr>
-						<td colspan=4 style='text-align:center;'>
-				<a href='retencion_Ver.php' class='botonverde' style='color:#343434;'>INICIO RETENCION</a>
+						<td colspan=4 style='text-align:right;'>
+							".$InicioBlack."
+								<a href='retencion_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+							".$closeButton."
 						</td>
 					</tr>
 				</table>";	
@@ -131,7 +130,7 @@ function validate_form(){
 		global $db; 		global $db_name;
 		global $idx; 		$idx = $_SESSION['idx'];
 
-	$sqla = "UPDATE `$db_name`.$vname SET `ret` = '$tiva', `name` = '$name' WHERE `id` = '$idx'";
+	$sqla = "UPDATE `$db_name`.$vname SET `ret` = '$tret', `name` = '$name' WHERE `id` = '$idx'";
 		
 		if(mysqli_query($db, $sqla)){ print($tabla); 
 		} else {
@@ -139,8 +138,17 @@ function validate_form(){
 			show_form ();
 			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 					}
-					
-	}	
+		
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='retencion_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
+
+	} // FIN function process_form()
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -148,73 +156,56 @@ function validate_form(){
 
 	function show_form($errors=[]){
 	
+		global $InicioBlackTit;		$InicioBlackTit = "INICIO RETENCIONES";
+		global $SaveBlackTit;		$SaveBlackTit = "MODIFICAR % RETENCION";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		global $db; 		global $db_name;
 	
 		if(isset($_POST['oculto2'])){$_SESSION['idx'] = $_POST['id'];
 		
 			$ret = strlen(trim($_POST['ret']));
 			$ret = $ret - 3;
-			$ivax = $_POST['ret'];
-			$iva1 = substr($_POST['ret'],0,$ret);
-			$iva2 = substr($_POST['ret'],-2,2);
+			$retx = $_POST['ret'];
+			$ret1 = substr($_POST['ret'],0,$ret);
+			$ret2 = substr($_POST['ret'],-2,2);
 
-			$defaults = array (	'iva1' => $iva1,	
-								'iva2' => $iva2);
+			$defaults = array (	'ret1' => $ret1,	
+								'ret2' => $ret2);
 
 		} elseif(isset($_POST['oculto'])){
 			$defaults = $_POST;
 
-		} else { $defaults = array ( 'iva1' => $_POST['iva1'],	
-									'iva2' => $_POST['iva2']);
+		} else { $defaults = array ( 'ret1' => $_POST['ret1'],	
+									'ret2' => $_POST['ret2']);
 										}
 
 		if ($errors){
-			print("<table style='border:none, margin: 0.4em auto 0.4em auto;'>
-					<tr>
-						<th style='text-align:left'>
-							<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-						</th>
-					</tr>
-					<tr>
-						<td style='text-align:left'>");
-				
-		for($a=0; $c=count($errors), $a<$c; $a++){
-			print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
-			}
-		print("</td>
-				</tr>
-				</table>
-			<div style='clear:both'></div>");
+			require 'tablaErrors.php';
 		}
 
 ////////////////////
 
-	print("<table align='center' style=\"margin-top:10px\">
+	print("<table class='tableForm' >
 				<tr>
-					<td colspan=2 style='text-align:center;'>
-			<a href='retencion_Ver.php' class='botonverde' style='color:#343434;'>INICIO RETENCION</a>
-					</td>
-				</tr>
-				<tr>
-					<th colspan=2 >MODIFICAR % RETENCION</th>
+					<th colspan=2 >MODIFICAR % RETENCIONES</th>
 				</tr>
 		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
 				<tr>
-					<td>RETENCION % TIPO</td>
+					<td>RETENCIONES % TIPO</td>
 					<td>
-		<input style='text-align:right' type='text' name='iva1' size=4 maxlength=2 value='".$defaults['iva1']."' />,<input type='text' name='iva2' size=4 maxlength=2 value='".$defaults['iva2']."' />%
+		<input style='text-align:right' type='text' name='ret1' size=4 maxlength=2 value='".$defaults['ret1']."' />,<input type='text' name='ret2' size=4 maxlength=2 value='".$defaults['ret2']."' />%
 					</td>
 				</tr>
 				<tr>
-					<th colspan='2' valign='middle' >
-						<input type='submit' class='botonazul' value='MODIFICAR % RETENCION' />
+					<td colspan='2' style='text-align:right;' >
+							".$SaveBlack."".$closeButton."
 						<input type='hidden' name='oculto' value=1 />
 			</form>														
-					</td>
-				</tr>
-				<tr>
-					<td colspan=2 style='text-align:center;'>
-			<a href='retencion_Ver.php' class='botonverde' style='color:#343434;'>INICIO RETENCION</a>
+							".$InicioBlack."
+								<a href='retencion_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+							".$closeButton."
 					</td>
 				</tr>
 			</table>"); 
@@ -229,7 +220,7 @@ function validate_form(){
 
 		global $db;
 		
-		global $tiva; 		global $name;
+		global $tret; 		global $name;
 
 		$ActionTime = date('H:i:s');
 
@@ -259,7 +250,7 @@ function validate_form(){
 
 		global $db;
 		
-		global $tiva; 		global $name;
+		global $tret; 		global $name;
 
 		$ActionTime = date('H:i:s');
 
@@ -269,7 +260,7 @@ function validate_form(){
 					}
 	
 		global $text;
-		$text = "\n- RETENCION MODIFICADO ".$ActionTime.".\n\t ID: ".$_SESSION['idx'].".\n\t % TIPO RETENCION: ".$tiva.".\n\t NOMBRE: ".$name.".";
+		$text = "\n- RETENCION MODIFICADO ".$ActionTime.".\n\t ID: ".$_SESSION['idx'].".\n\t % TIPO RETENCION: ".$tret.".\n\t NOMBRE: ".$name.".";
 
 		$logdocu = $_SESSION['ref'];
 		$logdate = date('Y-m-d');

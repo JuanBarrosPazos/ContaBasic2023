@@ -23,27 +23,35 @@ session_start();
 				 ////////////////////				  ///////////////////
 
 	function ver_todo(){
-		
-	global $db; 		global $db_name;
+
+		global $AddBlackTit;		$AddBlackTit = "CREAR NUEVO EJERCICIO";
+		global $CachedBlackTit;		$CachedBlackTit = "MODIFICAR STATUS";
+		global $DeleteGreyTit;		$DeleteGreyTit = "PAPELERA STATUS EJERCICIOS";
+		global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR STATUS EJERCICIO";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
 	
-	global $vname; 		$vname = "`".$_SESSION['clave']."status`";
+		global $db; 		global $db_name;
+		
+		global $vname; 		$vname = "`".$_SESSION['clave']."status`";
 
-	$sqlb =  "SELECT * FROM $vname ORDER BY `year` DESC ";
-	$qb = mysqli_query($db, $sqlb);
+		$sqlb =  "SELECT * FROM $vname ORDER BY `year` DESC ";
+		$qb = mysqli_query($db, $sqlb);
 
-	if(!$qb){
-			print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
+		if(!$qb){
+				print("<font color='#FF0000'>ERROR L.37: </font></br>".mysqli_error($db)."</br>");
 			
 		} else {
 			if(mysqli_num_rows($qb) == 0){
 
+				global $titNoData;	$titNoData = "TABLA ".strtoupper($vname)."<br><br>";
 				require 'status_NoData.php';
 				
 			}else{
-		print ("<table align='center'>
+		print ("<table class='tableForm' >
 				<tr>
 					<th colspan=7 class='BorderInf'>
-						MODIFICAR EJERCCIOS STATUS ".mysqli_num_rows($qb)." RESULTADOS.
+						MODIFICAR EJERCICIOS STATUS ".mysqli_num_rows($qb)." RESULTADOS.
 					</th>
 				</tr>
 				<tr>
@@ -53,10 +61,12 @@ session_start();
 					<th class='BorderInfDch'>STATE</th>	
 					<th class='BorderInfDch'>HIDDEN</th>
 					<th colspan=2 class='BorderInf'>
-			<a href='status_Crear.php' title='CREAR NUEVO EJERCICIO' class='botonverde' style='color:#343434;' >CREAR NUEVO EJERCICIO</a>
-			<button type='submit' title='PAPELERA EJERCICIO' class='botonverde imgButIco DeleteGrey'>
-				<a href='status_feedback_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-			</button>
+						".$AddBlack."
+							<a href='status_Crear.php' >&nbsp;&nbsp;&nbsp;&nbsp</a>
+						".$closeButton."
+						".$DeleteGrey."
+							<a href='status_feedback_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton."
 					</th>
 				</tr>");
 			
@@ -80,8 +90,8 @@ session_start();
 				<input name='hidden' type='hidden' value='".$rowb['hidden']."' />".$rowb['hidden']."
 						</td>
 						<td align='center' class='BorderInf'>
-				<input type='submit' value='MODIFICAR STATUS' class='botonnaranja' />
-				<input type='hidden' name='oculto2' value=1 />
+							".$CachedBlack.$closeButton."
+								<input type='hidden' name='oculto2' value=1 />
 		</form>
 			</td>
 			<td class='BorderInf' >
@@ -94,8 +104,8 @@ session_start();
 				<!--
 				<input type='submit' value='BORRAR FEEDBACK EJERCICIO' />
 				-->
-				<button type='submit' title='BORRAR' class='botonrojo imgButIco DeleteWhite'></button>
-				<input type='hidden' name='oculto2' value=1 />
+				".$DeleteWhite.$closeButton."
+					<input type='hidden' name='oculto2' value=1 />
 		</form>
 			</td>
 		</tr>");

@@ -29,6 +29,10 @@ session_start();
 
 	function process_form(){
 	
+		global $InicioBlackTit;		$InicioBlackTit = "STATUS EJERCICIOS";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		global $db; 		global $db_name;	
 		
 		global $vname; 		$vname = "`".$_SESSION['clave']."status`";
@@ -39,31 +43,32 @@ session_start();
 		global $stat; 		$stat = $_POST['stat'];
 		global $hidden; 	$hidden = $_POST['hidden'];
 
-		$tabla = "<table align='center' style='margin-top:10px'>
+		$tabla = "<table class='tableForm' >
 					<tr>
 						<th colspan=4 class='BorderInf'>
 							MODIFICADO EN ".strtoupper($vname)."
 						</th>
 					</tr>
 					<tr align='center'>
-						<td class='BorderInfDch'>YEAR</td>
-						<td class='BorderInfDch'>CODE</td>
-						<td class='BorderInfDch'>STATUS</td>
+						<td class='BorderInf'>YEAR</td>
+						<td class='BorderInf'>CODE</td>
+						<td class='BorderInf'>STATUS</td>
 						<td class='BorderInf'>HIDDEN</td>
 					</tr>
 					<tr align='center'>
-						<td  class='BorderInfDch'>".$year."</td>
-						<td  class='BorderInfDch'>".$ycod."</td>
-						<td  class='BorderInfDch'>".$stat."</td>
+						<td  class='BorderInf'>".$year."</td>
+						<td  class='BorderInf'>".$ycod."</td>
+						<td  class='BorderInf'>".$stat."</td>
 						<td  class='BorderInf'>".$hidden."</td>
 					</tr>
 					<tr>
-					<td colspan='4' style='text-align:center;' >
-			<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
+					<td colspan='4' style='text-align:right;' >
+						".$InicioBlack."
+							<a href='status_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton."
 					</td>
 				</tr>
-
-				</table>";	
+			</table>";	
 			
 		$sqla = "UPDATE `$db_name`.$vname SET `year` = '$year', `ycod` = '$ycod', `stat` = '$stat', `hidden` = '$hidden' WHERE `year` = '$year'";
 			
@@ -73,6 +78,15 @@ session_start();
 					show_form ();
 					global $texerror;		$texerror = "\n\t ".mysqli_error($db);
 						}
+		
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='status_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
 					
 	} // FIN function process_form()
 
@@ -95,28 +109,29 @@ session_start();
 				
 			if(mysqli_num_rows($qb) == 0){
 
+				global $titNoData;	$titNoData = "TABLA ".strtoupper($vname)."<br><br>";
 				require 'status_NoData.php';
 
-			} else {print ("<table align='center'>
+			} else {print ("<table class='tableForm' >
 							<tr>
 								<th colspan=6 class='BorderInf'>
-									EJERCCIOS STATUS ".mysqli_num_rows($qb).".
+									EJERCCIOS STATUS ".mysqli_num_rows($qb)."
 								</th>
 							</tr>
 							<tr align='center'>
-								<th class='BorderInfDch'>ID</th>
-								<th class='BorderInfDch'>YEAR</th>	
-								<th class='BorderInfDch'>ICOD</th>		
-								<th class='BorderInfDch'>STATE</th>
+								<th class='BorderInf'>ID</th>
+								<th class='BorderInf'>YEAR</th>	
+								<th class='BorderInf'>ICOD</th>		
+								<th class='BorderInf'>STATE</th>
 								<th class='BorderInf'>HIDDEN</th>	
 							</tr>");
 			
 		while($rowb = mysqli_fetch_assoc($qb)){
 			print (	"<tr align='center'>
-						<td class='BorderInfDch' align='center'>".$rowb['id']."</td>
-						<td class='BorderInfDch' align='center'>".$rowb['year']."</td>
-						<td class='BorderInfDch' align='center'>".$rowb['ycod']."</td>
-						<td class='BorderInfDch' align='center'>".$rowb['stat']."</td>
+						<td class='BorderInf' align='center'>".$rowb['id']."</td>
+						<td class='BorderInf' align='center'>".$rowb['year']."</td>
+						<td class='BorderInf' align='center'>".$rowb['ycod']."</td>
+						<td class='BorderInf' align='center'>".$rowb['stat']."</td>
 						<td class='BorderInf' align='center'>".$rowb['hidden']."</td>
 					</tr>");
 			} /* Fin del while.*/ 
@@ -135,6 +150,11 @@ session_start();
 
 	function show_form(){
 		
+		global $InicioBlackTit;		$InicioBlackTit = "INICIO STATUS EJERCICIOS";
+		global $SaveBlackTit;		$SaveBlackTit = "MODIFICAR STATUS EJERCICIOS";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		global $db; 		global $db_name;
 		
 		if(isset($_POST['oculto2'])){	
@@ -160,9 +180,9 @@ session_start();
 
 	////////////////////
 
-		print("<table align='center' style=\"margin-top:10px\">
+		print("<table class='tableForm' >
 					<tr>
-						<th colspan=4 class='BorderInf'>MODIFICAR STATUS EJERCICIO</th>
+						<th colspan=4 >MODIFICAR STATUS EJERCICIO</th>
 					</tr>
 		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
 				<tr>
@@ -204,15 +224,13 @@ session_start();
 						</td>
 					</tr>
 					<tr>
-						<td colspan='4' align='center' valign='middle' >
-							<input type='submit' value='MODIFICAR STATUS EJERCICIO' class='botonnaranja' />
+						<td colspan='4' style='text-align:right;' >
+							".$SaveBlack.$closeButton."
 							<input type='hidden' name='oculto' value=1 />
 			</form>														
-						</td>
-					</tr>
-					<tr>
-						<td colspan='4' style='text-align:center;' >
-				<a href='status_Ver.php' class='botonverde' style='color:#343434;'>INICIO EJERCICOS STATUS</a>
+						".$InicioBlack."
+							<a href='status_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton."
 						</td>
 					</tr>
 				</table>"); 

@@ -26,6 +26,12 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 function ver_todo(){
 		
+	global $AddBlackTit;		$AddBlackTit = "CREAR TIPO IMPUESTO";
+	global $CachedBlackTit;		$CachedBlackTit = "MODIFICAR % IMPUESTO";
+	global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	global $db; 		global $db_name;
 	$orden = '`iva` ASC';
 	
@@ -39,10 +45,11 @@ function ver_todo(){
 	} else {
 			if(mysqli_num_rows($qb) == 0){
 
+				global $titNoData;	$titNoData = "TABLA ".strtoupper($vname)."<br><br>";
 				require 'Impuestos_NoData.php';
 				
 			} else { 
-				print ("<table align='center'>
+				print ("<table class='tableForm' >
 						<tr>
 							<th colspan=5 class='BorderInf'>
 								TIPOS % IMPUESTOS ".mysqli_num_rows($qb)." RESULTADOS.
@@ -53,7 +60,9 @@ function ver_todo(){
 							<th class='BorderInfDch'>VALUE %</th>
 							<th class='BorderInfDch'>NAME</th>
 							<th colspan=2 class='BorderInf'>
-					<a href='Impuestos_Crear.php' class='botonverde' style='color:#343434;'>CREAR IMPUESTO</a>
+								".$AddBlack."
+									<a href='Impuestos_Crear.php' >&nbsp;&nbsp;&nbsp;&nbsp</a>
+								".$closeButton."
 							</th>
 						</tr>");
 			
@@ -73,8 +82,8 @@ function ver_todo(){
 							<input name='name' type='hidden' value='".$rowb['name']."' />".$rowb['name']."
 								</td>
 								<td class='BorderInf' align='center'>
-							<input type='submit' class='botonnaranja' value='MODIFICAR % IMPUESTO' />
-							<input type='hidden' name='oculto2' value=1 />
+								".$CachedBlack.$closeButton."
+									<input type='hidden' name='oculto2' value=1 />
 						</form>
 								</td>
 								<td class='BorderInf' align='center'>
@@ -85,8 +94,8 @@ function ver_todo(){
 					<!--
 						<input type='submit' class='botonrojo'  value='BORRAR % IMPUESTOS' />
 					-->
-					<button type='submit' title='BORRAR' class='botonrojo imgButIco DeleteWhite'></button>
-					<input type='hidden' name='oculto2' value=1 />
+						".$DeleteWhite.$closeButton."
+							<input type='hidden' name='oculto2' value=1 />
 						</form>
 								</td>
 							</tr>");

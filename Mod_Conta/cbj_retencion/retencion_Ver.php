@@ -26,6 +26,12 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 function ver_todo(){
 		
+	global $AddBlackTit;		$AddBlackTit = "CREAR TIPO RETENCION";
+	global $CachedBlackTit;		$CachedBlackTit = "MODIFICAR % RETENCION";
+	global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	global $db; 		global $db_name;
 	$orden = '`ret` ASC';
 	
@@ -39,21 +45,24 @@ function ver_todo(){
 	} else {
 			if(mysqli_num_rows($qb) == 0){
 
+				global $titNoData;	$titNoData = "TABLA ".strtoupper($vname)."<br><br>";
 				require 'retencion_NoData.php';
 				
 			} else { 
-				print ("<table align='center'>
+				print ("<table class='tableForm' >
 						<tr>
 							<th colspan=5 class='BorderInf'>
-								TIPOS % RETENCION ".mysqli_num_rows($qb)." RESULTADOS.
+								TIPOS % RETENCIONES ".mysqli_num_rows($qb)." RESULTADOS.
 							</th>
 						</tr>
 						<tr>
 							<th class='BorderInfDch'>ID</th>
 							<th class='BorderInfDch'>VALUE %</th>
 							<th class='BorderInfDch'>NAME</th>
-							<th colspan=2 >
-				<a href='retencion_Crear.php' class='botonverde' style='color:#343434;'>CREAR RETENCION</a>
+							<th colspan=2 class='BorderInf'>
+								".$AddBlack."
+									<a href='retencion_Crear.php' >&nbsp;&nbsp;&nbsp;&nbsp</a>
+								".$closeButton."
 							</th>
 						</tr>");
 			
@@ -73,8 +82,8 @@ function ver_todo(){
 							<input name='name' type='hidden' value='".$rowb['name']."' />".$rowb['name']."
 								</td>
 								<td class='BorderInf' align='center'>
-							<input type='submit' class='botonnaranja' value='MODIFICAR % RETENCION' />
-							<input type='hidden' name='oculto2' value=1 />
+								".$CachedBlack.$closeButton."
+									<input type='hidden' name='oculto2' value=1 />
 						</form>
 								</td>
 								<td class='BorderInf' align='center'>
@@ -83,10 +92,10 @@ function ver_todo(){
 						<input name='ret' type='hidden' value='".$rowb['ret']."' />
 						<input name='name' type='hidden' value='".$rowb['name']."' />
 					<!--
-						<input type='submit' class='botonrojo'  value='BORRAR % RETENCION' />
+						<input type='submit' class='botonrojo'  value='BORRAR % RETENCIONES' />
 					-->
-					<button type='submit' title='BORRAR' class='botonrojo imgButIco DeleteWhite'></button>
-					<input type='hidden' name='oculto2' value=1 />
+						".$DeleteWhite.$closeButton."
+							<input type='hidden' name='oculto2' value=1 />
 						</form>
 								</td>
 							</tr>");
@@ -127,7 +136,7 @@ function ver_todo(){
 			$orden = $_POST['Orden'];
 		}else{ $orden = '`id` ASC'; }
 
-		if(isset($_POST['todo'])){$nombre = "TODAS LAS RETENCIONES ".$orden;};	
+		if(isset($_POST['todo'])){$nombre = "TODOS LOS RETENCIONES ".$orden;};	
 
 		$ActionTime = date('H:i:s');
 
@@ -137,7 +146,7 @@ function ver_todo(){
 					}
 		
 		global $text;
-		$text = "\n- RETENCION MODIFICAR BUSCAR: ".$ActionTime.".\n\t Filtro => ".$nombre.".";
+		$text = "\n- RETENCIONES MODIFICAR BUSCAR: ".$ActionTime.".\n\t Filtro => ".$nombre.".";
 		
 		$logdocu = $_SESSION['ref'];
 		$logdate = date('Y-m-d');

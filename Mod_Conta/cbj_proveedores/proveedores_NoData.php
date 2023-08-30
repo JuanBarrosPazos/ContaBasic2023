@@ -6,20 +6,20 @@
         require '../Inclu/BotoneraVar.php';
         global $closeButton;
 
-	global $KeyForm;        global $BotonPapelera;   global $tituloLoc;
+	global $KeyForm;        global $BotonPapelera;
 
 	if($KeyForm == "feed"){
                 $BotonPapelera = "";
-                $tituloLoc = "PAPELERA PROVEEDORES<br><br>";
 	}else{
                 $BotonPapelera = $DeleteBlack."<a href='proveedoresFeed_Ver.php' >&nbsp;&nbsp;&nbsp;</a>".$closeButton;
-                $tituloLoc = "PROVEEDORES<br><br>";
 	}	
+
+        global $titNoData;
 
         print ("<table class='tableForm' style='padding:0.6em;' >
                 <tr>
                         <th>
-                                ".$tituloLoc."
+                                ".$titNoData."
                                 <font color='#FF0000'>NO HAY DATOS</font>
                         </th>
                 </tr>

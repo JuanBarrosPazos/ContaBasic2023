@@ -380,7 +380,7 @@ $status2 = "INSERT INTO `$db_name`.$vname11 (`id`, `year`, `ycod`, `stat`, `hidd
    				  `ycod` int(2) NOT NULL,
  				  `stat` varchar(5) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'open',
  				  `hidden` varchar(2) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'no',
-				  `date` varchar(19) collate utf8_spanish2_ci NOT NULL default '00-00-00/00:00:00',
+				  `date` datetime collate utf8_spanish2_ci NOT NULL default CURRENT_TIMESTAMP,
 				  PRIMARY KEY  (`id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
