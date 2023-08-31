@@ -1,6 +1,6 @@
 <?php
 
-print("<select name='dy' title='SELECCIONAR AÑO...' class='botonverde' >
+print("<select name='dy' title='SELECCIONAR AÑO...' class='botonverde' style='vertical-align: middle' >
 			<option value=''>YEAR</option>");
 				
 	global $db;

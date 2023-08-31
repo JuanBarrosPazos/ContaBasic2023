@@ -86,34 +86,35 @@ session_start();
 							<th colspan=11 class='BorderInf'>PAPELERA PROVEEDORES ".mysqli_num_rows($qc)."</th>
 						</tr>
 						<tr>
-							<th class='BorderInfDch'>ID</th>
-							<th class='BorderInfDch'>REFERENCIA</th>
-							<th class='BorderInfDch'>DNI</th>
-							<th class='BorderInfDch'>RAZON SOCIAL</th>
-							<th class='BorderInfDch'></th>
-							<th class='BorderInfDch'>DELETE</th>
-							<th colspan='5' class='BorderInf'>ACCIONES</th>
+							<th>ID</th><th>REFERENCIA</th><th>DNI</th>
+							<th>RAZON SOCIAL</th><th></th><th>DELETE</th>
+							<th colspan='5'>ACCIONES</th>
 					</tr>");
 				
+				global $styleBgc; global $i; $i = 1;
+
 			while($rowb = mysqli_fetch_assoc($qc)){
-				
-			print (	"<tr>
+
+				if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+				$i++;
+	
+			print (	"<tr class='".$styleBgc."'>
 										
 		<form name='ver' action='proveedoresFeed_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=550px,height=460px')\">
 
-			<td align='left' class='BorderInfDch'>".$rowb['id']."</td>
-			<td align='left' class='BorderInfDch'>".$rowb['ref']."</td>
-			<td align='left' class='BorderInfDch'>".$rowb['dni']."' />".$rowb['dni'].$rowb['ldni']."</td>
-			<td align='left' class='BorderInfDch'>".$rowb['rsocial']."</td>
-			<td class='BorderInfDch'>
+			<td align='left'>".$rowb['id']."</td>
+			<td align='left'>".$rowb['ref']."</td>
+			<td align='left'>".$rowb['dni']."' />".$rowb['dni'].$rowb['ldni']."</td>
+			<td align='left'>".$rowb['rsocial']."</td>
+			<td>
 				<img src='../cbj_Docs/img_proveedores/".$rowb['myimg']."' height='40px' width='30px' />
 			</td>
 
-			<td class='BorderInfDch'>".$rowb['borrado']."</td>");
+			<td>".$rowb['borrado']."</td>");
 
 			require 'proveedores_rowTotal.php';
 
-		print("<td colspan=2 align='center' class='BorderInf'>
+		print("<td colspan=2 align='center'>
 					<!--
 						<input type='submit' value='VER DETALLES' class='botonverde' />
 					-->
@@ -122,7 +123,7 @@ session_start();
 			</td>
 				</form>
 
-			<td align='center' class='BorderInf'>
+			<td align='center'>
 				<form name='modifica' action='proveedoresFeed_Recuperar_02.php' method='POST'>");
 
 				require 'proveedores_rowTotal.php';
@@ -134,7 +135,7 @@ session_start();
 						<input type='hidden' name='oculto2' value=1 />
 				</form>
 			</td>	
-			<td align='center' class='BorderInf'>
+			<td align='center'>
 				<form name='modifica' action='proveedoresFeed_Borrar_02.php' method='POST'>");
 
 				require 'proveedores_rowTotal.php';
@@ -221,34 +222,39 @@ session_start();
 				<th colspan=11 class='BorderInf'>PAPELERA PROVEEDORES ".mysqli_num_rows($qb)."</th>
 							</tr>
 							<tr>
-								<th class='BorderInfDch'>ID</th>
-								<th class='BorderInfDch'>REFERENCIA</th>
-								<th class='BorderInfDch'>DNI</th>
-								<th class='BorderInfDch'>RAZON SOCIAL</th>
-								<th class='BorderInfDch'></th>
-								<th class='BorderInfDch'>DELETE</th>
-								<th colspan='5' class='BorderInf'>ACCIONES</th>
+								<th>ID</th>
+								<th>REFERENCIA</th>
+								<th>DNI</th>
+								<th>RAZON SOCIAL</th>
+								<th></th>
+								<th>DELETE</th>
+								<th colspan='5'>ACCIONES</th>
 							</tr>");
 				
+				global $styleBgc; global $i; $i = 1;
+
 			while($rowb = mysqli_fetch_assoc($qb)){
-				
+
+				if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+				$i++;
+	
 		if($rowb['dni'] != "ANONIMO"){
-				print (	"<tr align='center'>
+				print (	"<tr class='".$styleBgc."'>
 										
 		<form name='ver' action='proveedoresFeed_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=550px,height=460px')\">
 		
-			<td align='left' class='BorderInfDch'>".$rowb['id']."</td>
-			<td align='left' class='BorderInfDch'>".$rowb['ref']."</td>
-			<td align='left' class='BorderInfDch'>".$rowb['dni'].$rowb['ldni']."</td>
-			<td align='left' class='BorderInfDch'>".$rowb['rsocial']."</td>
-			<td class='BorderInfDch'>
+			<td align='left'>".$rowb['id']."</td>
+			<td align='left'>".$rowb['ref']."</td>
+			<td align='left'>".$rowb['dni'].$rowb['ldni']."</td>
+			<td align='left'>".$rowb['rsocial']."</td>
+			<td>
 				<img src='../cbj_Docs/img_proveedores/".$rowb['myimg']."' height='40px' width='30px' />
 			</td>
-			<td class='BorderInfDch'>".$rowb['borrado']."</td>");
+			<td>".$rowb['borrado']."</td>");
 
 			require 'proveedores_rowTotal.php';
 
-		print("<td colspan=2 align='center' class='BorderInf'>
+		print("<td colspan=2 align='center'>
 					<!--
 						<input type='submit' value='VER DETALLES' class='botonverde' />
 					-->
@@ -257,7 +263,7 @@ session_start();
 				</form>
 			</td>
 
-			<td align='center' class='BorderInf'>
+			<td align='center'>
 				<form name='modifica' action='proveedoresFeed_Recuperar_02.php' method='POST'>");
 
 				require 'proveedores_rowTotal.php';
@@ -270,7 +276,7 @@ session_start();
 				</form>
 			</td>	
 
-			<td align='center' class='BorderInf'>
+			<td align='center'>
 				<form name='modifica' action='proveedoresFeed_Borrar_02.php' method='POST'>");
 
 			require 'proveedores_rowTotal.php';

@@ -126,8 +126,14 @@ session_start();
 								<th class='BorderInf'>HIDDEN</th>	
 							</tr>");
 			
+			global $styleBgc; global $i; $i = 1;
+
 		while($rowb = mysqli_fetch_assoc($qb)){
-			print (	"<tr align='center'>
+
+			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+			$i++;
+
+			print (	"<tr class='".$styleBgc."'>
 						<td class='BorderInf' align='center'>".$rowb['id']."</td>
 						<td class='BorderInf' align='center'>".$rowb['year']."</td>
 						<td class='BorderInf' align='center'>".$rowb['ycod']."</td>

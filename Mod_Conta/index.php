@@ -349,57 +349,37 @@ session_start();
 							  '`id` DESC' => 'Id Desc');
 	
 		if ($errors){
-			print("<table align='center'>
-					<tr>
-						<th style='text-align:center'>
-							<font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
-						</th>
-					</tr>
-					<tr>
-						<td style='text-align:left'>");
-			
-			for($a=0; $c=count($errors), $a<$c; $a++){
-				print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
-				}
-			print("</td>
-					</tr>
-					</table>>");
+
+			require 'Inclu_Index/tablaErrors.php';
+
 		}
 		
-		print("<table align='center' width='auto' style=\"border: none;\"><tr><td>");
-		
-		print("<table align='center' style=\"border:0px;margin-top:4px\">
+		print("<table class='tableForm' >
 					<tr>
-						<th colspan=2>BALANCE CONTABLE & GRÁFICAS</th>
+						<th>BALANCE CONTABLE & GRÁFICAS</th>
 					</tr>
 			<form name='filtroBal' method='post' action='$_SERVER[PHP_SELF]' >
 					<tr>
-						<td align='center' class='BorderSup'>
+						<td align='center'>
 							<!--
-						<input type='submit' value='FILTRO BALANCES' class='botonazul' />
+							<input type='submit' value='FILTRO BALANCES' class='botonazul' />
 							-->
-					<button type='submit' title='FILTRO BALANCES' class='botonlila imgButIco BuscaWhite'>
-					</button>
-										<input type='hidden' name='filtroBal' value=1 />
-						</td>
-						<td class='BorderSup'>	
-						<div style='float:left'>
-							<select name='Orden' title='ORDENAR POR...' class='botonverde'>");
+			<button type='submit' title='FILTRO BALANCES' class='botonlila imgButIco BuscaWhite' style='vertical-align: middle' >
+			</button>
+						<input type='hidden' name='filtroBal' value=1 />
+				<select name='Orden' title='ORDENAR POR...' class='botonverde' style='vertical-align: middle'>");
 							
 		foreach($ordenar as $option => $label){
 				print ("<option value='".$option."' ");
 					if($option == $defaults['Orden']){print ("selected = 'selected'");}
 													print ("> $label </option>");
 												}	
-		print ("</select>
-					</div><div style='float:left'>");
-									
+		print ("</select>");
+						
 			require 'Inclu/year_select_bbdd.php';
 										
 		print ("</select>
-					</div>
-					<div style='float:left'>
-						<select name='dm' title='SELECCIONAR MES...' class='botonverde' >");
+						<select name='dm' title='SELECCIONAR MES...' class='botonverde' style='vertical-align: middle' >");
 
 		foreach($dm as $optiondm => $labeldm){
 					print ("<option value='".$optiondm."' ");
@@ -409,7 +389,6 @@ session_start();
 						}	
 																
 		print ("</select>
-					</div>
 					</form>											
 				</td>
 			</tr>

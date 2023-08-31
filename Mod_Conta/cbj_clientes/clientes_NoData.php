@@ -28,7 +28,7 @@
                                 ".$PersonAddBlack."
                                         <a href='clientes_Crear.php' >&nbsp;&nbsp;&nbsp;</a>
                                 ".$closeButton.$PersonsBlack."
-                        <a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+                                        <a href='clientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
                                 ".$closeButton.$BotonPapelera."
                         </th>
                 </tr>

@@ -48,52 +48,53 @@ session_start();
 
 			}else{ print ("<table class='tableForm' >
 							<tr>
-								<th colspan=8 class='BorderInf'>
+								<th colspan=8>
 							RECUPERAR FEEDBACK EJERCCIOS ".mysqli_num_rows($qb)." RESULTADOS
 								</th>
 							</tr>
 							<tr>
-								<th class='BorderInfDch'>ID</th>
-								<th class='BorderInfDch'>YEAR</th>
-								<th class='BorderInfDch'>ICOD</th>
-								<th class='BorderInfDch'>STATE</th>
-								<th class='BorderInfDch'>HIDDEN</th>
-								<th class='BorderInfDch'>DATE</th>
-								<th colspan=2 class='BorderInf'>
+								<th>ID</th><th>YEAR</th><th>ICOD</th>
+								<th>STATE</th><th>HIDDEN</th><th>DATE</th>
+								<th colspan=2>
 									".$InicioBlack."
 										<a href='status_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
 									".$closeButton."
 								</th>
 							</tr>");
 			
+			global $styleBgc; global $i; $i = 1;
+
 		while($rowb = mysqli_fetch_assoc($qb)){
 
-			print (	"<tr align='center'>
+			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+			$i++;
+
+			print (	"<tr class='".$styleBgc."'>
 				<form name='modifica' action='status_feedback_recuperar_02.php' method='POST'>
-						<td class='BorderInfDch' align='center'>
+						<td align='center'>
 					<input name='id' type='hidden' value='".$rowb['id']."' />".$rowb['id']."
 						</td>
-						<td class='BorderInfDch' align='center'>
+						<td align='center'>
 					<input name='year' type='hidden' value='".$rowb['year']."' />".$rowb['year']."
 						</td>
-						<td class='BorderInfDch' align='center'>
+						<td align='center'>
 					<input name='ycod' type='hidden' value='".$rowb['ycod']."' />".$rowb['ycod']."
 						</td>
-						<td class='BorderInfDch' align='center'>
+						<td align='center'>
 					<input name='stat' type='hidden' value='".$rowb['stat']."' />".$rowb['stat']."
 						</td>
-						<td class='BorderInfDch' align='center'>
+						<td align='center'>
 					<input name='hidden' type='hidden' value='".$rowb['hidden']."' />".$rowb['hidden']."
 						</td>
-						<td class='BorderInfDch' align='center'>
+						<td align='center'>
 					<input name='date' type='hidden' value='".$rowb['date']."' />".$rowb['date']."
 						</td>
-						<td class='BorderInf' align='right'>
+						<td align='right'>
 							".$RestoreBlack.$closeButton."
 					<input type='hidden' name='oculto2' value=1 />
 				</form>
 						</td>
-						<td class='BorderInf' >
+						<td >
 				<form name='modifica' action='status_feedback_borrar_02.php' method='POST'>
 					<input name='id' type='hidden' value='".$rowb['id']."' />
 					<input name='year' type='hidden' value='".$rowb['year']."' />

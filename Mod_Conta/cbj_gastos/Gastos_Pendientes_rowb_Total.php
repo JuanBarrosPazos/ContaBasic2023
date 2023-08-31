@@ -1,49 +1,49 @@
 <?php
 
-    print ("<tr align='center'>
+    print ("<tr class='".$styleBgc."'>
     <form name='ver' action='Gastos_Pendientes_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=580px,height=660px')\">
         <input name='dyt1' type='hidden' value='".$dyt1."' />
         <input name='vname' type='hidden' value='".$vname."' />
-                <td class='BorderInfDch' align='center'>
+                <td align='center'>
         <input name='id' type='hidden' value='".$rowb['id']."' />".$rowb['id']."
                 </td>
-                <td class='BorderInfDch' align='center'>
+                <td align='center'>
         <input name='factnum' type='hidden' value='".$rowb['factnum']."' />".$rowb['factnum']."
                 </td>
-                <td class='BorderInfDch' align='left'>
+                <td align='left'>
         <input name='factdate' type='hidden' value='".$rowb['factdate']."' />".$rowb['factdate']."
                 </td>
-                <td class='BorderInfDch' align='center'>
+                <td align='center'>
         <input name='factnom' type='hidden' value='".$rowb['factnom']."' />".$rowb['factnom']."
                 </td>
-                <td class='BorderInfDch' align='left'>
+                <td align='left'>
         <input name='factnif' type='hidden' value='".$rowb['factnif']."' />".$rowb['factnif']."
                 </td>
-                <td class='BorderInfDch' align='right'>
+                <td align='right'>
         <input name='factiva' type='hidden' value='".$rowb['factiva']."' />".$rowb['factiva']."
                 </td>
-                <td class='BorderInfDch' align='right'>
+                <td align='right'>
         <input name='factivae' type='hidden' value='".$rowb['factivae']."' />".$rowb['factivae']."
                 </td>
-                <td class='BorderInfDch' align='right'>
+                <td align='right'>
         <input name='factpvp' type='hidden' value='".$rowb['factpvp']."' />".$rowb['factpvp']."
                 </td>
-                <td class='BorderInfDch' align='right'>
+                <td align='right'>
         <input name='factret' type='hidden' value='".$rowb['factret']."' />".$rowb['factret']."
                 </td>
-                <td class='BorderInfDch' align='right'>
+                <td align='right'>
         <input name='factrete' type='hidden' value='".$rowb['factrete']."' />".$rowb['factrete']."
                 </td>
-                <td class='BorderInfDch' align='right'>
+                <td align='right'>
         <input name='factpvptot' type='hidden' value='".$rowb['factpvptot']."' />".$rowb['factpvptot']."
                 </td>
         <input name='coment' type='hidden' value='".$rowb['coment']."' />
-                <td class='BorderInf' >
+                <td>
             <input type='submit' value='VER DETALLES' title='VER DETALLES FACTURA' class='botonverde' />
             <input type='hidden' name='oculto2' value=1 />
     </form>
                 </td>
-                <td class='BorderInf'>			
+                <td>			
     <form name='ver' action='Gastos_Pendientes_Modificar_img.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=580px,height=600px')\">
                 <input name='id' type='hidden' value='".$rowb['id']."' />
                 <input name='dyt1' type='hidden' value='".$dyt1."' />
@@ -68,7 +68,7 @@
                         <input type='hidden' name='oculto2' value=1 />
         </form>						
                 </td>
-                <td class='BorderInf' >
+                <td>
         <form name='modifica' action='Gastos_Pendientes_Modificar_02.php' method='POST'>
                 <input name='dyt1' type='hidden' value='".$dyt1."' />
                 <input name='vname' type='hidden' value='".$vname."' />
@@ -93,7 +93,7 @@
                         <input type='hidden' name='oculto2' value=1 />
          </form>
                 </td>
-                <td class='BorderInf' >
+                <td>
         <form name='modifica' action='Gastos_Pendientes_Modificar_03.php' method='POST' >
                 <input name='id' type='hidden' value='".$rowb['id']."' />
                 <input name='dyt1' type='hidden' value='".$dyt1."' />
@@ -116,9 +116,8 @@
                         <input type='submit' value='PAGADA' title='FACTURA PAGADA' class='botonazul' />
                         <input type='hidden' name='oculto2' value=1 />
         </form>		
-
                 </td>
-    		<td class='BorderInf'>
+    		<td>
 	<form name='modifica' action='Gastos_Pendientes_Borrar_02.php' method='POST'>
                 <input name='dyt1' type='hidden' value='".$dyt1."' />
                 <input name='refprovee' type='hidden' value='".$rowb['refprovee']."' />

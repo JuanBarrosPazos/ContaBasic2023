@@ -56,37 +56,42 @@ function ver_todo(){
 							</th>
 						</tr>
 						<tr>
-							<th class='BorderInfDch'>ID</th>
-							<th class='BorderInfDch'>VALUE %</th>
-							<th class='BorderInfDch'>NAME</th>
-							<th colspan=2 class='BorderInf'>
+							<th>ID</th>
+							<th>VALUE %</th>
+							<th>NAME</th>
+							<th colspan=2>
 								".$AddBlack."
 									<a href='Impuestos_Crear.php' >&nbsp;&nbsp;&nbsp;&nbsp</a>
 								".$closeButton."
 							</th>
 						</tr>");
 			
+				global $styleBgc; global $i; $i = 1;
+
 			while($rowb = mysqli_fetch_assoc($qb)){
 
+				if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+				$i++;
+	
 				if($rowb['iva'] != 0.00){
 
-					print (	"<tr align='center'>
+					print (	"<tr class='".$styleBgc."'>
 						<form name='modifica' action='Impuestos_Modificar_02.php' method='POST'>
-								<td class='BorderInfDch' align='center'>
+								<td align='center'>
 							<input name='id' type='hidden' value='".$rowb['id']."' />".$rowb['id']."
 								</td>
-								<td class='BorderInfDch' align='center'>
+								<td align='center'>
 							<input name='iva' type='hidden' value='".$rowb['iva']."' />".$rowb['iva']."
 								</td>
-								<td class='BorderInfDch' align='center'>
+								<td align='center'>
 							<input name='name' type='hidden' value='".$rowb['name']."' />".$rowb['name']."
 								</td>
-								<td class='BorderInf' align='center'>
+								<td align='center'>
 								".$CachedBlack.$closeButton."
 									<input type='hidden' name='oculto2' value=1 />
 						</form>
 								</td>
-								<td class='BorderInf' align='center'>
+								<td align='center'>
 				<form name='modifica' action='Impuestos_Borrar_02.php' method='POST'>
 						<input name='id' type='hidden' value='".$rowb['id']."' />
 						<input name='iva' type='hidden' value='".$rowb['iva']."' />

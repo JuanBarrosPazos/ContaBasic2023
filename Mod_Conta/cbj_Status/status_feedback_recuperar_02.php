@@ -50,11 +50,11 @@ session_start();
 						<th colspan=5 >RECUPERADO Y BORRADO EN ".strtoupper($vname)."</th>
 					</tr>
 					<tr align='center'>
-						<td class='BorderInf'>YEAR</td>
-						<td class='BorderInf'>CODE</td>
-						<td class='BorderInf'>STATUS</td>
-						<td class='BorderInf'>HIDDEN</td>
-						<td class='BorderInf'>DATE</td>
+						<td>YEAR</td>
+						<td>CODE</td>
+						<td>STATUS</td>
+						<td>HIDDEN</td>
+						<td>DATE</td>
 					</tr>
 					<tr align='center'>
 						<td>".$year."</td>
@@ -127,21 +127,23 @@ session_start();
 								<th colspan=6 >EJERCICIOS STATUS ".mysqli_num_rows($qb)."</th>
 							</tr>
 							<tr align='center'>
-								<th class='BorderInf'>ID</th>
-								<th class='BorderInf'>YEAR</th>
-								<th class='BorderInf'>ICOD</th>
-								<th class='BorderInf'>STATE</th>
-								<th class='BorderInf'>HIDDEN</th>
+								<th>ID</th><th>YEAR</th><th>ICOD</th>
+								<th>STATE</th><th>HIDDEN</th>
 							</tr>");
 			
+				global $styleBgc; global $i; $i = 1;
+
 			while($rowb = mysqli_fetch_assoc($qb)){
 
-			print (	"<tr align='center'>
-						<td class='BorderInf' align='center'>".$rowb['id']."</td>
-						<td class='BorderInf' align='center'>".$rowb['year']."</td>
-						<td class='BorderInf' align='center'>".$rowb['ycod']."</td>
-						<td class='BorderInf' align='center'>".$rowb['stat']."</td>
-						<td class='BorderInf' align='center'>".$rowb['hidden']."</td>
+				if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+				$i++;
+	
+			print (	"<tr class='".$styleBgc."'>
+						<td align='center'>".$rowb['id']."</td>
+						<td align='center'>".$rowb['year']."</td>
+						<td align='center'>".$rowb['ycod']."</td>
+						<td align='center'>".$rowb['stat']."</td>
+						<td align='center'>".$rowb['hidden']."</td>
 					</tr>");
 				} /* Fin del while.*/ 
 
@@ -190,11 +192,11 @@ session_start();
 					</tr>
 		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
 				<tr>
-					<td class='BorderInf' align='center'>YEAR</td>
-					<td class='BorderInf' align='center'>CODE</td>
-					<td class='BorderInf' align='center'>STATUS</td>
-					<td class='BorderInf' align='center'>HIDDEN</td>
-					<td class='BorderInf'align='center'>DATE</td>
+					<td align='center'>YEAR</td>
+					<td align='center'>CODE</td>
+					<td align='center'>STATUS</td>
+					<td align='center'>HIDDEN</td>
+					<tdalign='center'>DATE</tdalign=>
 				</tr>
 				<tr>
 					<td>

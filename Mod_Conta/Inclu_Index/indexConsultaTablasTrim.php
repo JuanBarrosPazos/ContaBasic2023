@@ -98,14 +98,14 @@
 
     print ("<div style='clear:both'></div>
 			<div class='divTablaIndex' >
-			<table class='tabla' >
+			<table class='tabla tableForm' >
 			<tr>
-				<th colspan=6 class='BorderInf resultadosi'>
+				<th colspan=6 class='resultadosi'>
 					INGRESOS TRIMESTRALES
 				</th>
 			</tr>
 			<tr>
-				<td colspan=6 class='BorderInf'>
+				<td colspan=6 class='BorderInf' style='padding-bottom:1.6em;' >
 					<div class='section'>
 						<ul class='timeline'>");
 			  
@@ -156,38 +156,29 @@
 				</div>
 					</td>
 				</tr>
-			
-			</tr>
-				<tr>
-					<td colspan='6' class='BorderInf'>
-				</td>
+			<tr>
+				<td colspan='2' class='resultadosi' align='center'>IMP REPER</td>
+				<td colspan='2' class='resultadosi' align='center'>RETEN REPER</td>
+				<td colspan='2' class='resultadosi' align='center'>TOT INGRESOS</td>
 			</tr>
 			<tr>
-				<td colspan='2' class='BorderInfDch resultadosi' align='center'>IMP REPER</td>
-				<td colspan='2' class='BorderInfDch resultadosi' align='center'>RETEN REPER</td>
-				<td colspan='2' class='BorderInf resultadosi' align='center'>TOT INGRESOS</td>
+				<td colspan='2' class='BorderInf resultadosi' align='center'>".$sumaivaei." €</td>
+				<td colspan='2' class='BorderInf resultadosi' align='center'>".$sumaretei." €</td>
+				<td colspan='2' class='BorderInf resultadosi' align='center'>".$sumapvptoti." €</td>
 			</tr>
 			<tr>
-				<td colspan='2' class='BorderInfDch resultadosi' align='right'>".$sumaivaei." €</td>
-				<td colspan='2' class='BorderInfDch resultadosi' align='right'>".$sumaretei." €</td>
-				<td colspan='2' class='BorderInf resultadosi' align='right'>".$sumapvptoti." €</td>
-			</tr>
-			<tr>
-				<td colspan='6' class='BorderInf'></td>
-			</tr>
-			<tr>
-				<th class='BorderInfDch'>AÑO</th>		
-				<th class='BorderInfDch'>MES</th>		
-				<th class='BorderInfDch'>IVA REPER</th>
-				<th class='BorderInfDch'>SUB TOT</th>
-				<th class='BorderInfDch'>RET REPER</th>
-				<th class='BorderInf'>TOTAL €</th>			
+				<th>AÑO</th><th>MES</th><th>IVA REPER</th>
+				<th>SUB TOT</th><th>RET REPER</th><th>TOTAL €</th>			
 			</tr>");
 
     global $i;  $i = 1; 
     
+	global $styleBgc;
+	
 	while($i <= 4){
-    
+
+		if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+
         if(($dm1 == 'TRI0')||($dm1 == 'TRI0')){
             if($mesIni < 10){ $mesIni = '0'.$mesIni; }else{ }
             if($mesFin < 10){ $mesFin = '0'.$mesFin; }else{ }
@@ -201,7 +192,6 @@
             }else{  $MesNomb = "TRI4"; }
 
 			$rowi['factdate'] = $MesNomb;
-
         }
     
     $SqlFromi = "FROM $vnamei WHERE (`factdate` BETWEEN '$betwIni' AND '$betwFin')";
@@ -235,37 +225,14 @@
     //if($TriSumToti == ''){ $TriSumToti = "0.00"; }else{ }
             
 	global $vnamei; 	global $dyt1;   global $MesNomb;
-	print (	"<tr align='center'>
-								
-	<form name='ver' action='Gastos_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=440px,height=670px')\">
-
-		<input name='id' type='hidden' value='".@$rowi['id']."' />
-
-					<td class='BorderInfDch' align='right'>
-		<input name='year' type='hidden' value='".$dyt1."' />".$dyt1."
-					</td>
-
-					<td class='BorderInfDch' align='right'>
-		<input name='mes' type='hidden' value='".$rowi['factdate']."' />".$rowi['factdate']."
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='iva' type='hidden' value='".$rowi['factivae']."' />".$rowi['factivae']." €
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='sub' type='hidden' value='".$rowi['factpvp']."' />".$rowi['factpvp']." €
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='ret' type='hidden' value='".$rowi['factrete']."' />".$rowi['factrete']." €
-					</td>
-																		
-					<td class='BorderInf' align='right'>
-		<input name='tot' type='hidden' value='".$rowi['factpvptot']."' />".$rowi['factpvptot']." €
-					</td>
-		</form>
-				</tr>");
+	print (	"<tr class='".$styleBgc."'>
+				<td align='center' >".$dyt1."</td>
+				<td align='right' >".$rowi['factdate']."</td>
+				<td align='right' >".$rowi['factivae']." €</td>
+				<td align='right' >".$rowi['factpvp']." €</td>
+				<td align='right' >".$rowi['factrete']." €</td>
+				<td align='right' >".$rowi['factpvptot']." €</td>
+			</tr>");
 
         $i++;   $mesIni = $mesIni+3;    $mesFin = $mesFin+3;
 
@@ -350,14 +317,14 @@
 /* FIN PARA SUMAR IVA */
 /////////////////////////
 
-    print ("<table class='tablac' style='text-aling:center !important;'>
+    print ("<table class='tablac tableForm'>
 			<tr>
-				<th colspan=6 class='BorderInf resultadosg'>
-					GATOS TRIMESTRALES
+				<th colspan=6 class='resultadosg'>
+					GASTOS TRIMESTRALES
 				</th>
 			</tr>
 			<tr>
-				<td colspan=6 class='BorderInf'>
+				<td colspan=6 class='BorderInf' style='padding-bottom:1.6em;'>
 					<div class='section'>
 						<ul class='timeline'>");
 			  
@@ -410,35 +377,27 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan='6' class='BorderInf'>
-					</td>
+					<td colspan='2' class='resultadosg' align='center'>IMP REPER</td>
+					<td colspan='2' class='resultadosg' align='center'>RETEN REPER</td>
+					<td colspan='2' class='resultadosg' align='center'>TOT INGRESOS</td>
 				</tr>
 				<tr>
-					<td colspan='2' class='BorderInfDch resultadosg' align='center'>IMP REPER</td>
-					<td colspan='2' class='BorderInfDch resultadosg' align='center'>RETEN REPER</td>
-					<td colspan='2' class='BorderInf resultadosg' align='center'>TOT INGRESOS</td>
+					<td colspan='2' class='BorderInf resultadosg' align='center'>".$sumaivaeg." €</td>
+					<td colspan='2' class='BorderInf resultadosg' align='center'>".$sumareteg." €</td>
+					<td colspan='2' class='BorderInf resultadosg' align='center'>".$sumapvptotg." €</td>
 				</tr>
 				<tr>
-					<td colspan='2' class='BorderInfDch resultadosg' align='right'>".$sumaivaeg." €</td>
-					<td colspan='2' class='BorderInfDch resultadosg' align='right'>".$sumareteg." €</td>
-					<td colspan='2' class='BorderInf resultadosg' align='right'>".$sumapvptotg." €</td>
-				</tr>
-				<tr>
-					<td colspan='6' class='BorderInf'>
-					</td>
-				</tr>
-				<tr>
-					<th class='BorderInfDch'>AÑO</th>		
-					<th class='BorderInfDch'>MES</th>		
-					<th class='BorderInfDch'>IVA REPER</th>
-					<th class='BorderInfDch'>SUB TOT</th>
-					<th class='BorderInfDch'>RET REPER</th>
-					<th class='BorderInf'>TOTAL €</th>			
+					<th>AÑO</th><th>MES</th><th>IVA REPER</th>
+					<th>SUB TOT</th><th>RET REPER</th><th>TOTAL €</th>			
 				</tr>");
 
 	global $i;  $i = 1; 
     
+		global $styleBgc;
+
 	while($i <= 4){
+
+		if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
     
         if($dm1 == 'TRI0'){
             if($mesIni < 10){ $mesIni = '0'.$mesIni; }else{ }
@@ -485,37 +444,14 @@
     //if($TriSumTotg == ''){ $TriSumTotg = "0.00"; }else{ }
             
 	global $dyt1;
-	print (	"<tr align='center'>
-								
-	<form name='ver' action='Gastos_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=440px,height=670px')\">
-
-		<input name='id' type='hidden' value='".@$rowg['id']."' />
-
-					<td class='BorderInfDch' align='right'>
-		<input name='year' type='hidden' value='".$dyt1."' />".$dyt1."
-					</td>
-
-					<td class='BorderInfDch' align='right'>
-		<input name='mes' type='hidden' value='".$rowg['factdate']."' />".$rowg['factdate']."
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='iva' type='hidden' value='".$rowg['factivae']."' />".$rowg['factivae']." €
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='sub' type='hidden' value='".$rowg['factpvp']."' />".$rowg['factpvp']." €
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='ret' type='hidden' value='".$rowg['factrete']."' />".$rowg['factrete']." €
-					</td>
-																		
-					<td class='BorderInf' align='right'>
-		<input name='tot' type='hidden' value='".$rowg['factpvptot']."' />".$rowg['factpvptot']." €
-					</td>
-		</form>
-				</tr>");
+	print (	"<tr class='".$styleBgc."'>
+				<td align='center' >".$dyt1."</td>
+				<td align='right' >".$rowg['factdate']."</td>
+				<td align='right' >".$rowg['factivae']." €</td>
+				<td align='right' >".$rowg['factpvp']." €</td>
+				<td align='right' >".$rowg['factrete']." €</td>
+				<td align='right' >".$rowg['factpvptot']." €</td>
+			</tr>");
 
         $i++;   $mesIni = $mesIni+3;    $mesFin = $mesFin+3;
 
@@ -558,7 +494,7 @@
 	//$sumapvptotd = '';	$sumareted = 0.00;	$sumaivaed = 0;
 
 	if((($sumapvptotd == 0.00)||($sumapvptotd == ''))&&(($sumareted == 0.00)||($sumareted == ''))&&(($sumaivaed == 0.00)||($sumaivaed == ''))){			
-				print ("<table class='tabla' >
+				print ("<table class='tabla tableForm' >
 				<tr>
 					<th colspan='3' class='BorderInf resultadosd'>
 						DIFERENCIA INGRESOS / GASTOS TRIMESTRALES 
@@ -587,14 +523,14 @@
 				</table>");
 	}else{	
 	
-    print ("<table class='tabla' >
+    print ("<table class='tabla tableForm' >
 			<tr>
-				<th colspan=6 class='BorderInf resultadosd'>
+				<th colspan=6 class='resultadosd'>
 					DIFERENCIA INGRESOS / GASTOS TRIMESTRALES
 				</th>
 			</tr>
 			<tr>
-				<td colspan=6 class='BorderInf'>
+				<td colspan=6 class='BorderInf' style='padding-bottom:1.6em;'>
 					<div class='section'>
 						<ul class='timeline'>");
 	
@@ -675,37 +611,29 @@
 					</td>
 			</tr>
 			<tr>
-				<td colspan='6' class='BorderInf'>
-				</td>
+				<td colspan='2' class='resultadosd' align='center'>IMP REPER</td>
+				<td colspan='2' class='resultadosd' align='center'>RETEN REPER</td>
+				<td colspan='2' class='resultadosd' align='center'>TOT INGRESOS</td>
 			</tr>
 			<tr>
-				<td colspan='2' class='BorderInfDch resultadosd' align='center'>IMP REPER</td>
-				<td colspan='2' class='BorderInfDch resultadosd' align='center'>RETEN REPER</td>
-				<td colspan='2' class='BorderInf resultadosd' align='center'>TOT INGRESOS</td>
+				<td colspan='2' class='BorderInf resultadosd' align='center'>".$sumaivaed." €</td>
+				<td colspan='2' class='BorderInf resultadosd' align='center'>".$sumareted." €</td>
+				<td colspan='2' class='BorderInf resultadosd' align='center'>".$sumapvptotd." €</td>
 			</tr>
 			<tr>
-				<td colspan='2' class='BorderInfDch resultadosd' align='right'>".$sumaivaed." €</td>
-				<td colspan='2' class='BorderInfDch resultadosd' align='right'>".$sumareted." €</td>
-				<td colspan='2' class='BorderInf resultadosd' align='right'>".$sumapvptotd." €</td>
-			</tr>
-			<tr>
-				<td colspan='6' class='BorderInf'>
-				</td>
-			</tr>
-			<tr>
-				<th class='BorderInfDch'>AÑO</th>		
-				<th class='BorderInfDch'>MES</th>		
-				<th class='BorderInfDch'>IVA REPER</th>
-				<th class='BorderInfDch'>SUB TOT</th>
-				<th class='BorderInfDch'>RET REPER</th>
-				<th class='BorderInf'>TOTAL €</th>			
+				<th>AÑO</th><th>MES</th><th>IVA REPER</th>
+				<th>SUB TOT</th><th>RET REPER</th><th>TOTAL €</th>			
 			</tr>");
 
     global $i;  $i = 1; 
-    global $TriSumIvad;	global $TriSumSubTotd; global $TriSumReted; global $TriSumTotd;
+    global $TriSumIvad;		global $TriSumSubTotd; 		global $TriSumReted; 		global $TriSumTotd;
+
+	global $styleBgc;
 
 	while($i <= 4){
-    
+
+		if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+
         if($dm1 == 'TRI0'){
             if($mesIni < 10){ $mesIni = '0'.$mesIni; }else{ }
             if($mesFin < 10){ $mesFin = '0'.$mesFin; }else{ }
@@ -799,35 +727,14 @@
 
 	global $dyt1;   global $MesNomb;
 	//if($rowi['tot']!= 0.00){
-	print (	"<tr align='center'>
-								
-	<form name='ver' action='Gastos_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=440px,height=670px')\">
-
-					<td class='BorderInfDch' align='right'>
-		<input name='year' type='hidden' value='".$dyt1."' />".$dyt1."
-					</td>
-
-					<td class='BorderInfDch' align='right'>
-		<input name='mes' type='hidden' value='".$MesNomb."' />".$MesNomb."
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='iva' type='hidden' value='".$TriSumIvad."' />".$TriSumIvad." €
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='sub' type='hidden' value='".$TriSumSubTotd."' />".$TriSumSubTotd." €
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='ret' type='hidden' value='".$TriSumReted."' />".$TriSumReted." €
-					</td>
-																		
-					<td class='BorderInf' align='right'>
-		<input name='tot' type='hidden' value='".$TriSumTotd."' />".$TriSumTotd." €
-					</td>
-		</form>
-				</tr>");
+	print (	"<tr class='".$styleBgc."' >
+				<td align='center' >".$dyt1."</td>
+				<td align='right' >".$MesNomb."</td>
+				<td align='right' >".$TriSumIvad." €</td>
+				<td align='right' >".$TriSumSubTotd." €</td>
+				<td align='right' >".$TriSumReted." €</td>
+				<td align='right' >".$TriSumTotd." €</td>
+			</tr>");
 
         $i++;   $mesIni = $mesIni+3;    $mesFin = $mesFin+3;
 

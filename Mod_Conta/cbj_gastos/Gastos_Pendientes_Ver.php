@@ -176,11 +176,12 @@ $_SESSION['usuarios'] = '';
 					Se ha producido un error: </font>".mysqli_error($db)."</br>");
 	} else {
 		if(mysqli_num_rows($qc) == 0){
-
+			global $KeyForm; 	$KeyForm = "pend";
+			global $titNoData; 	$titNoData = "GASTOS PENDIENTES VER<br><br>";
 			require 'Gastos_NoData.php';
 
 		}else{ 
-			print ("<table align='center'>
+			print ("<table class='tableForm' >
 					<tr>
 						<th colspan=16 class='BorderInf'>".mysqli_num_rows($qc)." RESULTADOS</th>
 					</tr>
@@ -206,7 +207,12 @@ $_SESSION['usuarios'] = '';
 						</th>
 					</tr>");
 			
+			global $styleBgc; global $i; $i = 1;
+
 		while($rowb = mysqli_fetch_assoc($qc)){
+
+			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+			$i++;
  			
 			global $vname; 		global $dyt1;
 		
@@ -218,18 +224,19 @@ $_SESSION['usuarios'] = '';
 					<td colspan='16' class='BorderInf'></td>
 				</tr>
 				<tr>
-					<td class='BorderInf' align='center'></td>
-					<td colspan='3' class='BorderInfDch' align='center'>IMPUESTOS REPERC €</td>
-					<td colspan='3' class='BorderInfDch' align='center'>RETENCION REPERC €</td>
-					<td colspan='4' class='BorderInfDch' align='center'>TOTAL €</td>
-					<td colspan='5' align='right'></td>
+					<td></td>
+					<td colspan='3' class='BorderDch' align='center'>IMPUESTOS REPERC €</td>
+					<td colspan='3' class='BorderDch' align='center'>RETENCION REPERC €</td>
+					<td colspan='4' class='BorderDch' align='center'>TOTAL €</td>
+					<td colspan='5' rowspan=2 align='center'>
+						<div id='footer'>&copy; Juan Barr&oacute;s Pazos 2016/2023</div>
+					</td>
 				</tr>
 				<tr>
-					<td class='BorderInf' align='center'></td>
-					<td colspan='3' class='BorderInfDch' align='right'>".$sumaivae." €</td>
-					<td colspan='3' class='BorderInfDch' align='right'>".$sumarete." €</td>
-					<td colspan='4' class='BorderInfDch' align='right'>".$sumapvptot." €</td>
-					<td colspan='5' class='BorderInf' align='right'></td>
+					<td></td>
+					<td colspan='3' class='BorderDch' align='center'>".$sumaivae." €</td>
+					<td colspan='3' class='BorderDch' align='center'>".$sumarete." €</td>
+					<td colspan='4' class='BorderDch' align='center'>".$sumapvptot." €</td>
 				</tr>
 			</table>");
 			
@@ -504,10 +511,11 @@ function gt2(){
 				print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
 		} else {
 			if(mysqli_num_rows($qb) == 0){
-
+				global $KeyForm; 	$KeyForm = "pend";
+				global $titNoData; 	$titNoData = "GASTOS PENDIENTES VER<br><br>";
 				require 'Gastos_NoData.php';
 
-			} else { print ("<table align='center'>
+			} else { print ("<table class='tableForm' >
 							<th colspan=16 class='BorderInf'>".mysqli_num_rows($qb)." RESULTADOS</th>
 						</tr>
 						<tr>
@@ -532,34 +540,40 @@ function gt2(){
 							</th>
 						</tr>");
 				
-			while($rowb = mysqli_fetch_assoc($qb)){
+			global $styleBgc; global $i; $i = 1;
 
+		while($rowb = mysqli_fetch_assoc($qb)){
+
+			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+			$i++;
+	
 				global $vname; 		global $dyt1;
 				
 				require 'Gastos_Pendientes_rowb_Total.php';
 						
-			} // FIN WHILE
+		} // FIN WHILE
 
-				print("<tr>
-							<td colspan='16' class='BorderInf'></td>
-						</tr>
-						<tr>
-							<td class='BorderInf' align='right'></td>
-							<td colspan='3' class='BorderInfDch' align='center'>IMPUESTOS REPERC €</td>
-							<td colspan='3' class='BorderInfDch' align='center'>RETENCION REPERC €</td>
-							<td colspan='4' class='BorderInfDch' align='center'>TOTAL €</td>
-							<td colspan='5' align='center'></td>
-						</tr>
-						<tr>
-							<td class='BorderInf' align='right'></td>
-							<td colspan='3' class='BorderInfDch' align='right'>".$sumaivae." €</td>
-							<td colspan='3' class='BorderInfDch' align='right'>".$sumarete." €</td>
-							<td colspan='4' class='BorderInfDch' align='right'>".$sumapvptot." €</td>
-							<td colspan='5' class='BorderInf' align='right'></td>
-						</tr>
-					</table>");
-				} /* Fin segundo else anidado en if */
-			} /* Fin de primer else . */
+			print("<tr>
+						<td colspan='16' class='BorderInf'></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td colspan='3' class='BorderDch' align='center'>IMPUESTOS REPERC €</td>
+						<td colspan='3' class='BorderDch' align='center'>RETENCION REPERC €</td>
+						<td colspan='4' class='BorderDch' align='center'>TOTAL €</td>
+						<td colspan='5' rowspan=2 align='center'>
+							<div id='footer'>&copy; Juan Barr&oacute;s Pazos 2016/2023</div>
+						</td>
+					</tr>
+					<tr>
+						<td></td>
+						<td colspan='3' class='BorderDch' align='center'>".$sumaivae." €</td>
+						<td colspan='3' class='BorderDch' align='center'>".$sumarete." €</td>
+						<td colspan='4' class='BorderDch' align='center'>".$sumapvptot." €</td>
+					</tr>
+				</table>");
+			} /* Fin segundo else anidado en if */
+		} /* Fin de primer else . */
 			
 		global $fil;												
 		$sqlg =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";

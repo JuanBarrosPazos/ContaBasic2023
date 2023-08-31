@@ -148,79 +148,79 @@
 	print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
 	} else {
 		if(mysqli_num_rows($qbi) == 0){
-			print ("<table class='tabla' >
+			print ("<div style='clear:both'></div>
+			<div class='divTablaIndex'>
+			<table class='tabla tableForm' >
 						<tr>
-						<th colspan='3' class='BorderInf resultadosi'>BALANCE INGRESOS</th>
+						<th colspan='3' class='resultadosi'>BALANCE INGRESOS</th>
 					</tr>
 					<tr>
 						<td colspan='3'>
-						<span style='display:block; margin-top: 0.4em;'>
-							<font color='#FF0000'>NO HAY DATOS</font>
-						</span>
+							<span style='display:block; margin-top: 0.4em;'>
+								<font color='#FF0000'>NO HAY DATOS</font>
+							</span>
 						</td>
 					</tr>
 					<tr>
-						<td colspan='3' class='BorderInf'></td>
+						<td class='resultadosi' align='center'>IMP DIFER</td>
+						<td class='resultadosi' align='center'>RETEN DIFER</td>
+						<td class='resultadosi' align='center'>TOT DIFER</td>
 					</tr>
 					<tr>
-						<td class='BorderInfDch resultadosi' align='center'>IMP DIFER</td>
-						<td class='BorderInfDch resultadosi' align='center'>RETEN DIFER</td>
-						<td class='BorderInf resultadosi' align='center'>TOT DIFER</td>
-					</tr>
-					<tr>
-						<td class='BorderInfDch resultadosi' align='right'>".$sumaivaei." €</td>
-						<td class='BorderInfDch resultadosi' align='right'>".$sumaretei." €</td>
-						<td class='BorderInf resultadosi' align='right'>".$sumapvptoti." €</td>
+						<td class='resultadosi' align='center'>".$sumaivaei." €</td>
+						<td class='resultadosi' align='center'>".$sumaretei." €</td>
+						<td class='resultadosi' align='center'>".$sumapvptoti." €</td>
 					</tr>
 				</table>");
 
 		} else { print ("<div style='clear:both'></div>
 			<div class='divTablaIndex'>
-			<table class='tabla' >
+			<table class='tabla tableForm' >
 			<tr>
 				<th colspan=6 class='BorderInf resultadosi'>
 					BALANCE INGRESOS ".mysqli_num_rows($qbi)."R.
 				</th>
 			</tr>
 			<tr>
-				<td colspan='6' class='BorderInf'>
-				</td>
+				<td colspan='2' class='resultadosi' align='center'>IMP REPER</td>
+				<td colspan='2' class='resultadosi' align='center'>RETEN REPER</td>
+				<td colspan='2' class='resultadosi' align='center'>TOT INGRESOS</td>
 			</tr>
 			<tr>
-				<td colspan='2' class='BorderInfDch resultadosi' align='center'>IMP REPER</td>
-				<td colspan='2' class='BorderInfDch resultadosi' align='center'>RETEN REPER</td>
-				<td colspan='2' class='BorderInf resultadosi' align='center'>TOT INGRESOS</td>
+				<td colspan='2' class='resultadosi' align='center'>".$sumaivaei." €</td>
+				<td colspan='2' class='resultadosi' align='center'>".$sumaretei." €</td>
+				<td colspan='2' class='resultadosi' align='center'>".$sumapvptoti." €</td>
 			</tr>
 			<tr>
-				<td colspan='2' class='BorderInfDch resultadosi' align='right'>".$sumaivaei." €</td>
-				<td colspan='2' class='BorderInfDch resultadosi' align='right'>".$sumaretei." €</td>
-				<td colspan='2' class='BorderInf resultadosi' align='right'>".$sumapvptoti." €</td>
-			</tr>
-			<tr>
-				<td colspan=6 class='BorderInf'>
+				<td colspan=6 class='BorderSup BorderInf'>
 					<div class='section'>
 						<ul class='chartlist'>");
 	
-			global $sqli; global $sqlgri; 	$sqlgri = $sqli;	
-			$qbgri = mysqli_query($db, $sqlgri);
-				  
-			while($rowgri = mysqli_fetch_assoc($qbgri)){
+		global $sqli; global $sqlgri; 	$sqlgri = $sqli;	
+		$qbgri = mysqli_query($db, $sqlgri);
 	
-				$rowgri['factpvptot']  = number_format($rowgri['factpvptot']  ,2,".","");
-				//if($TriSumTotg == ''){ $TriSumTotg = "0.00"; }else{ }
-				global $sumapvptoti;
-				if($sumapvptoti > 0){
-					$TotEi = ($rowgri['factpvptot']*100)/$sumapvptoti;
-				}elseif($sumapvptoti < 0){
-					$TotEi = abs(($sumapvptoti*100)/($rowgri['factpvptot']));
-				}else{ $TotEi = 0.00; }
+		global $styleBgc; global $i; $i = 1;
 
-				print("<li>
-							<a href='#' title='".$rowgri['factdate']." || ".$rowgri['factpvptot']." €'>
-				<span class='count '>".$rowgri['factdate']." || ".$rowgri['factpvptot']." €</span>
-				<span class='index bgcolori' style='width: ".$TotEi."%;'>".$rowgri['factpvptot']."</span>
-							</a>
-						</li>");
+		while($rowgri = mysqli_fetch_assoc($qbgri)){
+	
+			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+			$i++;
+
+			$rowgri['factpvptot']  = number_format($rowgri['factpvptot']  ,2,".","");
+			//if($TriSumTotg == ''){ $TriSumTotg = "0.00"; }else{ }
+			global $sumapvptoti;
+			if($sumapvptoti > 0){
+				$TotEi = ($rowgri['factpvptot']*100)/$sumapvptoti;
+			}elseif($sumapvptoti < 0){
+				$TotEi = abs(($sumapvptoti*100)/($rowgri['factpvptot']));
+			}else{ $TotEi = 0.00; }
+
+			print("<li class='".$styleBgc."' >
+						<a href='#' title='".$rowgri['factdate']." || ".$rowgri['factpvptot']." €'>
+			<span class='count'>".$rowgri['factdate']." || ".$rowgri['factpvptot']." €</span>
+			<span class='index bgcolori' style='width: ".$TotEi."%;'>".$rowgri['factpvptot']."</span>
+						</a>
+					</li>");
 	
 			} // FIN WHILE
 	
@@ -229,52 +229,26 @@
 				</td>
 			</tr>
 			<tr>
-				<td colspan='6' class='BorderInf'>
-				</td>
-			</tr>
-			<tr>
-				<th class='BorderInfDch'>AÑO</th>		
-				<th class='BorderInfDch'>FECHA</th>		
-				<th class='BorderInfDch'>IVA REPER</th>
-				<th class='BorderInfDch'>SUB TOT</th>
-				<th class='BorderInfDch'>RET REPER</th>
-				<th class='BorderInf'>TOTAL €</th>			
+				<th>AÑO</th><th>FECHA</th><th>IVA REPER</th>
+				<th>SUB TOT</th><th>RET REPER</th><th>TOTAL €</th>			
 			</tr>");
+
+		global $styleBgc; global $i; $i = 1;
 
 		while($rowi = mysqli_fetch_assoc($qbi)){
 
+			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+			$i++;
+
 		global $dyt1;
 		//if($rowi['tot']!= 0.00){
-		print (	"<tr align='center'>
-								
-		<form name='ver' action='Gastos_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=440px,height=670px')\">
-
-		<input name='id' type='hidden' value='".$rowi['id']."' />
-
-					<td class='BorderInfDch' align='right'>
-		<input name='year' type='hidden' value='".$dyt1."' />".$dyt1."
-					</td>
-
-					<td class='BorderInfDch' align='right'>
-		<input name='mes' type='hidden' value='".$rowi['factdate']."' />".$rowi['factdate']."
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='iva' type='hidden' value='".$rowi['factivae']."' />".$rowi['factivae']." €
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='sub' type='hidden' value='".$rowi['factpvp']."' />".$rowi['factpvp']." €
-					</td>
-					
-					<td class='BorderInfDch' align='right'>
-		<input name='ret' type='hidden' value='".$rowi['factrete']."' />".$rowi['factrete']." €
-					</td>
-																		
-					<td class='BorderInf' align='right'>
-		<input name='tot' type='hidden' value='".$rowi['factpvptot']."' />".$rowi['factpvptot']." €
-					</td>
-		</form>
+		print (	"<tr class='".$styleBgc."' >
+					<td align='right'>".$dyt1."</td>
+					<td align='right'>".$rowi['factdate']."</td>
+					<td align='right'>".$rowi['factivae']." €</td>
+					<td  align='right'>".$rowi['factpvp']." €</td>
+					<td align='right'>".$rowi['factrete']." €</td>
+					<td align='right'>".$rowi['factpvptot']." €</td>
 				</tr>");
 				
 						//}
@@ -338,61 +312,59 @@
 			print("<font color='#FF0000'>*Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
 	} else {
 		if(mysqli_num_rows($qbg) == 0){
-				print ("<table class='tablac' >
-							<tr>
-							<th colspan='3' class='BorderInf resultadosg'>BALANCE GASTOS</th>
+			print ("<table class='tablac tableForm' >
+						<tr>
+							<th colspan='3' class='resultadosg'>BALANCE GASTOS</th>
 						</tr>
 						<tr>
 							<td colspan='3'>
-							<span style='display:block; margin-top: 0.4em;'>
-								<font color='#FF0000'>NO HAY DATOS</font>
-							</span>
+								<span style='display:block; margin-top: 0.4em;'>
+									<font color='#FF0000'>NO HAY DATOS</font>
+								</span>
 							</td>
 						</tr>
 						<tr>
-							<td colspan='3' class='BorderInf'></td>
+							<td class='resultadosg' align='center'>IMP DIFER</td>
+							<td class='resultadosg' align='center'>RETEN DIFER</td>
+							<td class='resultadosg' align='center'>TOT DIFER</td>
 						</tr>
 						<tr>
-							<td class='BorderInfDch resultadosg' align='center'>IMP DIFER</td>
-							<td class='BorderInfDch resultadosg' align='center'>RETEN DIFER</td>
-							<td class='BorderInf resultadosg' align='center'>TOT DIFER</td>
-						</tr>
-						<tr>
-							<td class='BorderInfDch resultadosg' align='right'>".$sumaivaeg." €</td>
-							<td class='BorderInfDch resultadosg' align='right'>".$sumareteg." €</td>
-							<td class='BorderInf resultadosg' align='right'>".$sumapvptotg." €</td>
+							<td class='resultadosg' align='center'>".$sumaivaeg." €</td>
+							<td class='resultadosg' align='center'>".$sumareteg." €</td>
+							<td class='resultadosg' align='center'>".$sumapvptotg." €</td>
 						</tr>
 					</table>");
 		} else { 
-			print ("<table class='tablac' >
+			print ("<table class='tablac tableForm' >
 				<tr>
 					<th colspan='6' class='BorderInf resultadosg'>
 						BALANCE GASTOS ".mysqli_num_rows($qbg)."R.
 					</th>
 				</tr>
 				<tr>
-					<td colspan='6' class='BorderInf'>
-					</td>
+					<td colspan='2' class='resultadosg' align='center'>IMP SOPOR</td>
+					<td colspan='2' class='resultadosg' align='center'>RETEN SOPORT</td>
+					<td colspan='2' class='resultadosg' align='center'>TOTAL GASTOS</td>
 				</tr>
 				<tr>
-					<td colspan='2' class='BorderInfDch resultadosg' align='center'>IMP SOPOR</td>
-					<td colspan='2' class='BorderInfDch resultadosg' align='center'>RETEN SOPORT</td>
-					<td colspan='2' class='BorderInf resultadosg' align='center'>TOTAL GASTOS</td>
+					<td colspan='2' class='resultadosg' align='center'>".$sumaivaeg." €</td>
+					<td colspan='2' class='resultadosg' align='center'>".$sumareteg." €</td>
+					<td colspan='2' class='resultadosg' align='center'>".$sumapvptotg." €</td>
 				</tr>
 				<tr>
-					<td colspan='2' class='BorderInfDch resultadosg' align='right'>".$sumaivaeg." €</td>
-					<td colspan='2' class='BorderInfDch resultadosg' align='right'>".$sumareteg." €</td>
-					<td colspan='2' class='BorderInf resultadosg' align='right'>".$sumapvptotg." €</td>
-				</tr>
-				<tr>
-				<td colspan=6 class='BorderInf'>
+				<td colspan=6 class='BorderSup BorderInf'>
 					<div class='section'>
 						<ul class='chartlist'>");
 
 		global $sqlg; global $sqlgrg; 	$sqlgrg = $sqlg;	
 		$qbgrg = mysqli_query($db, $sqlgrg);
 			  
+		global $styleBgc; global $i; $i = 1;
+
 		while($rowgrg = mysqli_fetch_assoc($qbgrg)){
+
+			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+			$i++;
 
 			$rowgrg['factpvptot']  = number_format($rowgrg['factpvptot']  ,2,".","");
 			//if($TriSumTotg == ''){ $TriSumTotg = "0.00"; }else{ }
@@ -403,7 +375,7 @@
 				$TotEg = abs(($sumapvptotg*100)/($rowgrg['factpvptot']));
 			}else{ $TotEg = 0.00; }
 
-			print("<li>
+			print("<li class='".$styleBgc."' >
 						<a href='#' title='".$rowgrg['factdate']." || ".$rowgrg['factpvptot']." €'>
 			<span class='count'>".$rowgrg['factdate']." || ".$rowgrg['factpvptot']." €</span>
 			<span class='index bgcolorg' style='width: ".$TotEg."%;'>".$rowgrg['factpvptot']."</span>
@@ -417,53 +389,28 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan='6' class='BorderInf'>
-					</td>
-				</tr>
-				<tr>
-					<th class='BorderInfDch'>AÑO</th>
-					<th class='BorderInfDch'>MES</th>
-					<th class='BorderInfDch'>IVA REPER</th>
-					<th class='BorderInfDch'>SUBTOT</th>
-					<th class='BorderInfDch'>RET REPER</th>
-					<th class='BorderInf'>TOTAL €</th>	
+					<th>AÑO</th><th>MES</th><th>IVA REPER</th>
+					<th>SUBTOT</th><th>RET REPER</th><th>TOTAL €</th>	
 				</tr>");
 			
+		global $styleBgc; global $i; $i = 1;
+
 	while($rowg = mysqli_fetch_assoc($qbg)){
+
+		if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd'"; }
+
+		$i++;
 
 	global $dyt1;
 	//if($rowb['tot']!= 0.00){
-			print (	"<tr align='center'>
-									
-<form name='ver' action='Gastos_Ver_02.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=440px,height=670px')\">
-	<input name='dyt1' type='hidden' value='".$dyt1."' />
-	<input name='id' type='hidden' value='".$rowg['id']."' />
-
-						<td class='BorderInfDch' align='right'>
-	<input name='year' type='hidden' value='".$dyt1."' />".$dyt1."
-						</td>
-	
-						<td class='BorderInfDch' align='right'>
-	<input name='mes' type='hidden' value='".$rowg['factdate']."' />".$rowg['factdate']."
-						</td>
-						
-						<td class='BorderInfDch' align='right'>
-	<input name='iva' type='hidden' value='".$rowg['factivae']."' />".$rowg['factivae']." €
-						</td>
-						
-						<td class='BorderInfDch' align='right'>
-	<input name='sub' type='hidden' value='".$rowg['factpvp']."' />".$rowg['factpvp']." €
-						</td>
-						
-						<td class='BorderInfDch' align='right'>
-	<input name='ret' type='hidden' value='".$rowg['factrete']."' />".$rowg['factrete']." €
-						</td>
-						
-						<td class='BorderInf' align='right'>
-	<input name='tot' type='hidden' value='".$rowg['factpvptot']."' />".$rowg['factpvptot']." €
-						</td>
-		</form>
-			</tr>");
+			print (	"<tr class='".$styleBgc."'>
+						<td align='right'>".$dyt1."</td>
+						<td align='right'>".$rowg['factdate']."</td>
+						<td align='right'>".$rowg['factivae']." €</td>
+						<td align='right'>".$rowg['factpvp']." €</td>
+						<td align='right'>".$rowg['factrete']." €</td>
+						<td align='right'>".$rowg['factpvptot']." €</td>
+					</tr>");
 					//}
 		} /* Fin del while.*/ 
 
@@ -540,55 +487,49 @@
 	if(	$sumapvptotd >= 0){ $bgpvptotd = ""; }else{ $bgpvptotd = "style='background: #ff5e00 !important;'"; }
 
 	if(($TotEd1 == 0.00)&&($TotEd2 == 0.00)&&($TotEd3 == 0.00)&&($TotEd4 == 0.00)&&($TotEd5 == 0.00)){			
-				print ("<table class='tabla' >
+				print ("<table class='tabla tableForm' >
 					<tr>
-						<th colspan='3' class='BorderInf resultadosd'>
+						<th colspan='3' class='resultadosd'>
 							DIFERENCIA INGRESOS / GASTOS 
 						</th>
 					</tr>
 					<tr>
-						<td colspan='3'>
-						<span style='display:block; margin-top: 0.4em;'>
-							<font color='#FF0000'>NO HAY DATOS</font>
-						</span>
+						<td colspan='3' >
+							<span style='display:block; margin-top: 0.4em;'>
+								<font color='#FF0000'>NO HAY DATOS</font>
+							</span>
 						</td>
 					</tr>
 					<tr>
-						<td colspan='3' class='BorderInf'></td>
+						<td class='resultadosd' align='center'>IMP DIFER</td>
+						<td class='resultadosd' align='center'>RETEN DIFER</td>
+						<td class='resultadosd' align='center'>TOT DIFER</td>
 					</tr>
 					<tr>
-						<td class='BorderInfDch resultadosd' align='center'>IMP DIFER</td>
-						<td class='BorderInfDch resultadosd' align='center'>RETEN DIFER</td>
-						<td class='BorderInf resultadosd' align='center'>TOT DIFER</td>
-					</tr>
-					<tr>
-						<td class='BorderInfDch resultadosd' align='right'>".$sumaivaed." €</td>
-						<td class='BorderInfDch resultadosd' align='right'>".$sumareted." €</td>
-						<td class='BorderInf resultadosd' align='right'>".$sumapvptotd." €</td>
+						<td class='resultadosd' align='center'>".$sumaivaed." €</td>
+						<td class='resultadosd' align='center'>".$sumareted." €</td>
+						<td class='resultadosd' align='center'>".$sumapvptotd." €</td>
 					</tr>
 				</table>");
 	}else{
-	print ("<table class='tabla' >
+	print ("<table class='tabla tableForm' >
 				<tr>
 					<th colspan='3' class='BorderInf resultadosd'>
 						DIFERENCIA INGRESOS / GASTOS 
 					</th>
 				</tr>
 				<tr>
-					<td colspan='3' class='BorderInf'></td>
+					<td class='resultadosd' align='center'>IMP DIFER</td>
+					<td class='resultadosd' align='center'>RETEN DIFER</td>
+					<td class='resultadosd' align='center'>TOT DIFER</td>
 				</tr>
 				<tr>
-					<td class='BorderInfDch resultadosd' align='center'>IMP DIFER</td>
-					<td class='BorderInfDch resultadosd' align='center'>RETEN DIFER</td>
-					<td class='BorderInf resultadosd' align='center'>TOT DIFER</td>
+					<td class='resultadosd' align='center'>".$sumaivaed." €</td>
+					<td class='resultadosd' align='center'>".$sumareted." €</td>
+					<td class='resultadosd' align='center'>".$sumapvptotd." €</td>
 				</tr>
 				<tr>
-					<td class='BorderInfDch resultadosd' align='right'>".$sumaivaed." €</td>
-					<td class='BorderInfDch resultadosd' align='right'>".$sumareted." €</td>
-					<td class='BorderInf resultadosd' align='right'>".$sumapvptotd." €</td>
-				</tr>
-				<tr>
-					<td colspan=6 class='BorderInf'>
+					<td colspan=6 class='BorderSup' >
 						<div class='section'>
 				<ul class='timeline'>
 					<li class='TimeLine2'>

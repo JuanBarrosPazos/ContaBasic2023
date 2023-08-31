@@ -53,18 +53,18 @@ session_start();
 						</th>
 					</tr>
 					<tr align='center'>
-						<td class='BorderInf'>YEAR</td>
-						<td class='BorderInf'>CODE</td>
-						<td class='BorderInf'>STATUS</td>
-						<td class='BorderInf'>HIDDEN</td>
-						<td class='BorderInf'>DATE</td>
+						<td>YEAR</td>
+						<td>CODE</td>
+						<td>STATUS</td>
+						<td>HIDDEN</td>
+						<td>DATE</td>
 					</tr>
 					<tr align='center'>
-						<td  class='BorderInf'>".$year."</td>
-						<td  class='BorderInf'>".$ycod."</td>
-						<td  class='BorderInf'>".$stat."</td>
-						<td  class='BorderInf'>".$hidden."</td>
-						<td  class='BorderInf'>".$date."</td>
+						<td >".$year."</td>
+						<td >".$ycod."</td>
+						<td >".$stat."</td>
+						<td >".$hidden."</td>
+						<td >".$date."</td>
 					</tr>
 					<tr>
 						<td colspan='5' style='text-align:right;' >
@@ -131,20 +131,23 @@ session_start();
 									<th colspan=6 >EJERCICIOS STATUS ".mysqli_num_rows($qb).".</th>
 								</tr>
 								<tr align='center'>
-									<th class='BorderInf'>ID</th>
-									<th class='BorderInf'>YEAR</th>	
-									<th class='BorderInf'>ICOD</th>	
-									<th class='BorderInf'>STATE</th>
-									<th class='BorderInf'>HIDDEN</th>
+									<th>ID</th><th>YEAR</th><th>ICOD</th>	
+									<th>STATE</th><th>HIDDEN</th>
 								</tr>");
 			
+				global $styleBgc; global $i; $i = 1;
+
 			while($rowb = mysqli_fetch_assoc($qb)){
-				print (	"<tr align='center'>
-							<td class='BorderInf' align='center'>".$rowb['id']."</td>
-							<td class='BorderInf' align='center'>".$rowb['year']."</td>
-							<td class='BorderInf' align='center'>".$rowb['ycod']."</td>
-							<td class='BorderInf' align='center'>".$rowb['stat']."</td>
-							<td class='BorderInf' align='center'>".$rowb['hidden']."</td>
+
+				if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+				$i++;
+
+				print (	"<tr class='".$styleBgc."'>
+							<td align='center'>".$rowb['id']."</td>
+							<td align='center'>".$rowb['year']."</td>
+							<td align='center'>".$rowb['ycod']."</td>
+							<td align='center'>".$rowb['stat']."</td>
+							<td align='center'>".$rowb['hidden']."</td>
 						</tr>");
 					} /* Fin del while.*/ 
 
@@ -182,23 +185,28 @@ session_start();
 								<th colspan=6 >PAPELERA EJERCICIOS ".mysqli_num_rows($qb)."</th>
 							</tr>
 							<tr align='center'>
-								<th class='BorderInf'>ID</th>
-								<th class='BorderInf'>YEAR</th>
-								<th class='BorderInf'>ICOD</th>
-								<th class='BorderInf'>STATE</th>	
-								<th class='BorderInf'>HIDDEN</th>
-								<th class='BorderInf'>DATE</th>
+								<th>ID</th>
+								<th>YEAR</th>
+								<th>ICOD</th>
+								<th>STATE</th>	
+								<th>HIDDEN</th>
+								<th>DATE</th>
 							</tr>");
 			
+				global $styleBgc; global $i; $i = 1;
+
 			while($rowb = mysqli_fetch_assoc($qb)){
 
-				print (	"<tr align='center'>
-							<td class='BorderInf' align='center'>".$rowb['id']."</td>
-							<td class='BorderInf' align='center'>".$rowb['year']."</td>
-							<td class='BorderInf' align='center'>".$rowb['ycod']."</td>
-							<td class='BorderInf' align='center'>".$rowb['stat']."</td>
-							<td class='BorderInf' align='center'>".$rowb['hidden']."</td>
-							<td class='BorderInf' align='center'>".$rowb['date']."</td>
+				if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+				$i++;
+
+				print (	"<tr class='".$styleBgc."'>
+							<td align='center'>".$rowb['id']."</td>
+							<td align='center'>".$rowb['year']."</td>
+							<td align='center'>".$rowb['ycod']."</td>
+							<td align='center'>".$rowb['stat']."</td>
+							<td align='center'>".$rowb['hidden']."</td>
+							<td align='center'>".$rowb['date']."</td>
 						</tr>");
 				} /* Fin del while.*/ 
 

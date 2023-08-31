@@ -30,7 +30,7 @@
       float: left;
       clear: left;
       */
-      padding: 0.2em 0.6em 0.8em 0.6em;
+      padding: 0.2em 0.6em 0.2em 0.6em;
       text-align: center;
       /*border: 1px solid red;*/
 
@@ -89,10 +89,9 @@
       max-width: 80%;
     }
     .chartlist li:hover { 
-      background: #f9ffab; 
+      background: #f9ffab !important; 
     }
     
-
     /* TIMELINE CHARTS */
     .timeline { 
       text-align: center;
@@ -194,3 +193,4 @@
     .sparklist li { 
       padding: 0.4em 0; 
     }
+

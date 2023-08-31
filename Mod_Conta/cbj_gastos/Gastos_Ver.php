@@ -180,7 +180,7 @@ $_SESSION['usuarios'] = '';
 			require 'Gastos_NoData.php';
 
 		}else{ 
-			print ("<table align='center'>
+			print ("<table class='tableForm' >
 					<tr>
 						<th colspan=15 class='BorderInf'>".mysqli_num_rows($qc)." RESULTADOS</th>
 					</tr>
@@ -202,7 +202,12 @@ $_SESSION['usuarios'] = '';
 						</th>
 					</tr>");
 			
+			global $styleBgc; global $i; $i = 1;
+
 		while($rowb = mysqli_fetch_assoc($qc)){
+			
+			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+			$i++;
  			
 			global $vname; 		global $dyt1;
 		
@@ -214,18 +219,19 @@ $_SESSION['usuarios'] = '';
 					<td colspan='15' class='BorderInf'></td>
 				</tr>
 				<tr>
-					<td class='BorderInf' align='center'></td>
-					<td colspan='3' class='BorderInfDch' align='center'>IMPUESTOS REPERC €</td>
-					<td colspan='3' class='BorderInfDch' align='center'>RETENCION REPERC €</td>
-					<td colspan='4' class='BorderInfDch' align='center'>TOTAL €</td>
-					<td colspan='4' class='BorderInf' align='right'></td>
-				</tr>
+					<td align='center'></td>
+					<td colspan='3' class='BorderDch' align='center'>IMPUESTOS REPERC €</td>
+					<td colspan='3' class='BorderDch' align='center'>RETENCION REPERC €</td>
+					<td colspan='4' class='BorderDch' align='center'>TOTAL €</td>
+					<td colspan='4' rowspan=2 align='center'>
+					<div id='footer'>&copy; Juan Barr&oacute;s Pazos 2016/2023</div>
+				</td>
+	</tr>
 				<tr>
-					<td class='BorderInf' align='center'></td>
-					<td colspan='3' class='BorderInfDch' align='right'>".$sumaivae." €</td>
-					<td colspan='3' class='BorderInfDch' align='right'>".$sumarete." €</td>
-					<td colspan='4' class='BorderInfDch' align='right'>".$sumapvptot." €</td>
-					<td colspan='4' class='BorderInf' align='right'></td>
+					<td align='center'></td>
+					<td colspan='3' class='BorderDch' align='center'>".$sumaivae." €</td>
+					<td colspan='3' class='BorderDch' align='center'>".$sumarete." €</td>
+					<td colspan='4' class='BorderDch' align='center'>".$sumapvptot." €</td>
 				</tr>
 			</table>");
 			
@@ -445,16 +451,13 @@ $_SESSION['usuarios'] = '';
 /* PARA SUMAR PVPTOT */
 
 	if(!$qb){print(mysqli_error($db).".</br>");
-	}
-	else{
+	}else{
 		$qpvptot = mysqli_query($db, $sqlb);
 		$rowpvptot = mysqli_num_rows($qpvptot);
 		$sumapvptot = 0;
-			for($i=0; $i<$rowpvptot; $i++)
-											{
-												$ver = mysqli_fetch_array($qpvptot);
-
-		$sumapvptot = $sumapvptot + $ver['factpvptot'];
+			for($i=0; $i<$rowpvptot; $i++){
+					$ver = mysqli_fetch_array($qpvptot);
+					$sumapvptot = $sumapvptot + $ver['factpvptot'];
 												}
 	}
 				
@@ -486,8 +489,7 @@ $_SESSION['usuarios'] = '';
 			$qivae = mysqli_query($db, $sqlb);
 			$rowivae = mysqli_num_rows($qivae);
 			$sumaivae = 0;
-				for($i=0; $i<$rowivae; $i++)
-						{
+				for($i=0; $i<$rowivae; $i++){
 					$ver = mysqli_fetch_array($qivae);
 					$sumaivae = $sumaivae + $ver['factivae'];
 							}
@@ -503,7 +505,7 @@ $_SESSION['usuarios'] = '';
 
 				require 'Gastos_NoData.php';
 
-			} else { print ("<table align='center'>
+			} else { print ("<table class='tableForm' >
 							<th colspan=15 class='BorderInf'>".mysqli_num_rows($qb)." RESULTADOS</th>
 						</tr>
 						<tr>
@@ -523,32 +525,38 @@ $_SESSION['usuarios'] = '';
 			<a href='Gastos_Pendientes_Ver.php' class='botonverde' style='color:#343434 !important;'>VER GASTOS PENDIENTES</a>
 							</th>
 						</tr>");
-				
-			while($rowb = mysqli_fetch_assoc($qb)){
+		
+		global $styleBgc; global $i; $i = 1;
 
-				global $vname; 		global $dyt1;
+		while($rowb = mysqli_fetch_assoc($qb)){
+
+			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+			$i++;
+
+			global $vname; 		global $dyt1;
 				
-				require 'Gastos_rowb_Total.php';
+			require 'Gastos_rowb_Total.php';
 						
-			} // FIN WHILE
+		} // FIN WHILE
 
-				print("<tr>
-							<td colspan='15' class='BorderInf'></td>
-						</tr>
-						<tr>
-							<td class='BorderInf' align='right'></td>
-							<td colspan='3' class='BorderInfDch' align='center'>IMPUESTOS REPERC €</td>
-							<td colspan='3' class='BorderInfDch' align='center'>RETENCION REPERC €</td>
-							<td colspan='4' class='BorderInfDch' align='center'>TOTAL €</td>
-							<td colspan='4' class='BorderInf' align='center'></td>
-						</tr>
-						<tr>
-							<td class='BorderInf' align='right'></td>
-							<td colspan='3' class='BorderInfDch' align='right'>".$sumaivae." €</td>
-							<td colspan='3' class='BorderInfDch' align='right'>".$sumarete." €</td>
-							<td colspan='4' class='BorderInfDch' align='right'>".$sumapvptot." €</td>
-							<td colspan='4' class='BorderInf' align='right'></td>
-						</tr>
+		print("<tr>
+					<td colspan='15' class='BorderInf'></td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan='3' class='BorderDch' align='center'>IMPUESTOS REPERC €</td>
+					<td colspan='3' class='BorderDch' align='center'>RETENCION REPERC €</td>
+					<td colspan='4' class='BorderDch' align='center'>TOTAL €</td>
+					<td colspan='5' rowspan=2 align='center'>
+					<div id='footer'>&copy; Juan Barr&oacute;s Pazos 2016/2023</div>
+							</td>
+				</tr>
+				<tr>
+					<td></td>
+					<td colspan='3' class='BorderDch' align='center'>".$sumaivae." €</td>
+					<td colspan='3' class='BorderDch' align='center'>".$sumarete." €</td>
+					<td colspan='4' class='BorderDch' align='center'>".$sumapvptot." €</td>
+				</tr>
 					</table>");
 				} /* Fin segundo else anidado en if */
 			} /* Fin de primer else . */

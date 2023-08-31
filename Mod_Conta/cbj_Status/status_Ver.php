@@ -55,12 +55,12 @@ session_start();
 					</th>
 				</tr>
 				<tr>
-					<th class='BorderInfDch'>ID</th>			
-					<th class='BorderInfDch'>YEAR</th>
-					<th class='BorderInfDch'>ICOD</th>	
-					<th class='BorderInfDch'>STATE</th>	
-					<th class='BorderInfDch'>HIDDEN</th>
-					<th colspan=2 class='BorderInf'>
+					<th>ID</th>			
+					<th>YEAR</th>
+					<th>ICOD</th>	
+					<th>STATE</th>	
+					<th>HIDDEN</th>
+					<th colspan=2>
 						".$AddBlack."
 							<a href='status_Crear.php' >&nbsp;&nbsp;&nbsp;&nbsp</a>
 						".$closeButton."
@@ -70,31 +70,36 @@ session_start();
 					</th>
 				</tr>");
 			
+			global $styleBgc; global $i; $i = 1;
+
 		while($rowb = mysqli_fetch_assoc($qb)){
 
-		print ("<tr align='center'>
+			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+			$i++;
+
+		print ("<tr class='".$styleBgc."'>
 			<form name='modifica' action='status_Modificar_02.php' method='POST' >
-						<td class='BorderInfDch' align='center'>
+						<td align='center'>
 				<input name='id' type='hidden' value='".$rowb['id']."' />".$rowb['id']."
 						</td>
-						<td class='BorderInfDch' align='center'>
+						<td align='center'>
 				<input name='year' type='hidden' value='".$rowb['year']."' />".$rowb['year']."
 						</td>
-						<td class='BorderInfDch' align='center'>
+						<td align='center'>
 				<input name='ycod' type='hidden' value='".$rowb['ycod']."' />".$rowb['ycod']."
 						</td>
-						<td class='BorderInfDch' align='center'>
+						<td align='center'>
 				<input name='stat' type='hidden' value='".$rowb['stat']."' />".$rowb['stat']."
 						</td>
-						<td class='BorderInfDch' align='center'>
+						<td align='center'>
 				<input name='hidden' type='hidden' value='".$rowb['hidden']."' />".$rowb['hidden']."
 						</td>
-						<td align='center' class='BorderInf'>
+						<td align='center'>
 							".$CachedBlack.$closeButton."
 								<input type='hidden' name='oculto2' value=1 />
 		</form>
 			</td>
-			<td class='BorderInf' >
+			<td>
 		<form name='borrar' action='status_Borrar_02.php' method='POST'>
 				<input name='id' type='hidden' value='".$rowb['id']."' />
 				<input name='year' type='hidden' value='".$rowb['year']."' />
