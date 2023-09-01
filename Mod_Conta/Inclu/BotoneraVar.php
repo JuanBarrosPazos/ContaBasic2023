@@ -74,7 +74,7 @@ global $DetalleBlack;       global $DetalleBlackTit;
 $DetalleBlack = "<button type='submit' title='".$DetalleBlackTit."' class='botonverde imgButIco DetalleBlack' style='vertical-align:top;' >";
 
 global $DetalleGrey;        global $DetalleGreyTit;
-$DetalleGrey = "<button type='submit' title='".$DetalleGreyTit."' class='botonverde imgButIco DetalleGrey' style='vertical-align:top;' >";
+$DetalleGrey = "<button type='submit' title='".$DetalleGreyTit."' class='botonazul imgButIco DetalleGrey' style='vertical-align:top;' >";
 
 global $DetalleWhite;       global $DetalleWhiteTit;
 $DetalleWhite = "<button type='submit' title='".$DetalleWhiteTit."' class='botonverde imgButIco DetalleWhite' style='vertical-align:top;' >";
@@ -100,6 +100,28 @@ $InicioGrey = "<button type='submit' title='".$InicioGreyTit."' class='botonazul
 
 global $InicioWhite;        global $InicioWhiteTit;
 $InicioWhite = "<button type='submit' title='".$InicioWhiteTit."' class='botonazul imgButIco InicioWhite' style='vertical-align:top;' >";
+
+
+
+global $MoneyBlack;        global $MoneyBlackTit;
+$MoneyBlack = "<button type='submit' title='".$MoneyBlackTit."' class='botonazul imgButIco MoneyBlack' style='vertical-align:top;' >";
+
+global $MoneyGrey;        global $MoneyGreyTit;
+$MoneyGrey = "<button type='submit' title='".$MoneyGreyTit."' class='botonazul imgButIco MoneyGrey' style='vertical-align:top;' >";
+
+global $MoneyWhite;        global $MoneyWhiteTit;
+$MoneyWhite = "<button type='submit' title='".$MoneyWhiteTit."' class='botonazul imgButIco MoneyWhite' style='vertical-align:top;' >";
+
+
+
+global $MoneypBlack;        global $MoneypBlackTit;
+$MoneypBlack = "<button type='submit' title='".$MoneypBlackTit."' class='botonazul imgButIco MoneypBlack' style='vertical-align:top;' >";
+
+global $MoneypGrey;        global $MoneypGreyTit;
+$MoneypGrey = "<button type='submit' title='".$MoneypGreyTit."' class='botonverde imgButIco MoneypGrey' style='vertical-align:top;' >";
+
+global $MoneypWhite;        global $MoneypWhiteTit;
+$MoneypWhite = "<button type='submit' title='".$MoneypWhiteTit."' class='botonazul imgButIco MoneypWhite' style='vertical-align:top;' >";
 
 
 

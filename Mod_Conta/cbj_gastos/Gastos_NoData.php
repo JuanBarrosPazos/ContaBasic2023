@@ -34,10 +34,10 @@
                 </tr>
                 <tr>
                     <th>
-						".$AddBlack."
-							<a href='".$link1."' >&nbsp;&nbsp;&nbsp;&nbsp</a>
-						".$closeButton.$DetalleGrey."
+                        ".$DetalleGrey."
 							<a href='".$link2."' >&nbsp;&nbsp;&nbsp;&nbsp</a>
+						".$closeButton.$AddBlack."
+							<a href='".$link1."' >&nbsp;&nbsp;&nbsp;&nbsp</a>
 						".$closeButton.$DetalleBlack."
                             <a href='".$link3."' >&nbsp;&nbsp;&nbsp;&nbsp</a>
                         ".$closeButton."

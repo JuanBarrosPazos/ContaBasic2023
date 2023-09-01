@@ -1,26 +1,34 @@
 <?php
 
+	global $TitBut1;		global $TitBut2;
+
+	global $DetalleGreyTit; 	$DetalleGreyTit = $TitBut1; 	// "VER TODOS LOS GASTOS"
+	global $BuscaWhiteTit;		$BuscaWhiteTit = $TitBut2;		// "FILTRO BUSQUEDA GASTOS"
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 	global $cnt; 		$cnt = 0;
 
-	require 'ArrayMesDia.php'; 
+	require 'ArrayMesDia.php';
 	
 	require 'TablaIfErrors.php';
 
 	require 'ArrayOrdenar.php';
 	
-	print("<table align='center' style=\"border:0px;margin-top:4px\">
+	print("<table class='tableForm' >
 				<tr>
-					<th colspan=2>".$titulo."</th>
+					<th>".$titulo."</th>
 				</tr>
 			<form name='form_tabla' method='post' action='$_SERVER[PHP_SELF]'>
 				<tr>
-					<td align='right' class='BorderSup'>
+					<td style='text-align:center;' >
+				<!--
 				<input type='submit' value='FILTRO GASTOS' title='FILTRO DE GASTOS' class='botonazul' />
+				-->
+				".$BuscaWhite.$closeButton."
 				<input type='hidden' name='show_formcl' value=1 />
-					</td>
-					<td class='BorderSup'>
-			<div style='float:left'>
-		<select name='Orden' title='ORDENAR POR...' class='botonverde' >");
+
+		<select name='Orden' title='ORDENAR POR...' class='botonverde' style='vertical-align: middle' >");
 				foreach($ordenar as $option => $label){
 					print ("<option value='".$option."' ");
 					if($option == $defaults['Orden']){
@@ -30,15 +38,26 @@
 					}	
 						
 	print ("</select>
-				</div> 
-				<div style='float:left'>");
-								
-		require '../Inclu/year_select_bbdd.php';
+			<select name='dy' title='SELECCIONAR AÑO...' class='botonverde' style='vertical-align: middle' >
+				<option value=''>YEAR</option>");
+	
+	global $db;
+	global $t1; 		$t1 = "`".$_SESSION['clave']."status`";
+	$sqly =  "SELECT * FROM $t1  WHERE `hidden` = 'no' ORDER BY `year` DESC ";
+	$qy = mysqli_query($db, $sqly);				
+		
+	if(!$qy){print("* ".mysqli_error($db)."<br/>");
+	}else{while($rowsy = mysqli_fetch_assoc($qy)){
+						print ("<option value='".$rowsy['ycod']."' ");
+							if($rowsy['ycod'] == @$defaults['dy']){
+										print ("selected = 'selected'");
+									}
+										print ("> ".$rowsy['year']." </option>");
+								}
+							}  
 
 	print ("</select>
-				</div>
-				<div style='float:left'>
-						<select name='dm' title='SELECCIONAR MES...' class='botonverde' >");
+			<select name='dm' title='SELECCIONAR MES...' class='botonverde' style='vertical-align: middle' >");
 				foreach($dm as $optiondm => $labeldm){
 					print ("<option value='".$optiondm."' ");
 					if($optiondm == @$defaults['dm']){
@@ -48,9 +67,7 @@
 						}	
 																
 	print ("</select>
-				</div>
-				<div style='float:left'>
-					<select name='dd' title='SELECCIONAR DIA...' class='botonverde'>");
+			<select name='dd' title='SELECCIONAR DIA...' class='botonverde' style='vertical-align: middle' >");
 				foreach($dd as $optiondd => $labeldd){
 					print ("<option value='".$optiondd."' ");
 					if($optiondd == @$defaults['dd']){
@@ -60,30 +77,23 @@
 							}	
 																
 	print ("</select>
-				</div>
-				</td>
 			</tr>
 			<tr>					
-				<td colspan='2' class='BorderInf'>	
-				<div style='float:left; margin-right:12px'>
-			Nº FACTURA: &nbsp;
-			<input type='text' name='factnum' size=22 maxlength=20 value='".@$defaults['factnum']."' />
-				</div>
-				<div style='float:left; margin-right:12px'>
-			NIF: &nbsp;
+				<td style='text-align:center;' >	
+			<input type='text' name='factnum' placeholder='NÚMERO FACTURA' size=22 maxlength=20 value='".@$defaults['factnum']."' />
 			<!--
 			<input type='text' name='factnif' size=22 maxlength=10 value='".@$defaults['factnif']."' />
 			-->
 			<select name='factnif' title='NUMERO NIF FACTURA' class='botonverde'>
-			<option value=''>Nº NIF</option>");
-			global $db; 
-			global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."proveedores`";
+				<option value=''>Nº NIF</option>");
+				global $db; 
+				global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."proveedores`";
 
-			$sqlb =  "SELECT * FROM $tabla1 ORDER BY `rsocial` ASC ";
-			$qb = mysqli_query($db, $sqlb);
-			if(!$qb){
-					print("* ".mysqli_error($db)."<br/>");
-			} else {
+				$sqlb =  "SELECT * FROM $tabla1 ORDER BY `rsocial` ASC ";
+				$qb = mysqli_query($db, $sqlb);
+				if(!$qb){
+						print("* ".mysqli_error($db)."<br/>");
+				} else {
 					while($rows = mysqli_fetch_assoc($qb)){
 						print ("<option value='".$rows['dni'].$rows['ldni']."' ");
 						if($rows['dni'].$rows['ldni'] == @$defaults['factnif']){
@@ -94,95 +104,98 @@
 					}  
 
 	print ("</select>
-				</div>
-				<div style='float:left; margin-right:12px'>
-					RAZON SOCIAL: &nbsp;
 					<!--
 					<input type='text' name='factnom' size=22 maxlength=22 value='".@$defaults['factnom']."' />
 					-->
 			<select name='factnom' title='RAZON SOCIAL' class='botonverde'>
-			<option value=''>RAZON SOCIAL</option>");
-		global $db;
-		global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."proveedores`";
-		$sqlb =  "SELECT * FROM $tabla1 ORDER BY `rsocial` ASC ";
-		$qb = mysqli_query($db, $sqlb);
-		if(!$qb){
-				print("* ".mysqli_error($db)."<br/>");
-		} else {
-		while($rows = mysqli_fetch_assoc($qb)){
-					print ("<option value='".$rows['ref']."' ");
-					if($rows['ref'] == @$defaults['factnom']){
-										print ("selected = 'selected'");
-												}
-								print ("> ".$rows['rsocial']." </option>");
-						}
+				<option value=''>RAZON SOCIAL</option>");
+				global $db;
+				global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."proveedores`";
+				$sqlb =  "SELECT * FROM $tabla1 ORDER BY `rsocial` ASC ";
+				$qb = mysqli_query($db, $sqlb);
+				if(!$qb){
+						print("* ".mysqli_error($db)."<br/>");
+				} else {
+					while($rows = mysqli_fetch_assoc($qb)){
+						print ("<option value='".$rows['ref']."' ");
+						if($rows['ref'] == @$defaults['factnom']){
+											print ("selected = 'selected'");
+													}
+									print ("> ".$rows['rsocial']." </option>");
+							}
 			}
 
 	print ("</select>
-				</div>
 					</td>
 				</tr>
 			</form>");
 						
 	////////
 
-	if(isset($_POST['show_formcl'])){	global $cnt;
-										gt2();
-											}
+	if(isset($_POST['show_formcl'])){	global $cnt; 	gt2(); }
+
 	////////
+
 
 	print ("<form name='todo' method='post' action='$_SERVER[PHP_SELF]' >
 				<tr>
-					<td align='center' class='BorderSup'>
+					<td style='text-align:center;' >
+			<!--
 			<input type='submit' value='TODOS LOS GASTOS' title='VER TODOS LOS GASTOS' class='botonazul' />
+			-->
+			".$DetalleGrey.$closeButton."
 			<input type='hidden' name='todo' value=1 />
-					</td>
-					<td class='BorderSup'>	
-			<div style='float:left'>
-			<select name='Orden' title='ORDENAR POR...' class='botonverde'>");
+
+			<select name='Orden' title='ORDENAR POR...' class='botonazul' style='vertical-align: middle'>");
 						
 				foreach($ordenar as $option => $label){
-					
 					print ("<option value='".$option."' ");
-					
 					if($option == $defaults['Orden']){
-															print ("selected = 'selected'");
-																								}
-													print ("> $label </option>");
-												}	
+										print ("selected = 'selected'");
+													}
+										print ("> $label </option>");
+									}	
 						
 	print ("</select>
-				</div>
-				<div style='float:left'>");
-								
-		require '../Inclu/year_select_bbdd.php';
+			<select name='dy' title='SELECCIONAR AÑO...' class='botonazul' style='vertical-align: middle' >
+			<option value=''>YEAR</option>");
+					
+		global $db;
+		global $t1; 		$t1 = "`".$_SESSION['clave']."status`";
+		$sqly =  "SELECT * FROM $t1  WHERE `hidden` = 'no' ORDER BY `year` DESC ";
+		$qy = mysqli_query($db, $sqly);				
+			
+		if(!$qy){print("* ".mysqli_error($db)."<br/>");
+		}else{while($rowsy = mysqli_fetch_assoc($qy)){
+							print ("<option value='".$rowsy['ycod']."' ");
+								if($rowsy['ycod'] == @$defaults['dy']){
+											print ("selected = 'selected'");
+										}
+											print ("> ".$rowsy['year']." </option>");
+									}
+								}  
 									
 	print ("</select>
-				</div>
-				<div style='float:left'>
-					<select name='dm'  title='SELECCIONAR MES...' class='botonverde'>");
+			<select name='dm' title='SELECCIONAR MES...' class='botonazul' style='vertical-align: middle' >");
 					foreach($dm as $optiondm => $labeldm){
 								print ("<option value='".$optiondm."' ");
 						if($optiondm == @$defaults['dm']){
 											print ("selected = 'selected'");
 													}
-										print ("> $labeldm </option>");
-							}	
+											print ("> $labeldm </option>");
+									}	
 																
 	print ("</select>
-				</div>
-				<div style='float:left'>
-					<select name='dd' title='SELECCIONAR DIA...' class='botonverde'>");
+			<select name='dd' title='SELECCIONAR DIA...' class='botonazul' style='vertical-align: middle'>");
 						foreach($dd as $optiondd => $labeldd){
 							print ("<option value='".$optiondd."' ");
 							if($optiondd == @$defaults['dd']){
 												print ("selected = 'selected'");
-															}
-											print ("> $labeldd </option>");
+														}
+												print ("> $labeldd </option>");
 									}	
 																
 	print ("</select>
-					</div>
 				</form>														
 					</td></tr>");
 
@@ -192,9 +205,7 @@
 
 	////////
 			
-		print("	</table>
-							
-				"); /* Fin del print */
+		print("	</table>"); /* Fin del print */
 
 
 ?>

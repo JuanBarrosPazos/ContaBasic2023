@@ -39,7 +39,8 @@ $_SESSION['usuarios'] = '';
 				 ////////////////////				  ///////////////////
 
 	function validate_form(){
-	
+		
+		
 		require 'Inc_Show_Form_01_Val.php';
 
 		return $errors;
@@ -61,18 +62,18 @@ $_SESSION['usuarios'] = '';
 		require 'Gastos_factdate.php';
 
 		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
-		global $sqlc; 		$sqlc =  "SELECT * FROM $vname WHERE 1 ";
+		global $sqlb; 		$sqlb =  "SELECT * FROM $vname WHERE 1 ";
 
 		// FACTURA Nº
 		global $fnum;		global $or1;	global $or2;	
 		if(strlen(trim($_POST['factnum'])) == 0){
 			$fnum = '';
-			$sqlc .= " AND (";
+			$sqlb .= " AND (";
 			$or1 = '';
 		}else{
 			$fnum = $_POST['factnum'];
 			$or1 = 'OR';
-			$sqlc .= " AND (`factnum` = '$fnum' ";
+			$sqlb .= " AND (`factnum` = '$fnum' ";
 		}
 		global $factnum; 	$factnum = $_POST['factnum'];
 		
@@ -81,11 +82,11 @@ $_SESSION['usuarios'] = '';
 		if(strlen(trim($_POST['factnif'])) == 0){
 			$fnif = '';
 			if($or1 == ''){ $or2 = ''; } else { $or2 = 'OR'; }
-			$sqlc .= "";
+			$sqlb .= "";
 		}else{
 			$fnif = $_POST['factnif'];
 			$or2 = 'OR';
-			$sqlc .= " $or1 `factnif` = '$fnif' ";
+			$sqlb .= " $or1 `factnif` = '$fnif' ";
 		}
 		global $factnif; 	$factnif = $_POST['factnif'];
 		
@@ -93,39 +94,39 @@ $_SESSION['usuarios'] = '';
 		global $fnom;
 		if(strlen(trim($_POST['factnom'])) == 0){
 			$fnom = '';
-			$sqlc .= "";
+			$sqlb .= "";
 		}else{
 			$fnom = $_POST['factnom'];
-			$sqlc .= " $or2 `refprovee` = '$fnom' ";
+			$sqlb .= " $or2 `refprovee` = '$fnom' ";
 		}
 		global $factnom; 	$factnom = $_POST['factnom'];
 		
 		if($fil == "%%"){
-			$sqlc .= ")";
+			$sqlb .= ")";
 		}else{
-			$sqlc .= ") AND  (`factdate` LIKE '$fil')";
+			$sqlb .= ") AND  (`factdate` LIKE '$fil')";
 		}
-			//$sqlc .= "OR  `factdate` LIKE '$fil' ";
+			//$sqlb .= "OR  `factdate` LIKE '$fil' ";
 
 		global $orden;
 		if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
 			$orden = $_POST['Orden'];
 		}else{ $orden = '`id` ASC'; }
 
-			$sqlc .= " ORDER BY $orden ";
+			$sqlb .= " ORDER BY $orden ";
 
 	/*	
-	$sqlc =  "SELECT * FROM $vname WHERE (`factnum` = '$fnum' OR `factnif` = '$fnif' OR `refprovee` = '$fnom') AND  (`factdate` LIKE '$fil') ORDER BY $orden ";
+	$sqlb =  "SELECT * FROM $vname WHERE (`factnum` = '$fnum' OR `factnif` = '$fnif' OR `refprovee` = '$fnom') AND  (`factdate` LIKE '$fil') ORDER BY $orden ";
 	*/
-	//echo $sqlc;
-	$qc = mysqli_query($db, $sqlc);
+	//echo $sqlb;
+	$qb = mysqli_query($db, $sqlb);
 	
 /////////////////////	
 /* PARA SUMAR PVPTOT */
 
-	if(!$qc){print(mysqli_error($db).".</br>");
+	if(!$qb){print(mysqli_error($db).".</br>");
 	}else{
-		$qpvptot = mysqli_query($db, $sqlc);
+		$qpvptot = mysqli_query($db, $sqlb);
 		$rowpvptot = mysqli_num_rows($qpvptot);
 		$sumapvptot = 0;
 			for($i=0; $i<$rowpvptot; $i++){
@@ -140,9 +141,9 @@ $_SESSION['usuarios'] = '';
 /////////////////////	
 /* PARA SUMAR RETENCIONES */
 
-	if(!$qc){print(mysqli_error($db).".</br>");
+	if(!$qb){print(mysqli_error($db).".</br>");
 	}else{
-		$qrete = mysqli_query($db, $sqlc);
+		$qrete = mysqli_query($db, $sqlb);
 		$rowrete = mysqli_num_rows($qrete);
 		$sumarete = 0;
 			for($i=0; $i<$rowrete; $i++){
@@ -157,9 +158,9 @@ $_SESSION['usuarios'] = '';
 /////////////////////	
 /* PARA SUMAR IVA */
 
-	if(!$qc){print(mysqli_error($db).".</br>");
+	if(!$qb){print(mysqli_error($db).".</br>");
 	}else{
-		$qivae = mysqli_query($db, $sqlc);
+		$qivae = mysqli_query($db, $sqlb);
 		$rowivae = mysqli_num_rows($qivae);
 		$sumaivae = 0;
 			for($i=0; $i<$rowivae; $i++){
@@ -171,75 +172,30 @@ $_SESSION['usuarios'] = '';
 /* FIN PARA SUMAR IVA */
 /////////////////////////
 
-	if(!$qc){
+	global $AddBlackTit; 		$AddBlackTit = "CREAR NUEVO GASTO PENDIENTE";
+	global $MoneypBalckTit; 	$MoneypBalckTit = "VER TODOS GASTOS PENDIENTES";
+	global $MoneyBlackTit; 		$MoneyBlackTit = "FACTURA PAGADA";
+
+	global $DetalleBlackTit; 	$DetalleBlackTit = "VER DETALLES";
+	global $FotoBlackTit;		$FotoBlackTit = "MODIFICAR DOCS ADJUNTOS";
+	global $DatosBlackTit;		$DatosBlackTit = "MOFIFICAR DATOS FACTURA";
+	global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR DATOS";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
+	if(!$qb){
 			print("<font color='#FF0000'>
 					Se ha producido un error: </font>".mysqli_error($db)."</br>");
 	} else {
-		if(mysqli_num_rows($qc) == 0){
+		if(mysqli_num_rows($qb) == 0){
 			global $KeyForm; 	$KeyForm = "pend";
 			global $titNoData; 	$titNoData = "GASTOS PENDIENTES VER<br><br>";
 			require 'Gastos_NoData.php';
 
 		}else{ 
-			print ("<table class='tableForm' >
-					<tr>
-						<th colspan=16 class='BorderInf'>".mysqli_num_rows($qc)." RESULTADOS</th>
-					</tr>
-					<tr>
-						<th class='BorderInfDch'>ID</th>
-						<th class='BorderInfDch'>NUMERO</th>
-						<th class='BorderInfDch'>Y/M/D</th>
-						<th class='BorderInfDch'>RAZON SOCIAL</th>
-						<th class='BorderInfDch'>NIF/CIF</th>
-						<th class='BorderInfDch'>IMP %</th>
-						<th class='BorderInfDch'>IMP €</th>
-						<th class='BorderInfDch'>SUBTOT</th>										
-						<th class='BorderInfDch'>RET %</th>
-						<th class='BorderInfDch'>RET €</th>
-						<th class='BorderInfDch'>TOTAL</th>
-						<th colspan=5 class='BorderInf'>
-			<a href='Gastos_Pendientes_Crear.php' class='botonverde' style='color:#343434 !important;'>
-				CREAR NUEVO GASTO PENDIENTE
-			</a>
-			<a href='Gastos_Ver.php' class='botonverde' style='color:#343434 !important;'>
-				VER GASTOS
-			</a>
-						</th>
-					</tr>");
-			
-			global $styleBgc; global $i; $i = 1;
 
-		while($rowb = mysqli_fetch_assoc($qc)){
-
-			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
-			$i++;
- 			
-			global $vname; 		global $dyt1;
-		
-			require 'Gastos_Pendientes_rowb_Total.php';
-
-		} // FIN WHILE  
-
-		print("<tr>
-					<td colspan='16' class='BorderInf'></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td colspan='3' class='BorderDch' align='center'>IMPUESTOS REPERC €</td>
-					<td colspan='3' class='BorderDch' align='center'>RETENCION REPERC €</td>
-					<td colspan='4' class='BorderDch' align='center'>TOTAL €</td>
-					<td colspan='5' rowspan=2 align='center'>
-						<div id='footer'>&copy; Juan Barr&oacute;s Pazos 2016/2023</div>
-					</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td colspan='3' class='BorderDch' align='center'>".$sumaivae." €</td>
-					<td colspan='3' class='BorderDch' align='center'>".$sumarete." €</td>
-					<td colspan='4' class='BorderDch' align='center'>".$sumapvptot." €</td>
-				</tr>
-			</table>");
-			
+			require 'Gastos_rowb_Total_Tabla.php';
+						
 			} /* Fin segundo else anidado en if */
 
 		} /* Fin de primer else . */
@@ -312,7 +268,8 @@ $_SESSION['usuarios'] = '';
 								}
 								
 		global $titulo; $titulo = "CONSULTAR GASTOS PENDIENTES";
-
+		global $TitBut1;		$TitBut1 = "VER TODOS LOS GASTOS PENDIENTES";		
+		global $TitBut2;		$TitBut2 = "FILTRO BUSQUEDA GASTOS PENDIENTES";
 		require 'Inc_Show_Form_01.php';	
 
 	}	/* Fin show_form(); */
@@ -332,11 +289,11 @@ function gt2(){
 	
 	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
 
-	$sqlc =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+	$sqlb =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
  	
-	$qc = mysqli_query($db, $sqlc);
+	$qb = mysqli_query($db, $sqlb);
 	global $gt;
-	$gt = mysqli_num_rows($qc);
+	$gt = mysqli_num_rows($qb);
 	//print("* ".$gt);
 	global $cnt;
 
@@ -507,6 +464,17 @@ function gt2(){
 	/* FIN PARA SUMAR IVA */
 	/////////////////////////
 
+	global $AddBlackTit; 		$AddBlackTit = "CREAR NUEVO GASTO PENDIENTE";
+	global $MoneypGreyTit; 		$MoneypGreyTit = "VER TODOS GASTOS";
+	global $MoneyBlackTit; 		$MoneyBlackTit = "FACTURA PAGADA";
+
+	global $DetalleBlackTit; 	$DetalleBlackTit = "VER DETALLES";
+	global $FotoBlackTit;		$FotoBlackTit = "MODIFICAR DOCS ADJUNTOS";
+	global $DatosBlackTit;		$DatosBlackTit = "MOFIFICAR DATOS FACTURA";
+	global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR DATOS";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
 		if(!$qb){
 				print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
 		} else {
@@ -515,63 +483,10 @@ function gt2(){
 				global $titNoData; 	$titNoData = "GASTOS PENDIENTES VER<br><br>";
 				require 'Gastos_NoData.php';
 
-			} else { print ("<table class='tableForm' >
-							<th colspan=16 class='BorderInf'>".mysqli_num_rows($qb)." RESULTADOS</th>
-						</tr>
-						<tr>
-							<th class='BorderInfDch'>ID</th>			
-							<th class='BorderInfDch'>NUMERO</th>			
-							<th class='BorderInfDch'>Y/M/D</th>				
-							<th class='BorderInfDch'>RAZON SOCIAL</th>
-							<th class='BorderInfDch'>NIF / CIF</th>
-							<th class='BorderInfDch'>IMP %</th>
-							<th class='BorderInfDch'>IMP €</th>
-							<th class='BorderInfDch'>SUBTOT</th>										
-							<th class='BorderInfDch'>RET %</th>
-							<th class='BorderInfDch'>RET €</th>
-							<th class='BorderInfDch'>TOTAL</th>
-							<th colspan=5 class='BorderInf'>
-			<a href='Gastos_Pendientes_Crear.php' class='botonverde' style='color:#343434 !important;'>
-				CREAR NUEVO GASTO PENDIENTE
-			</a>
-			<a href='Gastos_Ver.php' class='botonverde' style='color:#343434 !important;'>
-				VER GASTOS
-			</a>
-							</th>
-						</tr>");
-				
-			global $styleBgc; global $i; $i = 1;
+			} else { 
 
-		while($rowb = mysqli_fetch_assoc($qb)){
+				require 'Gastos_Pendientes_rowb_Total_Tabla.php';
 
-			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
-			$i++;
-	
-				global $vname; 		global $dyt1;
-				
-				require 'Gastos_Pendientes_rowb_Total.php';
-						
-		} // FIN WHILE
-
-			print("<tr>
-						<td colspan='16' class='BorderInf'></td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan='3' class='BorderDch' align='center'>IMPUESTOS REPERC €</td>
-						<td colspan='3' class='BorderDch' align='center'>RETENCION REPERC €</td>
-						<td colspan='4' class='BorderDch' align='center'>TOTAL €</td>
-						<td colspan='5' rowspan=2 align='center'>
-							<div id='footer'>&copy; Juan Barr&oacute;s Pazos 2016/2023</div>
-						</td>
-					</tr>
-					<tr>
-						<td></td>
-						<td colspan='3' class='BorderDch' align='center'>".$sumaivae." €</td>
-						<td colspan='3' class='BorderDch' align='center'>".$sumarete." €</td>
-						<td colspan='4' class='BorderDch' align='center'>".$sumapvptot." €</td>
-					</tr>
-				</table>");
 			} /* Fin segundo else anidado en if */
 		} /* Fin de primer else . */
 			

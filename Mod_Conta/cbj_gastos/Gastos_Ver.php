@@ -61,18 +61,20 @@ $_SESSION['usuarios'] = '';
 		require 'Gastos_factdate.php';
 
 		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
-		global $sqlc; 		$sqlc =  "SELECT * FROM $vname WHERE 1 ";
+		global $sqlb; 		$sqlb =  "SELECT * FROM $vname WHERE 1 ";
 
 	// FACTURA Nº
-	global $fnum;		global $or1;	global $or2;	
+	global $fnum;		global $or1;	global $or2;	global $key;	
 	if(strlen(trim($_POST['factnum'])) == 0){
 		$fnum = '';
-		$sqlc .= " AND (";
+		$sqlb .= " AND (";
 		$or1 = '';
+		$key = 0;
 	}else{
-		$fnum = $_POST['factnum'];
+		$fnum = "%".$_POST['factnum']."%";
 		$or1 = 'OR';
-		$sqlc .= " AND (`factnum` = '$fnum' ";
+		$sqlb .= " AND (`factnum` LIKE '$fnum' ";
+		$key = 1;
 	}
 	global $factnum; 	$factnum = $_POST['factnum'];
 	
@@ -81,51 +83,59 @@ $_SESSION['usuarios'] = '';
 	if(strlen(trim($_POST['factnif'])) == 0){
 		$fnif = '';
 		if($or1 == ''){ $or2 = ''; } else { $or2 = 'OR'; }
-		$sqlc .= "";
+		$sqlb .= "";
+		$key = $key+0;
 	}else{
 		$fnif = $_POST['factnif'];
 		$or2 = 'OR';
-		$sqlc .= " $or1 `factnif` = '$fnif' ";
+		$sqlb .= " $or1 `factnif` = '$fnif' ";
+		$key = $key+1;
 	}
+
 	global $factnif; 	$factnif = $_POST['factnif'];
 	
 	// RAZON SOCIAL
 	global $fnom;
 	if(strlen(trim($_POST['factnom'])) == 0){
 		$fnom = '';
-		$sqlc .= "";
+		$sqlb .= "";
+		$key = $key+0;
 	}else{
 		$fnom = $_POST['factnom'];
-		$sqlc .= " $or2 `refprovee` = '$fnom' ";
+		$sqlb .= " $or2 `refprovee` = '$fnom' ";
+		$key = $key+1;
 	}
 	global $factnom; 	$factnom = $_POST['factnom'];
 	
 	if($fil == "%%"){
-		$sqlc .= ")";
+		if($key == 0){ $sqlb .= ""; }else{ $sqlb .= ")"; }
 	}else{
-		$sqlc .= ") AND  (`factdate` LIKE '$fil')";
+		$sqlb .= ") AND  (`factdate` LIKE '$fil')";
 	}
-		//$sqlc .= "OR  `factdate` LIKE '$fil' ";
+		//$sqlb .= "OR  `factdate` LIKE '$fil' ";
 
+	if($key == 0){ $sqlb =  "SELECT * FROM $vname "; }else{ }
+	echo $key."<br>";
+	
 	global $orden;
 	if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
 		$orden = $_POST['Orden'];
 	}else{ $orden = '`id` ASC'; }
 
-		$sqlc .= " ORDER BY $orden ";
+		$sqlb .= " ORDER BY $orden ";
 
 	/*	
-	$sqlc =  "SELECT * FROM $vname WHERE (`factnum` = '$fnum' OR `factnif` = '$fnif' OR `refprovee` = '$fnom') AND  (`factdate` LIKE '$fil') ORDER BY $orden ";
+	$sqlb =  "SELECT * FROM $vname WHERE (`factnum` = '$fnum' OR `factnif` = '$fnif' OR `refprovee` = '$fnom') AND  (`factdate` LIKE '$fil') ORDER BY $orden ";
 	*/
-	//echo $sqlc;
-	$qc = mysqli_query($db, $sqlc);
+	echo $sqlb."<br>";
+	$qb = mysqli_query($db, $sqlb);
 	
 /////////////////////	
 /* PARA SUMAR PVPTOT */
 
-	if(!$qc){print(mysqli_error($db).".</br>");
+	if(!$qb){print(mysqli_error($db).".</br>");
 	}else{
-		$qpvptot = mysqli_query($db, $sqlc);
+		$qpvptot = mysqli_query($db, $sqlb);
 		$rowpvptot = mysqli_num_rows($qpvptot);
 		$sumapvptot = 0;
 			for($i=0; $i<$rowpvptot; $i++){
@@ -140,9 +150,9 @@ $_SESSION['usuarios'] = '';
 /////////////////////	
 /* PARA SUMAR RETENCIONES */
 
-	if(!$qc){print(mysqli_error($db).".</br>");
+	if(!$qb){print(mysqli_error($db).".</br>");
 	}else{
-		$qrete = mysqli_query($db, $sqlc);
+		$qrete = mysqli_query($db, $sqlb);
 		$rowrete = mysqli_num_rows($qrete);
 		$sumarete = 0;
 			for($i=0; $i<$rowrete; $i++){
@@ -157,9 +167,9 @@ $_SESSION['usuarios'] = '';
 /////////////////////	
 /* PARA SUMAR IVA */
 
-	if(!$qc){print(mysqli_error($db).".</br>");
+	if(!$qb){print(mysqli_error($db).".</br>");
 	}else{
-		$qivae = mysqli_query($db, $sqlc);
+		$qivae = mysqli_query($db, $sqlb);
 		$rowivae = mysqli_num_rows($qivae);
 		$sumaivae = 0;
 			for($i=0; $i<$rowivae; $i++){
@@ -171,69 +181,27 @@ $_SESSION['usuarios'] = '';
 /* FIN PARA SUMAR IVA */
 /////////////////////////
 
-	if(!$qc){
+	global $AddBlackTit; 		$AddBlackTit = "CREAR NUEVO GASTO PENDIENTE";
+	global $MoneypBlackTit; 	$MoneypBlackTit = "VER TODOS GASTOS PENDIENTES";
+
+	global $DetalleBlackTit; 	$DetalleBlackTit = "VER DETALLES";
+	global $FotoBlackTit;		$FotoBlackTit = "MODIFICAR DOCS ADJUNTOS";
+	global $DatosBlackTit;		$DatosBlackTit = "MOFIFICAR DATOS FACTURA";
+	global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR DATOS";
+	require '../Inclu/BotoneraVar.php';
+	global $closeButton;
+
+	if(!$qb){
 			print("<font color='#FF0000'>
 					Se ha producido un error: </font>".mysqli_error($db)."</br>");
 	} else {
-		if(mysqli_num_rows($qc) == 0){
+		if(mysqli_num_rows($qb) == 0){
 
-			require 'Gastos_NoData.php';
+				require 'Gastos_NoData.php';
 
 		}else{ 
-			print ("<table class='tableForm' >
-					<tr>
-						<th colspan=15 class='BorderInf'>".mysqli_num_rows($qc)." RESULTADOS</th>
-					</tr>
-					<tr>
-						<th class='BorderInfDch'>ID</th>
-						<th class='BorderInfDch'>NUMERO</th>
-						<th class='BorderInfDch'>Y/M/D</th>
-						<th class='BorderInfDch'>RAZON SOCIAL</th>
-						<th class='BorderInfDch'>NIF/CIF</th>
-						<th class='BorderInfDch'>IMP %</th>
-						<th class='BorderInfDch'>IMP €</th>
-						<th class='BorderInfDch'>SUBTOT</th>										
-						<th class='BorderInfDch'>RET %</th>
-						<th class='BorderInfDch'>RET €</th>
-						<th class='BorderInfDch'>TOTAL</th>
-						<th colspan=4 class='BorderInfDch'>
-			<a href='Gastos_Crear.php' class='botonverde' style='color:#343434 !important;'>CREAR NUEVO GASTO</a>
-			<a href='Gastos_Pendientes_Ver.php' class='botonverde' style='color:#343434 !important;'>VER GASTOS PENDIENTES</a>
-						</th>
-					</tr>");
-			
-			global $styleBgc; global $i; $i = 1;
 
-		while($rowb = mysqli_fetch_assoc($qc)){
-			
-			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
-			$i++;
- 			
-			global $vname; 		global $dyt1;
-		
-			require 'Gastos_rowb_Total.php';
-
-		} // FIN WHILE  
-
-		print("<tr>
-					<td colspan='15' class='BorderInf'></td>
-				</tr>
-				<tr>
-					<td align='center'></td>
-					<td colspan='3' class='BorderDch' align='center'>IMPUESTOS REPERC €</td>
-					<td colspan='3' class='BorderDch' align='center'>RETENCION REPERC €</td>
-					<td colspan='4' class='BorderDch' align='center'>TOTAL €</td>
-					<td colspan='4' rowspan=2 align='center'>
-					<div id='footer'>&copy; Juan Barr&oacute;s Pazos 2016/2023</div>
-				</td>
-	</tr>
-				<tr>
-					<td align='center'></td>
-					<td colspan='3' class='BorderDch' align='center'>".$sumaivae." €</td>
-					<td colspan='3' class='BorderDch' align='center'>".$sumarete." €</td>
-					<td colspan='4' class='BorderDch' align='center'>".$sumapvptot." €</td>
-				</tr>
-			</table>");
+				require 'Gastos_rowb_Total_Tabla.php';
 			
 			} /* Fin segundo else anidado en if */
 
@@ -306,8 +274,10 @@ $_SESSION['usuarios'] = '';
 									'Orden' => isset($ordenar));
 								}
 
-		global $titulo; $titulo = "CONSULTAR GASTOS";
 
+		global $titulo; $titulo = "CONSULTAR GASTOS";
+		global $TitBut1;		$TitBut1 = "VER TODOS LOS GASTOS";		
+		global $TitBut2;		$TitBut2 = "FILTRO BUSQUEDA GASTOS";
 		require 'Inc_Show_Form_01.php';	
 
 	}	/* Fin show_form(); */
@@ -327,9 +297,9 @@ $_SESSION['usuarios'] = '';
 	
 	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
 
-	$sqlc =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+	$sqlb =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
  	
-	$qc = mysqli_query($db, $sqlc);
+	$qc = mysqli_query($db, $sqlb);
 	global $gt;
 	$gt = mysqli_num_rows($qc);
 	//print("* ".$gt);
@@ -337,31 +307,23 @@ $_SESSION['usuarios'] = '';
 
 	if(($gt>0)&&($_POST['dm'] == '')&&($_POST['dd'] == '')&&($cnt < 1)){
 		print("	<tr>
-		 			<td colspan='2' align='right' class='BorderInf'>
-				<div style='float:left; margin-right:3px;  margin-left:3px;'>
-			<form name='grafico' action='grafico_gf.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
+		 			<td>
+			<form name='grafico' action='grafico_gf.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>
 		<input type='submit' value='GRAFIC LINEAL TOTAL' title='VER GRAFICA LINEAL TOTAL' class='botonnaranja' />
 		<input type='hidden' name='grafico' value=1 />
 			</form>	
-				</div>	 				
-				<div style='float:left; margin-right:3px;  margin-left:3px;'>
-			<form name='grafico' action='grafico_gfb.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
+			<form name='grafico' action='grafico_gfb.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>
 		<input type='submit' value='GRAFIC BARRAS TOTAL' title='VER GRAFICA BARRAS TOTAL' class='botonnaranja' />
 		<input type='hidden' name='grafico' value=1 />
 			</form>	
-				</div>					
-				<div style='float:left; margin-right:3px;  margin-left:3px;'>
-			<form name='grafico2' action='grafico_gf2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
+			<form name='grafico2' action='grafico_gf2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>
 		<input type='submit' value='GRAFIC LINEAL DETALLE' title='VER GRAFICA LINEAL DETALLE' class='botonnaranja' />
 		<input type='hidden' name='grafico2' value=1 />
 			</form>	
-				</div>					
-				<div style='float:left; margin-right:3px;  margin-left:3px;'>
-			<form name='grafico2' action='grafico_gf2b.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
+			<form name='grafico2' action='grafico_gf2b.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>
 		<input type='submit' value='GRAFIC BARRAS DETALLE' title='VER GRAFICA BARRAS DETALLE' class='botonnaranja' />
 		<input type='hidden' name='grafico2' value=1 />
 			</form>	
-				</div>					
 					</td>
 				</tr>");
 		}
@@ -374,53 +336,44 @@ $_SESSION['usuarios'] = '';
 
 	function gt1(){
 
-	global $db; 		global $db_name;
+		global $db; 		global $db_name;
 
-	require 'Gastos_factdate.php';
+		require 'Gastos_factdate.php';
 
-	global $orden;
-	if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
-		$orden = $_POST['Orden'];
-	}else{ $orden = '`id` ASC'; }
+		global $orden;
+		if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
+			$orden = $_POST['Orden'];
+		}else{ $orden = '`id` ASC'; }
 
 
-	global $vname; 	$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
-	$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
-	$qb = mysqli_query($db, $sqlb);
-	if(mysqli_num_rows($qb) == 0){}
-	global $gt;
-	$gt = mysqli_num_rows($qb);
-	//print("* ".$gt);
-	
-	if(($gt>0)&&($_POST['dm'] != '')&&($_POST['dd'] == '')){
+		global $vname; 	$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+		$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
+		$qb = mysqli_query($db, $sqlb);
+		if(mysqli_num_rows($qb) == 0){}
+		global $gt;
+		$gt = mysqli_num_rows($qb);
+		//print("* ".$gt);
+		
+		if(($gt>0)&&($_POST['dm'] != '')&&($_POST['dd'] == '')){
 
 		print("	<tr>
-		 			<td align='right' class='BorderInf' colspan='2'>
-				<div style='float:left; margin-right:3px;  margin-left:3px;'>
-			<form name='grafico' action='grafico_g.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-	<input type='submit' value='GRAFIC LINEAL TOTAL DIA' title='VER GRAFICA LINEAL TOTAL POR DIA' class='botonnaranja' />
-	<input type='hidden' name='grafico' value=1 />
+		 			<td>
+			<form name='grafico' action='grafico_g.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;' >
+		<input type='submit' value='GRAFIC LINEAL TOTAL DIA' title='VER GRAFICA LINEAL TOTAL POR DIA' class='botonnaranja' />
+		<input type='hidden' name='grafico' value=1 />
 			</form>	
-				</div>
-				<div style='float:left; margin-right:3px;  margin-left:3px;'>
-			<form name='graficob' action='grafico_gb.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-	<input type='submit' value='GRAFIC BARRAS TOTAL DIA' title='VER GRAFICA BARRAS TOTAL POR DIA' class='botonnaranja' />
-	<input type='hidden' name='graficob' value=1 />
+			<form name='graficob' action='grafico_gb.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>
+		<input type='submit' value='GRAFIC BARRAS TOTAL DIA' title='VER GRAFICA BARRAS TOTAL POR DIA' class='botonnaranja' />
+		<input type='hidden' name='graficob' value=1 />
 			</form>	
-				</div>
-				<div style='float:left' margin-right:3px;  margin-left:3px;>
-			<form name='grafico2' action='grafico_g2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-	<input type='submit' value='GRAFIC LINEAL DETALLE' title='VER GRAFICA LINEAL DETALLE' class='botonnaranja' />
-	<input type='hidden' name='grafico2' value=1 />
+			<form name='grafico2' action='grafico_g2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>
+		<input type='submit' value='GRAFIC LINEAL DETALLE' title='VER GRAFICA LINEAL DETALLE' class='botonnaranja' />
+		<input type='hidden' name='grafico2' value=1 />
 			</form>	
-				</div>					
-			</div>
-				<div style='float:left' margin-right:3px;  margin-left:3px;>
-			<form name='graficob2' action='grafico_gb2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-	<input type='submit' value='GRAFIC BARRAS DETALLE' title='VER GRAFICA BARRAS DETALLE' class='botonnaranja' />
-	<input type='hidden' name='graficob2' value=1 />
+			<form name='graficob2' action='grafico_gb2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>
+		<input type='submit' value='GRAFIC BARRAS DETALLE $$' title='VER GRAFICA BARRAS DETALLE' class='botonnaranja' />
+		<input type='hidden' name='graficob2' value=1 />
 			</form>	
-				</div>					
 					</td>
 				</tr>");
 		} // FIN if
@@ -498,6 +451,16 @@ $_SESSION['usuarios'] = '';
 	/* FIN PARA SUMAR IVA */
 	/////////////////////////
 
+		global $AddBlackTit; 		$AddBlackTit = "CREAR NUEVO GASTO PENDIENTE";
+		global $MoneypBlackTit; 	$MoneypBlackTit = "VER TODOS GASTOS PENDIENTES";
+
+		global $DetalleBlackTit; 	$DetalleBlackTit = "VER DETALLES";
+		global $FotoBlackTit;		$FotoBlackTit = "MODIFICAR DOCS ADJUNTOS";
+		global $DatosBlackTit;		$DatosBlackTit = "MOFIFICAR DATOS FACTURA";
+		global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR DATOS";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
 		if(!$qb){
 				print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
 		} else {
@@ -505,59 +468,10 @@ $_SESSION['usuarios'] = '';
 
 				require 'Gastos_NoData.php';
 
-			} else { print ("<table class='tableForm' >
-							<th colspan=15 class='BorderInf'>".mysqli_num_rows($qb)." RESULTADOS</th>
-						</tr>
-						<tr>
-							<th class='BorderInfDch'>ID</th>			
-							<th class='BorderInfDch'>NUMERO</th>			
-							<th class='BorderInfDch'>Y/M/D</th>				
-							<th class='BorderInfDch'>RAZON SOCIAL</th>
-							<th class='BorderInfDch'>NIF / CIF</th>
-							<th class='BorderInfDch'>IMP %</th>
-							<th class='BorderInfDch'>IMP €</th>
-							<th class='BorderInfDch'>SUBTOT</th>										
-							<th class='BorderInfDch'>RET %</th>
-							<th class='BorderInfDch'>RET €</th>
-							<th class='BorderInfDch'>TOTAL</th>
-							<th colspan=4 class='BorderInfDch'>
-			<a href='Gastos_Crear.php' class='botonverde' style='color:#343434 !important;'>CREAR NUEVO GASTO</a>
-			<a href='Gastos_Pendientes_Ver.php' class='botonverde' style='color:#343434 !important;'>VER GASTOS PENDIENTES</a>
-							</th>
-						</tr>");
-		
-		global $styleBgc; global $i; $i = 1;
+			} else { 
 
-		while($rowb = mysqli_fetch_assoc($qb)){
-
-			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
-			$i++;
-
-			global $vname; 		global $dyt1;
-				
-			require 'Gastos_rowb_Total.php';
-						
-		} // FIN WHILE
-
-		print("<tr>
-					<td colspan='15' class='BorderInf'></td>
-				</tr>
-				<tr>
-					<td></td>
-					<td colspan='3' class='BorderDch' align='center'>IMPUESTOS REPERC €</td>
-					<td colspan='3' class='BorderDch' align='center'>RETENCION REPERC €</td>
-					<td colspan='4' class='BorderDch' align='center'>TOTAL €</td>
-					<td colspan='5' rowspan=2 align='center'>
-					<div id='footer'>&copy; Juan Barr&oacute;s Pazos 2016/2023</div>
-							</td>
-				</tr>
-				<tr>
-					<td></td>
-					<td colspan='3' class='BorderDch' align='center'>".$sumaivae." €</td>
-					<td colspan='3' class='BorderDch' align='center'>".$sumarete." €</td>
-					<td colspan='4' class='BorderDch' align='center'>".$sumapvptot." €</td>
-				</tr>
-					</table>");
+					require 'Gastos_rowb_Total_Tabla.php';
+					
 				} /* Fin segundo else anidado en if */
 			} /* Fin de primer else . */
 			

@@ -526,6 +526,34 @@ a:hover  img {
 }
 
 
+.MoneyBlack{
+	background-image: url(../cbj_Images/money_black.png);
+}
+.MoneyGrey{
+	background-image: url(../cbj_Images/money_grey.png);
+}
+.MoneyWhite{
+	background-image: url(../cbj_Images/money_white.png);
+}
+.MoneyBlack:hover, .MoneyGrey:hover, .MoneyWhite:hover{
+	background-image: url(../cbj_Images/money_grey.png);
+}
+
+
+.MoneypBlack{
+	background-image: url(../cbj_Images/moneyp_black.png);
+}
+.MoneypGrey{
+	background-image: url(../cbj_Images/moneyp_grey.png);
+}
+.MoneypWhite{
+	background-image: url(../cbj_Images/moneyp_white.png);
+}
+.MoneypBlack:hover, .MoneypGrey:hover, .MoneypWhite:hover{
+	background-image: url(../cbj_Images/moneyp_grey.png);
+}
+
+
 .PersonAddBlack{
 	background-image: url(../cbj_Images/person_add_black.png);
 }
