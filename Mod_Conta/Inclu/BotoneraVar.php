@@ -110,7 +110,7 @@ global $MoneyGrey;        global $MoneyGreyTit;
 $MoneyGrey = "<button type='submit' title='".$MoneyGreyTit."' class='botonazul imgButIco MoneyGrey' style='vertical-align:top;' >";
 
 global $MoneyWhite;        global $MoneyWhiteTit;
-$MoneyWhite = "<button type='submit' title='".$MoneyWhiteTit."' class='botonazul imgButIco MoneyWhite' style='vertical-align:top;' >";
+$MoneyWhite = "<button type='submit' title='".$MoneyWhiteTit."' class='botonrojo imgButIco MoneyWhite' style='vertical-align:top;' >";
 
 
 
@@ -121,7 +121,7 @@ global $MoneypGrey;        global $MoneypGreyTit;
 $MoneypGrey = "<button type='submit' title='".$MoneypGreyTit."' class='botonverde imgButIco MoneypGrey' style='vertical-align:top;' >";
 
 global $MoneypWhite;        global $MoneypWhiteTit;
-$MoneypWhite = "<button type='submit' title='".$MoneypWhiteTit."' class='botonazul imgButIco MoneypWhite' style='vertical-align:top;' >";
+$MoneypWhite = "<button type='submit' title='".$MoneypWhiteTit."' class='botonrojo imgButIco MoneypWhite' style='vertical-align:top;' >";
 
 
 

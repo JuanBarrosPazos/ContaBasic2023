@@ -132,7 +132,7 @@
 						
 	////////
 
-	if(isset($_POST['show_formcl'])){	global $cnt; 	gt2(); }
+	if(isset($_POST['show_formcl'])){ global $cnt; 	gt2(); }
 
 	////////
 

@@ -62,58 +62,9 @@ $_SESSION['usuarios'] = '';
 		require 'Gastos_factdate.php';
 
 		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
-		global $sqlb; 		$sqlb =  "SELECT * FROM $vname WHERE 1 ";
 
-		// FACTURA Nº
-		global $fnum;		global $or1;	global $or2;	
-		if(strlen(trim($_POST['factnum'])) == 0){
-			$fnum = '';
-			$sqlb .= " AND (";
-			$or1 = '';
-		}else{
-			$fnum = $_POST['factnum'];
-			$or1 = 'OR';
-			$sqlb .= " AND (`factnum` = '$fnum' ";
-		}
-		global $factnum; 	$factnum = $_POST['factnum'];
-		
-		// NIF
-		global $fnif;		
-		if(strlen(trim($_POST['factnif'])) == 0){
-			$fnif = '';
-			if($or1 == ''){ $or2 = ''; } else { $or2 = 'OR'; }
-			$sqlb .= "";
-		}else{
-			$fnif = $_POST['factnif'];
-			$or2 = 'OR';
-			$sqlb .= " $or1 `factnif` = '$fnif' ";
-		}
-		global $factnif; 	$factnif = $_POST['factnif'];
-		
-		// RAZON SOCIAL
-		global $fnom;
-		if(strlen(trim($_POST['factnom'])) == 0){
-			$fnom = '';
-			$sqlb .= "";
-		}else{
-			$fnom = $_POST['factnom'];
-			$sqlb .= " $or2 `refprovee` = '$fnom' ";
-		}
-		global $factnom; 	$factnom = $_POST['factnom'];
-		
-		if($fil == "%%"){
-			$sqlb .= ")";
-		}else{
-			$sqlb .= ") AND  (`factdate` LIKE '$fil')";
-		}
-			//$sqlb .= "OR  `factdate` LIKE '$fil' ";
-
-		global $orden;
-		if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
-			$orden = $_POST['Orden'];
-		}else{ $orden = '`id` ASC'; }
-
-			$sqlb .= " ORDER BY $orden ";
+		global $sqlb;
+		require 'FormConsultaFiltroGt2.php';
 
 	/*	
 	$sqlb =  "SELECT * FROM $vname WHERE (`factnum` = '$fnum' OR `factnif` = '$fnif' OR `refprovee` = '$fnom') AND  (`factdate` LIKE '$fil') ORDER BY $orden ";
@@ -203,7 +154,7 @@ $_SESSION['usuarios'] = '';
 	global $fil; 		global $orden; 		global $factnom;
 	global $factnif; 	global $factnum; 	global $vname;
 
-	$sqlg = "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+	$sqlg = $sqlb;
 	$qg = mysqli_query($db, $sqlg);
 
 	if($_SESSION['gtime']==''){$_SESSION['gtime']='';}
@@ -236,7 +187,7 @@ $_SESSION['usuarios'] = '';
 	
 	/////////////
 
-	$sqlgd =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+	$sqlgd = $sqlb;
 	$qgd = mysqli_query($db, $sqlgd);
 
 	$fhd = fopen($ruta.'IMxD3.php','w+');
@@ -247,6 +198,7 @@ $_SESSION['usuarios'] = '';
 		}
 	fclose($fhd);
 	
+
 	require 'gdtvt2.php';
 
 	}	/* Final process_form(); */
@@ -279,54 +231,66 @@ $_SESSION['usuarios'] = '';
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function gt2(){
+	function gt2(){
 
-	global $db; 	global $dyt1;
+		global $db; 	global $dyt1;
 
-	require 'Gastos_factdate.php';
+		require 'Gastos_factdate.php';
 
-	require 'Gastos_ConsultaLogica.php';
-	
-	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
+		require 'Gastos_ConsultaLogica.php';
+		
+		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
 
-	$sqlb =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
- 	
-	$qb = mysqli_query($db, $sqlb);
-	global $gt;
-	$gt = mysqli_num_rows($qb);
-	//print("* ".$gt);
-	global $cnt;
+		global $sqlb;
+		require 'FormConsultaFiltroGt2.php';
+		//$sqlb =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+		
+		
+		$qb = mysqli_query($db, $sqlb);
+		global $gt;
+		$gt = mysqli_num_rows($qb);
+		print("* ".$gt);
+		global $cnt;
 
-	if(($gt>0)&&($_POST['dm'] == '')&&($_POST['dd'] == '')&&($cnt < 1)){
-		print("	<tr>
-		 			<td colspan='2' align='right' class='BorderInf'>
-				<div style='float:left; margin-right:3px;  margin-left:3px;'>
-			<form name='grafico' action='grafico_gf.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-		<input type='submit' value='GRAFIC LINEAL TOTAL' title='VER GRAFICA LINEAL TOTAL' class='botonnaranja' />
-		<input type='hidden' name='grafico' value=1 />
-			</form>	
-				</div>	 				
-				<div style='float:left; margin-right:3px;  margin-left:3px;'>
-			<form name='grafico' action='grafico_gfb.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-		<input type='submit' value='GRAFIC BARRAS TOTAL' title='VER GRAFICA BARRAS TOTAL' class='botonnaranja' />
-		<input type='hidden' name='grafico' value=1 />
-			</form>	
-				</div>					
-				<div style='float:left; margin-right:3px;  margin-left:3px;'>
-			<form name='grafico2' action='grafico_gf2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-		<input type='submit' value='GRAFIC LINEAL DETALLE' title='VER GRAFICA LINEAL DETALLE' class='botonnaranja' />
-		<input type='hidden' name='grafico2' value=1 />
-			</form>	
-				</div>					
-				<div style='float:left; margin-right:3px;  margin-left:3px;'>
-			<form name='grafico2' action='grafico_gf2b.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-		<input type='submit' value='GRAFIC BARRAS DETALLE' title='VER GRAFICA BARRAS DETALLE' class='botonnaranja' />
-		<input type='hidden' name='grafico2' value=1 />
-			</form>	
-				</div>					
-					</td>
-				</tr>");
-		}
+		//if(($gt>0)&&($_POST['dm'] == '')&&($_POST['dd'] == '')&&($cnt < 1)){
+	if ((strlen(trim($_POST['factnum'])) == 0) && (strlen(trim($_POST['factnif'])) == 0)  && (strlen(trim($_POST['factnom'])) == 0)){ 
+
+	}elseif(($gt>0)&&($_POST['dm'] == '')&&($_POST['dd'] == '')&&($cnt < 1)){
+
+
+			print("	<tr>
+						<td colspan='2' align='right' class='BorderInf'>
+					<div style='float:left; margin-right:3px;  margin-left:3px;'>
+				<form name='grafico' action='grafico_gf.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
+			<input type='submit' value='GRAFIC LINEAL TOTAL' title='VER GRAFICA LINEAL TOTAL' class='botonnaranja' />
+			<input type='hidden' name='grafico' value=1 />
+			<input type='hidden' name='graficotit' value=1 />
+				</form>	
+					</div>	 				
+					<div style='float:left; margin-right:3px;  margin-left:3px;'>
+				<form name='grafico' action='grafico_gfb.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
+			<input type='submit' value='GRAFIC BARRAS TOTAL' title='VER GRAFICA BARRAS TOTAL' class='botonnaranja' />
+			<input type='hidden' name='grafico' value=1 />
+			<input type='hidden' name='graficotit' value=1 />
+				</form>	
+					</div>					
+					<div style='float:left; margin-right:3px;  margin-left:3px;'>
+				<form name='grafico2' action='grafico_gf2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
+			<input type='submit' value='GRAFIC LINEAL DETALLE' title='VER GRAFICA LINEAL DETALLE' class='botonnaranja' />
+			<input type='hidden' name='grafico2' value=1 />
+			<input type='hidden' name='graficotit' value=1 />
+				</form>	
+					</div>					
+					<div style='float:left; margin-right:3px;  margin-left:3px;'>
+				<form name='grafico2' action='grafico_gf2b.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
+			<input type='submit' value='GRAFIC BARRAS DETALLE' title='VER GRAFICA BARRAS DETALLE' class='botonnaranja' />
+			<input type='hidden' name='grafico2' value=1 />
+			<input type='hidden' name='graficotit' value=1 />
+				</form>	
+					</div>					
+						</td>
+					</tr>");
+			}
 
 	} // FIN function gt2()
 
@@ -336,55 +300,58 @@ function gt2(){
 
 	function gt1(){
 
-	global $db; 		global $db_name;
+		global $db; 		global $db_name;
 
-	global $orden;
-	if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
-		$orden = $_POST['Orden'];
-	}else{ $orden = '`id` ASC'; }
+		require 'Gastos_factdate.php';
 
-	require 'Gastos_factdate.php';
+		global $vname; 	$vname = "`".$_SESSION['clave']."gastos_pendientes`";
 
-	global $vname; 	$vname = "`".$_SESSION['clave']."gastos_pendientes`";
-	$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
-	$qb = mysqli_query($db, $sqlb);
-	if(mysqli_num_rows($qb) == 0){}
-	global $gt;
-	$gt = mysqli_num_rows($qb);
-	//print("* ".$gt);
-	
-	if(($gt>0)&&($_POST['dm'] != '')&&($_POST['dd'] == '')){
+		global $sqlb;
+		require 'FormConsultaFiltroGt1.php';
+		//$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
+		
+		$qb = mysqli_query($db, $sqlb);
+		if(mysqli_num_rows($qb) == 0){ }
+		global $gt;
+		$gt = mysqli_num_rows($qb);
+		//print("* ".$gt);
+		
+		if(($gt>0)&&($_POST['dm'] != '')&&($_POST['dd'] == '')){
 
-		print("	<tr>
-		 			<td align='right' class='BorderInf' colspan='2'>
-				<div style='float:left; margin-right:3px;  margin-left:3px;'>
+			print("	<tr>
+						<td align='right' class='BorderInf' colspan='2'>
+					<div style='float:left; margin-right:3px;  margin-left:3px;'>
 			<form name='grafico' action='grafico_g.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-	<input type='submit' value='GRAFIC LINEAL TOTAL DIA' title='VER GRAFICA LINEAL TOTAL POR DIA' class='botonnaranja' />
-	<input type='hidden' name='grafico' value=1 />
-			</form>	
-				</div>
-				<div style='float:left; margin-right:3px;  margin-left:3px;'>
+				<input type='submit' value='GRAFIC LINEAL TOTAL DIA' title='VER GRAFICA LINEAL TOTAL POR DIA' class='botonnaranja' />
+				<input type='hidden' name='grafico' value=1 />
+				<input type='hidden' name='graficotit' value=1 />
+				</form>	
+					</div>
+					<div style='float:left; margin-right:3px;  margin-left:3px;'>
 			<form name='graficob' action='grafico_gb.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-	<input type='submit' value='GRAFIC BARRAS TOTAL DIA' title='VER GRAFICA BARRAS TOTAL POR DIA' class='botonnaranja' />
-	<input type='hidden' name='graficob' value=1 />
+				<input type='submit' value='GRAFIC BARRAS TOTAL DIA' title='VER GRAFICA BARRAS TOTAL POR DIA' class='botonnaranja' />
+				<input type='hidden' name='graficob' value=1 />
+				<input type='hidden' name='graficotit' value=1 />
 			</form>	
-				</div>
-				<div style='float:left' margin-right:3px;  margin-left:3px;>
+					</div>
+					<div style='float:left' margin-right:3px;  margin-left:3px;>
 			<form name='grafico2' action='grafico_g2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-	<input type='submit' value='GRAFIC LINEAL DETALLE' title='VER GRAFICA LINEAL DETALLE' class='botonnaranja' />
-	<input type='hidden' name='grafico2' value=1 />
+				<input type='submit' value='GRAFIC LINEAL DETALLE' title='VER GRAFICA LINEAL DETALLE' class='botonnaranja' />
+				<input type='hidden' name='grafico2' value=1 />
+				<input type='hidden' name='graficotit' value=1 />
 			</form>	
-				</div>					
-			</div>
-				<div style='float:left' margin-right:3px;  margin-left:3px;>
+					</div>					
+				</div>
+					<div style='float:left' margin-right:3px;  margin-left:3px;>
 			<form name='graficob2' action='grafico_gb2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\">
-	<input type='submit' value='GRAFIC BARRAS DETALLE' title='VER GRAFICA BARRAS DETALLE' class='botonnaranja' />
-	<input type='hidden' name='graficob2' value=1 />
+				<input type='submit' value='GRAFIC BARRAS DETALLE' title='VER GRAFICA BARRAS DETALLE' class='botonnaranja' />
+				<input type='hidden' name='graficob2' value=1 />
+				<input type='hidden' name='graficotit' value=1 />
 			</form>	
-				</div>					
-					</td>
-				</tr>");
-		} // FIN if
+					</div>					
+						</td>
+					</tr>");
+			} // FIN if
 	} // FIN function gt1()
 
 				   ////////////////////				   ////////////////////
@@ -399,14 +366,12 @@ function gt2(){
 		
 		require 'Gastos_factdate.php';
 
-		global $orden;
-		if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
-			$orden = $_POST['Orden'];
-		}else{ $orden = '`id` ASC'; }
-
 		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
 
-		$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden $limit ";
+		global $sqlb;
+		require 'FormConsultaFiltroGt1.php';
+		//$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden $limit ";
+
 		$qb = mysqli_query($db, $sqlb);
 	
 /////////////////////	
@@ -418,12 +383,10 @@ function gt2(){
 		$qpvptot = mysqli_query($db, $sqlb);
 		$rowpvptot = mysqli_num_rows($qpvptot);
 		$sumapvptot = 0;
-			for($i=0; $i<$rowpvptot; $i++)
-											{
-												$ver = mysqli_fetch_array($qpvptot);
-
-		$sumapvptot = $sumapvptot + $ver['factpvptot'];
-												}
+			for($i=0; $i<$rowpvptot; $i++){
+						$ver = mysqli_fetch_array($qpvptot);
+						$sumapvptot = $sumapvptot + $ver['factpvptot'];
+							}
 	}
 				
 	/* FIN PARA SUMAR PVPTOT */
@@ -454,11 +417,10 @@ function gt2(){
 			$qivae = mysqli_query($db, $sqlb);
 			$rowivae = mysqli_num_rows($qivae);
 			$sumaivae = 0;
-				for($i=0; $i<$rowivae; $i++)
-						{
-					$ver = mysqli_fetch_array($qivae);
-					$sumaivae = $sumaivae + $ver['factivae'];
-							}
+				for($i=0; $i<$rowivae; $i++){
+							$ver = mysqli_fetch_array($qivae);
+							$sumaivae = $sumaivae + $ver['factivae'];
+								}
 		}
 				
 	/* FIN PARA SUMAR IVA */
@@ -482,16 +444,17 @@ function gt2(){
 				global $KeyForm; 	$KeyForm = "pend";
 				global $titNoData; 	$titNoData = "GASTOS PENDIENTES VER<br><br>";
 				require 'Gastos_NoData.php';
-
-			} else { 
-
+			}else{ 
 				require 'Gastos_Pendientes_rowb_Total_Tabla.php';
-
 			} /* Fin segundo else anidado en if */
 		} /* Fin de primer else . */
 			
-		global $fil;												
-		$sqlg =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
+		global $fil;
+														
+		global $sqlb;
+		require 'FormConsultaFiltroGt1.php';
+		//$sqlg =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
+		$sqlg = $sqlb;
 		$qg = mysqli_query($db, $sqlg);
 
 		if($_SESSION['gtime']==''){$_SESSION['gtime']='';}
@@ -524,15 +487,17 @@ function gt2(){
 		
 		/////////////
 
-		$sqlgd =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
+		global $sqlb;
+		require 'FormConsultaFiltroGt1.php';
+		//$sqlgd =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
+		$sqlgd = $sqlb;
 		$qgd = mysqli_query($db, $sqlgd);
 
 		$fhd = fopen($ruta.'IMxD.php','w+');
-		while($registrod = mysqli_fetch_array($qgd))
-		{
-		$lined = substr($registrod['factdate'],-2).",";
-		fwrite($fhd, $lined);
-		}
+		while($registrod = mysqli_fetch_array($qgd)){
+					$lined = substr($registrod['factdate'],-2).",";
+					fwrite($fhd, $lined);
+				}
 		fclose($fhd);
 		
 		require 'gdtvt.php';

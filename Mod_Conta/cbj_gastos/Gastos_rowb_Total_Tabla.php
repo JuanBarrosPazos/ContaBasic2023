@@ -18,7 +18,7 @@
 					<th colspan=4 class='BorderInf' style='text-align:center;' >
 			".$AddBlack."
 				<a href='Gastos_Crear.php'>&nbsp;&nbsp;&nbsp;</a>
-			".$closeButton.$MoneypBlack."
+			".$closeButton.$MoneypWhite."
 				<a href='Gastos_Pendientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
 			".$closeButton."
 					</th>

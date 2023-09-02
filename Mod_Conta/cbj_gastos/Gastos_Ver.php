@@ -61,69 +61,10 @@ $_SESSION['usuarios'] = '';
 		require 'Gastos_factdate.php';
 
 		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
-		global $sqlb; 		$sqlb =  "SELECT * FROM $vname WHERE 1 ";
 
-	// FACTURA Nº
-	global $fnum;		global $or1;	global $or2;	global $key;	
-	if(strlen(trim($_POST['factnum'])) == 0){
-		$fnum = '';
-		$sqlb .= " AND (";
-		$or1 = '';
-		$key = 0;
-	}else{
-		$fnum = "%".$_POST['factnum']."%";
-		$or1 = 'OR';
-		$sqlb .= " AND (`factnum` LIKE '$fnum' ";
-		$key = 1;
-	}
-	global $factnum; 	$factnum = $_POST['factnum'];
-	
-	// NIF
-	global $fnif;		
-	if(strlen(trim($_POST['factnif'])) == 0){
-		$fnif = '';
-		if($or1 == ''){ $or2 = ''; } else { $or2 = 'OR'; }
-		$sqlb .= "";
-		$key = $key+0;
-	}else{
-		$fnif = $_POST['factnif'];
-		$or2 = 'OR';
-		$sqlb .= " $or1 `factnif` = '$fnif' ";
-		$key = $key+1;
-	}
-
-	global $factnif; 	$factnif = $_POST['factnif'];
-	
-	// RAZON SOCIAL
-	global $fnom;
-	if(strlen(trim($_POST['factnom'])) == 0){
-		$fnom = '';
-		$sqlb .= "";
-		$key = $key+0;
-	}else{
-		$fnom = $_POST['factnom'];
-		$sqlb .= " $or2 `refprovee` = '$fnom' ";
-		$key = $key+1;
-	}
-	global $factnom; 	$factnom = $_POST['factnom'];
-	
-	if($fil == "%%"){
-		if($key == 0){ $sqlb .= ""; }else{ $sqlb .= ")"; }
-	}else{
-		$sqlb .= ") AND  (`factdate` LIKE '$fil')";
-	}
-		//$sqlb .= "OR  `factdate` LIKE '$fil' ";
-
-	if($key == 0){ $sqlb =  "SELECT * FROM $vname "; }else{ }
-	echo $key."<br>";
-	
-	global $orden;
-	if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
-		$orden = $_POST['Orden'];
-	}else{ $orden = '`id` ASC'; }
-
-		$sqlb .= " ORDER BY $orden ";
-
+		global $sqlb;
+		require 'FormConsultaFiltroGt2.php';
+		
 	/*	
 	$sqlb =  "SELECT * FROM $vname WHERE (`factnum` = '$fnum' OR `factnif` = '$fnif' OR `refprovee` = '$fnom') AND  (`factdate` LIKE '$fil') ORDER BY $orden ";
 	*/
@@ -210,7 +151,7 @@ $_SESSION['usuarios'] = '';
 	global $fil; 		global $orden; 		global $factnom;
 	global $factnif; 	global $factnum; 	global $vname;
 
-	$sqlg = "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+	$sqlg = $sqlb;
 	$qg = mysqli_query($db, $sqlg);
 
 	if($_SESSION['gtime']==''){$_SESSION['gtime']='';}
@@ -243,7 +184,7 @@ $_SESSION['usuarios'] = '';
 	
 	/////////////
 
-	$sqlgd =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+	$sqlgd =  $sqlb;
 	$qgd = mysqli_query($db, $sqlgd);
 
 	$fhd = fopen($ruta.'IMxD3.php','w+');
@@ -297,8 +238,9 @@ $_SESSION['usuarios'] = '';
 	
 	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
 
-	$sqlb =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refprovee` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
- 	
+	global $sqlb;
+	require 'FormConsultaFiltroGt2.php';
+	
 	$qc = mysqli_query($db, $sqlb);
 	global $gt;
 	$gt = mysqli_num_rows($qc);
@@ -340,14 +282,12 @@ $_SESSION['usuarios'] = '';
 
 		require 'Gastos_factdate.php';
 
-		global $orden;
-		if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
-			$orden = $_POST['Orden'];
-		}else{ $orden = '`id` ASC'; }
-
-
 		global $vname; 	$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
-		$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
+
+		global $sqlb;
+		require 'FormConsultaFiltroGt1.php';
+		//$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
+
 		$qb = mysqli_query($db, $sqlb);
 		if(mysqli_num_rows($qb) == 0){}
 		global $gt;
@@ -397,7 +337,9 @@ $_SESSION['usuarios'] = '';
 
 		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
 
-		$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden $limit ";
+		global $sqlb;
+		require 'FormConsultaFiltroGt1.php';
+		//$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden $limit ";
 		$qb = mysqli_query($db, $sqlb);
 	
 /////////////////////	
@@ -452,7 +394,7 @@ $_SESSION['usuarios'] = '';
 	/////////////////////////
 
 		global $AddBlackTit; 		$AddBlackTit = "CREAR NUEVO GASTO PENDIENTE";
-		global $MoneypBlackTit; 	$MoneypBlackTit = "VER TODOS GASTOS PENDIENTES";
+		global $MoneypWhiteTit; 	$MoneypWhiteTit = "VER TODOS GASTOS PENDIENTES";
 
 		global $DetalleBlackTit; 	$DetalleBlackTit = "VER DETALLES";
 		global $FotoBlackTit;		$FotoBlackTit = "MODIFICAR DOCS ADJUNTOS";
@@ -476,7 +418,10 @@ $_SESSION['usuarios'] = '';
 			} /* Fin de primer else . */
 			
 		global $fil;												
-		$sqlg =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
+		global $sqlb;
+		require 'FormConsultaFiltroGt1.php';
+		$sqlg = $sqlb;
+		//$sqlg =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
 		$qg = mysqli_query($db, $sqlg);
 
 		if($_SESSION['gtime']==''){$_SESSION['gtime']='';}
@@ -509,7 +454,10 @@ $_SESSION['usuarios'] = '';
 		
 		/////////////
 
-		$sqlgd =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
+		global $sqlb;
+		require 'FormConsultaFiltroGt1.php';
+		$sqlgd = $sqlb;
+		//$sqlgd =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
 		$qgd = mysqli_query($db, $sqlgd);
 
 		$fhd = fopen($ruta.'IMxD.php','w+');

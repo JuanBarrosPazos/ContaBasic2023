@@ -9,7 +9,7 @@
 - 
 
 ----
-### 2023/09/01 VERSIÓN Conta_Basic_New V23.04.04
+### 2023/09/02 VERSIÓN Conta_Basic_New V23.04.05
 
 - AJUSTES GENERALES DE CÓDIGO, GRÁFICAS Y BOTONERAS
 
