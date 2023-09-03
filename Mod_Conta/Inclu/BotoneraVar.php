@@ -33,7 +33,7 @@ global $CachedGrey;      global $CachedGreyTit;
 $CachedGrey ="<button type='submit' title='".$CachedGreyTit."' class='botonnaranja imgButIco CachedGrey' style='vertical-align:top;' >";
 
 global $CachedWhite;     global $CachedWhiteTit;
-$CachedWhite ="<button type='submit' title='".$CachedWhiteTit."' class='botonnaranja imgButIco CachedWhite' style='vertical-align:top;' >";
+$CachedWhite ="<button type='submit' title='".$CachedWhiteTit."' class='botonlila imgButIco CachedWhite' style='vertical-align:top;' >";
 
 
 
@@ -143,7 +143,7 @@ global $PersonsGrey;        global $PersonsGreyTit;
 $PersonsGrey = "<button type='submit' title='".$PersonsGreyTit."' class='botonazul imgButIco PersonsGrey' style='vertical-align:top;' >";
 
 global $PersonsWhite;       global $PersonsWhiteTit;
-$PersonsWhite = "<button type='submit' title='".$PersonsWhiteTit."' class='botonazul imgButIco PersonsWhite' style='vertical-align:top;' >";
+$PersonsWhite = "<button type='submit' title='".$PersonsWhiteTit."' class='botonlila imgButIco PersonsWhite' style='vertical-align:top;' >";
 
 
 

@@ -1,13 +1,15 @@
 <?php
 
-	print("<table align='center' style=\"margin-top:10px\">
+		global $PersonsWhiteTit;	$PersonsWhiteTit = "SELECCIONE PROVEEDOR";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+
+	print("<table class='tableForm' >
 				<tr>
-					<th colspan=2 class='BorderInf'>
-								".$Titulo."					
-					</th>
+					<th>".$Titulo."</th>
 				</tr>
 				<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]'>
-					<input type='hidden' name='proveegastos' value='".$defaults['proveegastos']."' />
+					<input type='hidden' name='proveegastos' value='".@$defaults['proveegastos']."' />
 					<input type='hidden' name='xl' value='".@$defaults['xl']."' />
 					<input type='hidden' name='id' value='".@$defaults['id']."' />
 					<input type='hidden' name='dy' value='".@$defaults['dy']."' />
@@ -31,13 +33,15 @@
 				<tr>
 					<td>
 						<div style='float:left'>
+							<!--
 							<input type='submit' value='".$TitValue."' class='botonverde' />
+							-->
+							".$PersonsWhite."".$closeButton."
 							<input type='hidden' name='oculto1' value=1 />
 						</div>
-					</td>
-					<td>
 						<div style='float:left'>
-					<select name='proveegastos' class='botonverde'>");
+			<select name='proveegastos' class='botonverde'>
+			<option value=''>SELECCIONE UN PROVEEDOR</option><!-- -->");
 
 		global $db;
 		global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."proveedores`";

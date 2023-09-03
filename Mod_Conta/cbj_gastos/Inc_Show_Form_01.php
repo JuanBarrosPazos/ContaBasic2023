@@ -28,7 +28,7 @@
 				".$BuscaWhite.$closeButton."
 				<input type='hidden' name='show_formcl' value=1 />
 
-		<select name='Orden' title='ORDENAR POR...' class='botonverde' style='vertical-align: middle' >");
+		<select name='Orden' title='ORDENAR POR...' class='botonlila' style='vertical-align: middle' >");
 				foreach($ordenar as $option => $label){
 					print ("<option value='".$option."' ");
 					if($option == $defaults['Orden']){
@@ -38,7 +38,7 @@
 					}	
 						
 	print ("</select>
-			<select name='dy' title='SELECCIONAR AÑO...' class='botonverde' style='vertical-align: middle' >
+			<select name='dy' title='SELECCIONAR AÑO...' class='botonlila' style='vertical-align: middle' >
 				<option value=''>YEAR</option>");
 	
 	global $db;
@@ -57,7 +57,7 @@
 							}  
 
 	print ("</select>
-			<select name='dm' title='SELECCIONAR MES...' class='botonverde' style='vertical-align: middle' >");
+			<select name='dm' title='SELECCIONAR MES...' class='botonlila' style='vertical-align: middle' >");
 				foreach($dm as $optiondm => $labeldm){
 					print ("<option value='".$optiondm."' ");
 					if($optiondm == @$defaults['dm']){
@@ -67,7 +67,7 @@
 						}	
 																
 	print ("</select>
-			<select name='dd' title='SELECCIONAR DIA...' class='botonverde' style='vertical-align: middle' >");
+			<select name='dd' title='SELECCIONAR DIA...' class='botonlila' style='vertical-align: middle' >");
 				foreach($dd as $optiondd => $labeldd){
 					print ("<option value='".$optiondd."' ");
 					if($optiondd == @$defaults['dd']){
@@ -84,7 +84,7 @@
 			<!--
 			<input type='text' name='factnif' size=22 maxlength=10 value='".@$defaults['factnif']."' />
 			-->
-			<select name='factnif' title='NUMERO NIF FACTURA' class='botonverde'>
+			<select name='factnif' title='NUMERO NIF FACTURA' class='botonlila'>
 				<option value=''>Nº NIF</option>");
 				global $db; 
 				global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."proveedores`";
@@ -107,7 +107,7 @@
 					<!--
 					<input type='text' name='factnom' size=22 maxlength=22 value='".@$defaults['factnom']."' />
 					-->
-			<select name='factnom' title='RAZON SOCIAL' class='botonverde'>
+			<select name='factnom' title='RAZON SOCIAL' class='botonlila'>
 				<option value=''>RAZON SOCIAL</option>");
 				global $db;
 				global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."proveedores`";

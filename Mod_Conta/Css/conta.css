@@ -269,10 +269,11 @@ a:hover  img {
 }
 
 .img1 {
+	display: inline-block;
 	text-align: center;
 	vertical-align: middle;
 	height: auto;
-	width: auto; 
+	width: min-content; 
 }
 .img1 img {
 	height: 90px;

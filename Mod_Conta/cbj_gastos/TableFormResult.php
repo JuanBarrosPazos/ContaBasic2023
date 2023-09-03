@@ -2,9 +2,9 @@
  
 	global $iniy;
 
-	$tabla = "<table align='center' style='margin-top:10px'>
+	$tabla = "<table class='tableForm' >
 				<tr>
-					<th colspan=4 class='BorderInf'>
+					<th colspan=4 >
 						".$title.strtoupper($vname)."
 					</th>
 				</tr>
@@ -43,7 +43,7 @@
 					<td colspan='3' style='text-align:left;'>".$_POST['coment']."</td>
 				</tr>
 				<tr>
-					<td colspan='4' align='center'>
+					<td colspan='4' align='right'>
 							".$link1.$link2."
 					</td>
 				</tr>

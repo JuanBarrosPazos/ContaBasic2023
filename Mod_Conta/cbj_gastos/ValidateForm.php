@@ -14,7 +14,7 @@
     //echo "*** ".$civae."<br>";
 
 	if(trim($factivae) != trim($civae)){
-		$errors [] = "IMPUESTOS € <font color='#FF0000'>CANTIDAD CORRECTA => </font> ".$civae." €";
+		$errors [] = "IMPUESTOS € <font color='#FF0000'> => </font> ".$civae." €";
 	}
 	
 	$fret = $_POST['factret'];
@@ -23,14 +23,15 @@
 	$crete = floatval($crete);
 	$crete = number_format($crete,2,".","");
 	if(trim($factrete) != trim($crete)){
-		$errors [] = "RETENCIONES € <font color='#FF0000'>CANTIDAD CORRECTA => </font> ".$crete." €";
+		$errors [] = "RETENCIONES € <font color='#FF0000'> => </font> ".$crete." €";
 	}
 	
-	$cftot = ($factpvp + $civae) + $factrete;
+	//$cftot = ($factpvp + $civae) + $factrete;
+	$cftot = ($factpvp + $civae) + $crete;
 	$cftot = floatval($cftot);
 	$cftot = number_format($cftot,2,".","");
 	if(trim($factpvptot) != trim($cftot)){
-			$errors [] = "TOTAL € <font color='#FF0000'>CANTIDAD CORRECTA => </font> ".$cftot." €";
+			$errors [] = "TOTAL € <font color='#FF0000'> => </font> ".$cftot." €";
 	}
 
 				   ////////////////////				   ////////////////////
@@ -275,11 +276,14 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
         global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
         
 	    global $exist;	
-		if(isset($_POST['id'])){
+		if((isset($_POST['id']))&&(strlen(trim($_POST['id'])) != 0)){
 			$sqlx =  "SELECT * FROM `$db_name`.$vname WHERE `id` <> '$_POST[id]' AND `factnum` = '$_POST[factnum]'";
+			//echo "id esta set<br>";
 		}else{
 			$sqlx =  "SELECT * FROM `$db_name`.$vname WHERE `factnum` = '$_POST[factnum]'";
+			//echo "id NO esta set<br>";
 		}
+
         $qx = mysqli_query($db, $sqlx);
         $countx = mysqli_num_rows($qx);
         $rowsx = mysqli_fetch_assoc($qx);

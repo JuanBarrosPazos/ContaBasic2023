@@ -1,184 +1,189 @@
 <?php
-session_start();
+	//session_start();
 
-	require '../../Mod_Admin/Inclu/error_hidden.php';
-	require '../Inclu/Conta_Head.php';
-	require '../../Mod_Admin/Inclu/my_bbdd_clave.php';
-	require '../../Mod_Admin/Conections/conection.php';
-	require '../../Mod_Admin/Conections/conect.php';
+	//require '../../Mod_Admin/Inclu/error_hidden.php';
+	//require '../Inclu/Conta_Head.php';
+	//require '../../Mod_Admin/Inclu/my_bbdd_clave.php';
+	//equire '../../Mod_Admin/Conections/conection.php';
+	//require '../../Mod_Admin/Conections/conect.php';
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
+	/*
 	if ($_SESSION['Nivel'] == 'admin'){
 
-		if(isset($_POST['oculto2'])){ 	process_form();
-										info();
+		if(isset($_POST['ocultoDetalle'])){ process_form_Dealle();
+											info_Dealle();
 									} 
 	} else { require '../Inclu/table_permisos.php'; }
+	*/
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	function process_form(){
+	function process_form_Dealle(){
 	
-			global $db; 		global $db_name;
-			global $vname; 		$vname = $_POST['vname'];
+		global $CancelBlackTit;		$CancelBlackTit = "CERRAR VENTANA";
+		global $MoneypBlackTit;		$MoneypBlackTit = "VER TODOS LOS GASTOS";
+		global $AddBlackTit; 		$AddBlackTit = "CREAR NUEVO GASTO";
+		require '../Inclu/BotoneraVar.php';
+		global $closeButton;
+	
+		global $db; 		global $db_name;
+		global $vname; 		$vname = $_POST['vname'];
 		//	print("** ".$_POST['vname']." / ".$_POST['dyt1']);
 			
-			$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `id` = '$_POST[id]'";
-			$qc = mysqli_query($db, $sqlc);
-			$countc = mysqli_num_rows($qc);
-			$rowsc = mysqli_fetch_assoc($qc);
+		$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `id` = '$_POST[id]'";
+		$qc = mysqli_query($db, $sqlc);
+		$countc = mysqli_num_rows($qc);
+		$rowsc = mysqli_fetch_assoc($qc);
 			
-			$ext_permitidas = array('pdf','PDF');
+		$ext_permitidas = array('pdf','PDF');
 				
-			$extension1 = substr($rowsc['myimg1'],-3);
-			// print($extension1);
-			// $extension1 = end(explode('.', $_FILES['myimg1']['name']) );
-			$ext_correcta1 = in_array($extension1, $ext_permitidas);
-				if(!$ext_correcta1){ $myimg1 = $rowsc['myimg1'];}
-				else{$myimg1 = 'pdf.png';}
+		$extension1 = substr($rowsc['myimg1'],-3);
+		// print($extension1);
+		// $extension1 = end(explode('.', $_FILES['myimg1']['name']) );
+		$ext_correcta1 = in_array($extension1, $ext_permitidas);
+			if(!$ext_correcta1){ $myimg1 = $rowsc['myimg1'];}
+			else{$myimg1 = 'pdf.png';}
 
-				$extension2 = substr($rowsc['myimg2'],-3);
-				// print($extension2);
-				// $extension2 = end(explode('.', $_FILES['myimg2']['name']) );
-				$ext_correcta2 = in_array($extension2, $ext_permitidas);
-				if(!$ext_correcta2){ $myimg2 = $rowsc['myimg2'];}
-				else{$myimg2 = 'pdf.png';}
+			$extension2 = substr($rowsc['myimg2'],-3);
+			// print($extension2);
+			// $extension2 = end(explode('.', $_FILES['myimg2']['name']) );
+			$ext_correcta2 = in_array($extension2, $ext_permitidas);
+			if(!$ext_correcta2){ $myimg2 = $rowsc['myimg2'];}
+			else{$myimg2 = 'pdf.png';}
 
-				$extension3 = substr($rowsc['myimg3'],-3);
-				// print($extension3);
-				// $extension3 = end(explode('.', $_FILES['myimg3']['name']) );
-				$ext_correcta3 = in_array($extension3, $ext_permitidas);
-				if(!$ext_correcta3){ $myimg3 = $rowsc['myimg3'];}
-				else{$myimg3 = 'pdf.png';}
+			$extension3 = substr($rowsc['myimg3'],-3);
+			// print($extension3);
+			// $extension3 = end(explode('.', $_FILES['myimg3']['name']) );
+			$ext_correcta3 = in_array($extension3, $ext_permitidas);
+			if(!$ext_correcta3){ $myimg3 = $rowsc['myimg3'];}
+			else{$myimg3 = 'pdf.png';}
 
-				$extension4 = substr($rowsc['myimg4'],-3);
-				// print($extension4);
-				// $extension4 = end(explode('.', $_FILES['myimg4']['name']) );
-				$ext_correcta4 = in_array($extension4, $ext_permitidas);
-				if(!$ext_correcta4){ $myimg4 = $rowsc['myimg4'];}
-				else{$myimg4 = 'pdf.png';}
+			$extension4 = substr($rowsc['myimg4'],-3);
+			// print($extension4);
+			// $extension4 = end(explode('.', $_FILES['myimg4']['name']) );
+			$ext_correcta4 = in_array($extension4, $ext_permitidas);
+			if(!$ext_correcta4){ $myimg4 = $rowsc['myimg4'];}
+			else{$myimg4 = 'pdf.png';}
 
-			print("<table align='center'>
-						<tr>
-							<th colspan=4 class='BorderInf'>
-									RAZON SOCIAL ".strtoupper($_POST['factnom']).".
-									NIF ".$_POST['factnif']."
-									</br> 
-									DOCS FACT Nº: ".$_POST['factnum']."
-							</th>
-						</tr>
-				<tr>
-				<td class='img1'>
-		<img src='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$myimg1."'  onclick=\"MM_showHideLayers('contenedor','','show','foto1A','','show','foto2A','','hide','foto3A','','hide','foto4A','','hide')\" onload=\"MM_showHideLayers('foto1A','','show','foto2A','','hide','foto3A','','hide','foto4A','','hide')\" /> 
-		<a style='font-size:14px' href='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$rowsc['myimg1']."' target='_blank'>
-						DOWNLOAD 1
-					</a>
-				</td>
-				<td class='img1'>
-		<img src='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$myimg2."' onclick=\"MM_showHideLayers('foto1A','','hide','foto2A','','show','foto3A','','hide','foto4A','','hide')\" /> 
-		<a style='font-size:14px' href='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$rowsc['myimg2']."' target='_blank'>
-						DOWNLOAD 2
-					</a>
-				</td>
-				<td class='img1'>
-		<img src='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$myimg3."' onclick=\"MM_showHideLayers('foto1A','','hide','foto2A','','hide','foto3A','','show','foto4A','','hide')\" /> 
-		<a style='font-size:14px' href='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$rowsc['myimg3']."' target='_blank'>
-						DOWNLOAD 3
-					</a>
-				</td>
-				<td class='img1'>
-		<img src='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$myimg4."' onclick=\"MM_showHideLayers('foto1A','','hide','foto2A','','hide','foto3A','','hide','foto4A','','show')\" /> 
-		<a style='font-size:14px' href='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$rowsc['myimg4']."' target='_blank'>
-						DOWNLOAD 4
-					</a>
+		print("<table class='detalle tableForm' style='width:fit-content !important;' >
+					<tr>
+						<th colspan=2 >
+								RAZON SOCIAL ".strtoupper($_POST['factnom']).".
+								NIF ".$_POST['factnif']."
+								</br> 
+								DOCS FACT Nº: ".$_POST['factnum']."
+						</th>
+					</tr>
+
+					<tr>
+						<td colspan=2 style='text-align:center;' >
+
+						<div class='img1'>
+			<button type='submit' class='botonnaranja' title='DESCARGAR DOCUMENTO 1' >
+				<a style='font-size:14px' href='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$rowsc['myimg1']."' target='_blank'>
+					<img src='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$myimg1."'> 
+				</a>
+			</button>							
+						</div>
+						<div class='img1'>
+			<button type='submit' class='botonnaranja' title='DESCARGAR DOCUMENTO 2' >
+				<a style='font-size:14px' href='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$rowsc['myimg2']."' target='_blank'>
+					<img src='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$myimg2."' > 
+				</a>
+			</button>							
+						</div>
+						<div class='img1'>
+			<button type='submit' class='botonnaranja' title='DESCARGAR DOCUMENTO 3' >
+				<a style='font-size:14px' href='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$rowsc['myimg3']."' target='_blank'>
+					<img src='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$myimg3."' > 
+				</a>
+			</button>							
+						</div>
+						<div class='img1'>
+			<button type='submit' class='botonnaranja' title='DESCARGAR DOCUMENTO 4' >
+				<a style='font-size:14px' href='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$rowsc['myimg4']."' target='_blank'>
+					<img src='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$myimg4."' > 
+				</a>
+			</button>							
+						</div>
 				</td>
 			</tr>
 			<tr>
-				<div id='foto1A' class='img2'> 
-					<img src='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$myimg1."' /> 
-				</div>
-				<div id='foto2A' class='img2'> 
-					<img src='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$myimg2."' /> 
-				</div>
-				<div id='foto3A' class='img2'> 
-					<img src='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$myimg3."' /> 
-				</div>
-				<div id='foto4A' class='img2'> 
-					<img src='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$myimg4."' /> 
-				</div>
+				<td class='BorderSup' style='text-align: right !important;' >ID </td>
+				<td class='BorderSup' >".$_POST['id']."</td>	
+			</tr>		
+			<tr>
+				<td style='text-align: right !important;' >NUMERO </td>
+				<td>".$_POST['factnum']."</td>			
+			</tr>		
+			<tr>
+				<td style='text-align: right !important;' >FECHA </td>
+				<td>".$_POST['factdate']."</td>				
+			</tr>		
+			<tr>
+				<td style='text-align: right !important;'>RAZON SOCIAL </td>
+				<td>".$_POST['factnom']."</td>
+			</tr>		
+			<tr>
+				<td style='text-align: right !important;' >NIF/CIF </td>
+				<td>".$_POST['factnif']."</td>
+			</tr>		
+			<tr>
+				<td style='text-align: right !important;' >IMPUESTOS % </td>
+				<td>".$_POST['factiva']."</td>
+			</tr>		
+			<tr>
+				<td style='text-align: right !important;' >IMPUESTOS € </td>
+				<td>".$_POST['factivae']."</td>
+			</tr>		
+			<tr>
+				<td style='text-align: right !important;' >SUBTOTAL </td>
+				<td>".$_POST['factpvp']."</td>
+			</tr>		
+			<tr>
+				<td style='text-align: right !important;' >RETENCIONES % </td>
+				<td>".$_POST['factret']."</td>
+			</tr>		
+			<tr>
+				<td style='text-align: right !important;' >RETENCIONES € </td>
+				<td>".$_POST['factrete']."</td>
+			</tr>		
+			<tr>
+				<td style='text-align: right !important;' >TOTAL € </td>
+				<td>".$_POST['factpvptot']."</td>
+			</tr>		
+			<tr>
+				<td colspan=2 style='text-align: left !important;' >DESCRIPCION </td>
 			</tr>
 			<tr>
-				<td colspan=2 class='BorderSup' style='text-align: right !important;' >ID </td>
-				<td colspan=2 class='BorderSup' >".$_POST['id']."</td>	
+				<td colspan=2 style='text-aling:left;' >".$_POST['coment']."</td>
 			</tr>		
 			<tr>
-				<td colspan=2 style='text-align: right !important;' >NUMERO </td>
-				<td colspan=2 >".$_POST['factnum']."</td>			
-			</tr>		
-			<tr>
-				<td colspan=2 style='text-align: right !important;' >FECHA </td>
-				<td colspan=2 >".$_POST['factdate']."</td>				
-			</tr>		
-			<tr>
-				<td colspan=2 style='text-align: right !important;'>RAZON SOCIAL </td>
-				<td colspan=2 >".$_POST['factnom']."</td>
-			</tr>		
-			<tr>
-				<td colspan=2 style='text-align: right !important;' >NIF/CIF </td>
-				<td colspan=2 >".$_POST['factnif']."</td>
-			</tr>		
-			<tr>
-				<td colspan=2 style='text-align: right !important;' >IMPUESTOS % </td>
-				<td colspan=2 >".$_POST['factiva']."</td>
-			</tr>		
-			<tr>
-				<td colspan=2 style='text-align: right !important;' >IMPUESTOS € </td>
-				<td colspan=2 >".$_POST['factivae']."</td>
-			</tr>		
-			<tr>
-				<td colspan=2 style='text-align: right !important;' >SUBTOTAL </td>
-				<td colspan=2 >".$_POST['factpvp']."</td>
-			</tr>		
-			<tr>
-				<td colspan=2 style='text-align: right !important;' >RETENCIONES % </td>
-				<td colspan=2 >".$_POST['factret']."</td>
-			</tr>		
-			<tr>
-				<td colspan=2 style='text-align: right !important;' >RETENCIONES € </td>
-				<td colspan=2 >".$_POST['factrete']."</td>
-			</tr>		
-			<tr>
-				<td colspan=2 style='text-align: right !important;' >TOTAL € </td>
-				<td colspan=2 >".$_POST['factpvptot']."</td>
-			</tr>		
-			<tr >
-					<td colspan=4 style='text-align: left !important;' >DESCRIPCION </td>
-			</tr>
-			<tr>
-				<td colspan=4 style='text-aling:left;' >".$_POST['coment']."</td>
-			</tr>		
-			<tr>
-				<td colspan=4 align='right' >
-		<form name='closewindow' action='$_SERVER[PHP_SELF]'  onsubmit=\"window.close()\">
-					<input type='submit' value='CERRAR VENTANA' class='botonverde' />
-					<input type='hidden' name='oculto2' value=1 />
-		</form>
+				<td colspan=2 align='right' >
+						".$MoneypBlack."
+								<a href='Gastos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton.$AddBlack."
+								<a href='Gastos_Crear.php'>&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton.$CancelBlack."
+								<a href='Gastos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+						".$closeButton."
 				</td>
 			</tr>
 		</table>");
 
-	} // FIN function process_form()
+	} // FIN function process_form_Dealle()
 			
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	function info(){
+	function info_Dealle(){
 
 		global $db;
 
@@ -209,7 +214,7 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	require '../Inclu/Conta_Footer.php';
+	//require '../Inclu/Conta_Footer.php';
 	
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

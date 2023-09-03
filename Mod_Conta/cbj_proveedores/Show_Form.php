@@ -59,7 +59,7 @@
 				-->
 				".$BuscaWhite.$closeButton."
 						<input type='hidden' name='oculto' value=1 />
-			<select name='Orden' title='ORDENAR PROVEEDORES POR...' class='botonverde'>");
+			<select name='Orden' title='ORDENAR PROVEEDORES POR...' class='botonlila'>");
 							
 			foreach($ordenar as $option => $label){
 				print ("<option value='".$option."' ");
@@ -68,7 +68,7 @@
 									}	
 						
 		print ("</select>
-				<select name='ref' title='REFERENCIA PROVEEDOR...' class='botonverde'>
+				<select name='ref' title='REFERENCIA PROVEEDOR...' class='botonlila'>
 					<option value=''>REFERENCIA</option>");
 					//global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."proveedores`";
 					$sqla =  "SELECT * FROM $tabla1 WHERE `ref` <> 'ANONIMO' ORDER BY `ref` ASC ";
@@ -86,7 +86,7 @@
 				}
 	
 		print ("</select>
-				<select name='rsocial' title='RAZON SOCIAL PROVEEDOR...' class='botonverde'>
+				<select name='rsocial' title='RAZON SOCIAL PROVEEDOR...' class='botonlila'>
 					<option value=''>RAZON SOCIAL</option>");
 					global $db;
 					//global $tabla1; 		$tabla1 = "`".$_SESSION['clave']."proveedores`";
