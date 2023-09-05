@@ -270,24 +270,66 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 	
         global $db; 	global $db_name;
 
-        $dyt1 = "20".$_POST['dy'];
+        global $dyt1;	$dyt1 = "20".$_POST['dy'];
                                                                     
-        global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
-        
-	    global $exist;	
-		if(isset($_POST['id'])){
-			$sqlx =  "SELECT * FROM `$db_name`.$vname WHERE `id` <> '$_POST[id]' AND `factnum` = '$_POST[factnum]'";
+		global $vnameg; 		$vnameg = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+		global $vnamegp; 		$vnamegp = "`".$_SESSION['clave']."gastos_pendientes`";
+
+		/* INICIO VERIFICO EL NUMERO DE LA FACTURA EN TODAS LAS TABLAS ACTIVAS MENOS PAPELERAS STATUS */
+			global $tableName; 			$tableName = "`".$_SESSION['clave']."status`";
+			$a = "SELECT MIN(year) FROM `$db_name`.$tableName ";
+			$ra = mysqli_query($db, $a);
+			$ym = mysqli_fetch_row($ra);
+			global $yearMin;	$yearMin = $ym[0];		//echo $yearMin;
+			global $yearHoy; 	$yearHoy = date('Y'); 	//echo $yearHoy;
+		
+			global $texerror; 	$texerror = '';
+
+			while($yearMin<=$yearHoy){
+
+				global $vnamegw; 		$vnamegw = "`".$_SESSION['clave']."gastos_".$yearMin."`";
+
+				if($yearMin != $dyt1){
+
+				$sqlgw =  "SELECT * FROM `$db_name`.$vnamegw WHERE `factnum` = '$_POST[factnum]'";
+				$qgw = mysqli_query($db, $sqlgw);
+				$countgw = mysqli_num_rows($qgw);	
+				//	$rowsg = mysqli_fetch_assoc($qg);
+				if(mysqli_query($db, $sqlgw)){ //print("* OK");
+				}else{  print("</br>* ERROR L.294</br> ".mysqli_error($db)."</br>");
+						$texerror .= "\n\t* ERROR L.294 ".mysqli_error($db);
+							}
+
+				if($countgw > 0){ $errors [] = "<font color='#FF0000'>YA EXISTE LA FACTURA EN ".$vnamegw." </font>"; }
+
+				}else{ }
+
+				$yearMin++;
+
+			} // FIN WHILE
+
+		/* FIN VERIFICO EL NUMERO DE LA FACTURA EN TODAS LAS TABLAS ACTIVAS MENOS PAPELERA STATUS */
+			
+		if((isset($_POST['id']))&&(strlen(trim($_POST['id'])) != 0)){
+			$sqlgp =  "SELECT * FROM `$db_name`.$vnamegp WHERE `id` <> '$_POST[id]' AND `factnum` = '$_POST[factnum]' ";
+			$sqlg =  "SELECT * FROM `$db_name`.$vnamegp WHERE `factnum` = '$_POST[factnum]'";
 		}else{
-			$sqlx =  "SELECT * FROM `$db_name`.$vname WHERE `factnum` = '$_POST[factnum]'";
+			$sqlgp =  "SELECT * FROM `$db_name`.$vnamegp WHERE `factnum` = '$_POST[factnum]'";
+			$sqlg =  "SELECT * FROM `$db_name`.$vnamegp WHERE `factnum` = '$_POST[factnum]'";
 		}
-        $qx = mysqli_query($db, $sqlx);
-        $countx = mysqli_num_rows($qx);
-        $rowsx = mysqli_fetch_assoc($qx);
+
+        $qg = mysqli_query($db, $sqlg);				$qgp = mysqli_query($db, $sqlgp);
+        $countg = mysqli_num_rows($qg);				$countgp = mysqli_num_rows($qgp);
+    //	$rowsg = mysqli_fetch_assoc($qg);			$rowsgp = mysqli_fetch_assoc($qgp);
         
-        if($countx > 0){
-			$errors [] = "<font color='#FF0000'>YA EXISTE LA FACTURA</font>";
-	    } 
-	}
+		if($countgp > 0){
+			$errors [] = "<font color='#FF0000'>YA EXISTE LA FACTURA EN ".$vnamegp." </font>";
+		} 
+		if($countg > 0){
+			$errors [] = "<font color='#FF0000'>YA EXISTE LA FACTURA EN ".$vnameg." </font>";
+		} 
+
+	}else{ } // FIN SI isset($_POST['factnum']
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

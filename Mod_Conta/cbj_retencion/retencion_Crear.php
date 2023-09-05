@@ -79,7 +79,6 @@ session_start();
 			$countx = mysqli_num_rows($qx);
 			$rowsx = mysqli_fetch_assoc($qx);
 				
-			global $exist;	
 			if($countx > 0){ $errors [] = "<font color='#FF0000'>YA EXISTE ESTE % RETENCIONES</font>"; }
 
 		}

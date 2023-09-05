@@ -133,7 +133,7 @@ function process_form(){
 			global $yearHoy; 	$yearHoy = date('Y'); 	//echo $yearHoy;
 		
 			while($yearMin<=$yearHoy){
-		
+	
 				//echo "* AÑO: ".$yearMin.".<br>";
 				global $tName; 	$tName =  "`".$_SESSION['clave']."gastos_".$yearMin."`";
 				$sg6 = "UPDATE `$db_name`.$tName SET `refprovee` = '$rf', `factnif` = '$factnif', `factnom` = '$_POST[rsocial]' WHERE $tName.`factnif` LIKE '$dnif' ";

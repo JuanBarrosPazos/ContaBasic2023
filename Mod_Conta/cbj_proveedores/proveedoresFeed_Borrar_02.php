@@ -48,7 +48,7 @@ session_start();
 
 			print("<table class='tableForm' >
 				<tr>
-					<th colspan=3 >HA BORRADO AL PROVEEDOR</th>
+					<th colspan=3 >HA BORRADO AL PROVEEDOR Y TODAS LAS FACTURAS</th>
 				</tr>
 				<tr>
 					<td style='width: 120px; text-align: right;'>RAZON SOCIAL</td>
@@ -101,13 +101,50 @@ session_start();
 
 			$destination_file = "../cbj_Docs/img_proveedores/".$_POST['myimg'];
 			if( file_exists($destination_file)){unlink($destination_file);}
-			
-		} else { print("</br><font color='#FF0000'>
-						* MODIFIQUE LA ENTRADA 82: </font></br> ".mysqli_error($db))."</br>";
-							show_form ();
-							global $texerror; 		$texerror = "\n\t ".mysqli_error($db);
-					}
 
+			/* 
+			INICIO BORRA EN CASACADA TODAS LAS ENTRADAS EN LAS TABLAS gastos CON EL NIF, RAZON SOCIAL 
+			*/
+			global $tableName; 			$tableName = "`".$_SESSION['clave']."status`";
+			$a = "SELECT MIN(year) FROM `$db_name`.$tableName ";
+			$ra = mysqli_query($db, $a);
+			$ym = mysqli_fetch_row($ra);
+			global $yearMin;	$yearMin = $ym[0];		//echo $yearMin;
+			global $yearHoy; 	$yearHoy = date('Y'); 	//echo $yearHoy;
+			
+			global $texerror; 	$texerror = '';
+
+ 			while($yearMin<=$yearHoy){
+	
+				//echo "* AÑO: ".$yearMin.".<br>";
+				global $tName; 	$tName =  "`".$_SESSION['clave']."gastos_".$yearMin."`";
+				$sgDel = "DELETE FROM `$db_name`.$tName WHERE $tName.`refprovee` = '$_POST[ref]' AND `factnom` = '$_POST[rsocial]' ";
+	
+				if(mysqli_query($db, $sgDel)){ //print("* OK");
+				} else {  print("</br>* ERROR L.121</br> ".mysqli_error($db)."</br>");
+						  $texerror .= "\n\t* ERROR L.121 ".mysqli_error($db);
+							}
+
+				$yearMin++;
+
+			} // FIN WHILE
+
+			global $tableGastPend; 		$tableGastPend = "`".$_SESSION['clave']."gastos_pendientes`";
+			$sgDelPend = "DELETE FROM `$db_name`.$tableGastPend WHERE `refprovee` = '$_POST[ref]' AND `factnom` = '$_POST[rsocial]' ";
+			if(mysqli_query($db, $sgDelPend)){ //print("* OK");
+			}else{   print("</br>* ERROR L.133</br> ".mysqli_error($db)."</br>");
+					 global $texerror; 	 $texerror .= "\n\t* ERROR L.133 ".mysqli_error($db);
+						}
+			/* 
+			FIN BORRA EN CASACADA TODAS LAS ENTRADAS EN LAS TABLAS gastos CON EL NIF, RAZON SOCIAL 
+			*/
+
+			
+		} else { print("</br>* ERROR L.45</br> ".mysqli_error($db)."</br>");
+							show_form ();
+							global $texerror; 		$texerror .= "\n\t* ERROR L.45 ".mysqli_error($db);
+					}
+		/*
 		global $redir;
 		$redir = "<script type='text/javascript'>
 						function redir(){
@@ -116,6 +153,7 @@ session_start();
 					setTimeout('redir()',8000);
 					</script>";
 		print ($redir);
+		*/
 
 	} // FIN function process_form()
 
@@ -158,7 +196,7 @@ session_start();
 
 function show_form(){
 	
-	global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR DATOS PROVEEDOR";
+	global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR DATOS PROVEEDOR Y TODAS LAS FACTURAS";
 	global $PersonsBlackTit;	$PersonsBlackTit = "VER TODOS LOS PROVEEDORES";
 	global $DeleteBlackTit;		$DeleteBlackTit = "INICIO PAPELERA PROVEEDORES";
 	require '../Inclu/BotoneraVar.php';

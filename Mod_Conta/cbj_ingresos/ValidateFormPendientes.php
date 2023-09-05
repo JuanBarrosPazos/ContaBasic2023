@@ -274,7 +274,6 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
                                                                     
         global $vname; 		$vname = "`".$_SESSION['clave']."ingresos_pendientes`";
         
-	    global $exist;	
 		if(isset($_POST['id'])){
 			$sqlx =  "SELECT * FROM `$db_name`.$vname WHERE `id` <> '$_POST[id]' AND `factnum` = '$_POST[factnum]'";
 		}else{
