@@ -40,7 +40,7 @@
 							<input type='hidden' name='oculto1' value=1 />
 						</div>
 						<div style='float:left'>
-			<select name='proveegastos' class='botonverde'>
+			<select name='proveegastos' class='botonlila'>
 			<option value=''>SELECCIONE UN PROVEEDOR</option><!-- -->");
 
 		global $db;

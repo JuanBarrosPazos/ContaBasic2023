@@ -367,7 +367,7 @@ session_start();
 			<button type='submit' title='FILTRO BALANCES' class='botonlila imgButIco BuscaWhite' style='vertical-align: middle' >
 			</button>
 						<input type='hidden' name='filtroBal' value=1 />
-				<select name='Orden' title='ORDENAR POR...' class='botonlila' style='vertical-align: middle'>");
+				<select name='Orden' title='ORDENAR POR...' class='botonlila' style='vertical-align: middle' >");
 							
 		foreach($ordenar as $option => $label){
 				print ("<option value='".$option."' ");
@@ -394,7 +394,7 @@ session_start();
 									}  
 
 		print ("</select>
-				<select name='dm' title='SELECCIONAR MES...' class='botonlila style='vertical-align: middle' >");
+				<select name='dm' title='SELECCIONAR MES...' class='botonlila' style='vertical-align: middle' >");
 
 		foreach($dm as $optiondm => $labeldm){
 					print ("<option value='".$optiondm."' ");

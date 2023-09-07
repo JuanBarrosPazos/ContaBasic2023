@@ -260,10 +260,10 @@ if ($_SESSION['Nivel'] == 'admin'){
 		global $dyx; 		$dyx = "20".$_POST['dy'];
 		global $dmx; 		$dmx = "M".$_POST['dm'];
 
-		global $dyxo;
-		global $dmxo;
-		$dyxo = "20".$_SESSION['yold'];
-		$dmxo = "M".$_SESSION['mold'];
+		global $dyxo;		$dyxo = "20".$_SESSION['yold'];
+		global $dmxo;		$dmxo = "M".$_SESSION['mold'];
+		
+		
 
 		global $mes;
 		if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
@@ -271,7 +271,6 @@ if ($_SESSION['Nivel'] == 'admin'){
 		elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
 		elseif(($dmx == "M10")||($dmx == "M11")||($dmx == "M12")){$mes = "TRI4";}
 		
-		$dmxo = "M".$_SESSION['mold'];
 		global $meso;
 		if(($dmxo == "M01")||($dmxo == "M02")||($dmxo == "M03")){$meso = "TRI1";}
 		elseif(($dmxo == "M04")||($dmxo == "M05")||($dmxo == "M06")){$meso = "TRI2";}
@@ -290,16 +289,15 @@ if ($_SESSION['Nivel'] == 'admin'){
 	
 	if($_SESSION['yold'] != $dynew){
 		
-		global $rutaold;
-		global $rutanew;
-		$rutaold = "../cbj_Docs/docingresos_20".$_SESSION['yold']."/";
-		$rutanew = "../cbj_Docs/docingresos_20".$dynew."/";
+		global $rutaold;		$rutaold = "../cbj_Docs/docingresos_20".$_SESSION['yold']."/";
+		global $rutanew;		$rutanew = "../cbj_Docs/docingresos_20".$dynew."/";
 		
 		if(file_exists($rutaold.$_SESSION['myimg1b']) ){
 					copy($rutaold.$_SESSION['myimg1b'], $rutanew.$_SESSION['myimg1b']);
 					unlink($rutaold.$_SESSION['myimg1b']);
-			/*		print(" <br/>* CHANGE YEAR FACT: 20".$_SESSION['yold']." X 20".$dynew."
-							<br/>- Ok Copy & Unlink Img Name 1.");
+			/*		
+				print(" <br/>* CHANGE YEAR FACT: 20".$_SESSION['yold']." X 20".$dynew."
+						<br/>- Ok Copy & Unlink Img Name 1.");
 			*/
 										}else{print("<br/>- No Ok Copy & Unlink Img Name 1.");}
 										
@@ -390,27 +388,27 @@ if ($_SESSION['Nivel'] == 'admin'){
 			global $ruta;
 			$ruta = "../cbj_Docs/docingresos_20".$dynew."/";
 			
-			if( file_exists($ruta.$_SESSION['myimg1b'])){
-						rename($ruta.$_SESSION['myimg1b'], $ruta.$_SESSION['$nombre1n']);
-				/*		print("	<br/>* CHANGE FACT NUM: ".$_SESSION['fnold']." X ".$_SESSION['fnnew']."
-								<br/>- Ok Rename Img Name 1.");
+		if( file_exists($ruta.$_SESSION['myimg1b'])){
+					rename($ruta.$_SESSION['myimg1b'], $ruta.$_SESSION['$nombre1n']);
+				/*	print("	<br/>* CHANGE FACT NUM: ".$_SESSION['fnold']." X ".$_SESSION['fnnew']."
+							<br/>- Ok Rename Img Name 1.");
 				*/
-						}else{print("<br/>- No Ok Rename Img Name 1.");}
+		}else{print("<br/>- No Ok Rename Img Name 1.");}
 
 		if( file_exists($ruta.$_SESSION['myimg2b'])){
 					rename($ruta.$_SESSION['myimg2b'], $ruta.$_SESSION['$nombre2n']);
-			/*		print("<br/>- Ok Rename Img Name 2.");	*/
-					}else{print("<br/>- No Ok Rename Img Name 2.");}
+				/*		print("<br/>- Ok Rename Img Name 2.");	*/
+		}else{print("<br/>- No Ok Rename Img Name 2.");}
 										
 		if( file_exists($ruta.$_SESSION['myimg3b'])){
 					rename($ruta.$_SESSION['myimg3b'], $ruta.$_SESSION['$nombre3n']);
-			/*		print("<br/>- Ok Rename Img Name 3.");	*/
-					}else{print("<br/>- No Ok Rename Img Name 3.");}
+				/* print("<br/>- Ok Rename Img Name 3.");	*/
+		}else{print("<br/>- No Ok Rename Img Name 3.");}
 										
 		if( file_exists($ruta.$_SESSION['myimg4b'])){
 					rename($ruta.$_SESSION['myimg4b'], $ruta.$_SESSION['$nombre4n']);
-			/*		print("<br/>- Ok Rename Img Name 4.");	*/
-					}else{print("<br/>- No Ok Rename Img Name 4.");}
+				/* print("<br/>- Ok Rename Img Name 4.");	*/
+		}else{print("<br/>- No Ok Rename Img Name 4.");}
 
 					mf1();
 					

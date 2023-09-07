@@ -6,7 +6,7 @@
 				<tr>
 					<td style='text-align:right;'>NUMERO</td>
 					<td>
-		<input type='text' name='factnum' size=22 maxlength=20 value='".strtoupper(@$defaults['factnum'])."' />
+		<input type='text' name='factnum' size=22 maxlength=20 value='".strtoupper(@$defaults['factnum'])."' required />
 					</td>
 				</tr>
 				<tr>
@@ -14,7 +14,7 @@
 					<td>
 				<div style='float:left'>
 								
-		<select name='dy' title='SELECCIONAR AÑO..' class='botonverde' style='vertical-align: middle'>
+		<select name='dy' title='SELECCIONAR AÑO..' class='botonverde' style='vertical-align: middle' required >
 			<option value=''>YEAR</option>");
 					
 			global $db;
@@ -27,18 +27,18 @@
 			}else{
 									
 				while($rowsy = mysqli_fetch_assoc($qy)){
-							print ("<option value='".$rowsy['ycod']."' ");
+						print ("<option value='".$rowsy['ycod']."' ");
 							if($rowsy['ycod'] == @$defaults['dy']){
 											print ("selected = 'selected'");
 																				}
-											print ("> ".$rowsy['year']." </option>");
+									print ("> ".$rowsy['year']." </option>");
 				}
 			}  
 																	
 		print ("</select>
 					</div>
 					<div style='float:left'>
-				<select style='margin-left:12px' name='dm' class='botonverde' >");
+				<select style='margin-left:12px' name='dm' class='botonverde' required >");
 					foreach($dm as $optiondm => $labeldm){
 						print ("<option value='".$optiondm."' ");
 					if($optiondm == @$defaults['dm']){
@@ -50,7 +50,7 @@
 		print ("</select>
 					</div>
 					<div style='float:left'>
-						<select style='margin-left:12px' name='dd' class='botonverde'>");
+						<select style='margin-left:12px' name='dd' class='botonverde' required >");
 			foreach($dd as $optiondd => $labeldd){
 						print ("<option value='".$optiondd."' ");
 					if($optiondd == @$defaults['dd']){
@@ -85,7 +85,7 @@
 					<td style='text-align:right;'>IMPUESTOS %</td>
 					<td>
 			<div style='float:left'>
-				<select name='factiva' class='botonverde'>");
+				<select name='factiva' class='botonverde' required >");
 
 		global $db;
 		global $vname; 		$vname = "`".$_SESSION['clave']."impuestos`";
@@ -110,15 +110,19 @@
 				<tr>
 					<td style='text-align:right;'>IMPUESTOS €</td>
 					<td>
-			<input style='text-align:right' type='text' name='factivae1' size=5 maxlength=5 value='".@$defaults['factivae1']."' />,
-			<input type='text' name='factivae2' size=2 maxlength=2 value='".@$defaults['factivae2']."' />€
+			<!--		
+			<input type='text' name='factivae1' size=5 maxlength=5 value='".@$defaults['factivae1']."' style='text-align:right' required />,
+			<input type='text' name='factivae2' size=2 maxlength=2 value='".@$defaults['factivae2']."' required /> €
+			-->
+			<input type='hidden' name='factivae1' value='".@$defaults['factivae1']."' required />".@$defaults['factivae1'].",
+			<input type='hidden' name='factivae2' value='".@$defaults['factivae2']."' required />".@$defaults['factivae2']." €
 					</td>
 				</tr>
 				<tr>
 					<td style='text-align:right;'>RETENCIONES %</td>
 					<td>
 			<div style='float:left'>
-				<select name='factret' class='botonverde'>");
+				<select name='factret' class='botonverde' required>");
 
 		global $db;
 		global $vnamer; 	$vnamer = "`".$_SESSION['clave']."retencion`";
@@ -143,22 +147,30 @@
 				<tr>
 					<td style='text-align:right;'>RETENCIONES €</td>
 					<td>
-			<input style='text-align:right' type='text' name='factrete1' size=5 maxlength=5 value='".@$defaults['factrete1']."' />,
-			<input type='text' name='factrete2' size=2 maxlength=2 value='".@$defaults['factrete2']."' />€
+			<!--
+			<input style='text-align:right' type='text' name='factrete1' size=5 maxlength=5 value='".@$defaults['factrete1']."' required />,
+			<input type='text' name='factrete2' size=2 maxlength=2 value='".@$defaults['factrete2']."' required />€
+			-->
+			<input type='hidden' name='factrete1' value='".@$defaults['factrete1']."' />".@$defaults['factrete1'].",
+			<input type='hidden' name='factrete2' value='".@$defaults['factrete2']."' />".@$defaults['factrete2']." €
 					</td>
 				</tr>
 				<tr>
 					<td style='text-align:right;'>SUBTOTAL €</td>
 					<td>
-			<input style='text-align:right' type='text' name='factpvp1' size=5 maxlength=5 value='".@$defaults['factpvp1']."' />,
-			<input type='text' name='factpvp2' size=2 maxlength=2 value='".@$defaults['factpvp2']."' />€
+			<input type='text' name='factpvp1' size=5 maxlength=5 value='".@$defaults['factpvp1']."'  style='text-align:right' required/> , 
+			<input type='text' name='factpvp2' size=2 maxlength=2 value='".@$defaults['factpvp2']."' required />€
 					</td>
 				</tr>
 				<tr>
 					<td style='text-align:right;'>TOTAL €</td>
 					<td>
-			<input style='text-align:right' type='text' name='factpvptot1' size=5 maxlength=5 value='".@$defaults['factpvptot1']."' />,
-			<input type='text' name='factpvptot2' size=2 maxlength=2 value='".@$defaults['factpvptot2']."' />€
+			<!--
+			<input type='text' name='factpvptot1' size=5 maxlength=5 value='".@$defaults['factpvptot1']."' style='text-align:right' required />,
+			<input type='text' name='factpvptot2' size=2 maxlength=2 value='".@$defaults['factpvptot2']."' required />€
+			-->
+			<input type='hidden' name='factpvptot1' value='".@$defaults['factpvptot1']."' required />".@$defaults['factpvptot1'].",
+			<input type='hidden' name='factpvptot2' value='".@$defaults['factpvptot2']."' required />".@$defaults['factpvptot2']." €
 					</td>
 				</tr>
 				<tr>

@@ -38,7 +38,7 @@ session_start();
 		}elseif(isset($_POST['cero'])){
 						process_form_img();
 		}elseif(isset($_POST['ocultoDetalle'])){ 
-						process_form_Dealle();
+						process_form_Detalle();
 						info_Dealle();
 		}else{  show_form();
 				global $limit;	$limit = 'LIMIT 20';
@@ -150,13 +150,9 @@ session_start();
 							Se ha producido un error: </font>".mysqli_error($db)."</br>");
 			} else {
 				if(mysqli_num_rows($qb) == 0){
-
 						require 'Gastos_NoData.php';
-
 				}else{ 
-
 						require 'Gastos_rowb_Total_Tabla.php';
-					
 					} /* Fin segundo else anidado en if */
 
 				} /* Fin de primer else . */
@@ -254,12 +250,12 @@ session_start();
 	require 'FormConsultaFiltroGt2.php';
 	
 	$qc = mysqli_query($db, $sqlb);
-	global $gt;
-	$gt = mysqli_num_rows($qc);
+	
+	global $gt; 	$gt = mysqli_num_rows($qc);
 	//print("* ".$gt);
 	global $cnt;
 
-	if(($gt>0)&&($_POST['dm'] == '')&&($_POST['dd'] == '')&&($cnt < 1)){
+	if(($gt>0)&&($_POST['dm'] != '')&&($_POST['dd'] == '')&&($cnt < 1)){
 		print("	<tr>
 		 			<td>
 			<form name='grafico' action='grafico_gf.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>

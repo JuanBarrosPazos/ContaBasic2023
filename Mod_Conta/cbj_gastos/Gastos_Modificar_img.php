@@ -152,6 +152,7 @@
 	
 		global $MoneypBlackTit;		$MoneypBlackTit = "VER TODOS LOS GASTOS";
 		global $AddBlackTit; 		$AddBlackTit = "CREAR NUEVO GASTO";
+		global $CancelBlackTit;		$CancelBlackTit = 'CANCELAR Y VOLVER';
 		require '../Inclu/BotoneraVar.php';
 		global $closeButton;
 	

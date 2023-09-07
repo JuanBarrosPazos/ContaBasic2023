@@ -379,7 +379,7 @@
 				<tr>
 					<td colspan='2' class='resultadosg' align='center'>IMP REPER</td>
 					<td colspan='2' class='resultadosg' align='center'>RETEN REPER</td>
-					<td colspan='2' class='resultadosg' align='center'>TOT INGRESOS</td>
+					<td colspan='2' class='resultadosg' align='center'>TOT GASTOS</td>
 				</tr>
 				<tr>
 					<td colspan='2' class='BorderInf resultadosg' align='center'>".$sumaivaeg." €</td>
@@ -613,7 +613,7 @@
 			<tr>
 				<td colspan='2' class='resultadosd' align='center'>IMP REPER</td>
 				<td colspan='2' class='resultadosd' align='center'>RETEN REPER</td>
-				<td colspan='2' class='resultadosd' align='center'>TOT INGRESOS</td>
+				<td colspan='2' class='resultadosd' align='center'>DIFER INGRESOS</td>
 			</tr>
 			<tr>
 				<td colspan='2' class='BorderInf resultadosd' align='center'>".$sumaivaed." €</td>

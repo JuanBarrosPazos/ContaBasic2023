@@ -2,7 +2,7 @@
  
 	global $iniy;
 
-	$tabla = "<table class='tableForm' >
+	$tabla = "<table class='tableForm' style='max-width: 610px;' >
 				<tr>
 					<th colspan=4 >
 						".$title.strtoupper($vname)."
@@ -30,7 +30,7 @@
 					<td style='text-align:right;'>RETENCIONES %</td>
 					<td>".$_POST['factret']."</td>
 					<td style='text-align:right;'>RETENCIONES €</td>
-					<td>".$factivae."</td>
+					<td>".$factrete."</td>
 				</tr>
 				<tr>
 					<td style='text-align:right;'>SUBTOTAL</td>

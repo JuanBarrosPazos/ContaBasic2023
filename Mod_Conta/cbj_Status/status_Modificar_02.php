@@ -233,10 +233,12 @@ session_start();
 						<td colspan='4' style='text-align:right;' >
 							".$SaveBlack.$closeButton."
 							<input type='hidden' name='oculto' value=1 />
-			</form>														
+			</form>	
+					<div style='display:inline-block; float:left !important;' >
 						".$InicioBlack."
 							<a href='status_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
 						".$closeButton."
+					</div>
 						</td>
 					</tr>
 				</table>"); 

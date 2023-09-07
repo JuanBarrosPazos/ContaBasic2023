@@ -35,7 +35,7 @@ session_start();
 
 	function validate_form(){
 	
-		global $sqld; 		global $qd; 		global $rowd;
+		global $db; 	global $sqld; 		global $qd; 		global $rowd;
 
 		$errors = array();
 		
@@ -81,165 +81,200 @@ session_start();
 		$link2 = $MoneypWhite."<a href='Gastos_Crear.php' >&nbsp;&nbsp;&nbsp;</a>".$closeButton;
 	 
 		require 'TableFormResult.php';
-		
-		/************* CREAMOS LAS IMAGENES EN LA IMG PRO SECCION ***************/
-		
-		/////////////
 
-		if($_FILES['myimg1']['size'] == 0){$new_name1 = 'untitled.png';
-				$new_name1 = $_POST['factnum']."_1.png";
-				$rename_filename1 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name1;								
-				copy("../cbj_Docs/docgastos_".$dyt1."/untitled.png", $rename_filename1);
+		/************* INICIO NOMBRES DE LAS IMG  ***************/
+
+		global $new_name1;	global $new_name2;	global $new_name3;	global $new_name4;
+		
+		if($_FILES['myimg1']['size'] == 0){
+			$new_name1 = $_POST['factnum']."_1.png";
 		}else{
-			$safe_filename1 = trim(str_replace('/', '', $_FILES['myimg1']['name']));
-			$safe_filename1 = trim(str_replace('..', '', $safe_filename1));
-	
-			$nombre1 = $_FILES['myimg1']['name'];
-			$nombre1_tmp = $_FILES['myimg1']['tmp_name'];
-			$tipo1 = $_FILES['myimg1']['type'];
-			$tamano1 = $_FILES['myimg1']['size'];
-	
-			$destination_file1 = "../cbj_Docs/docgastos_".$dyt1."/".$safe_filename1;
-		
-	    if( file_exists("../cbj_Docs/docgastos_".$dyt1."/".$nombre1) ){
-				unlink("../cbj_Docs/docgastos_".$dyt1."/".$nombre1);
-			//	print("** El archivo ".$nombre1." Ya existe, seleccione otra imagen.</br>");
-		}elseif (move_uploaded_file($_FILES['myimg1']['tmp_name'], $destination_file1)){
-
-			// Renombrar el archivo:
 			$extension1 = substr($_FILES['myimg1']['name'],-3);
-			// print($extension1);
 			// $extension1 = end(explode('.', $_FILES['myimg1']['name']) );
-			global $new_name1;
 			$new_name1 = $_POST['factnum']."_1.".$extension1;
-			$rename_filename1 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name1;								
-			rename($destination_file1, $rename_filename1);
-
-		}else{print("NO SE HA PODIDO GUARDAR EN ".$destination_file1);}
-				}
-
-		/////////////
-
-		if($_FILES['myimg2']['size'] == 0){$new_name2 = 'untitled.png';
-				$new_name2 = $_POST['factnum']."_2.png";
-				$rename_filename2 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name2;								
-				copy("../cbj_Docs/docgastos_".$dyt1."/untitled.png", $rename_filename2);
-		}else{
-
-			$safe_filename2 = trim(str_replace('/', '', $_FILES['myimg2']['name']));
-			$safe_filename2 = trim(str_replace('..', '', $safe_filename2));
-	
-			$nombre2 = $_FILES['myimg2']['name'];
-			$nombre2_tmp = $_FILES['myimg2']['tmp_name'];
-			$tipo2 = $_FILES['myimg2']['type'];
-			$tamano2 = $_FILES['myimg2']['size'];
-	
-			$destination_file2 = "../cbj_Docs/docgastos_".$dyt1."/".$safe_filename2;
-		
-			if( file_exists("../cbj_Docs/docgastos_".$dyt1."/".$nombre2) ){
-					unlink("../cbj_Docs/docgastos_".$dyt1."/".$nombre2);
-				//	print("** El archivo ".$nombre1." Ya existe, seleccione otra imagen.</br>");
-
-			}elseif (move_uploaded_file($_FILES['myimg2']['tmp_name'], $destination_file2)){
-
-				// Renombrar el archivo:
-				$extension2 = substr($_FILES['myimg2']['name'],-3);
-				// print($extension2);
-				// $extension2 = end(explode('.', $_FILES['myimg2']['name']) );
-				global $new_name2;
-				$new_name2 = $_POST['factnum']."_2.".$extension2;
-				$rename_filename2 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name2;								
-				rename($destination_file2, $rename_filename2);
-			}else {print("NO SE HA PODIDO GUARDAR EN ".$destination_file2);}
-
 		}
-			
-		/////////////
 
-		if($_FILES['myimg3']['size'] == 0){$new_name3 = 'untitled.png';
-				$new_name3 = $_POST['factnum']."_3.png";
-				$rename_filename3 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name3;								
-				copy("../cbj_Docs/docgastos_".$dyt1."/untitled.png", $rename_filename3);
+		if($_FILES['myimg2']['size'] == 0){
+			$new_name2 = $_POST['factnum']."_2.png";
 		}else{
-
-			$safe_filename3 = trim(str_replace('/', '', $_FILES['myimg3']['name']));
-			$safe_filename3 = trim(str_replace('..', '', $safe_filename3));
-	
-			$nombre3 = $_FILES['myimg3']['name'];
-			$nombre3_tmp = $_FILES['myimg3']['tmp_name'];
-			$tipo3 = $_FILES['myimg3']['type'];
-			$tamano3 = $_FILES['myimg3']['size'];
-	
-			$destination_file3 = "../cbj_Docs/docgastos_".$dyt1."/".$safe_filename3;
-		
-			if( file_exists("../cbj_Docs/docgastos_".$dyt1."/".$nombre3) ){
-					unlink("../cbj_Docs/docgastos_".$dyt1."/".$nombre3);
-				//	print("** El archivo ".$nombre1." Ya existe, seleccione otra imagen.</br>");
-			}elseif (move_uploaded_file($_FILES['myimg3']['tmp_name'], $destination_file3)){
-
-				// Renombrar el archivo:
-				$extension3 = substr($_FILES['myimg3']['name'],-3);
-				// print($extension3);
-				// $extension3 = end(explode('.', $_FILES['myimg3']['name']) );
-				global $new_name3;
-				$new_name3 = $_POST['factnum']."_3.".$extension3;
-				$rename_filename3 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name3;								
-				rename($destination_file3, $rename_filename3);
-			}else {print("NO SE HA PODIDO GUARDAR EN ".$destination_file3);}
-			
+			$extension2 = substr($_FILES['myimg2']['name'],-3);
+			$new_name2 = $_POST['factnum']."_2.".$extension2;
 		}
-			
-		/////////////
-		
-		if($_FILES['myimg4']['size'] == 0){$new_name4 = 'untitled.png';
-				$new_name4 = $_POST['factnum']."_4.png";
-				$rename_filename4 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name4;								
-				copy("../cbj_Docs/docgastos_".$dyt1."/untitled.png", $rename_filename4);
+
+		if($_FILES['myimg3']['size'] == 0){
+			$new_name3 = $_POST['factnum']."_3.png";
 		}else{
-
-			$safe_filename4 = trim(str_replace('/', '', $_FILES['myimg4']['name']));
-			$safe_filename4 = trim(str_replace('..', '', $safe_filename4));
-	
-			$nombre4 = $_FILES['myimg4']['name'];
-			$nombre4_tmp = $_FILES['myimg4']['tmp_name'];
-			$tipo4 = $_FILES['myimg4']['type'];
-			$tamano4 = $_FILES['myimg4']['size'];
-	
-			$destination_file4 = "../cbj_Docs/docgastos_".$dyt1."/".$safe_filename4;
-		
-			if( file_exists("../cbj_Docs/docgastos_".$dyt1."/".$nombre4) ){
-					unlink("../cbj_Docs/docgastos_".$dyt1."/".$nombre4);
-				//	print("** El archivo ".$nombre1." Ya existe, seleccione otra imagen.</br>");
-			}elseif (move_uploaded_file($_FILES['myimg4']['tmp_name'], $destination_file4)){
-
-				// Renombrar el archivo:
-				$extension4 = substr($_FILES['myimg4']['name'],-3);
-				// print($extension4);
-				// $extension4 = end(explode('.', $_FILES['myimg4']['name']) );
-				global $new_name4;
-				$new_name4 = $_POST['factnum']."_4.".$extension4;
-				$rename_filename4 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name4;								
-				rename($destination_file4, $rename_filename4);
-			}else {print("NO SE HA PODIDO GUARDAR EN ".$destination_file4);}
-
+			$extension3 = substr($_FILES['myimg3']['name'],-3);
+			$new_name3 = $_POST['factnum']."_3.".$extension3;
 		}
-			
-		/////////////
-		
+
+		if($_FILES['myimg4']['size'] == 0){
+			$new_name4 = $_POST['factnum']."_4.png";
+		}else{
+			$extension4 = substr($_FILES['myimg4']['name'],-3);
+			$new_name4 = $_POST['factnum']."_4.".$extension4;
+		}
+
+		/************* FIN NOMBRES DE LAS IMG  ***************/
+
 		global $db; 		global $db_name;
 
-		if(strlen(trim($factrete)) == 0){
-			$factrete = 0.0;
-		} else { }
+		if(strlen(trim($factrete)) == 0){ $factrete = 0.0; }else{ }
 
 		$sqla = "INSERT INTO `$db_name`.$vname (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[refprovee]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$new_name1', '$new_name2', '$new_name3', '$new_name4')";
 		
+		// SE CUMPLE EL QUERY
 		if(mysqli_query($db, $sqla)){ 
+		
+			/************* INICIO CREAMOS LAS IMAGENES ***************/
+		
+			if($_FILES['myimg1']['size'] == 0){ 
+				$new_name1 = $_POST['factnum']."_1.png";
+				$rename_filename1 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name1;								
+				copy("../cbj_Docs/docgastos_".$dyt1."/untitled.png", $rename_filename1);
+			}else{
+				$safe_filename1 = trim(str_replace('/', '', $_FILES['myimg1']['name']));
+				$safe_filename1 = trim(str_replace('..', '', $safe_filename1));
+		
+				$nombre1 = $_FILES['myimg1']['name'];
+				$nombre1_tmp = $_FILES['myimg1']['tmp_name'];
+				$tipo1 = $_FILES['myimg1']['type'];
+				$tamano1 = $_FILES['myimg1']['size'];
+	
+				$destination_file1 = "../cbj_Docs/docgastos_".$dyt1."/".$safe_filename1;
+			
+			if( file_exists("../cbj_Docs/docgastos_".$dyt1."/".$nombre1) ){
+					unlink("../cbj_Docs/docgastos_".$dyt1."/".$nombre1);
+				//	print("** El archivo ".$nombre1." Ya existe, seleccione otra imagen.</br>");
+			}elseif (move_uploaded_file($_FILES['myimg1']['tmp_name'], $destination_file1)){
+	
+				// Renombrar el archivo:
+				//$extension1 = substr($_FILES['myimg1']['name'],-3);
+				// print($extension1);
+				// $extension1 = end(explode('.', $_FILES['myimg1']['name']) );
+				global $new_name1;
+				//$new_name1 = $_POST['factnum']."_1.".$extension1;
+				$rename_filename1 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name1;								
+				rename($destination_file1, $rename_filename1);
+	
+			}else{print("NO SE HA PODIDO GUARDAR EN ".$destination_file1);}
+					}
+	
+			/////////////
+	
+			if($_FILES['myimg2']['size'] == 0){
+					$new_name2 = $_POST['factnum']."_2.png";
+					$rename_filename2 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name2;								
+					copy("../cbj_Docs/docgastos_".$dyt1."/untitled.png", $rename_filename2);
+			}else{
+	
+				$safe_filename2 = trim(str_replace('/', '', $_FILES['myimg2']['name']));
+				$safe_filename2 = trim(str_replace('..', '', $safe_filename2));
+		
+				$nombre2 = $_FILES['myimg2']['name'];
+				$nombre2_tmp = $_FILES['myimg2']['tmp_name'];
+				$tipo2 = $_FILES['myimg2']['type'];
+				$tamano2 = $_FILES['myimg2']['size'];
+		
+				$destination_file2 = "../cbj_Docs/docgastos_".$dyt1."/".$safe_filename2;
+			
+				if( file_exists("../cbj_Docs/docgastos_".$dyt1."/".$nombre2) ){
+						unlink("../cbj_Docs/docgastos_".$dyt1."/".$nombre2);
+					//	print("** El archivo ".$nombre1." Ya existe, seleccione otra imagen.</br>");
+	
+				}elseif (move_uploaded_file($_FILES['myimg2']['tmp_name'], $destination_file2)){
+	
+					// Renombrar el archivo:
+					//$extension2 = substr($_FILES['myimg2']['name'],-3);
+					// print($extension2);
+					// $extension2 = end(explode('.', $_FILES['myimg2']['name']) );
+					global $new_name2;
+					//$new_name2 = $_POST['factnum']."_2.".$extension2;
+					$rename_filename2 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name2;								
+					rename($destination_file2, $rename_filename2);
+				}else {print("NO SE HA PODIDO GUARDAR EN ".$destination_file2);}
+	
+			}
+				
+			/////////////
+	
+			if($_FILES['myimg3']['size'] == 0){
+					$new_name3 = $_POST['factnum']."_3.png";
+					$rename_filename3 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name3;								
+					copy("../cbj_Docs/docgastos_".$dyt1."/untitled.png", $rename_filename3);
+			}else{
+	
+				$safe_filename3 = trim(str_replace('/', '', $_FILES['myimg3']['name']));
+				$safe_filename3 = trim(str_replace('..', '', $safe_filename3));
+		
+				$nombre3 = $_FILES['myimg3']['name'];
+				$nombre3_tmp = $_FILES['myimg3']['tmp_name'];
+				$tipo3 = $_FILES['myimg3']['type'];
+				$tamano3 = $_FILES['myimg3']['size'];
+		
+				$destination_file3 = "../cbj_Docs/docgastos_".$dyt1."/".$safe_filename3;
+			
+				if( file_exists("../cbj_Docs/docgastos_".$dyt1."/".$nombre3) ){
+						unlink("../cbj_Docs/docgastos_".$dyt1."/".$nombre3);
+					//	print("** El archivo ".$nombre1." Ya existe, seleccione otra imagen.</br>");
+				}elseif (move_uploaded_file($_FILES['myimg3']['tmp_name'], $destination_file3)){
+	
+					// Renombrar el archivo:
+					//$extension3 = substr($_FILES['myimg3']['name'],-3);
+					// print($extension3);
+					// $extension3 = end(explode('.', $_FILES['myimg3']['name']) );
+					global $new_name3;
+					//$new_name3 = $_POST['factnum']."_3.".$extension3;
+					$rename_filename3 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name3;								
+					rename($destination_file3, $rename_filename3);
+				}else {print("NO SE HA PODIDO GUARDAR EN ".$destination_file3);}
+				
+			}
+				
+			/////////////
+			
+			if($_FILES['myimg4']['size'] == 0){
+					$new_name4 = $_POST['factnum']."_4.png";
+					$rename_filename4 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name4;								
+					copy("../cbj_Docs/docgastos_".$dyt1."/untitled.png", $rename_filename4);
+			}else{
+	
+				$safe_filename4 = trim(str_replace('/', '', $_FILES['myimg4']['name']));
+				$safe_filename4 = trim(str_replace('..', '', $safe_filename4));
+		
+				$nombre4 = $_FILES['myimg4']['name'];
+				$nombre4_tmp = $_FILES['myimg4']['tmp_name'];
+				$tipo4 = $_FILES['myimg4']['type'];
+				$tamano4 = $_FILES['myimg4']['size'];
+		
+				$destination_file4 = "../cbj_Docs/docgastos_".$dyt1."/".$safe_filename4;
+			
+				if( file_exists("../cbj_Docs/docgastos_".$dyt1."/".$nombre4) ){
+						unlink("../cbj_Docs/docgastos_".$dyt1."/".$nombre4);
+					//	print("** El archivo ".$nombre1." Ya existe, seleccione otra imagen.</br>");
+				}elseif (move_uploaded_file($_FILES['myimg4']['tmp_name'], $destination_file4)){
+	
+					// Renombrar el archivo:
+					//$extension4 = substr($_FILES['myimg4']['name'],-3);
+					// print($extension4);
+					// $extension4 = end(explode('.', $_FILES['myimg4']['name']) );
+					global $new_name4;
+					//$new_name4 = $_POST['factnum']."_4.".$extension4;
+					$rename_filename4 = "../cbj_Docs/docgastos_".$dyt1."/".$new_name4;								
+					rename($destination_file4, $rename_filename4);
+				}else {print("NO SE HA PODIDO GUARDAR EN ".$destination_file4);}
+	
+			}
+				
+			/************* FIN CREAMOS LAS IMAGENES ***************/
+
 			print($tabla); 
-		}else{ print("* ERROR L.235: ".mysqli_error($db));
-					show_form();
-					global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
-				}
+
+		}else{ // NO SE CUMPLE EL QUERY
+				print("* ERROR L.124: ".mysqli_error($db));
+				show_form();
+				global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
+			}
 			
 		/////////////
 	
@@ -250,12 +285,12 @@ session_start();
 			$dmx = substr($_POST['dm'],-1);
 				}
 		*/
-		
 		global $mes;
 		if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
 		elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
 		elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
 		elseif(($dmx == "10")||($dmx == "11")||($dmx == "12")){$mes = "TRI4";}
+
 
 		global $redir;
 		$redir = "<script type='text/javascript'>
@@ -281,8 +316,12 @@ session_start();
 				require '../Inclu/BotoneraVar.php';
 		global $closeButton;
 
-		global $db; 		global $db_name;
-		
+		global $db; 			global $db_name;
+
+		global $valIvaeEnt;		global $valIvaeDec;		
+		global $valReteEnt;		global $valReteDec;
+		global $valToteEnt;		global $valToteDec;	
+						
 		global $sesionref; 		$sesionref = "`".$_SESSION['clave']."proveedores`";
 
 		if((isset($_POST['proveegastos']))&&($_POST['proveegastos']!='')){
@@ -301,56 +340,67 @@ session_start();
 		}
 	
 		if((isset($_POST['oculto']))||(isset($_POST['oculto1']))){
-				 //$defaults = $_POST;
-				 $defaults = array ( 'proveegastos' => @$_POST['proveegastos'],
-									 'dy' => $_POST['dy'],
-									 'dm' => $_POST['dm'],
-									 'dd' => $_POST['dd'],
-									 'factnum' => strtoupper($_POST['factnum']),
-								     // 'factdate' => $_POST['factdate'],
-								   	 'refprovee' => @$rowprovee['ref'],
-								   	 'factnom' => @$rowprovee['rsocial'],
-								   	 'factnif' => @$_dnil,
-								   	 'factiva' => $_POST['factiva'],
-									 'factivae1' => $_POST['factivae1'],	
-									 'factivae2' => $_POST['factivae2'],	
-								   	 'factret' => $_POST['factret'],
-									 'factrete1' => $_POST['factrete1'],	
-									 'factrete2' => $_POST['factrete2'],	
-									 'factpvp1' => $_POST['factpvp1'],	
-									 'factpvp2' => $_POST['factpvp2'],	
-									 'factpvptot1' => $_POST['factpvptot1'],	
-									 'factpvptot2' => $_POST['factpvptot2'],	
-									 'coment' => $_POST['coment'],	
-									 'myimg1' => @$_POST['myimg1'],	
-									 'myimg2' => @$_POST['myimg2'],	
-									 'myimg3' => @$_POST['myimg3'],	
-									 'myimg4' => @$_POST['myimg4']);
+			
+			if(!isset($_POST['oculto'])){
+				$_POST['factivae1'] = '00';		$_POST['factivae2'] = '00';
+				$_POST['factrete1'] = '00';		$_POST['factrete2'] = '00';
+				$_POST['factpvptot1'] = '00';	$_POST['factpvptot2'] = '00';
+			}else{
+				$_POST['factivae1'] = $valIvaeEnt;		$_POST['factivae2'] = $valIvaeDec;
+				$_POST['factrete1'] = $valReteEnt;		$_POST['factrete2'] = $valReteDec;
+				$_POST['factpvptot1'] = $valToteEnt;	$_POST['factpvptot2'] = $valToteDec;
+			}	
+
+				//$defaults = $_POST;
+				$defaults = array ( 'proveegastos' => @$_POST['proveegastos'],
+									'dy' => $_POST['dy'],
+									'dm' => $_POST['dm'],
+									'dd' => $_POST['dd'],
+									'factnum' => strtoupper($_POST['factnum']),
+								// 	'factdate' => $_POST['factdate'],
+								   	'refprovee' => @$rowprovee['ref'],
+								   	'factnom' => @$rowprovee['rsocial'],
+								   	'factnif' => @$_dnil,
+								   	'factiva' => $_POST['factiva'],
+									'factivae1' => $_POST['factivae1'],	
+									'factivae2' => $_POST['factivae2'],	
+								   	'factret' => $_POST['factret'],
+									'factrete1' => $_POST['factrete1'],	
+									'factrete2' => $_POST['factrete2'],	
+									'factpvp1' => $_POST['factpvp1'],	
+									'factpvp2' => $_POST['factpvp2'],	
+									'factpvptot1' => $_POST['factpvptot1'],	
+									'factpvptot2' => $_POST['factpvptot2'],	
+									'coment' => $_POST['coment'],	
+									'myimg1' => @$_POST['myimg1'],	
+									'myimg2' => @$_POST['myimg2'],	
+									'myimg3' => @$_POST['myimg3'],	
+									'myimg4' => @$_POST['myimg4']);
 
 		}else{ $defaults = array ( 'proveegastos' => @$_POST['proveegastos'],
-									 'dy' => @$_POST['dy'],
-									 'dm' => @$_POST['dm'],
-									 'dd' => @$_POST['dd'],
+									 'dy' => '',
+									 'dm' => '',
+									 'dd' => '',
 									 'factnum' => strtoupper(@$_POST['factnum']),
 								     // 'factdate' => $_POST['factdate'],
 								   	 'refprovee' => @$rowprovee['ref'],
 								   	 'factnom' => @$rowprovee['rsocial'],
 								   	 'factnif' => @$_dnil,
-								   	 'factiva' => @$_POST['factiva'],
-									 'factivae1' => @$_POST['factivae1'],	
+								   	 'factiva' => '00',
+									 'factivae1' => '00',	
 									 'factivae2' => '00',	
-								   	 'factret' => @$_POST['factret'],
-									 'factrete1' => @$_POST['factrete1'],	
+								   	 'factret' => '00',
+									 'factrete1' => '00',	
 									 'factrete2' => '00',	
-									 'factpvp1' => @$_POST['factpvp1'],	
-									 'factpvp2' => '00',	
-									 'factpvptot1' => @$_POST['factpvptot1'],	
+									 'factpvp1' => '',	
+									 'factpvp2' => '',	
+									 'factpvptot1' => '00',
 									 'factpvptot2' => '00',	
-									 'coment' => @$_POST['coment'],	
-									 'myimg1' => @$_POST['myimg1'],	
-									 'myimg2' => @$_POST['myimg2'],	
-									 'myimg3' => @$_POST['myimg3'],	
-									 'myimg4' => @$_POST['myimg4']); }
+									 'coment' => '',	
+									 'myimg1' => '',	
+									 'myimg2' => '',	
+									 'myimg3' => '',	
+									 'myimg4' => ''); }
 
 		require 'ArrayMesDia.php';
 										
@@ -393,25 +443,25 @@ session_start();
 		require 'FormDatos.php';
 
 		print("<tr>
-					<td>PDF / FOTO 1</td>
+					<td style='text-align:right;'>PDF / FOTO 1</td>
 					<td>
 		<input type='file' name='myimg1' value='".@$defaults['myimg1']."' style='color:#fff !important;' />
 					</td>
 				</tr>
 				<tr>
-					<td>PDF / FOTO 2</td>
+					<td style='text-align:right;'>PDF / FOTO 2</td>
 					<td>
 		<input type='file' name='myimg2' value='".@$defaults['myimg2']."' style='color:#fff !important;' />
 					</td>
 				</tr>
 				<tr>
-					<td>PDF / FOTO 3</td>
+					<td style='text-align:right;'>PDF / FOTO 3</td>
 					<td>
 		<input type='file' name='myimg3' value='".@$defaults['myimg3']."' style='color:#fff !important;' />
 					</td>
 				</tr>
 				<tr>
-					<td>PDF / FOTO 4</td>
+					<td style='text-align:right;'>PDF / FOTO 4</td>
 					<td>
 		<input type='file' name='myimg4' value='".@$defaults['myimg4']."' style='color:#fff !important;' />
 					</td>
@@ -423,13 +473,14 @@ session_start();
 					-->
 					".$SaveBlack.$closeButton."
 						<input type='hidden' name='oculto' value=1 />
-			</form>	
+			</form>
+					<div style='display:inline-block; float:left !important;' >
 						".$MoneypBlack."
-							<a href='Gastos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+							<a href='Gastos_Ver.php'>&nbsp;&nbsp;&nbsp;</a>
 						".$closeButton.$MoneypWhite."
 							<a href='Gastos_Pendientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
 						".$closeButton."
-													
+					</div>								
 					</td>
 				</tr>
 			</table>"); 

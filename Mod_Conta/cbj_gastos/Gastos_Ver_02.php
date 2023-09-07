@@ -14,7 +14,7 @@
 	/*
 	if ($_SESSION['Nivel'] == 'admin'){
 
-		if(isset($_POST['ocultoDetalle'])){ process_form_Dealle();
+		if(isset($_POST['ocultoDetalle'])){ process_form_Detalle();
 											info_Dealle();
 									} 
 	} else { require '../Inclu/table_permisos.php'; }
@@ -24,7 +24,7 @@
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	function process_form_Dealle(){
+	function process_form_Detalle(){
 	
 		global $CancelBlackTit;		$CancelBlackTit = "CERRAR VENTANA";
 		global $MoneypBlackTit;		$MoneypBlackTit = "VER TODOS LOS GASTOS";
@@ -80,10 +80,8 @@
 								DOCS FACT Nº: ".$_POST['factnum']."
 						</th>
 					</tr>
-
 					<tr>
 						<td colspan=2 style='text-align:center;' >
-
 						<div class='img1'>
 			<button type='submit' class='botonnaranja' title='DESCARGAR DOCUMENTO 1' >
 				<a style='font-size:14px' href='../cbj_Docs/docgastos_".$_POST['dyt1']."/".$rowsc['myimg1']."' target='_blank'>
@@ -166,18 +164,22 @@
 			</tr>		
 			<tr>
 				<td colspan=2 align='right' >
-						".$MoneypBlack."
+					<div style='display:inline-block; float:left !important;' >
+						".$AddBlack."
 								<a href='Gastos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-						".$closeButton.$AddBlack."
+						".$closeButton."
+					</div>	
+						".$MoneypBlack."
 								<a href='Gastos_Crear.php'>&nbsp;&nbsp;&nbsp;</a>
-						".$closeButton.$CancelBlack."
+						".$closeButton."
+						".$CancelBlack."
 								<a href='Gastos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
 						".$closeButton."
 				</td>
 			</tr>
 		</table>");
 
-	} // FIN function process_form_Dealle()
+	} // FIN function process_form_Detalle()
 			
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
