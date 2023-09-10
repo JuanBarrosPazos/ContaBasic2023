@@ -4,7 +4,9 @@
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	require 'FormatNumber.php';
+	/* INICIO VALIDACIÓN DE LOS VALORES NUMERICOS DE LA FACTURA */
+
+	require 'FormatNumber.php'; 
 
 	global $civae;
 	$civae = $factpvp * ($fiva / 100);
@@ -12,26 +14,40 @@
     $civae = number_format($civae,2,".","");
 	//$civae = number_format($civae,2,".","");
     //echo "*** ".$civae."<br>";
+	global $valIvaeEnt;		$valIvaeEnt = substr($civae,0,-3);
+	global $valIvaeDec;		$valIvaeDec = substr($civae,-2);
+	//echo "*** ".$valIvaeEnt.".".$valIvaeDec."<br>";
 
 	if(trim($factivae) != trim($civae)){
-		$errors [] = "IMPUESTOS € <font color='#FF0000'>CANTIDAD CORRECTA => </font> ".$civae." €";
+		$errors [] = "IMPUESTOS € <font color='#FF0000'> => </font> ".$civae." €";
 	}
-	
+
 	$fret = $_POST['factret'];
 
 	$crete = $factpvp * ($fret / 100);
 	$crete = floatval($crete);
 	$crete = number_format($crete,2,".","");
 	if(trim($factrete) != trim($crete)){
-		$errors [] = "RETENCIONES € <font color='#FF0000'>CANTIDAD CORRECTA => </font> ".$crete." €";
+		$errors [] = "RETENCIONES € <font color='#FF0000'> => </font> ".$crete." €";
 	}
-	
-	$cftot = ($factpvp + $civae) + $factrete;
+	global $valReteEnt;		$valReteEnt = substr($crete,0,-3);
+	global $valReteDec;		$valReteDec = substr($crete,-2);
+	//echo "*** ".$valReteEnt.".".$valReteDec."<br>";
+
+	//$cftot = ($factpvp + $civae) + $factrete;
+	$cftot = ($factpvp + $civae) + $crete;
 	$cftot = floatval($cftot);
 	$cftot = number_format($cftot,2,".","");
 	if(trim($factpvptot) != trim($cftot)){
-			$errors [] = "TOTAL € <font color='#FF0000'>CANTIDAD CORRECTA => </font> ".$cftot." €";
+			$errors [] = "TOTAL € <font color='#FF0000'> => </font> ".$cftot." €";
 	}
+	global $valToteEnt;		$valToteEnt = substr($cftot,0,-3);
+	global $valToteDec;		$valToteDec = substr($cftot,-2);
+	//echo "*** ".$valToteEnt.".".$valToteDec."<br>";
+	
+
+	/* FINAL VALIDACIÓN DE LOS VALORES NUMERICOS DE LA FACTURA */
+
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -266,16 +282,18 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	if($_POST['dy'] != ''){
+	global $keyModifDat;
+
+	if((isset($_POST['factnum']))&&(strlen(trim($_POST['factnum'])) != 0)){
 	
         global $db; 	global $db_name;
 
-        global $dyt1;	$dyt1 = "20".$_POST['dy'];
+		global $dyt1;		
+		if((isset($_POST['dy']))&&(strlen(trim($_POST['dy'])) != 0)){
+        	$dyt1 = "20".$_POST['dy'];
+		}else{ $dyt1 = date('Y'); }
                                                                     
-		global $vnameg; 		$vnameg = "`".$_SESSION['clave']."gastos_".$dyt1."`";
-		global $vnamegp; 		$vnamegp = "`".$_SESSION['clave']."gastos_pendientes`";
-
-		/* INICIO VERIFICO EL NUMERO DE LA FACTURA EN TODAS LAS TABLAS ACTIVAS MENOS PAPELERAS STATUS */
+		/* INICIO VERIFICO EL NUMERO DE LA FACTURA EN TODAS LAS TABLAS ACTIVAS MENOS PAPELERA STATUS */
 			global $tableName; 			$tableName = "`".$_SESSION['clave']."status`";
 			$a = "SELECT MIN(year) FROM `$db_name`.$tableName ";
 			$ra = mysqli_query($db, $a);
@@ -296,8 +314,8 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 				$countgw = mysqli_num_rows($qgw);	
 				//	$rowsg = mysqli_fetch_assoc($qg);
 				if(mysqli_query($db, $sqlgw)){ //print("* OK");
-				}else{  print("</br>* ERROR L.294</br> ".mysqli_error($db)."</br>");
-						$texerror .= "\n\t* ERROR L.294 ".mysqli_error($db);
+				}else{  print("</br>* ERROR L.295</br> ".mysqli_error($db)."</br>");
+						$texerror .= "\n\t* ERROR L.295 ".mysqli_error($db);
 							}
 
 				if($countgw > 0){ $errors [] = "<font color='#FF0000'>YA EXISTE LA FACTURA EN ".$vnamegw." </font>"; }
@@ -307,27 +325,32 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 				$yearMin++;
 
 			} // FIN WHILE
-
+						
 		/* FIN VERIFICO EL NUMERO DE LA FACTURA EN TODAS LAS TABLAS ACTIVAS MENOS PAPELERA STATUS */
-			
+
+        global $vnameg; 	$vnameg = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+        global $vnamegp; 	$vnamegp = "`".$_SESSION['clave']."gastos_pendientes`";
+ 
 		if((isset($_POST['id']))&&(strlen(trim($_POST['id'])) != 0)){
-			$sqlgp =  "SELECT * FROM `$db_name`.$vnamegp WHERE `id` <> '$_POST[id]' AND `factnum` = '$_POST[factnum]' ";
-			$sqlg =  "SELECT * FROM `$db_name`.$vnamegp WHERE `factnum` = '$_POST[factnum]'";
+			$sqlg =  "SELECT * FROM `$db_name`.$vnameg WHERE `factnum` = '$_POST[factnum]'";
+			$sqlgp =  "SELECT * FROM `$db_name`.$vnamegp WHERE `id` <> '$_POST[id]' AND `factnum` = '$_POST[factnum]'";
+			//echo "id esta set<br>";
 		}else{
+			$sqlg =  "SELECT * FROM `$db_name`.$vnameg WHERE `factnum` = '$_POST[factnum]'";
 			$sqlgp =  "SELECT * FROM `$db_name`.$vnamegp WHERE `factnum` = '$_POST[factnum]'";
-			$sqlg =  "SELECT * FROM `$db_name`.$vnamegp WHERE `factnum` = '$_POST[factnum]'";
+			//echo "id NO esta set<br>";
 		}
 
         $qg = mysqli_query($db, $sqlg);				$qgp = mysqli_query($db, $sqlgp);
         $countg = mysqli_num_rows($qg);				$countgp = mysqli_num_rows($qgp);
     //	$rowsg = mysqli_fetch_assoc($qg);			$rowsgp = mysqli_fetch_assoc($qgp);
         
-		if($countgp > 0){
-			$errors [] = "<font color='#FF0000'>YA EXISTE LA FACTURA EN ".$vnamegp." </font>";
-		} 
-		if($countg > 0){
+        if($countg > 0){
 			$errors [] = "<font color='#FF0000'>YA EXISTE LA FACTURA EN ".$vnameg." </font>";
-		} 
+	    }
+        if($countgp > 0){
+			$errors [] = "<font color='#FF0000'>--YA EXISTE LA FACTURA EN ".$vnamegp." </font>";
+	    } 
 
 	}else{ } // FIN SI isset($_POST['factnum']
 

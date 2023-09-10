@@ -24,9 +24,8 @@ if ($_SESSION['Nivel'] == 'admin'){
 					show_form($form_errors);
 			} else { process_form();
 					 info_02();
-				if(($_SESSION['yold'] != $_SESSION['ynew'])||($_SESSION['mold'] != $_SESSION['mnew'])){ }
 					}
-			} else {show_form();}
+			} else { show_form(); }
 
 	} else { require '../Inclu/table_permisos.php'; } 
 
@@ -52,14 +51,12 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 	function process_form(){
 	
-		global $AddBlackTit; 		$AddBlackTit = "CREAR NUEVO GASTO";
-		global $MoneypBlackTit;		$MoneypBlackTit = "VER TODOS LOS GASTOS";
-		global $MoneypWhiteTit;		$MoneypWhiteTit = "VER TODOS LOS GASTOS PENDIENTES";
-				require '../Inclu/BotoneraVar.php';
-		global $closeButton;
+		global $rutPend;	$rutPend = '';
+		global $pend;		$pend = "";
+		require 'Gastos_Botonera.php';
 
 		global $db; 		global $db_name;	
-		global $dyt1; 		global $dynew;		global $texerror;
+		global $dyt1; 		global $texerror;
 		
 		require 'Gastos_factdate.php';
 
@@ -68,203 +65,11 @@ if ($_SESSION['Nivel'] == 'admin'){
 		//////////////
 			//////////////
 		//////////////
-	
-		global $ivaold; 	$ivaold = $_SESSION['ivae1'].".".$_SESSION['ivae2'];
-	
-		global $diferiva;
 
-		if($_SESSION['ivae1'] == $factivae1){
-				if($_SESSION['ivae2'] == $factivae2) {
-
-				}elseif($_SESSION['ivae2'] > $factivae2) {
-									$diferiva = $ivaold - $factivae;
-									$diferiva = "-".$diferiva;
-				}elseif($_SESSION['ivae2'] < $factivae2) {
-									$diferiva = $factivae - $ivaold;
-					}
-		}elseif($_SESSION['ivae1'] > $factivae1){
-									global $diferiva;
-									$diferiva = $ivaold - $factivae;
-									$diferiva = "-".$diferiva;
-		}elseif($_SESSION['ivae1'] < $factivae1){
-									global $diferiva;
-									$diferiva = $factivae - $ivaold;
-		}
-
-		// printf('%.2f', $diferiva);
-		// print("<br/>* Difer iva tot: ".$diferiva."<br/>");
-		
-	//////////////
-	
-		global $retold;
-		$retold = $_SESSION['rete1'].".".$_SESSION['rete2'];
-	
-		if($_SESSION['rete1'] == $factrete1){
-				global $diferret;
-				if($_SESSION['rete2'] == $factrete2) {
-
-				}elseif($_SESSION['rete2'] > $factrete2) {
-									$diferret = $retold - $factrete;
-									$diferret = "-".$diferret;
-				}elseif($_SESSION['rete2'] < $factrete2) {
-									$diferret = $factrete - $retold;
-							}
-		}elseif($_SESSION['rete1'] > $factrete1){
-				global $diferret;	$diferret = $retold - $factrete; 	$diferret = "-".$diferret;
-		}elseif($_SESSION['rete1'] < $factrete1){
-				global $diferret; 	$diferret = $factrete - $retold;
-		}
-
-		// printf('%.2f', $diferret);
-		// print("<br/>* Difer ret tot: ".$diferret."<br/>");
-		
-	//////////////
-
-		global $pvpold;
-		$pvpold = $_SESSION['factpvp1'].".".$_SESSION['factpvp2'];
-		
-		if($_SESSION['factpvp1'] == $factpvp1) {
-				global $diferpvp;
-				if($_SESSION['factpvp2'] == $factpvp2) {
-				}elseif($_SESSION['factpvp2'] > $factpvp2) {
-									$diferpvp = $pvpold - $factpvp;
-									$diferpvp = "-".$diferpvp;
-				}elseif($_SESSION['factpvp2'] < $factpvp2) {
-									$diferpvp = $factpvp - $pvpold;
-							}
-		}elseif($_SESSION['factpvp1'] > $factpvp1) {
-					global $diferpvp;	$diferpvp = $pvpold - $factpvp; 	$diferpvp = "-".$diferpvp;
-		}elseif($_SESSION['factpvp1'] < $factpvp1) {
-					global $diferpvp; 	$diferpvp = $factpvp - $pvpold;
-			}
-		//	printf('%.2f', $diferpvp);
-		//	print("<br/>* Difer pvp : ".$diferpvp."<br/>");
-		
-		//////////////
-			
-		global $pvptold;
-		$pvptold = $_SESSION['factpvptot1'].".".$_SESSION['factpvptot2'];
-
-		if($_SESSION['factpvptot1'] == $factpvptot1) {
-				global $diferpvptot;
-				if($_SESSION['factpvptot2'] == $factpvptot2) {
-
-				}elseif($_SESSION['factpvptot2'] > $factpvptot2) {
-									$diferpvptot = $pvptold - $factpvptot;
-									$diferpvptot = "-".$diferpvptot;
-				}elseif($_SESSION['factpvptot2'] < $factpvptot2) {
-									$diferpvptot = $factpvptot - $pvptold;
-							}
-		}elseif($_SESSION['factpvp1'] > $factpvptot1) {
-					global $diferpvptot; 	$diferpvptot = $pvptold - $factpvptot; 	$diferpvptot = "-".$diferpvptot;
-		}elseif($_SESSION['factpvp1'] < $factpvptot1) {
-					global $diferpvptot; 	$diferpvptot = $factpvptot - $pvptold;
-			}
-			
-		//	printf('%.2f', $diferpvptot);
-		//	print("<br/>* Difer pvp tot: ".$diferpvptot."<br/>");
-		
-		//////////////
-			//////////////
-		//////////////
-
-		$dynew = $_POST['dy'];
+		global $dynew;		$dynew = $_POST['dy'];
 		$_SESSION['ynew'] = $_POST['dy'];
 		$_SESSION['mnew'] = $_POST['dm'];
-		
-		if(($_SESSION['yold'] == $dynew) && ($_SESSION['mold'] == $_POST['dm'])){
-		
-		global $dyx; 		$dyx = "20".$_POST['dy'];
-		global $dmx; 		$dmx = "M".$_POST['dm'];
-					
-		global $mes;
-		if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
-		elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
-		elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
-		elseif(($dmx == "M10")||($dmx == "M11")||($dmx == "M12")){$mes = "TRI4";}
-		
-		}elseif(($_SESSION['yold'] == $dynew)&&($_SESSION['mold'] != $_POST['dm'])){
-		
-			global $factpvp; 		global $factivae;
-			global $factrete; 		global $factpvptot;
-
-			global $ivaold;
-			$ivaold = $_SESSION['ivae1'].".".$_SESSION['ivae2'];
-			global $retold;
-			$retold = $_SESSION['rete1'].".".$_SESSION['rete2'];
-			global $pvpold;
-			$pvpold = $_SESSION['factpvp1'].".".$_SESSION['factpvp2'];
-			global $pvptold;
-			$pvptold = $_SESSION['factpvptot1'].".".$_SESSION['factpvptot2'];
-
-			global $dyx; 		$dyx = "20".$_POST['dy'];
-			global $dmx; 		$dmx = "M".$_POST['dm'];
-			global $dmxo; 		$dmxo = "M".$_SESSION['mold'];
-
-			global $meso;
-			if(($dmxo == "M01")||($dmxo == "M02")||($dmxo == "M03")){$meso = "TRI1";}
-			elseif(($dmxo == "M04")||($dmxo == "M05")||($dmxo == "M06")){$meso = "TRI2";}
-			elseif(($dmxo == "M07")||($dmxo == "M08")||($dmxo == "M09")){$meso = "TRI3";}
-			elseif(($dmxo == "M10")||($dmxo == "M11")||($dmxo == "M12")){$meso = "TRI4";}
-			global $mes;
-			if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
-			elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
-			elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
-			elseif(($dmx == "M10")||($dmx == "M11")||($dmx == "M12")){$mes = "TRI4";}
-			
-			if($meso == $mes){
-			global $mes;
-			if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
-			elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
-			elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
-			elseif(($dmx == "M10")||($dmx == "M11")||($dmx == "M12")){$mes = "TRI4";}
-			
-			global $mes;
-			if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
-			elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
-			elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
-			elseif(($dmx == "M10")||($dmx == "M11")||($dmx == "M12")){$mes = "TRI4";}
-
-			global $meso;
-			if(($dmxo == "M01")||($dmxo == "M02")||($dmxo == "M03")){$meso = "TRI1";}
-			elseif(($dmxo == "M04")||($dmxo == "M05")||($dmxo == "M06")){$meso = "TRI2";}
-			elseif(($dmxo == "M07")||($dmxo == "M08")||($dmxo == "M09")){$meso = "TRI3";}
-			elseif(($dmxo == "M10")||($dmxo == "M11")||($dmxo == "M12")){$meso = "TRI4";}
-
-		//	print("* ".$sumatriiva." ".$sumatripvp." ".$sumatritot.".<br/>");
-			}
-			
-		}elseif($_SESSION['yold'] != $dynew){
 	
-			global $ivaold; 	$ivaold = $_SESSION['ivae1'].".".$_SESSION['ivae2'];
-			global $retold; 	$retold = $_SESSION['rete1'].".".$_SESSION['rete2'];
-			global $pvpold; 	$pvpold = $_SESSION['factpvp1'].".".$_SESSION['factpvp2'];
-			global $pvptold; 	$pvptold = $_SESSION['factpvptot1'].".".$_SESSION['factpvptot2'];
-
-			global $dyx; 		$dyx = "20".$_POST['dy'];
-			global $dmx; 		$dmx = "M".$_POST['dm'];
-
-			global $dyxo;	$dyxo = "20".$_SESSION['yold'];
-			global $dmxo;	$dmxo = "M".$_SESSION['mold'];
-			
-			global $mes;
-			if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
-			elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
-			elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
-			elseif(($dmx == "M10")||($dmx == "M11")||($dmx == "M12")){$mes = "TRI4";}
-			
-			global $meso;
-			if(($dmxo == "M01")||($dmxo == "M02")||($dmxo == "M03")){$meso = "TRI1";}
-			elseif(($dmxo == "M04")||($dmxo == "M05")||($dmxo == "M06")){$meso = "TRI2";}
-			elseif(($dmxo == "M07")||($dmxo == "M08")||($dmxo == "M09")){$meso = "TRI3";}
-			elseif(($dmxo == "M10")||($dmxo == "M11")||($dmxo == "M12")){$meso = "TRI4";}
-
-		}
-
-		//////////////
-			//////////////
-		//////////////
-
 		$idx = $_SESSION['idx'];
 		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
 		$_SESSION['vname'] = $vname;
@@ -272,7 +77,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 		// echo "** ".$_SESSION['yold']." || ".$dynew."<br>";
 
 		if($_SESSION['yold'] != $dynew){
-			
+
 			global $rutaold;		$rutaold = "../cbj_Docs/docgastos_20".$_SESSION['yold']."/";
 			global $rutanew;		$rutanew = "../cbj_Docs/docgastos_20".$dynew."/";
 			
@@ -325,26 +130,21 @@ if ($_SESSION['Nivel'] == 'admin'){
 			$sent = "UPDATE `$db_name`.$vname  SET `factnum` = '$_POST[factnum]', `factdate` = '$factdate', `refprovee` =  '$_POST[refprovee]', `factnom` =  '$_POST[factnom]', `factnif` = '$_POST[factnif]', `factiva` = '$_POST[factiva]', `factivae` = '$factivae', `factpvp` = '$factpvp', `factret` = '$_POST[factret]', `factrete` = '$factrete',  `factpvptot` = '$factpvptot', `coment` = '$_POST[coment]' WHERE $vname.`id` = '$idx'  ";
 		}
 
-		global $iniy; 	$iniy = substr(date('Y'),0,2);
-
-		global $title;	$title = 'SE HA MODIFICADO EN ';
-		
-		global $link1; 	
-		$link1 = $AddBlack."<a href='Gastos_Crear.php'>&nbsp;&nbsp;&nbsp;</a>".$closeButton.$MoneypBlack."<a href='Gastos_Ver.php'>&nbsp;&nbsp;&nbsp;</a>".$closeButton;
-		global $link2;
-		$link2 = $MoneypWhite."<a href='Gastos_Crear.php' >&nbsp;&nbsp;&nbsp;</a>".$closeButton;
-	
-		require 'TableFormResult.php';
-			
 		/////////////
 		
 		global $db;		global $sent; 		$sqla = $sent;
 		
-		if(mysqli_query($db, $sqla)){ //	print("<br/>* INSERT / UPDATE DB DATA.");
-									  print($tabla); 
-		}else{ print("* MODIFIQUE LA ENTRADA: 318/332 ".mysqli_error($db));
-				 show_form ();
-				 $texerror .= "\n\t ".mysqli_error($db);
+		if(mysqli_query($db, $sqla)){
+
+			global $iniy; 	$iniy = substr(date('Y'),0,2);
+			global $title;	$title = 'SE HA MODIFICADO EN ';
+			//global $Modif2;		$Modif2 = "style='display:none; visibility: hidden;'";
+			global $ConteBotones;		$ConteBotones = "style='display:block;'";
+			require 'TableFormResult.php'; 
+
+		}else{ print("* MODIFIQUE LA ENTRADA: 116/130 ".mysqli_error($db));
+				show_form ();
+				$texerror .= "\n\t ".mysqli_error($db);
 					}
 
 		/////////////
@@ -379,22 +179,22 @@ if ($_SESSION['Nivel'] == 'admin'){
 						rename($ruta.$_SESSION['myimg1b'], $ruta.$_SESSION['$nombre1n']);
 					/*	print("	<br/>* CHANGE FACT NUM: ".$_SESSION['fnold']." X ".$_SESSION['fnnew']."<br/>- Ok Rename Img Name 1.");
 					*/
-			}else{print("<br/>- No Ok Rename Img Name 1.");}
+			}else{print("<br/>- No Ok Rename Img Name 1. ".$ruta.$_SESSION['$nombre1n']);}
 
 			if(file_exists($ruta.$_SESSION['myimg2b'])){
 						rename($ruta.$_SESSION['myimg2b'], $ruta.$_SESSION['$nombre2n']);
 					/*	print("<br/>- Ok Rename Img Name 2.");	*/
-			}else{print("<br/>- No Ok Rename Img Name 2.");}
+			}else{print("<br/>- No Ok Rename Img Name 2. ".$ruta.$_SESSION['$nombre2n']);}
 											
 			if(file_exists($ruta.$_SESSION['myimg3b'])){
 						rename($ruta.$_SESSION['myimg3b'], $ruta.$_SESSION['$nombre3n']);
 					/*	print("<br/>- Ok Rename Img Name 3.");	*/
-			}else{print("<br/>- No Ok Rename Img Name 3.");}
+			}else{print("<br/>- No Ok Rename Img Name 3. ".$ruta.$_SESSION['$nombre3n']);}
 											
 			if(file_exists($ruta.$_SESSION['myimg4b'])){
 						rename($ruta.$_SESSION['myimg4b'], $ruta.$_SESSION['$nombre4n']);
 					/*	print("<br/>- Ok Rename Img Name 4.");	*/
-			}else{print("<br/>- No Ok Rename Img Name 4.");}
+			}else{print("<br/>- No Ok Rename Img Name 4. ".$ruta.$_SESSION['$nombre4n']);}
 
 			mf1();
 		}
@@ -426,7 +226,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 		
 		if(mysqli_query($db, $sqlfn)){ 
 				// print("<br/>* OK DB UPDATE."); 
-		}else{  print("* MODIFIQUE LA ENTRADA 436: ".mysqli_error($db));
+		}else{  print("* MODIFIQUE LA ENTRADA 234: ".mysqli_error($db));
 				global $texerror; 	$texerror .= "\n\t ".mysqli_error($db);
 					}
 							
@@ -440,25 +240,24 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 		$_SESSION['idx'] = $_POST['id'];
 
-		echo '*** '.$_POST['id'].'<br>';
-		echo '*** '.$_SESSION['idx'].'<br>';
+		//echo '*** '.$_POST['id'].'<br>';
+		//echo '*** '.$_SESSION['idx'].'<br>';
 
-		global $MoneypGreyTit;		$MoneypGreyTit = "VER TODOS LOS GASTOS";
-		global $AddBlackTit; 		$AddBlackTit = "CREAR NUEVO GASTO";
-		global $SaveBlackTit;		$SaveBlackTit = "MODIFICAR DATOS FACTURA";
-		require '../Inclu/BotoneraVar.php';
-		global $closeButton;
+		global $rutPend;	$rutPend = '';
+		global $pend;		$pend = "";
+		require 'Gastos_Botonera.php';
 
 		global $db; 	global $db_name;
 
 		global $valIvaeEnt;		global $valIvaeDec;		
 		global $valReteEnt;		global $valReteDec;
 		global $valToteEnt;		global $valToteDec;	
-						
+
 		global $sesionref; 		$sesionref = "`".$_SESSION['clave']."clientes`";
 		
 		if((isset($_POST['proveegastos']))&&($_POST['proveegastos']!='')){
-			$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveegastos]'";
+			global $sqlx;
+			$sqlx = " SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveegastos]'";
 			$qx = mysqli_query($db, $sqlx);
 			$rowprovee = mysqli_fetch_assoc($qx);
 			$_rsocial = @$rowprovee['rsocial'];
@@ -469,7 +268,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 			$_dnil = $_dni.$_ldni;
 		}
 
-		// DATOS DEGASTOS VER
+		// DATOS DESDE GASTOS VER
 		if(isset($_POST['oculto2'])){
 			
 			$datex = $_POST['factdate'];
@@ -482,6 +281,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 			$_SESSION['yold'] = $dyx;
 		
 			$_SESSION['myimg1b'] = $_POST['myimg1'];
+			//echo "* ".$_SESSION['myimg1b']."<br>";
 			$_SESSION['myimg2b'] = $_POST['myimg2'];
 			$_SESSION['myimg3b'] = $_POST['myimg3'];
 			$_SESSION['myimg4b'] = $_POST['myimg4'];
@@ -563,6 +363,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 								'factpvptot2' => $factpvptot2,	
 								'coment' => $_POST['coment']);
 
+		// DATOS DESDE EL FORMULARIO =>
 		}elseif(isset($_POST['oculto'])){
 
 			// DATOS DEL FORMULARIO MODIFICAR
@@ -570,7 +371,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 			$_POST['factivae1'] = $valIvaeEnt;		$_POST['factivae2'] = $valIvaeDec;
 			$_POST['factrete1'] = $valReteEnt;		$_POST['factrete2'] = $valReteDec;
 			$_POST['factpvptot1'] = $valToteEnt;	$_POST['factpvptot2'] = $valToteDec;
-
+			$dyx = $_POST['dy'];
 			$defaults = array ( 'id' => $_POST['id'],
 								'proveegastos' => $_POST['proveegastos'],
 								'dy' => $_POST['dy'],
@@ -595,6 +396,8 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 		}else{ $defaults = $_POST; }
 
+		// echo "* ".$_SESSION['yold']."<br>";
+
 		require 'TablaIfErrors.php';
 		
 		require 'ArrayMesDia.php';
@@ -606,7 +409,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 		print("<table class='tableForm' >
 				<tr>
-					<th colspan=2'>MODIFICAR GASTO</th>
+					<th colspan=2'>".$Titulo."</th>
 				</tr>");
 
 		if($_POST['proveegastos'] != ''){
@@ -620,15 +423,12 @@ if ($_SESSION['Nivel'] == 'admin'){
 						-->
 						".$SaveBlack.$closeButton."
 						<input type='hidden' name='oculto' value=1 />
-				</form>	
-						<div style='display:inline-block; float:left !important;' >
-							".$AddBlack."
-								<a href='Gastos_Crear.php' >&nbsp;&nbsp;&nbsp;</a>
-							".$closeButton.$MoneypGrey."
-								<a href='Gastos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-							".$closeButton."
-						</div>
-					</td>
+				</form>");
+			
+			global $Modif2;		$Modif2 = "style='display:none; visibility: hidden;'";
+			require 'Gastos_Botones.php';
+
+			print("</td>
 				</tr>
 			</table>");
 		}

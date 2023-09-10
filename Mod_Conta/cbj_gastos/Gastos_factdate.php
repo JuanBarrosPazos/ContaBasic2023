@@ -3,18 +3,18 @@
     global $fil;    $fil = '';
 
     if(@$_POST['dy'] == ''){ $dy1 = '';
-                             $dyt1 = date('Y');	
+                             $dyt1 = date('Y');
                              $fil = date('y').'/%';
                              $_SESSION['gyear'] = date('Y');
-    }else{ $dy1 = $_POST['dy'];
+    }else{  $dy1 = $_POST['dy'];
             $fil = $dy1.'/%';
             $dyt1 = "20".$_POST['dy'];
             $_SESSION['gyear'] = "20".$_POST['dy'];	
              }
 
-    if(@$_POST['dm'] == ''){    $dm1 = '';
-                                $fil .= $dm1.'/%';
-                                $_SESSION['gtime'] = '';
+    if(@$_POST['dm'] == ''){ $dm1 = '';
+                             $fil .= $dm1.'/%';
+                             $_SESSION['gtime'] = '';
 
     }else{  $dm1 = $_POST['dm']."/%";
             $fil .= $dm1;
@@ -46,4 +46,5 @@
 																					}
     echo "* ".$fil."<br>";
     */
+    
 ?>

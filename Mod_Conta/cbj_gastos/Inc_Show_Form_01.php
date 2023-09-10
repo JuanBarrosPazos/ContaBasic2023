@@ -1,5 +1,7 @@
 <?php
 
+	unset($_SESSION['miid']);
+	
 	global $TitBut1;		global $TitBut2;
 
 	global $DetalleGreyTit; 	$DetalleGreyTit = $TitBut1; 	// "VER TODOS LOS GASTOS"

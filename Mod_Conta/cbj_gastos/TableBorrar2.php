@@ -1,6 +1,6 @@
 <?php
 
-		print("<table align='center' style='margin-top:10px'>
+		print("<table class='tableForm' >
 				<tr>
 					<th colspan=2 class='BorderInf'>
 						".$titulo."
@@ -110,15 +110,17 @@
 					<input name='myimg4' type='hidden' value='".$defaults['myimg4']."' />
 				<tr>
 					<td colspan='2' align='right' >
-						<input type='submit' value='BORRAR GASTO PENDIENTE' class='botonnaranja' />
+					<!--
+						<input type='submit' value='".$titInput."' class='botonnaranja' />
+					-->
+						".$DeleteWhite.$closeButton."
 						<input type='hidden' name='oculto' value=1 />
-			</form>														
-					</td>
-				</tr>
-				<tr>
-					<td colspan='4' align='center'>
-			<a href='Gastos_Pendientes_Ver.php' class='botonazul' style='color:#343434 !important' >INICIO GASTOS PENDIENTES</a>
-					</td>
+			</form>");
+
+			global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
+			require 'Gastos_Botones.php';
+
+			print("</td>
 				</tr>
 			</table>"); 
 

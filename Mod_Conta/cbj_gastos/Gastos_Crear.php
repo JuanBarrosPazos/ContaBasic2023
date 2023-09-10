@@ -52,11 +52,9 @@ session_start();
 
 	function process_form(){
 	
-		global $AddBlackTit; 		$AddBlackTit = "CREAR NUEVO GASTO";
-		global $MoneypBlackTit;		$MoneypBlackTit = "VER TODOS LOS GASTOS";
-		global $MoneypWhiteTit;		$MoneypWhiteTit = "VER TODOS LOS GASTOS PENDIENTES";
-				require '../Inclu/BotoneraVar.php';
-		global $closeButton;
+		global $rutPend;	$rutPend = '';
+		global $pend;		$pend = "";
+		require 'Gastos_Botonera.php';
 
 		global $db; 		global $db_name;		global $vname;	
 		global $dyt1; 		global $dm1;
@@ -66,21 +64,6 @@ session_start();
 		require 'FormatNumber.php';
 
 		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
-
-		global $iniy; 		$iniy = substr(date('Y'),0,2);
-
-		global $title;	$title = 'SE HA GRABADO EN ';
-
-		$AddBlack;
-		$MoneypBlack;
-		$MoneypWhite;
-
-		global $link1; 	
-		$link1 = $AddBlack."<a href='Gastos_Crear.php'>&nbsp;&nbsp;&nbsp;</a>".$closeButton.$MoneypBlack."<a href='Gastos_Ver.php'>&nbsp;&nbsp;&nbsp;</a>".$closeButton;
-		global $link2;
-		$link2 = $MoneypWhite."<a href='Gastos_Crear.php' >&nbsp;&nbsp;&nbsp;</a>".$closeButton;
-	 
-		require 'TableFormResult.php';
 
 		/************* INICIO NOMBRES DE LAS IMG  ***************/
 
@@ -253,7 +236,7 @@ session_start();
 						unlink("../cbj_Docs/docgastos_".$dyt1."/".$nombre4);
 					//	print("** El archivo ".$nombre1." Ya existe, seleccione otra imagen.</br>");
 				}elseif (move_uploaded_file($_FILES['myimg4']['tmp_name'], $destination_file4)){
-	
+
 					// Renombrar el archivo:
 					//$extension4 = substr($_FILES['myimg4']['name'],-3);
 					// print($extension4);
@@ -268,30 +251,26 @@ session_start();
 				
 			/************* FIN CREAMOS LAS IMAGENES ***************/
 
-			print($tabla); 
+			global $iniy; 		$iniy = substr(date('Y'),0,2);
+			global $title;	$title = 'SE HA GRABADO EN ';
+			global $ConteBotones;		$ConteBotones = "style='display:block;'";
+
+			/*
+			global $Crear;			$Crear = "style='display:none; visibility: hidden;'";
+			global $Ver2;			$Ver2 = "style='display:none; visibility: hidden;'";
+			global $ModImg2;		$ModImg2 = "style='display:none; visibility: hidden;'";
+			global $Modif2;			$Modif2 = "style='display:none; visibility: hidden;'";
+			global $Borrar2;		$Borrar2 = "style='display:none; visibility: hidden;'";
+			*/
+			require 'TableFormResult.php';
 
 		}else{ // NO SE CUMPLE EL QUERY
 				print("* ERROR L.124: ".mysqli_error($db));
 				show_form();
 				global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 			}
-			
-		/////////////
-	
-		global $dyx; 	$dyx = "20".$_POST['dy'];
-		global $dmx; 	$dmx = "M".$_POST['dm'];
+		
 		/*
-			if(($dmx != 10)||($dmx != 11)||($dmx != 12)){
-			$dmx = substr($_POST['dm'],-1);
-				}
-		*/
-		global $mes;
-		if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
-		elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
-		elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
-		elseif(($dmx == "10")||($dmx == "11")||($dmx == "12")){$mes = "TRI4";}
-
-
 		global $redir;
 		$redir = "<script type='text/javascript'>
 						function redir(){
@@ -300,6 +279,7 @@ session_start();
 					setTimeout('redir()',8000);
 					</script>";
 		print ($redir);
+		*/
 
 	} // FIN function process_form()	
 
@@ -309,12 +289,9 @@ session_start();
 
 	function show_form($errors=[]){
 	
-		global $MoneypBlackTit;		$MoneypBlackTit = "VER TODOS LOS GASTOS";
-		global $MoneypWhiteTit;		$MoneypWhiteTit = "VER TODOS LOS GASTOS PENDIENTES";
-		global $SaveBlackTit;		$SaveBlackTit = "GUARDAR DATOS FACTURA";
-		global $PersonsWhiteTit;	$PersonsWhiteTit = "SELECCIONE PROVEEDOR";
-				require '../Inclu/BotoneraVar.php';
-		global $closeButton;
+		global $rutPend;	$rutPend = '';
+		global $pend;		$pend = "";
+		require 'Gastos_Botonera.php';
 
 		global $db; 			global $db_name;
 
@@ -349,7 +326,7 @@ session_start();
 				$_POST['factivae1'] = $valIvaeEnt;		$_POST['factivae2'] = $valIvaeDec;
 				$_POST['factrete1'] = $valReteEnt;		$_POST['factrete2'] = $valReteDec;
 				$_POST['factpvptot1'] = $valToteEnt;	$_POST['factpvptot2'] = $valToteDec;
-			}	
+					}	
 
 				//$defaults = $_POST;
 				$defaults = array ( 'proveegastos' => @$_POST['proveegastos'],
@@ -378,43 +355,50 @@ session_start();
 									'myimg4' => @$_POST['myimg4']);
 
 		}else{ $defaults = array ( 'proveegastos' => @$_POST['proveegastos'],
-									 'dy' => '',
-									 'dm' => '',
-									 'dd' => '',
-									 'factnum' => strtoupper(@$_POST['factnum']),
-								     // 'factdate' => $_POST['factdate'],
-								   	 'refprovee' => @$rowprovee['ref'],
-								   	 'factnom' => @$rowprovee['rsocial'],
-								   	 'factnif' => @$_dnil,
-								   	 'factiva' => '00',
-									 'factivae1' => '00',	
-									 'factivae2' => '00',	
-								   	 'factret' => '00',
-									 'factrete1' => '00',	
-									 'factrete2' => '00',	
-									 'factpvp1' => '',	
-									 'factpvp2' => '',	
-									 'factpvptot1' => '00',
-									 'factpvptot2' => '00',	
-									 'coment' => '',	
-									 'myimg1' => '',	
-									 'myimg2' => '',	
-									 'myimg3' => '',	
-									 'myimg4' => ''); }
+									'dy' => '',
+									'dm' => '',
+									'dd' => '',
+									'factnum' => strtoupper(@$_POST['factnum']),
+								// 'factdate' => $_POST['factdate'],
+								   	'refprovee' => @$rowprovee['ref'],
+								   	'factnom' => @$rowprovee['rsocial'],
+								   	'factnif' => @$_dnil,
+								   	'factiva' => '00',
+									'factivae1' => '00',	
+									'factivae2' => '00',	
+								   	'factret' => '00',
+									'factrete1' => '00',	
+									'factrete2' => '00',	
+									'factpvp1' => '',	
+									'factpvp2' => '',	
+									'factpvptot1' => '00',
+									'factpvptot2' => '00',	
+									'coment' => '',	
+									'myimg1' => '',	
+									'myimg2' => '',	
+									'myimg3' => '',	
+									'myimg4' => '');
+							}
 
 		require 'ArrayMesDia.php';
 										
 		global $Titulo; 	$Titulo = "SELECCIONE PROVEEDOR GASTO";
 		global $TitValue;	$TitValue = "SELECCIONE PROVEEDOR";
 		require 'FormSelectProvee.php';
+		
+		global $Crear;			$Crear = "style='display:none; visibility: hidden;'";
+		global $Ver2;			$Ver2 = "style='display:none; visibility: hidden;'";
+		global $ModImg2;		$ModImg2 = "style='display:none; visibility: hidden;'";
+		global $Modif2;			$Modif2 = "style='display:none; visibility: hidden;'";
+		global $Borrar2;		$Borrar2 = "style='display:none; visibility: hidden;'";
+
 		print ("<tr>
-					<td style='text-align:right;' >
-						".$MoneypBlack."
-							<a href='Gastos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-						".$closeButton.$MoneypWhite."
-							<a href='Gastos_Pendientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-						".$closeButton."
-					</td>
+					<td style='text-align:center;' >");
+			
+			global $ConteBotones;		$ConteBotones = "style='display:block;'";
+			require 'Gastos_Botones.php';
+					
+		print("</td>
 				</tr>
 			</table>");
 				
@@ -473,15 +457,12 @@ session_start();
 					-->
 					".$SaveBlack.$closeButton."
 						<input type='hidden' name='oculto' value=1 />
-			</form>
-					<div style='display:inline-block; float:left !important;' >
-						".$MoneypBlack."
-							<a href='Gastos_Ver.php'>&nbsp;&nbsp;&nbsp;</a>
-						".$closeButton.$MoneypWhite."
-							<a href='Gastos_Pendientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-						".$closeButton."
-					</div>								
-					</td>
+			</form>");
+			
+			global $ConteBotones;		$ConteBotones = "style='display:inline-block; float:left !important;'";
+			require 'Gastos_Botones.php';
+			
+			print("</td>
 				</tr>
 			</table>"); 
 			}

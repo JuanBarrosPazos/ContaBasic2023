@@ -81,7 +81,7 @@ session_start();
 		/*	
 		$sqlb =  "SELECT * FROM $vname WHERE (`factnum` = '$fnum' OR `factnif` = '$fnif' OR `refprovee` = '$fnom') AND  (`factdate` LIKE '$fil') ORDER BY $orden ";
 		*/
-		echo $sqlb."<br>";
+		//echo $sqlb."<br>";
 		$qb = mysqli_query($db, $sqlb);
 	
 		/////////////////////	
@@ -135,27 +135,21 @@ session_start();
 		/* FIN PARA SUMAR IVA */
 		/////////////////////////
 
-			global $AddBlackTit; 		$AddBlackTit = "CREAR NUEVO GASTO PENDIENTE";
-			global $MoneypBlackTit; 	$MoneypBlackTit = "VER TODOS GASTOS PENDIENTES";
+		global $rutPend;	$rutPend = '';
+		global $pend;	$pend = "";
+		require 'Gastos_Botonera.php';
 
-			global $DetalleBlackTit; 	$DetalleBlackTit = "VER DETALLES";
-			global $FotoBlackTit;		$FotoBlackTit = "MODIFICAR DOCS ADJUNTOS";
-			global $DatosBlackTit;		$DatosBlackTit = "MOFIFICAR DATOS FACTURA";
-			global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR DATOS";
-			require '../Inclu/BotoneraVar.php';
-			global $closeButton;
+		if(!$qb){
+				print("<font color='#FF0000'>
+						Se ha producido un error: </font>".mysqli_error($db)."</br>");
+		}else{
+			if(mysqli_num_rows($qb) == 0){
+					require 'Gastos_NoData.php';
+			}else{ 
+					require 'Gastos_rowb_Total_Tabla.php';
+						} /* Fin segundo else anidado en if */
 
-			if(!$qb){
-					print("<font color='#FF0000'>
-							Se ha producido un error: </font>".mysqli_error($db)."</br>");
-			} else {
-				if(mysqli_num_rows($qb) == 0){
-						require 'Gastos_NoData.php';
-				}else{ 
-						require 'Gastos_rowb_Total_Tabla.php';
-					} /* Fin segundo else anidado en if */
-
-				} /* Fin de primer else . */
+		} /* Fin de primer else . */
 				
 		global $fil; 		global $orden; 		global $factnom;
 		global $factnif; 	global $factnum; 	global $vname;
@@ -361,7 +355,7 @@ session_start();
 				for($i=0; $i<$rowpvptot; $i++){
 						$ver = mysqli_fetch_array($qpvptot);
 						$sumapvptot = $sumapvptot + $ver['factpvptot'];
-													}
+									}
 		}
 					
 		/* FIN PARA SUMAR PVPTOT */
@@ -376,8 +370,8 @@ session_start();
 				$rowrete = mysqli_num_rows($qrete);
 				$sumarete = 0;
 					for($i=0; $i<$rowrete; $i++){
-								$verret = mysqli_fetch_array($qrete);
-								$sumarete = $sumarete + $verret['factrete'];
+							$verret = mysqli_fetch_array($qrete);
+							$sumarete = $sumarete + $verret['factrete'];
 									}
 			}
 					
@@ -393,33 +387,27 @@ session_start();
 				$rowivae = mysqli_num_rows($qivae);
 				$sumaivae = 0;
 					for($i=0; $i<$rowivae; $i++){
-						$ver = mysqli_fetch_array($qivae);
-						$sumaivae = $sumaivae + $ver['factivae'];
-								}
+							$ver = mysqli_fetch_array($qivae);
+							$sumaivae = $sumaivae + $ver['factivae'];
+									}
 			}
 					
 		/* FIN PARA SUMAR IVA */
 		/////////////////////////
 
-			global $AddBlackTit; 		$AddBlackTit = "CREAR NUEVO GASTO PENDIENTE";
-			global $MoneypWhiteTit; 	$MoneypWhiteTit = "VER TODOS GASTOS PENDIENTES";
+		global $rutPend;	$rutPend = '';
+		global $pend;	$pend = "";
+		require 'Gastos_Botonera.php';
 
-			global $DetalleBlackTit; 	$DetalleBlackTit = "VER DETALLES";
-			global $FotoBlackTit;		$FotoBlackTit = "MODIFICAR DOCS ADJUNTOS";
-			global $DatosBlackTit;		$DatosBlackTit = "MOFIFICAR DATOS FACTURA";
-			global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR DATOS";
-			require '../Inclu/BotoneraVar.php';
-			global $closeButton;
-
-			if(!$qb){
-				print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
-			}else{
-				if(mysqli_num_rows($qb) == 0){
+		if(!$qb){
+			print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
+		}else{
+			if(mysqli_num_rows($qb) == 0){
 					require 'Gastos_NoData.php';
-				}else{ 
-						require 'Gastos_rowb_Total_Tabla.php';
-					} /* Fin segundo else anidado en if */
-			} /* Fin de primer else . */
+			}else{ 
+					require 'Gastos_rowb_Total_Tabla.php';
+				} /* Fin segundo else anidado en if */
+		} /* Fin de primer else . */
 				
 			global $fil; 	global $sqlb;
 

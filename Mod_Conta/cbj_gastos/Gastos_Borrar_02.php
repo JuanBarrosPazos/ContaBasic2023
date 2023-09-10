@@ -31,6 +31,10 @@ session_start();
 
 	function process_form(){
 
+		global $rutPend;	$rutPend = '';
+		global $pend;		$pend = "";
+		require 'Gastos_Botonera.php';
+
 		global $dyt1;
 		
 		require 'Gastos_factdate.php';
@@ -41,22 +45,19 @@ session_start();
  
 		require 'FormatNumber.php';
 
-		global $title;	$title = 'SE HA BORRADO EN ';
-		
-		global $link1; 	
-		$link1 = "<a href='Gastos_Ver.php' class='botonazul' style='color:#343434 !important' >INICIO GASTOS</a>";
-		global $link2;
-		$link2 = "<a href='Gastos_Crear.php' class='botonazul' style='color:#343434 !important' >CREAR NUEVO GASTO</a>";
-		
-		require 'TableFormResult.php';
-
 		/////////////
 			
 		$sqla = "DELETE FROM `$db_name`.$vname  WHERE $vname.`id` = '$_POST[id]'  ";
 			
-		if(mysqli_query($db, $sqla)){ print($tabla); 
+		if(mysqli_query($db, $sqla)){ 
 			
-			//$_POST['myimg1']
+			global $title;			$title = 'SE HA BORRADO EN ';
+			global $Modif2;			$Modif2= "style='display:none; visibility: hidden;'";
+			global $Ver2;			$Ver2= "style='display:none; visibility: hidden;'";
+			global $ModImg2;		$ModImg2= "style='display:none; visibility: hidden;'";
+			global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
+			global $ConteBotones;	$ConteBotones = "style='display:block;'";
+			require 'TableFormResult.php';			
 				
 			$sesionref2 = "docgastos_".$dyt1;
 
@@ -85,22 +86,14 @@ session_start();
 					global $texerror; $texerror = "\n\t ".mysqli_error($db);
 					}
 
-		/////////////
-			
-		global $dyx; 		$dyx = "20".$_POST['dy'];
-		global $dmx; 		$dmx = "M".$_POST['dm'];
-		/*
-		if(($dmx != 10)||($dmx != 11)||($dmx != 12)){
-		$dmx = substr($_POST['dm'],-1);
-			}
-		*/
-
-		global $mes;
-		if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
-		elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
-		elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
-		elseif(($dmx == "10")||($dmx == "11")||($dmx == "12")){$mes = "TRI4";}
-		
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='Gastos_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
 
 	} // FIN process_form()
 	
@@ -110,7 +103,11 @@ session_start();
 
 	function show_form(){
 	
-			if(isset($_POST['oculto2'])){
+		global $rutPend;	$rutPend = '';
+		global $pend;		$pend = "";
+		require 'Gastos_Botonera.php';
+
+		if(isset($_POST['oculto2'])){
 				
 				$datex = $_POST['factdate'];
 				$dyx = substr($_POST['factdate'],0,2);
@@ -184,8 +181,8 @@ session_start();
 
 		global $checked; 	$checked = "";
 		global $Checkbox; 	$Checkbox = "";
-		global $titulo; $titulo = "ELIMINAR GASTO";
-		
+		global $titulo; 	$titulo = "ELIMINAR GASTO";
+		global $titInput;	$titInput = "BORRAR GASTO PENDIENTE";
 		require 'TableBorrar2.php';
 	
 	} // FIN function show_form()

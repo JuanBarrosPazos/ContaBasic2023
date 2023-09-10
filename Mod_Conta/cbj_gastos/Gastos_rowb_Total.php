@@ -1,5 +1,7 @@
 <?php
-
+        if(!isset($vname)){$vname = $vnameBot; }else{ }
+        //echo "-- ".$vname."<br>";
+        
         print(" <input type='hidden' name='dyt1' value='".$dyt1."' />
                 <input type='hidden' name='vname' value='".$vname."' />
                 <input type='hidden' name='id' value='".$rowb['id']."' />

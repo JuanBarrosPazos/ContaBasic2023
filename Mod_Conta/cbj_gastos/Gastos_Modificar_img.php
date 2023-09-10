@@ -39,34 +39,8 @@
 	
 		global $sqld; 		global $qd; 	global $rowd;
 
-		$errors = array();
-
-		$limite = 500 * 1024;
-	
-		$ext_permitidas = array('jpg','JPG','gif','GIF','png','PNG','pdf','PDF','bmp','BMP');
+		require 'ValidateImgMod.php';
 		
-		$extension = substr($_FILES['myimg']['name'],-3);
-		// print($extension);
-		// $extension = end(explode('.', $_FILES['myimg']['name']) );
-		$ext_correcta = in_array($extension, $ext_permitidas);
-
-		// $tipo_correcto = preg_match('/^image\/(gif|png|jpg|bmp)$/', $_FILES['myimg']['type']);
-
-		if($_FILES['myimg']['size'] == 0){
-			$errors [] = "Ha de seleccionar una fotograf&iacute;a.";
-		}elseif(!$ext_correcta){
-			$errors [] = "La extension no esta admitida: ".$_FILES['myimg']['name'];
-		}/*	elseif(!$tipo_correcto){
-				$errors [] = "Este tipo de archivo no esta admitido: ".$_FILES['myimg']['name'];
-		}*/elseif($_FILES['myimg']['size'] > $limite){
-		$tamanho = $_FILES['myimg']['size'] / 1024;
-		$errors [] = "El archivo".$_FILES['myimg']['name']." es mayor de 500 KBytes. ".$tamanho." KB";
-		}elseif ($_FILES['myimg']['error'] == UPLOAD_ERR_PARTIAL){
-				$errors [] = "La carga del archivo se ha interrumpido.";
-		}elseif ($_FILES['myimg']['error'] == UPLOAD_ERR_NO_FILE){
-					$errors [] = "Es archivo no se ha cargado.";
-					}
-					
 		return $errors;
 
 	}  // FIN VALIDATE_FOMR()
@@ -76,71 +50,17 @@
 				 ////////////////////				  ///////////////////
 
 	function modifica_form_img(){
-	
+
 		global $db; 	global $db_name;	global $img; 	global $imgcamp;
 
-		global $ruta;
-		$ruta = "../cbj_Docs/docgastos_".$_SESSION['midyt1']."/";
+		global $rutaRedir;	$rutaRedir = '';
+
+		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$_SESSION['midyt1']."`";
+
+		global $ruta; 	$ruta = "../cbj_Docs/docgastos_".$_SESSION['midyt1']."/";
 		$_SESSION['ruta'] = $ruta;
 
-		$safe_filename = trim(str_replace('/', '', $_FILES['myimg']['name']));
-		$safe_filename = trim(str_replace('..', '', $safe_filename));
-
-		$nombre = $_FILES['myimg']['name'];
-		$nombre_tmp = $_FILES['myimg']['tmp_name'];
-		$tipo = $_FILES['myimg']['type'];
-		$tamano = $_FILES['myimg']['size'];
-
-		global $destination_file;
-		$destination_file = $ruta.$safe_filename;
-		
-	    if( file_exists($ruta.$nombre) ){
-			unlink($ruta.$nombre);
-		}elseif (move_uploaded_file($_FILES['myimg']['tmp_name'], $destination_file)){
-
-			// Eliminar el archivo antiguo untitled.png
-			if($_SESSION['ImgCbj'] != 'untitled.png' ){
-					@unlink($ruta.$_SESSION['ImgCbj']);
-										}
-			// Renombrar el archivo:
-			$extension = substr($_FILES['myimg']['name'],-3);
-			// print($extension);
-			// $extension = end(explode('.', $_FILES['myimg']['name']) );
-			//global $new_name;
-			//	$new_name = $_SESSION['ImgCbj'];
-			date('H:i:s');
-			date('Y-m-d');
-			$dt = date('is');
-			global $new_name;
-			$new_name = $_SESSION['mivalor']."_".$dt.".".$extension;
-			$rename_filename = $ruta.$new_name;								
-			rename($destination_file, $rename_filename);
-			
-			global $db; 		global $db_name;
-
-			global $mivalor; 	$imgcamp = "`".$_SESSION['imgcamp']."`";
-			$mivalor = $_SESSION['mivalor'];
-			
-			global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$_SESSION['midyt1']."`";
-			
-			$sqla = "UPDATE `$db_name`.$vname SET $imgcamp = '$new_name'  WHERE $vname.`factnum` = '$mivalor' LIMIT 1 ";
-			
-			if(mysqli_query($db, $sqla)){
-				
-				global $redir;
-				$redir = "<script type='text/javascript'>
-								function redir(){
-								window.location.href='Gastos_Ver.php?imagen=1';
-							}
-							setTimeout('redir()',50);
-							</script>";
-				print ($redir);
-		
-			}else { print("* ERROR ".mysqli_error($db));
-					show_form ();
-					global $texerror;		$texerror = "\n\t ".mysqli_error($db);
-						}
-		}else{print("NO SE HA PODIDO GUARDAR EN ../imgpro/imgpro".$_SESSION['miseccion']."/");}
+		require 'FormImgMod.php';
 
 	} // FIN MODIFICA_FORM_IMG()
 	
@@ -150,13 +70,13 @@
 
 	function process_form_img(){
 	
-		global $MoneypBlackTit;		$MoneypBlackTit = "VER TODOS LOS GASTOS";
-		global $AddBlackTit; 		$AddBlackTit = "CREAR NUEVO GASTO";
-		global $CancelBlackTit;		$CancelBlackTit = 'CANCELAR Y VOLVER';
-		require '../Inclu/BotoneraVar.php';
-		global $closeButton;
+		global $rutPend;	$rutPend = '';
+		global $pend;		$pend = "";
+		require 'Gastos_Botonera.php';
 	
-		global $db; 		global $db_name;
+		global $db; 	global $db_name;
+
+		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$_SESSION['midyt1']."`";
 
 		if(isset($_POST['oculto2'])){
 		
@@ -184,9 +104,11 @@
 			global $ruta; 		$ruta = "../cbj_Docs/docgastos_".$_SESSION['midyt1']."/";
 			$_SESSION['ruta'] = $ruta;
 				
-			global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$_SESSION['midyt1']."`";
+		//	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$_SESSION['midyt1']."`";
 
-			$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `factnum` = '$_POST[factnum]'";
+			global $sqlc;
+		//	$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `factnum` = '$_POST[factnum]'";
+			$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `id` = '$_SESSION[miid]'";
 			$qc = mysqli_query($db, $sqlc);
 			$rowsc = mysqli_fetch_assoc($qc);
 		
@@ -229,9 +151,11 @@
 			global $ruta; 		$ruta = "../cbj_Docs/docgastos_".$_SESSION['midyt1']."/";
 			$_SESSION['ruta'] = $ruta;
 
-			global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$_SESSION['midyt1']."`";
+		//	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$_SESSION['midyt1']."`";
 
-			$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `factnum` = '$_SESSION[mivalor]'";
+			global $sqlc;
+		//	$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `factnum` = '$_SESSION[mivalor]'";
+			$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `id` = '$_SESSION[miid]'";
 			$qc = mysqli_query($db, $sqlc);
 			$rowsc = mysqli_fetch_assoc($qc);
 										
@@ -271,95 +195,29 @@
 						}
 		}
 
-		print(" <table class='detalle tableForm' style='width:fit-content !important;'>
-				<tr>
-					<th class='BorderInf'>
-		SECCION: ".strtoupper($_SESSION['clave']."gastos_".$_SESSION['midyt1']).".
-							</br> 
-		FACTURA Nº: ".$_SESSION['mivalor'].". R. Social: ".$_SESSION['minombre'].". ID: ".$_SESSION['miid']."
-					</th>
-				</tr>
-		        <tr>
-					<td style='text-align:center;' >
-					<div class='img1'>
-				<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
-					<button type='submit' class='botonnaranja' title='MODIFICAR IMAGEN 1' >
-						<img src='".$ruta.$myimg1."' />
-					</button>							
-						<input type='hidden' name='mimg1' value='".$_SESSION['myimg1']."' />
-					<!--
-						<input type='submit' value='MODIF IMG 1' class='botonnaranja' />
-					-->
-				</form>		  
-					</div>
-		        	<div class='img1'>
-				<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
-					<button type='submit' class='botonnaranja' title='MODIFICAR IMAGEN 2' >
-								<img src='".$ruta.$myimg2."' /> 
-					</button>							
-						<input type='hidden' name='mimg2' value='".$_SESSION['myimg2']."' />
-					<!--
-						<input type='submit' value='MODIF IMG 2' class='botonnaranja' />
-					-->
-			</form>		  
-					</div>
-					<div class='img1'>
-			<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
-					<button type='submit' class='botonnaranja' title='MODIFICAR IMAGEN 3' >
-								<img src='".$ruta.$myimg3."' />
-					</button>							
-						<input name='mimg3' type='hidden' value='".$_SESSION['myimg3']."' />
-					<!--	
-						<input type='submit' value='MODIF IMG 3' class='botonnaranja' />
-					-->
-			</form>		  
-					</div>
-					<div class='img1'>
-			<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
-					<button type='submit' class='botonnaranja' title='MODIFICAR IMAGEN 4' >
-								<img src='".$ruta.$myimg4."' />
-					</button>							
-							<input name='mimg4' type='hidden' value='".$_SESSION['myimg4']."' />
-						<!--
-							<input type='submit' value='MODIF IMG 4' class='botonnaranja' />
-						-->
-			</form>		  
-					</div>
-				</td>
-			</tr>");
-       
-		$printimg =	"<tr>
-						<td>
-							<div id='foto1A' class='img2'><img src='".$ruta.$myimg1."' /></div>
-							<div id='foto2A' class='img2'><img src='".$ruta.$myimg2."' /></div>
-							<div id='foto3A' class='img2'><img src='".$ruta.$myimg3."' /></div>
-							<div id='foto4A' class='img2'><img src='".$ruta.$myimg4."' /></div>
-						</td>
-					</tr>";
-				
+		require 'TableImgModif.php';
+
 		if((isset($_POST['mimg1']))||(isset($_POST['mimg2']))||(isset($_POST['mimg3']))||(isset($_POST['mimg4']))){
-				show_form_img();
+						show_form_img();
 		}elseif(isset($_POST['imagenmodif'])){
 			if($form_errors = validate_form_img()){
 						show_form_img($form_errors);
-			} else { modifica_form_img();
-					 show_form_img();
-					 info_img();
+			}else{  modifica_form_img();
+					show_form_img();
+					info_img();
 						}
 		}elseif(isset($_POST['cero'])){ print($printimg);
 								
 		}else{ print($printimg); }
 
 		print(" <tr>
-					<td style='text-align: right;' >
-						".$MoneypBlack."
-								<a href='Gastos_Ver.php'>&nbsp;&nbsp;&nbsp;</a>
-						".$closeButton.$AddBlack."
-								<a href='Gastos_Crear.php' >&nbsp;&nbsp;&nbsp;</a>
-						".$closeButton.$CancelBlack."
-								<a href='Gastos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
-						".$closeButton."
-					</td>
+					<td style='text-align: center;' >");
+
+					global $ModImg2;		$ModImg2 = "style='display:none; visibility: hidden;'";
+					global $ConteBotones;	$ConteBotones = "style='display:block;'";
+					require 'Gastos_Botones.php';
+		
+		print("</td>
 				</tr>
 			</table>");	 
 
@@ -371,10 +229,9 @@
 					
 	function show_form_img($errors=[]){
 	
-		global $SaveBlackTit;		$SaveBlackTit = "MODIFICAR LA IMAGEN";
-		global $CachedWhiteTit;		$CachedWhiteTit = "ACTUALIZAR VISTAS";
-		require '../Inclu/BotoneraVar.php';
-		global $closeButton;
+		global $rutPend;	$rutPend = '';
+		global $pend;		$pend = "";
+		require 'Gastos_Botonera.php';
 
 		global $db; 	
 			

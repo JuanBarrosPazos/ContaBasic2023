@@ -1,9 +1,5 @@
 <?php
 
-		global $PersonsWhiteTit;	$PersonsWhiteTit = "SELECCIONE PROVEEDOR";
-		require '../Inclu/BotoneraVar.php';
-		global $closeButton;
-
 	print("<table class='tableForm' >
 				<tr>
 					<th>".$Titulo."</th>

@@ -334,11 +334,11 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 		if((isset($_POST['id']))&&(strlen(trim($_POST['id'])) != 0)){
 			$sqlg =  "SELECT * FROM `$db_name`.$vnameg WHERE `id` <> '$_POST[id]' AND `factnum` = '$_POST[factnum]'";
 			$sqlgp =  "SELECT * FROM `$db_name`.$vnamegp WHERE `factnum` = '$_POST[factnum]'";
-			echo "id esta set<br>";
+			//echo "id esta set<br>";
 		}else{
 			$sqlg =  "SELECT * FROM `$db_name`.$vnameg WHERE `factnum` = '$_POST[factnum]'";
 			$sqlgp =  "SELECT * FROM `$db_name`.$vnamegp WHERE `factnum` = '$_POST[factnum]'";
-			echo "id NO esta set<br>";
+			//echo "id NO esta set<br>";
 		}
 
         $qg = mysqli_query($db, $sqlg);				$qgp = mysqli_query($db, $sqlgp);
@@ -346,7 +346,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
     //	$rowsg = mysqli_fetch_assoc($qg);			$rowsgp = mysqli_fetch_assoc($qgp);
         
         if($countg > 0){
-			$errors [] = "<font color='#FF0000'>*** YA EXISTE LA FACTURA EN ".$vnameg." </font>";
+			$errors [] = "<font color='#FF0000'>YA EXISTE LA FACTURA EN ".$vnameg." </font>";
 	    }
         if($countgp > 0){
 			$errors [] = "<font color='#FF0000'>YA EXISTE LA FACTURA EN ".$vnamegp." </font>";

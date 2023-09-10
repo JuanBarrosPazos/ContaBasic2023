@@ -53,12 +53,8 @@ session_start();
 	global $link2;
 	$link2 = "<a href='Gastos_Pendiente_Crear.php' class='botonazul' style='color:#343434 !important' >CREAR NUEVO GASTO PENDIENTE</a>";
 
-	require 'TableFormResult.php';
-
-		global $rutaold;
-		global $rutanew;
-		$rutaold = "../cbj_Docs/docgastos_pendientes/";
-		$rutanew = "../cbj_Docs/docgastos_20".$dynew."/";
+		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_pendientes/";
+		global $rutanew;		$rutanew = "../cbj_Docs/docgastos_20".$dynew."/";
 		
 		if(file_exists($rutaold.$_SESSION['myimg1']) ){
 					copy($rutaold.$_SESSION['myimg1'], $rutanew.$_SESSION['myimg1']);
@@ -94,9 +90,9 @@ session_start();
 	global $sent;								
 	$sent = "INSERT INTO `$db_name`.$vname (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]')";
 		
-		if(mysqli_query($db, $sent)){ //	print("<br/>* OK DELETE DATA."); 
-										print($tabla); 
-		} else {
+		if(mysqli_query($db, $sent)){
+			require 'TableFormResult.php';
+		}else{
 			print("* MODIFIQUE LA ENTRADA 335: ".mysqli_error($db));
 			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 				}

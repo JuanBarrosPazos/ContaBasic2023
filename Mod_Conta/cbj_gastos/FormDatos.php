@@ -16,10 +16,16 @@
 								
 		<select name='dy' title='SELECCIONAR AÑO..' class='botonverde' style='vertical-align: middle' required >
 			<option value=''>YEAR</option>");
-					
+
 			global $db;
 			global $t1; 		$t1 = "`".$_SESSION['clave']."status`";
-			$sqly =  "SELECT * FROM $t1 WHERE `stat` = 'open' ORDER BY `year` DESC ";
+
+			if($rutPend == 'Pendientes_'){
+				$sqly =  "SELECT * FROM $t1 ORDER BY `year` DESC ";
+			}else{
+				$sqly =  "SELECT * FROM $t1 WHERE `stat` = 'open' ORDER BY `year` DESC ";
+			}
+
 			$qy = mysqli_query($db, $sqly);				
 				
 			if(!$qy){
@@ -176,7 +182,7 @@
 				<tr>
 					<td style='text-align:right; vertical-align:top;'>DESCRIPCIÓN</td>
 					<td>
-			<textarea cols='35' rows='7' onkeypress='return limitac(event, 200);' onkeyup='actualizaInfoc(200)' name='coment' id='coment'>".@$defaults['coment']."</textarea>
+			<textarea id='coment' cols='35' rows='7' onkeypress='return limitac(event, 200);' onkeyup='actualizaInfoc(200)' name='coment' required>".@$defaults['coment']."</textarea>
 			</br>
 	            <div id='infoc' align='center' style='color:#0080C0;'>
         					Maximum 200 characters            
