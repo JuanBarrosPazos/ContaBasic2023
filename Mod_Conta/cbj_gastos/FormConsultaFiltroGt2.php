@@ -63,6 +63,6 @@
 	//echo $key."<br>";
 	
 	$sqlb .= " ORDER BY $orden ";
-	echo "-*- ".$sqlb."<br>";
+	//echo "-*- ".$sqlb."<br>";
 
 ?>

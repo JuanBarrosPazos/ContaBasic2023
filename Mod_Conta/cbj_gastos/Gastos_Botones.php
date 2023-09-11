@@ -8,28 +8,29 @@
     }else{ }
     
     global $selBotones;
-    
+
     if((isset($_POST['id']))&&(@$_POST['id'] != '')){
         $selBotones = " WHERE `id` = '$_POST[id]' ";
     }elseif((isset($_SESSION['miid']))&&($_SESSION['miid'] != '')){
         $selBotones = " WHERE `id` = '$_SESSION[miid]' ";
     }else{ $selBotones = " ORDER BY `id` DESC "; }
 
-    global $db; 	global $db_name;	global $vnameBot;       global $rutPend;
+    global $db; 	global $db_name;	global $vnameBot; global $vname;      global $rutPend;
     if($rutPend == 'Pendientes_'){
         $vnameBot = "`".$_SESSION['clave']."gastos_pendientes`";
     }else{
-     	$vnameBot = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+     	$vnameBot = $vname;
     }
+    
     global $sqlBot;		$sqlBot = "SELECT * FROM `$db_name`.$vnameBot $selBotones LIMIT 1";
     //echo "** ".$rutPend;
-    echo "<br>".$sqlBot."<br>";
+    //echo "-- ".$sqlBot."<br>";
     $qBot = mysqli_query($db, $sqlBot);
     $countBot = mysqli_num_rows($qBot);
     $rowb = mysqli_fetch_assoc($qBot);
     //echo "** ".@$rowb['id']."<br>";
 
-    print("<div ".$ConteBotones." >
+    print("<div ".$ConteBotones." ><!-- INICIO DIV CONTENEDOR -->
 
     <div ".$Crear.">
             ".$AddBlack."
@@ -82,13 +83,25 @@
         print($DeleteWhite.$closeButton."
                 <input type='hidden' name='oculto2' value=1 />
         </form>
-    </div>
-    
-            ".$CancelBlack."
+    </div>");
+
+    if($rutPend == 'Pendientes_'){
+        print("<div ".$Recupera3.">
+                <form name='modifica' action='Gastos_Pendientes_Modificar_03.php' method='POST'>");
+
+            require 'Gastos_rowb_Total.php';
+
+        print($MoneyBlack.$closeButton."
+                <input type='hidden' name='oculto2' value=1 />
+                </form>
+            </div>");
+
+    }else{ }
+
+    print($CancelBlack."
 				<a href='Gastos_".$rutPend."Ver.php' >&nbsp;&nbsp;&nbsp;</a>
 			".$closeButton."
 
-	</div>");
-
+	</div><!-- FIN DIV CONTENEDOR -->");
 
 ?>

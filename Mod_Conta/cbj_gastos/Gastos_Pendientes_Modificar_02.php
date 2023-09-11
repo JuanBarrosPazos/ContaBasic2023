@@ -364,7 +364,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 				</tr>");
 
 		if($_POST['proveegastos'] != ''){
-	
+
 			require 'FormDatos.php';
 
 			print("<tr>

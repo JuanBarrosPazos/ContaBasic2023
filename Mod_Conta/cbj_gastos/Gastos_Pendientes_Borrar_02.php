@@ -85,7 +85,7 @@ session_start();
 					show_form ();
 					global $texerror; $texerror = "\n\t ".mysqli_error($db);
 					}
-
+		/*
 		global $redir;
 		$redir = "<script type='text/javascript'>
 						function redir(){
@@ -94,6 +94,7 @@ session_start();
 					setTimeout('redir()',8000);
 					</script>";
 		print ($redir);
+		*/
 
 	} // FIN process_form()
 	

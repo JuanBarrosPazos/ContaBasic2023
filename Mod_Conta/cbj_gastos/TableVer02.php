@@ -36,15 +36,15 @@
 				    <div class='img1'>
 		<button type='submit' class='botonnaranja' title='DESCARGAR DOCUMENTO 4' >
 			<a style='font-size:14px' href='../cbj_Docs/docgastos_".$rutFinImg."/".$rowsc['myimg4']."' target='_blank'>
-				<img src='../cbj_Docs/docgastos_".$rutFinImg."/".$myimg4."' > 
+				<img src='../cbj_Docs/docgastos_".$rutFinImg."/".$myimg4."' >
 			</a>
 		</button>							
 				    </div>
 			    </td>
 			</tr>
             <tr>
-				<td class='BorderSup' style='text-align: right !important; width: 50%;'>ID </td>
-				<td class='BorderSup' style='width: 50%;' >".$_POST['id']."</td>	
+				<td style='text-align: right !important; width: 50%;'>ID </td>
+				<td style='width: 50%;' >".$_POST['id']."</td>	
 			</tr>		
 			<tr>
 				<td style='text-align: right !important;' >NUMERO</td>

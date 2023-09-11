@@ -40,85 +40,114 @@ session_start();
 
 	function process_form_2(){
 	
+		global $rutPend;	$rutPend = 'Pendientes_';
+		global $pend;	$pend = "PENDIENTES";
+		require 'Gastos_Botonera.php';
+
 		global $db; 		global $db_name;
-		global $vname; 		global $dyt1; 		global $dynew;
+		global $vname; 		global $dyt1;
 		
 		require 'Gastos_factdate.php';
 
 	require 'FormatNumber.php';
 
-	global $title;	$title = 'SE HA BORRADO EL GASTO PENDIENTE EN ';
-	global $link1; 	
-	$link1 = "<a href='Gastos_Pendientes_Ver.php' class='botonazul' style='color:#343434 !important' >INICIO GASTOS PENDIENTES</a>";
-	global $link2;
-	$link2 = "<a href='Gastos_Pendiente_Crear.php' class='botonazul' style='color:#343434 !important' >CREAR NUEVO GASTO PENDIENTE</a>";
-
 		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_pendientes/";
-		global $rutanew;		$rutanew = "../cbj_Docs/docgastos_20".$dynew."/";
+		global $rutanew;		$rutanew = "../cbj_Docs/docgastos_".$dyt1."/";
 		
-		if(file_exists($rutaold.$_SESSION['myimg1']) ){
+		if(file_exists($rutaold.$_SESSION['myimg1'])){
 					copy($rutaold.$_SESSION['myimg1'], $rutanew.$_SESSION['myimg1']);
-					unlink($rutaold.$_SESSION['myimg1']);
-			/*		print(" <br/>* CHANGE YEAR FACT: 20".$_SESSION['yold']." X 20".$dynew."
-							<br/>- Ok Copy & Unlink Img Name 1.");
-			*/
-										}else{print("<br/>- No Ok Copy & Unlink Img Name 1.");}
+					//unlink($rutaold.$_SESSION['myimg1']);
+					/*	
+					print(" <br/>* CHANGE YEAR FACT: 20".$_SESSION['yold']." X 20".$dyt1."
+									<br/>- Ok Copy & Unlink Img Name 1.");
+					*/
+		}else{
+			print("<br/>- No Ok Copy & Unlink Img Name 1 ".$rutaold.$_SESSION['myimg1']. " TO ".$rutanew.$_SESSION['myimg1']);}
 										
 		if(file_exists($rutaold.$_SESSION['myimg2']) ){
-								copy($rutaold.$_SESSION['myimg2'], $rutanew.$_SESSION['myimg2']);
-								unlink($rutaold.$_SESSION['myimg2']);
-						/*		print("<br/>- Ok Copy & Unlink Img Name 2.");	*/
-										}else{print("<br/>- No Ok Copy & Unlink Img Name 2.");}
+					copy($rutaold.$_SESSION['myimg2'], $rutanew.$_SESSION['myimg2']);
+					//unlink($rutaold.$_SESSION['myimg2']);
+					/* print("<br/>- Ok Copy & Unlink Img Name 2."); */
+		}else{
+			print("<br/>- No Ok Copy & Unlink Img Name 2 ".$rutaold.$_SESSION['myimg2']. " TO ".$rutanew.$_SESSION['myimg2']);}
 										
 		if(file_exists($rutaold.$_SESSION['myimg3']) ){
-								copy($rutaold.$_SESSION['myimg3'], $rutanew.$_SESSION['myimg3']);
-								unlink($rutaold.$_SESSION['myimg3']);
-						/*		print("<br/>- Ok Copy & Unlink Img Name 3.");	*/
-										}else{print("<br/>- No Ok Copy & Unlink Img Name 3.");}
+					copy($rutaold.$_SESSION['myimg3'], $rutanew.$_SESSION['myimg3']);
+					//unlink($rutaold.$_SESSION['myimg3']);
+					/* print("<br/>- Ok Copy & Unlink Img Name 3."); */
+		}else{
+			print("<br/>- No Ok Copy & Unlink Img Name 3 ".$rutaold.$_SESSION['myimg3']. " TO ".$rutanew.$_SESSION['myimg3']);}
 										
 		if(file_exists($rutaold.$_SESSION['myimg4']) ){
-								copy($rutaold.$_SESSION['myimg4'], $rutanew.$_SESSION['myimg4']);
-								unlink($rutaold.$_SESSION['myimg4']);
-						/*		print("<br/>- Ok Copy & Unlink Img Name 4.");	*/
-										}else{print("<br/>- No Ok Copy & Unlink Img Name 4.");}
-										
-	$idx = $_SESSION['idx'];
+					copy($rutaold.$_SESSION['myimg4'], $rutanew.$_SESSION['myimg4']);
+					//unlink($rutaold.$_SESSION['myimg4']);
+					/* print("<br/>- Ok Copy & Unlink Img Name 4."); */
+		}else{print("<br/>- No Ok Copy & Unlink Img Name 4 ".$rutaold.$_SESSION['myimg4']. " TO ".$rutanew.$_SESSION['myimg4']);}
+						
+		$idx = $_SESSION['idx'];
 
-	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
-	$_SESSION['vname'] = $vname;
-	
-	global $sent;								
-	$sent = "INSERT INTO `$db_name`.$vname (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]')";
+		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+		$_SESSION['vname'] = $vname;
+		
+		global $sent;								
+		$sent = "INSERT INTO `$db_name`.$vname (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]')";
 		
 		if(mysqli_query($db, $sent)){
-			require 'TableFormResult.php';
+
+			global $title;			$title = 'SE HA RECUPERADO LA FACTURA EN ';
+			global $Modif2;			$Modif2= "style='display:none; visibility: hidden;'";
+			global $Ver2;			$Ver2= "style='display:none; visibility: hidden;'";
+			global $ModImg2;		$ModImg2= "style='display:none; visibility: hidden;'";
+			global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
+			global $Recupera3;		$Recupera3 = "style='display:none; visibility: hidden;'";
+			global $ConteBotones;	$ConteBotones = "style='display:block;'";
+			require 'TableFormResult.php';	
+			
+			unlink($rutaold.$_SESSION['myimg1']);
+			unlink($rutaold.$_SESSION['myimg2']);
+			unlink($rutaold.$_SESSION['myimg3']);
+			unlink($rutaold.$_SESSION['myimg4']);
+				
 		}else{
-			print("* MODIFIQUE LA ENTRADA 335: ".mysqli_error($db));
+			print("* ERROR L.93: ".mysqli_error($db));
 			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 				}
-	$idx = $_SESSION['idx'];
-	global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastos_pendientes`";
-	$sqla = "DELETE FROM `$db_name`.$vnamed  WHERE $vnamed.`id` = '$idx'  ";
+
+		$idx = $_SESSION['idx'];
+		global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastos_pendientes`";
+		$sqla = "DELETE FROM `$db_name`.$vnamed  WHERE $vnamed.`id` = '$idx'  ";
+
 		if(mysqli_query($db, $sqla)){ //	print("<br/>* OK DELETE DATA."); 
-		} else {
+		}else{
 			print("* MODIFIQUE LA ENTRADA 349: ".mysqli_error($db));
 			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 				}
 
+		/*
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='Gastos_Pendientes_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
+		*/
+				
 	//////////////
 				//////////////
 	//////////////
 	
-	global $dyx; 		$dyx = "20".$_POST['dy'];
-	global $dmx; 		$dmx = "M".$_POST['dm'];
+		global $dyx; 		$dyx = "20".$_POST['dy'];
+		global $dmx; 		$dmx = "M".$_POST['dm'];
 
-	global $mes;
-	if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
-	elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
-	elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
-	elseif(($dmx == "10")||($dmx == "11")||($dmx == "12")){$mes = "TRI4";}
+		global $mes;
+		if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
+		elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
+		elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
+		elseif(($dmx == "10")||($dmx == "11")||($dmx == "12")){$mes = "TRI4";}
 	
-		} 
+	} // FIN process_form_2()
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -126,12 +155,15 @@ session_start();
 
 	function show_form($errors=[]){
 
+		global $rutPend;	$rutPend = 'Pendientes_';
+		global $pend;	$pend = "PENDIENTES";
+		require 'Gastos_Botonera.php';
+
 		global $db; 	global $db_name;
 		
 		global $sesionref; 		$sesionref = "`".$_SESSION['clave']."clientes`";
 		
 		if(isset($_POST['provegastos'])){
-
 			$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveedores]'";
 			$qx = mysqli_query($db, $sqlx);
 			$rowprovee = mysqli_fetch_assoc($qx);
@@ -141,7 +173,6 @@ session_start();
 			$_ldni = $rowprovee['ldni'];
 			global $_dnil;
 			$_dnil = $_dni.$_ldni;
-
 		}
 		
 		$_SESSION['idx'] = $_POST['id'];
@@ -277,10 +308,27 @@ session_start();
 		require 'TablaIfErrors.php';
 
 		require 'ArrayMesDia.php';
-				
+
+		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_pendientes/";
+
+		/*
+		if(file_exists($rutaold.$_SESSION['myimg1'])){		
+			print("** ".$_SESSION['myimg1']."<br>");
+		}else{ echo "** NO ENCUENTRO LA IMAGEN ".$_SESSION['myimg1']."<br>"; }
+		if(file_exists($rutaold.$_SESSION['myimg2'])){	
+			print("** ".$_SESSION['myimg2']."<br>");
+		}else{ echo "** NO ENCUENTRO LA IMAGEN ".$_SESSION['myimg2']."<br>"; }
+		if(file_exists($rutaold.$_SESSION['myimg3'])){	
+			print("** ".$_SESSION['myimg3']."<br>");
+		}else{ echo "** NO ENCUENTRO LA IMAGEN ".$_SESSION['myimg3']."<br>"; }
+		if(file_exists($rutaold.$_SESSION['myimg4'])){	
+			print("** ".$_SESSION['myimg4']."<br>");
+		}else{ echo "** NO ENCUENTRO LA IMAGEN ".$_SESSION['myimg4']."<br>"; }
+		*/
+		
 		////////////////////
 
-		if($_POST['proveegastos'] != '') {
+		if($_POST['proveegastos'] != ''){
 
 		global $checked;
 		if(@$defaults['xl'] == 'yes') { $checked = "checked='checked'";}else{ $checked = ""; }
@@ -292,13 +340,14 @@ session_start();
 						</td>
 					</tr>";
 
-		global $titulo; $titulo = "MARCAR COMO COBRADO ESTE GASTO PENDIENTE";
-
+		global $titulo; 	$titulo = "MARCAR COMO COBRADO ESTE GASTO PENDIENTE";
+		global $titInput;	$titInput = "GUARDAR GASTO PENDIENTE COMO PAGADO";
+		global $Recupera3;	$Recupera3 = "style='display:none; visibility: hidden;'";
 		require 'TableBorrar2.php';
 
 		}
 
-	}
+	} // FIN function show_form($errors=[])
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////

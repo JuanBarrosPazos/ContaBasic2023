@@ -343,7 +343,7 @@ session_start();
 		require 'FormConsultaFiltroGt1.php';
 		//$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden $limit ";
 		$qb = mysqli_query($db, $sqlb);
-	
+
 	/////////////////////	
 	/* PARA SUMAR PVPTOT */
 

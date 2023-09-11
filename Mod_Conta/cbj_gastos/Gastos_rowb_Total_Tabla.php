@@ -1,7 +1,10 @@
 <?php
-
+	
 	print ("<table class='tableForm' >
-				<th colspan=15 class='BorderInf'>GASTOS ".mysqli_num_rows($qb)." RESULTADOS</th>
+			<tr>
+				<th colspan=15 class='BorderInf'>
+					GASTOS ".$dyt1." - ".mysqli_num_rows($qb)." RESULTADOS
+				</th>
 			</tr>
 			<tr>
 				<th class='BorderInfDch'>ID</th>			

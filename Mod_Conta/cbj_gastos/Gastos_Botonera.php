@@ -13,6 +13,7 @@
     global $MoneypGreyTit;		$MoneypGreyTit = "VER TODOS LOS GASTOS";
     global $MoneypWhiteTit;		$MoneypWhiteTit = "VER TODOS LOS GASTOS PENDIENTES";
     global $PersonsWhiteTit;	$PersonsWhiteTit = "SELECCIONE PROVEEDOR";
+    global $RestoreBlackTit;    $RestoreBlackTit = "RESTAURAR";
     global $SaveBlackTit;		$SaveBlackTit = "MODIFICAR DATOS FACTURA ".$pend;
 
     require '../Inclu/BotoneraVar.php';
@@ -21,11 +22,12 @@
 
     $ConteBotones = "style='display:inline-block; float:left !important;'";
 
-    $Modif2 = "style='display:inline-block;'";
     $Borrar2 = "style='display:inline-block;'";
-    $Ver2 = "style='display:inline-block;'";
-    $ModImg2 = "style='display:inline-block;'";
     $Crear = "style='display:inline-block;'";
+    $Modif2 = "style='display:inline-block;'";
+    $ModImg2 = "style='display:inline-block;'";
+    $Recupera3 = "style='display:inline-block;'";
+    $Ver2 = "style='display:inline-block;'";
 
 
 ?>

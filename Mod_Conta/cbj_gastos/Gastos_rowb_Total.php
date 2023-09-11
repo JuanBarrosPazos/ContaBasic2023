@@ -1,6 +1,6 @@
 <?php
         if(!isset($vname)){$vname = $vnameBot; }else{ }
-        //echo "-- ".$vname."<br>";
+        // echo "-- ".$vname."<br>";
         
         print(" <input type='hidden' name='dyt1' value='".$dyt1."' />
                 <input type='hidden' name='vname' value='".$vname."' />
