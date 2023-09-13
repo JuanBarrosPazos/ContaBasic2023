@@ -1,8 +1,13 @@
 <?php
 
-	unset($_SESSION['miid']);
-	
-	global $TitBut1;		global $TitBut2;
+	unset($_SESSION['ImgCbj']);
+	unset($_SESSION['myimg1']); 	unset($_SESSION['myimg2']);
+	unset($_SESSION['myimg3']); 	unset($_SESSION['myimg4']);	
+	unset($_SESSION['miseccion']); 	unset($_SESSION['miid']);	
+	unset($_SESSION['mivalor']); 	unset($_SESSION['minombre']);	
+	unset($_SESSION['miref']); 		unset($_SESSION['midyt1']);	
+
+	global $TitBut1;			global $TitBut2;
 
 	global $DetalleGreyTit; 	$DetalleGreyTit = $TitBut1; 	// "VER TODOS LOS GASTOS"
 	global $BuscaWhiteTit;		$BuscaWhiteTit = $TitBut2;		// "FILTRO BUSQUEDA GASTOS"
@@ -134,7 +139,8 @@
 						
 	////////
 
-	if(isset($_POST['show_formcl'])){ global $cnt; 	gt2(); }
+	global $papelera;
+	if((isset($_POST['show_formcl']))&&($papelera !=1)){ global $cnt; 	gt2(); }
 
 	////////
 
@@ -202,8 +208,9 @@
 					</td></tr>");
 
 	////////
-	
-		if(isset($_POST['todo'])){ gt1(); }
+		
+		global $papelera;
+		if((isset($_POST['todo']))&&($papelera !=1)){ gt1(); }
 
 	////////
 			

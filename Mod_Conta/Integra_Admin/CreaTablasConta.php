@@ -225,7 +225,6 @@ function config_one_cbj(){
 			$table4 = "\t* NO OK TABLA ".$vname1b.". ".mysqli_error($db)."\n";
 			}
 			
-
 		/************** CREAMOS LA TABLA CLIENTES ***************/
 
 	global $vname6;
@@ -325,11 +324,10 @@ function config_one_cbj(){
   */
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
-	global $table5;
 	if(mysqli_query($db, $tib)){
-			$table5 = "\t* OK TABLA ".$vname3b."\n";
+			$table5 .= "\t* OK TABLA ".$vname3b."\n";
 	}else{print( "* NO OK TABLA ".$vname3b.". ".mysqli_error($db)."\n");
-		  $table5 = "\t* NO OK TABLA ".$vname3b.". ".mysqli_error($db)."\n";
+		  $table5 .= "\t* NO OK TABLA ".$vname3b.". ".mysqli_error($db)."\n";
 			}
 
 	/************** CREAMOS LA TABLA STATUS ***************/
@@ -559,7 +557,43 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	}else{//print("* YA EXISTE EL DIRECTORIO DIRECTORIO ".$carpeta2."\n");
 			$data4 = "\t* YA EXISTE EL DIRECTORIO ".$carpeta2."\n";
 				}
+
+	/************** CREAMOS LA TABLA GASTOS FEED  ***************/
+
+	global $vnamegf;
+	$vnamegf = "`".$_SESSION['clave']."gastosfeed`";
 	
+	$tgf = "CREATE TABLE IF NOT EXISTS `$db_name`.$vnamegf (
+  `id` int(4) NOT NULL auto_increment,
+  `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `refprovee` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
+  `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factiva` int(2) NOT NULL,
+  `factivae` decimal(9,2) unsigned NOT NULL,
+  `factpvp` decimal(9,2) unsigned NOT NULL,
+  `factret` int(2) unsigned NOT NULL,
+  `factrete` decimal(9,2) unsigned NOT NULL,
+  `factpvptot` decimal(9,2) unsigned NOT NULL,
+  `coment` text collate utf8_spanish2_ci NOT NULL,
+  `myimg1` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `borrado` datetime collate utf8_spanish2_ci NOT NULL default CURRENT_TIMESTAMP,
+  `ruta` varchar(50) collate utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
+
+	global $data1;
+	if(mysqli_query($db, $tgf)){
+			$data1 = $data1."\t* OK TABLA ".$vnamegf."\n";
+	} else { print( "* NO OK TABLA ".$vnamegf.". ".mysqli_error($db)."\n");
+			 $data1 = $data1."\t* NO OK TABLA ".$vnamegf.". ".mysqli_error($db)."\n";
+			}
+
 	/************** CREAMOS LA TABLA INGRESOS  ***************/
 
 	global $tblClientes;
@@ -664,7 +698,43 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	} else { //print("* NO OK EL DIRECTORIO ".$carpeta4."\n");
 			 $data8 = "\t* YA EXISTE EL DIRECTORIO ".$carpeta4."\n";
 				}
+
+	/************** CREAMOS LA TABLA INGRESOS FEED  ***************/
+
+	global $vnameif;
+	$vnameif = "`".$_SESSION['clave']."ingresosfeed`";
 	
+	$tif = "CREATE TABLE IF NOT EXISTS `$db_name`.$vnameif (
+  `id` int(4) NOT NULL auto_increment,
+  `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `refcliente` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
+  `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factiva` int(2) NOT NULL,
+  `factivae` decimal(9,2) unsigned NOT NULL,
+  `factpvp` decimal(9,2) unsigned NOT NULL,
+  `factret` int(2) unsigned NOT NULL,
+  `factrete` decimal(9,2) unsigned NOT NULL,
+  `factpvptot` decimal(9,2) unsigned NOT NULL,
+  `coment` text collate utf8_spanish2_ci NOT NULL,
+  `myimg1` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `borrado` datetime collate utf8_spanish2_ci NOT NULL default CURRENT_TIMESTAMP,
+  `ruta` varchar(50) collate utf8_spanish2_ci NOT NULL,
+  PRIMARY KEY  (`id`),
+  UNIQUE KEY `id` (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
+		
+	global $data5;
+	if(mysqli_query($db, $tif)){
+			$data5 = "\t* OK TABLA ".$vnameif."\n";
+	}else{ print( "* NO OK TABLA ".$vnameif.". ".mysqli_error($db)."\n");
+			$data5 = "\t* NO OK TABLA ".$vnameif.". ".mysqli_error($db)."\n";
+				}
+
 		/************	PASAMOS LOS PARAMETROS A .LOG	*****************/
 	
 		$datein = date('Y-m-d H:i:s');

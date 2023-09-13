@@ -41,51 +41,40 @@ session_start();
 
 		global $db; 		global $db_name;
 
-		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+
  
 		require 'FormatNumber.php';
 
 		/////////////
-			
-		$sqla = "DELETE FROM `$db_name`.$vname  WHERE $vname.`id` = '$_POST[id]'  ";
-			
-		if(mysqli_query($db, $sqla)){ 
-			
-			global $title;			$title = 'SE HA BORRADO EN ';
-			global $Modif2;			$Modif2= "style='display:none; visibility: hidden;'";
-			global $Ver2;			$Ver2= "style='display:none; visibility: hidden;'";
-			global $ModImg2;		$ModImg2= "style='display:none; visibility: hidden;'";
-			global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
-			global $ConteBotones;	$ConteBotones = "style='display:block;'";
-			require 'TableFormResult.php';			
+		global $vnamei; 		$vnamei = "`".$_SESSION['clave']."gastosfeed`";
+		global $sent;
+		$sent = "INSERT INTO `$db_name`.$vnamei (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`, `ruta`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]', '$_POST[delruta]' )";
+		
+		if(mysqli_query($db, $sent)){
+
+			global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+			$sqla = "DELETE FROM `$db_name`.$vname  WHERE $vname.`id` = '$_POST[id]'  ";
+			if(mysqli_query($db, $sqla)){
+				global $title;			$title = 'SE HA BORRADO EN ';
+				global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
+				global $Modif2;			$Modif2= "style='display:none; visibility: hidden;'";
+				global $ModImg2;		$ModImg2= "style='display:none; visibility: hidden;'";
+				global $PendienteG;		$PendienteG = "style='display:none; visibility: hidden;'";
+				global $Ver2;			$Ver2= "style='display:none; visibility: hidden;'";
 				
-			$sesionref2 = "docgastos_".$dyt1;
-
-			if( file_exists("../cbj_Docs/".$sesionref2."/".$_POST['myimg1']) ){
-				$destination_file = "../cbj_Docs/".$sesionref2."/".$_POST['myimg1'];
-				unlink($destination_file);
+				global $ConteBotones;	$ConteBotones = "style='display:block;'";
+				require 'TableFormResult.php';			
+			}else{ print("* ERROR L.56: ".mysqli_error($db));
+						show_form ();
+						global $texerror; $texerror = "\n\t ".mysqli_error($db);
+							}
+		}else{
+			print("* ERROR L.51: ".mysqli_error($db));
+			show_form ();
+			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 				}
-
-			if( file_exists("../cbj_Docs/".$sesionref2."/".$_POST['myimg2']) ){
-				$destination_file = "../cbj_Docs/".$sesionref2."/".$_POST['myimg2'];
-				unlink($destination_file);
-				}
-
-			if( file_exists("../cbj_Docs/".$sesionref2."/".$_POST['myimg3']) ){
-				$destination_file = "../cbj_Docs/".$sesionref2."/".$_POST['myimg3'];
-				unlink($destination_file);
-				}
-
-			if( file_exists("../cbj_Docs/".$sesionref2."/".$_POST['myimg4']) ){
-				$destination_file = "../cbj_Docs/".$sesionref2."/".$_POST['myimg4'];
-				unlink($destination_file);
-				}
-
-		} else { print("* MODIFIQUE LA ENTRADA 300: ".mysqli_error($db));
-					show_form ();
-					global $texerror; $texerror = "\n\t ".mysqli_error($db);
-					}
-
+		
+		/*
 		global $redir;
 		$redir = "<script type='text/javascript'>
 						function redir(){
@@ -94,6 +83,7 @@ session_start();
 					setTimeout('redir()',8000);
 					</script>";
 		print ($redir);
+		*/
 
 	} // FIN process_form()
 	
@@ -107,13 +97,16 @@ session_start();
 		global $pend;		$pend = "";
 		require 'Gastos_Botonera.php';
 
+		global $dyt1;
+		
 		if(isset($_POST['oculto2'])){
 				
 				$datex = $_POST['factdate'];
 				$dyx = substr($_POST['factdate'],0,2);
 				$dmx = substr($_POST['factdate'],3,2);
 				$ddx = substr($_POST['factdate'],-2,2);
-	
+				$dyt1 = "20".$dyx;
+
 				$ivae = strlen(trim($_POST['factivae']));
 				$ivae = $ivae - 3;
 				$ivaex = $_POST['factivae'];
@@ -149,7 +142,10 @@ session_start();
 				$fil2 = "%".$dnilx."%";
 
 				$_POST['proveegastos'] = $_POST['refprovee'];
-	
+
+				$sesionref2 = "docgastos_".$dyt1;
+				global $DelRuta;		$DelRuta ="../cbj_Docs/".$sesionref2."/";
+		
 				$defaults = array ( 'id' => $_POST['id'],
 									'proveegastos' => $_POST['refprovee'],
 									'refprovee' => $_POST['refprovee'],
@@ -174,7 +170,9 @@ session_start();
 									'myimg1' => $_POST['myimg1'],	
 									'myimg2' => $_POST['myimg2'],	
 									'myimg3' => $_POST['myimg3'],	
-									'myimg4' => $_POST['myimg4']);
+									'myimg4' => $_POST['myimg4'],
+									'vname'  => $_POST['vname'],
+									'delruta' => $DelRuta);
 								}
 	
 		////////////////////
@@ -183,7 +181,9 @@ session_start();
 		global $Checkbox; 	$Checkbox = "";
 		global $titulo; 	$titulo = "ELIMINAR GASTO";
 		global $titInput;	$titInput = "BORRAR GASTO PENDIENTE";
-		require 'TableBorrar2.php';
+		global $Borrar2;	$Borrar2= "style='display:none; visibility: hidden;'";
+
+		require 'TableBorrar.php';
 	
 	} // FIN function show_form()
 

@@ -29,11 +29,11 @@ session_start();
 
 	function a(){	
 	
-		global $ruta; 		$ruta = "../cbj_Docs/grafics/";
+		global $rutaDir; 		$rutaDir = "../cbj_Docs/grafics/";
 
 		/////	DATOS DIARIOS TOTALES	//////
 		
-		global $IDTVT; 			$IDTVT = $ruta."IDTVT.php";
+		global $IDTVT; 			$IDTVT = $rutaDir."IDTVT.php";
 		global $file_IDTVT; 	$file_IDTVT = file_get_contents($IDTVT);
 		$IDTVT_a = explode(',',$file_IDTVT);
 		global $gt; 	$gt = $IDTVT_a;
@@ -46,7 +46,7 @@ session_start();
 
 	function process_form(){
 
-		global $coordenadax; 	global $ruta; 	global $gt; 	global $gd;
+		global $coordenadax; 	global $rutaDir; 	global $gt; 	global $gd;
 		
 		global $s1; 	$s1 = $_SESSION['ref']; 		$s1 = trim($s1);
 		global $s2; 	$s2 = $_SESSION['usuarios']; 	$s2 = trim($s2);

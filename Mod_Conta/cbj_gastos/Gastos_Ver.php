@@ -173,12 +173,12 @@ session_start();
 	
 		//print ("* ".$_SESSION['gtime']);
 		
-		global $ruta;
-		$ruta = "../cbj_Docs/grafics/";
+		global $rutaDir;
+		$rutaDir = "../cbj_Docs/grafics/";
 
 		/////////////
 
-		$fh = fopen($ruta.'IMxT3.php','w+');
+		$fh = fopen($rutaDir.'IMxT3.php','w+');
 		while($registro = mysqli_fetch_array($qg)){
 			$line = $registro['factpvptot'].",";
 			fwrite($fh, $line);
@@ -190,7 +190,7 @@ session_start();
 		$sqlgd =  $sqlb;
 		$qgd = mysqli_query($db, $sqlgd);
 
-		$fhd = fopen($ruta.'IMxD3.php','w+');
+		$fhd = fopen($rutaDir.'IMxD3.php','w+');
 		while($registrod = mysqli_fetch_array($qgd)){
 			$lined = "M".substr($registrod['factdate'],3,2)."\nD".substr($registrod['factdate'],-2).",";
 			fwrite($fhd, $lined);
@@ -433,12 +433,12 @@ session_start();
 			
 			//print ("* ".$_SESSION['gtime']);
 			
-			global $ruta;
-			$ruta = "../cbj_Docs/grafics/";
+			global $rutaDir;
+			$rutaDir = "../cbj_Docs/grafics/";
 
 			/////////////
 
-			$fh = fopen($ruta.'IMxT.php','w+');
+			$fh = fopen($rutaDir.'IMxT.php','w+');
 			while($registro = mysqli_fetch_array($qg)){
 						$line = $registro['factpvptot'].",";
 						fwrite($fh, $line);
@@ -453,7 +453,7 @@ session_start();
 			//$sqlgd =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
 			$qgd = mysqli_query($db, $sqlgd);
 
-			$fhd = fopen($ruta.'IMxD.php','w+');
+			$fhd = fopen($rutaDir.'IMxD.php','w+');
 			while($registrod = mysqli_fetch_array($qgd))
 			{
 			$lined = substr($registrod['factdate'],-2).",";

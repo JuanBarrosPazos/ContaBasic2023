@@ -79,7 +79,7 @@
 			</form>						
 				</td>
 				<td style='text-align:center;' >
-			<form name='modifica' action='Gastos_Pendientes_Modificar_02.php' method='POST'>");
+			<form name='modifica' action='Gastos_Pendientes_Modificar.php' method='POST'>");
 
 		require 'Gastos_rowb_Total.php';
 
@@ -105,7 +105,7 @@
 				</td>
 
 				<td style='text-align:center;' >
-		<form name='modifica' action='Gastos_Pendientes_Borrar_02.php' method='POST'>");
+		<form name='modifica' action='Gastos_Pendientes_Borrar.php' method='POST'>");
 
 		require 'Gastos_rowb_Total.php';
 

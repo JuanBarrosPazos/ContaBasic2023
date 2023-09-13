@@ -1,5 +1,8 @@
 <?php
 
+		global $db; 	global $db_name;	global $img; 	global $imgcamp; 	global $vname;
+		global $rutaDir;
+		
 		global $safe_filename;
 		$safe_filename = trim(str_replace('/', '', $_FILES['myimg']['name']));
 		$safe_filename = trim(str_replace('..', '', $safe_filename));
@@ -10,15 +13,15 @@
 		$tamano = $_FILES['myimg']['size'];
 
 		global $destination_file;
-		$destination_file = $ruta.$safe_filename;
+		$destination_file = $rutaDir.$safe_filename;
 		
-	    if(file_exists($ruta.$nombre) ){
-						unlink($ruta.$nombre);
+	    if(file_exists($rutaDir.$nombre) ){
+						unlink($rutaDir.$nombre);
 		}elseif(move_uploaded_file($_FILES['myimg']['tmp_name'], $destination_file)){
 
 			// Eliminar el archivo antiguo untitled.png
 			if($_SESSION['ImgCbj'] != 'untitled.png' ){
-						@unlink($ruta.$_SESSION['ImgCbj']);
+						@unlink($rutaDir.$_SESSION['ImgCbj']);
 										}
 			// Renombrar el archivo:
 			$extension = substr($_FILES['myimg']['name'],-3);
@@ -31,14 +34,13 @@
 			$dt = date('is');
 			global $new_name;
 			$new_name = $_SESSION['mivalor']."_".$dt.".".$extension;
-			$rename_filename = $ruta.$new_name;								
+			$rename_filename = $rutaDir.$new_name;								
 			rename($destination_file, $rename_filename);
 			
 			global $db; 		global $db_name;
 
 			global $mivalor; 	$imgcamp = "`".$_SESSION['imgcamp']."`";
 			$mivalor = $_SESSION['mivalor'];
-			
 			
 			$sqla = "UPDATE `$db_name`.$vname SET $imgcamp = '$new_name' WHERE $vname.`id` = '$_SESSION[miid]' AND $vname.`factnum` = '$mivalor' LIMIT 1 ";
 			
@@ -52,11 +54,12 @@
 							setTimeout('redir()',2);
 							</script>";
 				print ($redir);
-		
+
 			}else { print("* ERROR ".mysqli_error($db));
 					show_form ();
 					global $texerror;		$texerror = "\n\t ".mysqli_error($db);
 						}
+						
 		}else{print("NO SE HA PODIDO GUARDAR EN ../imgpro/imgpro".$_SESSION['miseccion']."/");}
 
 

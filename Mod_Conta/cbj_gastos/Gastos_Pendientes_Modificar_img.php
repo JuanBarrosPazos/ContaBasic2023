@@ -57,8 +57,8 @@
 
 		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
 
-		global $ruta; 		$ruta = "../cbj_Docs/docgastos_pendientes/";
-		$_SESSION['ruta'] = $ruta;
+		global $rutaDir; 		$rutaDir = "../cbj_Docs/docgastos_pendientes/";
+		$_SESSION['ruta'] = $rutaDir;
 
 		require 'FormImgMod.php';
 
@@ -101,8 +101,8 @@
 			$_SESSION['miref'] = $_POST['refprovee'];
 			$_SESSION['midyt1'] = $_POST['dyt1'];
 		
-			global $ruta; 		$ruta = "../cbj_Docs/docgastos_pendientes/";
-			$_SESSION['ruta'] = $ruta;
+			global $rutaDir; 		$rutaDir = "../cbj_Docs/docgastos_pendientes/";
+			$_SESSION['ruta'] = $rutaDir;
 				
 		//	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
 
@@ -148,8 +148,8 @@
 	
 		}else{		
 	
-			global $ruta; 		$ruta = "../cbj_Docs/docgastos_pendientes/";
-			$_SESSION['ruta'] = $ruta;
+			global $rutaDir; 		$rutaDir = "../cbj_Docs/docgastos_pendientes/";
+			$_SESSION['ruta'] = $rutaDir;
 
 		//	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
 
@@ -237,8 +237,8 @@
 
 		global $db; 	
 
-		global $ruta; 		$ruta = "../cbj_Docs/docgastos_pendientes/";
-		$_SESSION['ruta'] = $ruta;
+		global $rutaDir; 		$rutaDir = "../cbj_Docs/docgastos_pendientes/";
+		$_SESSION['ruta'] = $rutaDir;
 
 		if(isset($_POST['mimg1'])){	$_SESSION['ImgCbj'] = $_SESSION['myimg1'];
 									$_SESSION['imgcamp'] = "myimg1";}
@@ -316,7 +316,7 @@
 					<input type='hidden' name='cero' value=1 />
 				</form>	
 				<div class='img1'>
-					<img src='".$ruta.$myimg."' />
+					<img src='".$rutaDir.$myimg."' />
 				</div>
 
 				</th>

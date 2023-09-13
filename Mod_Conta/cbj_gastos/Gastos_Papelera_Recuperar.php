@@ -40,37 +40,70 @@ session_start();
 
 	function process_form_2(){
 	
-		global $db; 		global $db_name;
-		global $vname; 		global $dyt1;
+		global $db; 			global $db_name;
+		global $vname; 			global $dyt1;		$dyt1 = $_SESSION['dyt1'];
+		echo "** ".$dyt1."<br>";
 		
-		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_pendientes/";
-		global $rutanew;		$rutanew = "../cbj_Docs/docgastos_".$dyt1."/";
-
+		global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastosfeed`";
 		global $vnamei; 		$vnamei = "`".$_SESSION['clave']."gastos_".$dyt1."`";
-		global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastos_pendientes`";
-		
-		global $rutPend;	$rutPend = 'Pendientes_';
-		global $pend;	$pend = "PENDIENTES";
+
+		global $rutPend;	$rutPend = '';
+		global $pend;	$pend = "";
 		require 'Gastos_Botonera.php';
-		global $title;			$title = 'SE HA RECUPERADO LA FACTURA EN ';
+		global $title;			$title = 'SE HA INSERTADO LA FACTURA EN ';
+
+		//require 'Modificar03process_form_2.php';
 
 		require 'Gastos_factdate.php';
 
 		require 'FormatNumber.php';
 
-		require 'Modificar03process_form_2.php';
-				
-		/*
-			global $dyx; 		$dyx = "20".$_POST['dy'];
-			global $dmx; 		$dmx = "M".$_POST['dm'];
+		$idx = $_SESSION['idx'];
 
-			global $mes;
-			if(($dmx == "M01")||($dmx == "M02")||($dmx == "M03")){$mes = "TRI1";}
-			elseif(($dmx == "M04")||($dmx == "M05")||($dmx == "M06")){$mes = "TRI2";}
-			elseif(($dmx == "M07")||($dmx == "M08")||($dmx == "M09")){$mes = "TRI3";}
-			elseif(($dmx == "10")||($dmx == "11")||($dmx == "12")){$mes = "TRI4";}
+		global $sent;
+		$sent = "INSERT INTO `$db_name`.$vnamei (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]')";
+		
+		if(mysqli_query($db, $sent)){
+
+			//global $title;			$title = 'SE INSERTADO LA FACTURA EN ';
+			global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
+			global $Modif2;			$Modif2= "style='display:none; visibility: hidden;'";
+			global $ModImg2;		$ModImg2= "style='display:none; visibility: hidden;'";
+			global $PendienteG;		$PendienteG= "style='display:none; visibility: hidden;'";
+			global $Recupera3;		$Recupera3 = "style='display:none; visibility: hidden;'";
+			global $Ver2;			$Ver2= "style='display:none; visibility: hidden;'";
+			global $ConteBotones;	$ConteBotones = "style='display:block;'";
+
+			global $papelera;		$papelera = 1;
+
+			require 'TableFormResult.php';	
+				
+		}else{
+			print("* ERROR L.64: ".mysqli_error($db));
+			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
+				}
+
+		$idx = $_SESSION['idx'];
+		// global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+		$sqla = "DELETE FROM `$db_name`.$vnamed  WHERE $vnamed.`id` = '$idx'  ";
+
+		if(mysqli_query($db, $sqla)){ //	print("<br/>* OK DELETE DATA."); 
+		}else{
+			print("* ERROR L.88: ".mysqli_error($db));
+			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
+				}
+
+		/*
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='Gastos_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
 		*/
-	
+		
 	} // FIN process_form_2()
 
 				   ////////////////////				   ////////////////////
@@ -79,18 +112,18 @@ session_start();
 
 	function show_form($errors=[]){
 
-		global $rutPend;	$rutPend = 'Pendientes_';
-		global $pend;	$pend = "PENDIENTES";
+		global $rutPend;	$rutPend = '';
+		global $pend;	$pend = "";
 		require 'Gastos_Botonera.php';
-		global $titulo; 	$titulo = "MARCAR COMO COBRADO ESTE GASTO PENDIENTE";
-		global $titInput;	$titInput = "GUARDAR GASTO PENDIENTE COMO PAGADO";
-		global $TituloCheck;	$TituloCheck = "SI SE HA PAGADO LA FACTURA MARQUE LA CASILLA";
+		global $titulo; 	$titulo = "RECUPERAR ESTA FACTURA A SU UBICACIÓN ORIGINAL";
+		global $titInput;	$titInput = "RECUPERAR FACTURA";
+		global $TituloCheck;	$TituloCheck = "SI DESEA RECUPERAR LA FACTURA MARQUE LA CASILLA";
 
-		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_pendientes/";
-		//echo "* ".$rutaold."<br>";
+		if(isset($_POST['oculto2'])){ $_SESSION['yold'] = substr($_POST['factdate'],0,2); }else{ }
 
 		global $db; 	global $db_name;
-		
+
+		global $papelera;		$papelera = 1;
 		require 'Modifica03show_form.php';
 
 	} // FIN function show_form($errors=[])

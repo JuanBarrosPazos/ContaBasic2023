@@ -51,17 +51,15 @@
 
 	function modifica_form_img(){
 
-		global $db; 	global $db_name;	global $img; 	global $imgcamp;
+		//global $db; 	global $db_name;	global $img; 	global $imgcamp; 	global $vname;
 
 		global $rutaRedir;	$rutaRedir = '';
 
-		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$_SESSION['midyt1']."`";
-
-		global $ruta; 	$ruta = "../cbj_Docs/docgastos_".$_SESSION['midyt1']."/";
-		$_SESSION['ruta'] = $ruta;
+		global $rutaDir; 	$rutaDir = "../cbj_Docs/docgastos_".$_SESSION['midyt1']."/";
+		$_SESSION['ruta'] = $rutaDir;
 
 		require 'FormImgMod.php';
-
+		
 	} // FIN MODIFICA_FORM_IMG()
 	
 				   ////////////////////				   ////////////////////
@@ -75,8 +73,6 @@
 		require 'Gastos_Botonera.php';
 	
 		global $db; 	global $db_name;
-
-		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$_SESSION['midyt1']."`";
 
 		if(isset($_POST['oculto2'])){
 		
@@ -99,25 +95,29 @@
 			$_SESSION['mivalor'] = $_POST['factnum'];
 			$_SESSION['minombre'] = $_POST['factnom'];
 			$_SESSION['miref'] = $_POST['refprovee'];
-			$_SESSION['midyt1'] = $_POST['dyt1'];
-		
-			global $ruta; 		$ruta = "../cbj_Docs/docgastos_".$_SESSION['midyt1']."/";
-			$_SESSION['ruta'] = $ruta;
+
+			$_SESSION['midyt1'] = substr($_POST['vname'],-5,-1);
+			// $_SESSION['midyt1'] = $_POST['dyt1'];
+			//$_SESSION['midyt1'] = $_POST['dyt1'];
+		//echo $_SESSION['midyt1'];
+			global $rutaDir; 		$rutaDir = "../cbj_Docs/docgastos_".$_SESSION['midyt1']."/";
+			$_SESSION['ruta'] = $rutaDir;
 				
-		//	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$_SESSION['midyt1']."`";
+			global $vname;	
+			$vname = $_POST['vname'];	//$vname = "`".$_SESSION['clave']."gastos_".$_SESSION['midyt1']."`";
 
 			global $sqlc;
 		//	$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `factnum` = '$_POST[factnum]'";
 			$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `id` = '$_SESSION[miid]'";
 			$qc = mysqli_query($db, $sqlc);
 			$rowsc = mysqli_fetch_assoc($qc);
-		
+		// echo "<br>** ".$sqlc."<br";
 			$ext_permitidas = array('pdf','PDF');
 			
-			$extension1 = substr($rowsc['myimg1'],-3);
+			@$extension1 = substr($rowsc['myimg1'],-3);
 			$ext_correcta1 = in_array($extension1, $ext_permitidas);
 			if(!$ext_correcta1){ global $myimg1; 	$myimg1 = $rowsc['myimg1'];
-								$_SESSION['myimg1'] = $rowsc['myimg1'];
+								@$_SESSION['myimg1'] = $rowsc['myimg1'];
 			}else{	global $myimg1; 	$myimg1 = 'pdf.png';
 					$_SESSION['myimg1'] = $myimg1;
 						}
@@ -148,10 +148,10 @@
 	
 		}else{		
 	
-			global $ruta; 		$ruta = "../cbj_Docs/docgastos_".$_SESSION['midyt1']."/";
-			$_SESSION['ruta'] = $ruta;
+			global $rutaDir; 		$rutaDir = "../cbj_Docs/docgastos_".$_SESSION['midyt1']."/";
+			$_SESSION['ruta'] = $rutaDir;
 
-		//	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$_SESSION['midyt1']."`";
+			global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$_SESSION['midyt1']."`";
 
 			global $sqlc;
 		//	$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `factnum` = '$_SESSION[mivalor]'";
@@ -198,7 +198,7 @@
 		require 'TableImgModif.php';
 
 		if((isset($_POST['mimg1']))||(isset($_POST['mimg2']))||(isset($_POST['mimg3']))||(isset($_POST['mimg4']))){
-						show_form_img();
+							show_form_img();
 		}elseif(isset($_POST['imagenmodif'])){
 			if($form_errors = validate_form_img()){
 						show_form_img($form_errors);
@@ -207,7 +207,7 @@
 					info_img();
 						}
 		}elseif(isset($_POST['cero'])){ print($printimg);
-								
+									
 		}else{ print($printimg); }
 
 		print(" <tr>
@@ -220,6 +220,8 @@
 		print("</td>
 				</tr>
 			</table>");	 
+
+		echo "<br>** ".$sqlc."<br";
 
 	}
 
@@ -235,9 +237,9 @@
 
 		global $db; 	
 			
-		global $ruta;
-		$ruta = "../cbj_Docs/docgastos_".$_SESSION['midyt1']."/";
-		$_SESSION['ruta'] = $ruta;
+		global $rutaDir;
+		$rutaDir = "../cbj_Docs/docgastos_".$_SESSION['midyt1']."/";
+		$_SESSION['ruta'] = $rutaDir;
 
 		if(isset($_POST['mimg1'])){	$_SESSION['ImgCbj'] = $_SESSION['myimg1'];
 									$_SESSION['imgcamp'] = "myimg1";}
@@ -285,8 +287,7 @@
 				print("<font color='#FF0000'>**</font>  ".$errors [$a]."<br/>");
 				}
 			print("</td>
-					</tr>
-					<div style='clear:both'>");
+					</tr>");
 		}
 	
 		$ext_permitidas = array('pdf','PDF');
@@ -299,9 +300,7 @@
 		else{	global $myimg; 	$myimg = 'pdf.png'; }
 
 	print("<tr>
-				<th style='padding-top: 0.6em'>
-					SELECCIONE UNA NUEVA IMAGEN
-				</th>
+				<th style='padding-top: 0.6em'>SELECCIONE UNA NUEVA IMAGEN</th>
 			</tr>
 			<tr>
 				<th>
@@ -315,7 +314,7 @@
 					<input type='hidden' name='cero' value=1 />
 				</form>	
 				<div class='img1'>
-					<img src='".$ruta.$myimg."' />
+					<img src='".$rutaDir.$myimg."' />
 				</div>
 
 				</th>

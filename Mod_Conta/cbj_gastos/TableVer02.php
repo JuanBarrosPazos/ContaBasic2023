@@ -14,29 +14,29 @@
 				<td colspan=2 style='text-align:center;' >
 				    <div class='img1'>
 		<button type='submit' class='botonnaranja' title='DESCARGAR DOCUMENTO 1' >
-			<a style='font-size:14px' href='../cbj_Docs/docgastos_".$rutFinImg."/".$rowsc['myimg1']."' target='_blank'>
-				<img src='../cbj_Docs/docgastos_".$rutFinImg."/".$myimg1."'> 
+			<a style='font-size:14px' href='".$rutaDir.$rowsc['myimg1']."' target='_blank'>
+				<img src='".$rutaDir.$myimg1."'> 
 			</a>
 		</button>							
 				    </div>
 				    <div class='img1'>
 		<button type='submit' class='botonnaranja' title='DESCARGAR DOCUMENTO 2' >
-			<a style='font-size:14px' href='../cbj_Docs/docgastos_".$rutFinImg."/".$rowsc['myimg2']."' target='_blank'>
-				<img src='../cbj_Docs/docgastos_".$rutFinImg."/".$myimg2."' > 
+			<a style='font-size:14px' href='".$rutaDir.$rowsc['myimg2']."' target='_blank'>
+				<img src='".$rutaDir.$myimg2."' > 
 			</a>
 		</button>							
 				    </div>
 				    <div class='img1'>
 		<button type='submit' class='botonnaranja' title='DESCARGAR DOCUMENTO 3' >
-			<a style='font-size:14px' href='../cbj_Docs/docgastos_".$rutFinImg."/".$rowsc['myimg3']."' target='_blank'>
-				<img src='../cbj_Docs/docgastos_".$rutFinImg."/".$myimg3."' > 
+			<a style='font-size:14px' href='".$rutaDir.$rowsc['myimg3']."' target='_blank'>
+				<img src='".$rutaDir.$myimg3."' > 
 			</a>
 		</button>							
 				    </div>
 				    <div class='img1'>
 		<button type='submit' class='botonnaranja' title='DESCARGAR DOCUMENTO 4' >
-			<a style='font-size:14px' href='../cbj_Docs/docgastos_".$rutFinImg."/".$rowsc['myimg4']."' target='_blank'>
-				<img src='../cbj_Docs/docgastos_".$rutFinImg."/".$myimg4."' >
+			<a style='font-size:14px' href='".$rutaDir.$rowsc['myimg4']."' target='_blank'>
+				<img src='".$rutaDir.$myimg4."' >
 			</a>
 		</button>							
 				    </div>

@@ -35,7 +35,7 @@
 		//	print("** ".$_POST['vname']." / ".$_POST['dyt1']);
 			
 		$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `id` = '$_POST[id]'";
-		//echo "* ".$sqlc."<br>";
+		echo "* ".$sqlc."<br>";
 
 		$qc = mysqli_query($db, $sqlc);
 		$rowsc = mysqli_fetch_assoc($qc);
@@ -45,10 +45,10 @@
 				
 		global $myimg1;		global $myimg2;		global $myimg3;		global $myimg4;
 
-		$extension1 = substr($rowsc['myimg1'],-3);
-		// print($extension1);
-		// $extension1 = end(explode('.', $_FILES['myimg1']['name']) );
-		$ext_correcta1 = in_array($extension1, $ext_permitidas);
+			$extension1 = substr($rowsc['myimg1'],-3);
+		// 	print($extension1);
+		// 	$extension1 = end(explode('.', $_FILES['myimg1']['name']) );
+			$ext_correcta1 = in_array($extension1, $ext_permitidas);
 			if(!$ext_correcta1){ $myimg1 = $rowsc['myimg1'];}
 			else{$myimg1 = 'pdf.png';}
 
@@ -73,7 +73,9 @@
 			if(!$ext_correcta4){ $myimg4 = $rowsc['myimg4'];}
 			else{$myimg4 = 'pdf.png';}
 
-			global $rutFinImg;		$rutFinImg = $_POST['dyt1'];
+			global $rutaDir;		//$rutaDir = $_POST['dyt1'];
+			$rutaDir = "../cbj_Docs/docgastos_".substr($_POST['vname'],-5,-1)."/";
+        
 
 			require 'TableVer02.php';
 

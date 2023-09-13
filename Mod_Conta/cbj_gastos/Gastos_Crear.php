@@ -15,6 +15,13 @@ session_start();
 
 	if ($_SESSION['Nivel'] == 'admin'){
 
+		unset($_SESSION['ImgCbj']);
+		unset($_SESSION['myimg1']); 	unset($_SESSION['myimg2']);
+		unset($_SESSION['myimg3']); 	unset($_SESSION['myimg4']);	
+		unset($_SESSION['miseccion']); 	unset($_SESSION['miid']);	
+		unset($_SESSION['mivalor']); 	unset($_SESSION['minombre']);	
+		unset($_SESSION['miref']); 		unset($_SESSION['midyt1']);	
+
 		master_index();
 
 		if(isset($_POST['oculto'])){
@@ -27,6 +34,7 @@ session_start();
 								
 		} else { show_form(); }
 		
+
 	} else { require '../Inclu/table_permisos.php'; } 
 
 				   ////////////////////				   ////////////////////
@@ -391,7 +399,8 @@ session_start();
 		global $ModImg2;		$ModImg2 = "style='display:none; visibility: hidden;'";
 		global $Modif2;			$Modif2 = "style='display:none; visibility: hidden;'";
 		global $Borrar2;		$Borrar2 = "style='display:none; visibility: hidden;'";
-
+		global $PendienteG;		$PendienteG = "style='display:none; visibility: hidden;'";
+		
 		print ("<tr>
 					<td style='text-align:center;' >");
 			

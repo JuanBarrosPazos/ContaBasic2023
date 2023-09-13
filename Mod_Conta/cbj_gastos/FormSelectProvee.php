@@ -27,15 +27,12 @@
 					<input type='hidden' name='factpvptot2' value='".@$defaults['factpvptot2']."' />
 					<input type='hidden' name='coment' value='".@$defaults['coment']."' />
 				<tr>
-					<td>
-						<div style='float:left'>
-							<!--
-							<input type='submit' value='".$TitValue."' class='botonverde' />
-							-->
+					<td style='text-align:center;'>
+						<div style='display:inline-block; vertical-align: middle;' >
 							".$PersonsWhite."".$closeButton."
 							<input type='hidden' name='oculto1' value=1 />
 						</div>
-						<div style='float:left'>
+						<div style='display:inline-block; vertical-align: middle;' >
 			<select name='proveegastos' class='botonlila'>
 			<option value=''>SELECCIONE UN PROVEEDOR</option><!-- -->");
 

@@ -40,26 +40,22 @@ session_start();
 
 	function process_form_2(){
 	
-		global $db; 		global $db_name;
-		global $vname; 		global $dyt1;
+		global $db; 			global $db_name;
+		global $vname; 			global $dyt1;
 		
-		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_pendientes/";
-		global $rutanew;		$rutanew = "../cbj_Docs/docgastos_".$dyt1."/";
+		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_".$dyt1."/";
+		global $rutanew;		$rutanew  = "../cbj_Docs/docgastos_pendientes/";
+		
+		global $vnamei; 		$vnamei = "`".$_SESSION['clave']."gastos_pendientes`";
+		global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastos_".$dyt1."`";
 
-		global $vnamei; 		$vnamei = "`".$_SESSION['clave']."gastos_".$dyt1."`";
-		global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastos_pendientes`";
-		
-		global $rutPend;	$rutPend = 'Pendientes_';
-		global $pend;	$pend = "PENDIENTES";
+		global $rutPend;	$rutPend = '';
+		global $pend;	$pend = "";
 		require 'Gastos_Botonera.php';
-		global $title;			$title = 'SE HA RECUPERADO LA FACTURA EN ';
-
-		require 'Gastos_factdate.php';
-
-		require 'FormatNumber.php';
+		global $title;			$title = 'SE HA INSERTADO LA FACTURA EN ';
 
 		require 'Modificar03process_form_2.php';
-				
+
 		/*
 			global $dyx; 		$dyx = "20".$_POST['dy'];
 			global $dmx; 		$dmx = "M".$_POST['dm'];
@@ -79,18 +75,20 @@ session_start();
 
 	function show_form($errors=[]){
 
-		global $rutPend;	$rutPend = 'Pendientes_';
-		global $pend;	$pend = "PENDIENTES";
+		global $rutPend;	$rutPend = '';
+		global $pend;	$pend = "";
 		require 'Gastos_Botonera.php';
-		global $titulo; 	$titulo = "MARCAR COMO COBRADO ESTE GASTO PENDIENTE";
-		global $titInput;	$titInput = "GUARDAR GASTO PENDIENTE COMO PAGADO";
-		global $TituloCheck;	$TituloCheck = "SI SE HA PAGADO LA FACTURA MARQUE LA CASILLA";
+		global $titulo; 		$titulo = "MARCAR COMO NO PAGADO ESTE GASTO";
+		global $titInput;		$titInput = "GUARDAR COMO GASTO PENDIENTE DE PAGO";
+		global $TituloCheck;	$TituloCheck = "SI NO SE HA PAGADO LA FACTURA MARQUE LA CASILLA";
 
-		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_pendientes/";
+		if(isset($_POST['oculto2'])){ $_SESSION['yold'] = substr($_POST['factdate'],0,2); }else{ }
+
+		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_20".$_SESSION['yold']."/";
 		//echo "* ".$rutaold."<br>";
 
 		global $db; 	global $db_name;
-		
+
 		require 'Modifica03show_form.php';
 
 	} // FIN function show_form($errors=[])

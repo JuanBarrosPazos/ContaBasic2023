@@ -184,7 +184,7 @@ session_start();
 		global $Checkbox; 	$Checkbox = "";
 		global $titulo; 	$titulo = "ELIMINAR GASTO";
 		global $titInput;	$titInput = "BORRAR GASTO PENDIENTE";
-		require 'TableBorrar2.php';
+		require 'TableBorrar.php';
 	
 	} // FIN function show_form()
 

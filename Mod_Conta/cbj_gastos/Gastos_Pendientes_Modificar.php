@@ -103,48 +103,48 @@ if ($_SESSION['Nivel'] == 'admin'){
 		
 		if($_SESSION['fnold'] != $_POST['factnum']){
 			
-			global $nombre1;	$nombre1 = $_SESSION['myimg1b'];
-			$extension1 = substr($_SESSION['myimg1b'],-3);
+			global $nombre1;	$nombre1 = $_SESSION['myimg1'];
+			$extension1 = substr($_SESSION['myimg1'],-3);
 			$nombre1n = $_SESSION['fnnew']."_1.".$extension1;
 			$_SESSION['$nombre1n'] = $nombre1n;
 					
-			global $nombre2;	$nombre2 = $_SESSION['myimg2b'];
-			$extension2 = substr($_SESSION['myimg2b'],-3);
+			global $nombre2;	$nombre2 = $_SESSION['myimg2'];
+			$extension2 = substr($_SESSION['myimg2'],-3);
 			$nombre2n = $_SESSION['fnnew']."_2.".$extension2;
 			$_SESSION['$nombre2n'] = $nombre2n;
 
-			global $nombre3;	$nombre3 = $_SESSION['myimg3b'];
-			$extension3 = substr($_SESSION['myimg3b'],-3);
+			global $nombre3;	$nombre3 = $_SESSION['myimg3'];
+			$extension3 = substr($_SESSION['myimg3'],-3);
 			$nombre3n = $_SESSION['fnnew']."_3.".$extension3;
 			$_SESSION['$nombre3n'] = $nombre3n;
 
-			global $nombre4;	$nombre4 = $_SESSION['myimg4b'];
-			$extension4 = substr($_SESSION['myimg4b'],-3);
+			global $nombre4;	$nombre4 = $_SESSION['myimg4'];
+			$extension4 = substr($_SESSION['myimg4'],-3);
 			$nombre4n = $_SESSION['fnnew']."_4.".$extension4;
 			$_SESSION['$nombre4n'] = $nombre4n;
 
-			global $ruta; 	$ruta = "../cbj_Docs/docgastos_pendientes/";
+			global $rutaDir; 	$rutaDir = "../cbj_Docs/docgastos_pendientes/";
 			
-			if(file_exists($ruta.$_SESSION['myimg1b'])){
-						rename($ruta.$_SESSION['myimg1b'], $ruta.$_SESSION['$nombre1n']);
+			if(file_exists($rutaDir.$_SESSION['myimg1'])){
+						rename($rutaDir.$_SESSION['myimg1'], $rutaDir.$_SESSION['$nombre1n']);
 					/*	print("	<br/>* CHANGE FACT NUM: ".$_SESSION['fnold']." X ".$_SESSION['fnnew']."<br/>- Ok Rename Img Name 1.");
 					*/
-			}else{print("<br/>- No Ok Rename Img Name 1. ".$ruta.$_SESSION['$nombre1n']);}
+			}else{print("<br/>- No Ok Rename Img Name 1. ".$rutaDir.$_SESSION['$nombre1n']);}
 
-			if(file_exists($ruta.$_SESSION['myimg2b'])){
-						rename($ruta.$_SESSION['myimg2b'], $ruta.$_SESSION['$nombre2n']);
+			if(file_exists($rutaDir.$_SESSION['myimg2'])){
+						rename($rutaDir.$_SESSION['myimg2'], $rutaDir.$_SESSION['$nombre2n']);
 					/*	print("<br/>- Ok Rename Img Name 2.");	*/
-			}else{print("<br/>- No Ok Rename Img Name 2. ".$ruta.$_SESSION['$nombre2n']);}
+			}else{print("<br/>- No Ok Rename Img Name 2. ".$rutaDir.$_SESSION['$nombre2n']);}
 											
-			if(file_exists($ruta.$_SESSION['myimg3b'])){
-						rename($ruta.$_SESSION['myimg3b'], $ruta.$_SESSION['$nombre3n']);
+			if(file_exists($rutaDir.$_SESSION['myimg3'])){
+						rename($rutaDir.$_SESSION['myimg3'], $rutaDir.$_SESSION['$nombre3n']);
 					/*	print("<br/>- Ok Rename Img Name 3.");	*/
-			}else{print("<br/>- No Ok Rename Img Name 3. ".$ruta.$_SESSION['$nombre3n']);}
+			}else{print("<br/>- No Ok Rename Img Name 3. ".$rutaDir.$_SESSION['$nombre3n']);}
 											
-			if(file_exists($ruta.$_SESSION['myimg4b'])){
-						rename($ruta.$_SESSION['myimg4b'], $ruta.$_SESSION['$nombre4n']);
+			if(file_exists($rutaDir.$_SESSION['myimg4'])){
+						rename($rutaDir.$_SESSION['myimg4'], $rutaDir.$_SESSION['$nombre4n']);
 					/*	print("<br/>- Ok Rename Img Name 4.");	*/
-			}else{print("<br/>- No Ok Rename Img Name 4. ".$ruta.$_SESSION['$nombre4n']);}
+			}else{print("<br/>- No Ok Rename Img Name 4. ".$rutaDir.$_SESSION['$nombre4n']);}
 
 			mf1();
 		}
@@ -232,10 +232,10 @@ if ($_SESSION['Nivel'] == 'admin'){
 			$_SESSION['dold'] = $ddx;
 			$_SESSION['yold'] = $dyx;
 		
-			$_SESSION['myimg1b'] = $_POST['myimg1'];
-			$_SESSION['myimg2b'] = $_POST['myimg2'];
-			$_SESSION['myimg3b'] = $_POST['myimg3'];
-			$_SESSION['myimg4b'] = $_POST['myimg4'];
+			$_SESSION['myimg1'] = $_POST['myimg1'];
+			$_SESSION['myimg2'] = $_POST['myimg2'];
+			$_SESSION['myimg3'] = $_POST['myimg3'];
+			$_SESSION['myimg4'] = $_POST['myimg4'];
 
 			$ivae = strlen(trim($_POST['factivae']));
 			$ivae = $ivae - 3;

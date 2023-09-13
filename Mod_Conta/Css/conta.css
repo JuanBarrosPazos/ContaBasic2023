@@ -110,6 +110,11 @@ table {
 	border-right-style: solid;
 	border-right-color: #CCC;
 }
+.BorderIzd {
+	border-left-width: 1px;
+	border-left-style: solid;
+	border-left-color: #CCC;
+}
 
 tr {
 	margin: 0px;

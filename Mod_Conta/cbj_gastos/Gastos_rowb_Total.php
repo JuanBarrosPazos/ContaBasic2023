@@ -1,7 +1,31 @@
 <?php
-        if(!isset($vname)){$vname = $vnameBot; }else{ }
-        // echo "-- ".$vname."<br>";
-        
+
+        switch (true) {
+                case ((!isset($vname))&&(strlen(trim($vname)) == 0)):
+                        $vname = $vnameBot; 
+                        break;
+                case ((isset($vname))&&(strlen(trim($vname)) != 0)):
+                        //echo "NO HAGO NADA";
+                        //echo "* ".$vname."<br>";
+                        break;
+                case ((isset($_SESSION['vname']))&&(strlen(trim(@$_SESSION['vname'])) != 0)):
+                        $vname = @$_SESSION['vname'];  
+                        break;
+                default:
+                        echo "<table class='detalle tableForm'><tr><td>
+                                ERROR EN VARIABLE VNAME DE BBDD
+                                </td></tr></table>";
+                        global $redir;
+                        $redir = "<script type='text/javascript'>
+                                        function redir(){
+                                        window.location.href='Gastos_Ver.php';
+                                                }
+                                        setTimeout('redir()',8000);
+                                        </script>";
+                        print ($redir);
+                        break;
+        } // FIN SWITCH CASE
+
         print(" <input type='hidden' name='dyt1' value='".$dyt1."' />
                 <input type='hidden' name='vname' value='".$vname."' />
                 <input type='hidden' name='id' value='".$rowb['id']."' />
@@ -22,6 +46,8 @@
                 <input type='hidden' name='myimg1'value='".@$rowb['myimg1']."' />
                 <input type='hidden' name='myimg2' value='".@$rowb['myimg2']."' />
                 <input type='hidden' name='myimg3' value='".@$rowb['myimg3']."' />
-                <input type='hidden' name='myimg4' value='".@$rowb['myimg4']."' />");
+                <input type='hidden' name='myimg4' value='".@$rowb['myimg4']."' />
+                
+                <input type='hidden' name='delruta' value='".@$rowb['ruta']."' />");
 
 ?>

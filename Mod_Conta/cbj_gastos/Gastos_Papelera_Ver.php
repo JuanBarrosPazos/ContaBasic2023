@@ -6,8 +6,7 @@ session_start();
 	require '../../Mod_Admin/Inclu/my_bbdd_clave.php';
 	require '../../Mod_Admin/Conections/conection.php';
 	require '../../Mod_Admin/Conections/conect.php';
-	require 'Gastos_Pendientes_Modificar_img.php';
-	require 'Gastos_Pendientes_Ver_02.php';
+	require 'Gastos_Papelera_Ver_02.php';
 
 	$_SESSION['usuarios'] = '';
 
@@ -26,20 +25,12 @@ session_start();
 		}elseif(isset($_POST['show_formcl'])){
 					if($form_errors = validate_form()){
 							show_form($form_errors);
-					}else{ process_form();
+					}else{ 	process_form();
 							info();
 								}
-		}elseif((isset($_POST['oculto2']))||(isset($_GET['imagen']))){ 
-						process_form_img();
-		}elseif((isset($_POST['mimg1']))||(isset($_POST['mimg2']))||(isset($_POST['mimg3']))||(isset($_POST['mimg4']))){ 
-						process_form_img();
-		}elseif(isset($_POST['imagenmodif'])){
-						process_form_img();
-		}elseif(isset($_POST['cero'])){
-						process_form_img();
 		}elseif(isset($_POST['ocultoDetalle'])){ 
 						process_form_Detalle();
-						info_Dealle();
+						info_Detalle();
 		}else{  show_form();
 				global $limit;	$limit = 'LIMIT 20';
 				ver_todo(); 
@@ -73,14 +64,11 @@ session_start();
 		
 		require 'Gastos_factdate.php';
 
-		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
+		global $vname; 		$vname = "`".$_SESSION['clave']."gastosfeed`";
 
 		global $sqlb;
 		require 'FormConsultaFiltroGt2.php';
 		
-		/*	
-		$sqlb =  "SELECT * FROM $vname WHERE (`factnum` = '$fnum' OR `factnif` = '$fnif' OR `refprovee` = '$fnom') AND  (`factdate` LIKE '$fil') ORDER BY $orden ";
-		*/
 		//echo $sqlb."<br>";
 		$qb = mysqli_query($db, $sqlb);
 	
@@ -135,8 +123,8 @@ session_start();
 		/* FIN PARA SUMAR IVA */
 		/////////////////////////
 
-		global $rutPend;	$rutPend = 'Pendientes_';
-		global $pend;	$pend = "PENDIENTES";
+		global $rutPend;	$rutPend = '';
+		global $pend;	$pend = "";
 		require 'Gastos_Botonera.php';
 
 		if(!$qb){
@@ -146,7 +134,7 @@ session_start();
 			if(mysqli_num_rows($qb) == 0){
 					require 'Gastos_NoData.php';
 			}else{ 
-					require 'Gastos_Pendientes_rowb_Total_Tabla.php';
+					require 'Gastos_rowb_Papelera_Tabla.php';
 						} /* Fin segundo else anidado en if */
 
 		} /* Fin de primer else . */
@@ -178,15 +166,6 @@ session_start();
 
 		/////////////
 
-		$fh = fopen($rutaDir.'IMxT3.php','w+');
-		while($registro = mysqli_fetch_array($qg)){
-			$line = $registro['factpvptot'].",";
-			fwrite($fh, $line);
-			}
-		fclose($fh);
-		
-		/////////////
-
 		$sqlgd =  $sqlb;
 		$qgd = mysqli_query($db, $sqlgd);
 
@@ -198,7 +177,6 @@ session_start();
 			}
 		fclose($fhd);
 		
-		require 'gdtvt2.php';
 
 	}	/* Final process_form(); */
 
@@ -210,116 +188,23 @@ session_start();
 	
 		if(isset($_POST['show_formcl'])){
 					$defaults = $_POST;
-		} elseif(isset($_POST['todo'])){
+		}elseif(isset($_POST['todo'])){
 				$defaults = $_POST;
-		} else { $defaults = array ('factnom' => '',
+		}else{ $defaults = array ( 'factnom' => '',
 									'factnif' => '',
 									'factnum' => '',
 									'Orden' => isset($ordenar));
 								}
 
-		global $titulo; $titulo = "CONSULTAR GASTOS";
-		global $TitBut1;		$TitBut1 = "VER TODOS LOS GASTOS";		
-		global $TitBut2;		$TitBut2 = "FILTRO BUSQUEDA GASTOS";
+		global $titulo; 		$titulo = "CONSULTAR PAPELERA GASTOS";
+		global $TitBut1;		$TitBut1 = "VER TODOS PAPELERA GASTOS";		
+		global $TitBut2;		$TitBut2 = "FILTRO BUSQUEDA PAPELERA GASTOS";
+		global $papelera;		$papelera = 1;
 		require 'Inc_Show_Form_01.php';	
 
 	}	/* Fin show_form(); */
 
 	
-				   ////////////////////				   ////////////////////
-////////////////////				////////////////////				////////////////////
-				 ////////////////////				  ///////////////////
-
-	function gt2(){
-
-		global $db; 	global $dyt1;
-
-		require 'Gastos_factdate.php';
-
-		require 'Gastos_ConsultaLogica.php';
-	
-	global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
-
-	global $sqlb;
-	require 'FormConsultaFiltroGt2.php';
-	
-	$qc = mysqli_query($db, $sqlb);
-	
-	global $gt; 	$gt = mysqli_num_rows($qc);
-	//print("* ".$gt);
-	global $cnt;
-
-	if(($gt>0)&&($_POST['dm'] != '')&&($_POST['dd'] == '')&&($cnt < 1)){
-		print("	<tr>
-		 			<td>
-			<form name='grafico' action='grafico_gf.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>
-		<input type='submit' value='GRAFIC LINEAL TOTAL' title='VER GRAFICA LINEAL TOTAL' class='botonnaranja' />
-		<input type='hidden' name='grafico' value=1 />
-			</form>	
-			<form name='grafico' action='grafico_gfb.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>
-		<input type='submit' value='GRAFIC BARRAS TOTAL' title='VER GRAFICA BARRAS TOTAL' class='botonnaranja' />
-		<input type='hidden' name='grafico' value=1 />
-			</form>	
-			<form name='grafico2' action='grafico_gf2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>
-		<input type='submit' value='GRAFIC LINEAL DETALLE' title='VER GRAFICA LINEAL DETALLE' class='botonnaranja' />
-		<input type='hidden' name='grafico2' value=1 />
-			</form>	
-			<form name='grafico2' action='grafico_gf2b.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>
-		<input type='submit' value='GRAFIC BARRAS DETALLE' title='VER GRAFICA BARRAS DETALLE' class='botonnaranja' />
-		<input type='hidden' name='grafico2' value=1 />
-			</form>	
-					</td>
-				</tr>");
-		}
-
-	} // FIN function gt2()
-
-				   ////////////////////				   ////////////////////
-////////////////////				////////////////////				////////////////////
-				 ////////////////////				  ///////////////////
-
-	function gt1(){
-
-		global $db; 		global $db_name;
-
-		require 'Gastos_factdate.php';
-
-		global $vname; 	$vname = "`".$_SESSION['clave']."gastos_pendientes`";
-
-		global $sqlb;
-		require 'FormConsultaFiltroGt1.php';
-		//$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
-
-		$qb = mysqli_query($db, $sqlb);
-		if(mysqli_num_rows($qb) == 0){}
-		global $gt;
-		$gt = mysqli_num_rows($qb);
-		//print("* ".$gt);
-		
-		if(($gt>0)&&($_POST['dm'] != '')&&($_POST['dd'] == '')){
-
-		print("	<tr>
-		 			<td>
-			<form name='grafico' action='grafico_g.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;' >
-		<input type='submit' value='GRAFIC LINEAL TOTAL DIA' title='VER GRAFICA LINEAL TOTAL POR DIA' class='botonnaranja' />
-		<input type='hidden' name='grafico' value=1 />
-			</form>	
-			<form name='graficob' action='grafico_gb.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>
-		<input type='submit' value='GRAFIC BARRAS TOTAL DIA' title='VER GRAFICA BARRAS TOTAL POR DIA' class='botonnaranja' />
-		<input type='hidden' name='graficob' value=1 />
-			</form>	
-			<form name='grafico2' action='grafico_g2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>
-		<input type='submit' value='GRAFIC LINEAL DETALLE' title='VER GRAFICA LINEAL DETALLE' class='botonnaranja' />
-		<input type='hidden' name='grafico2' value=1 />
-			</form>	
-			<form name='graficob2' action='grafico_gb2.php' target='popup' method='POST' onsubmit=\"window.open('', 'popup', 'width=1000px,height=600px')\" style='display: inline-block !important;'>
-		<input type='submit' value='GRAFIC BARRAS DETALLE $$' title='VER GRAFICA BARRAS DETALLE' class='botonnaranja' />
-		<input type='hidden' name='graficob2' value=1 />
-			</form>	
-					</td>
-				</tr>");
-		} // FIN if
-	} // FIN function gt1()
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -337,13 +222,13 @@ session_start();
 			$orden = $_POST['Orden'];
 		}else{ $orden = '`id` ASC'; }
 
-		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
+		global $vname; 		$vname = "`".$_SESSION['clave']."gastosfeed`";
 
 		global $sqlb;
 		require 'FormConsultaFiltroGt1.php';
 		//$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden $limit ";
 		$qb = mysqli_query($db, $sqlb);
-
+	
 	/////////////////////	
 	/* PARA SUMAR PVPTOT */
 
@@ -395,8 +280,8 @@ session_start();
 		/* FIN PARA SUMAR IVA */
 		/////////////////////////
 
-		global $rutPend;	$rutPend = 'Pendientes_';
-		global $pend;	$pend = "PENDIENTES";
+		global $rutPend;	$rutPend = '';
+		global $pend;	$pend = "";
 		require 'Gastos_Botonera.php';
 
 		if(!$qb){
@@ -405,7 +290,7 @@ session_start();
 			if(mysqli_num_rows($qb) == 0){
 					require 'Gastos_NoData.php';
 			}else{ 
-					require 'Gastos_Pendientes_rowb_Total_Tabla.php';
+					require 'Gastos_rowb_Papelera_Tabla.php';
 				} /* Fin segundo else anidado en if */
 		} /* Fin de primer else . */
 				
@@ -437,31 +322,6 @@ session_start();
 			$rutaDir = "../cbj_Docs/grafics/";
 
 			/////////////
-
-			$fh = fopen($rutaDir.'IMxT.php','w+');
-			while($registro = mysqli_fetch_array($qg)){
-						$line = $registro['factpvptot'].",";
-						fwrite($fh, $line);
-					}
-			fclose($fh);
-			
-			/////////////
-
-			global $sqlb;
-			require 'FormConsultaFiltroGt1.php';
-			$sqlgd = $sqlb;
-			//$sqlgd =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden ";
-			$qgd = mysqli_query($db, $sqlgd);
-
-			$fhd = fopen($rutaDir.'IMxD.php','w+');
-			while($registrod = mysqli_fetch_array($qgd))
-			{
-			$lined = substr($registrod['factdate'],-2).",";
-			fwrite($fhd, $lined);
-			}
-			fclose($fhd);
-			
-			require 'gdtvt.php';
 
 	}	/* FIN ver_todo(); */
 

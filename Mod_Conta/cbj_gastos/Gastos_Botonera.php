@@ -5,10 +5,13 @@
     global $CachedWhiteTit;		$CachedWhiteTit = "ACTUALIZAR VISTAS";
     global $CancelBlackTit;		$CancelBlackTit = 'CANCELAR Y VOLVER';
     global $DatosBlackTit;		$DatosBlackTit = "MOFIFICAR DATOS FACTURA";
+    global $DeleteBlackTit;		$DeleteBlackTit = "INICIO PAPELERA GASTOS";
+    global $DeleteGreyTit;		$DeleteGreyTit = "INICIO PAPELERA GASTOS PENDIENTES";
     global $DeleteWhiteTit;		$DeleteWhiteTit = "BORRAR DATOS";
     global $DetalleBlackTit; 	$DetalleBlackTit = "VER DETALLES";
 	global $FotoBlackTit;		$FotoBlackTit = "MODIFICAR DOCS ADJUNTOS";
 	global $MoneyBlackTit; 		$MoneyBlackTit = "FACTURA PAGADA";
+    global $MoneyWhiteTit;      $MoneyWhiteTit = "MOVER A GASTO PENDIENTE DE PAGO";
     global $MoneypBlackTit;		$MoneypBlackTit = "VER TODOS LOS GASTOS ".$pend;
     global $MoneypGreyTit;		$MoneypGreyTit = "VER TODOS LOS GASTOS";
     global $MoneypWhiteTit;		$MoneypWhiteTit = "VER TODOS LOS GASTOS PENDIENTES";
@@ -26,6 +29,7 @@
     $Crear = "style='display:inline-block;'";
     $Modif2 = "style='display:inline-block;'";
     $ModImg2 = "style='display:inline-block;'";
+    $PendienteG = "style='display:inline-block;'";
     $Recupera3 = "style='display:inline-block;'";
     $Ver2 = "style='display:inline-block;'";
 

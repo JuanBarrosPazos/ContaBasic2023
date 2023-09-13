@@ -6,8 +6,11 @@
 			</tr>
 		<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
 
+			<input type='hidden' name='vname' value='".$defaults['vname']."' />
 			<input type='hidden' name='proveegastos' value='".$defaults['proveegastos']."' />
 
+			<input type='hidden' name='delruta' value='".@$defaults['delruta']."' />".@$defaults['delruta']."
+			
 			<tr>
 				<td style='text-align:right; width:50%;' >RAZON SOCIAL</td>
 				<td style='width:50%;'>
@@ -110,17 +113,13 @@
 				echo $SaveBlack.$closeButton;
 			}
 
-					
-
-
 			print("<input type='hidden' name='oculto' value=1 />
 		</form>");
 
-		global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
+		//global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
 		require 'Gastos_Botones.php';
 		print("</td>
 			</tr>
 		</table>"); 
-
 
 ?>

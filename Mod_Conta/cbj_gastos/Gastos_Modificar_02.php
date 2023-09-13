@@ -71,7 +71,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 		$_SESSION['mnew'] = $_POST['dm'];
 	
 		$idx = $_SESSION['idx'];
-		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+		global $vname;		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
 		$_SESSION['vname'] = $vname;
 	
 		// echo "** ".$_SESSION['yold']." || ".$dynew."<br>";
@@ -81,9 +81,9 @@ if ($_SESSION['Nivel'] == 'admin'){
 			global $rutaold;		$rutaold = "../cbj_Docs/docgastos_20".$_SESSION['yold']."/";
 			global $rutanew;		$rutanew = "../cbj_Docs/docgastos_20".$dynew."/";
 			
-			if(file_exists($rutaold.$_SESSION['myimg1b']) ){
-						@copy($rutaold.$_SESSION['myimg1b'], $rutanew.$_SESSION['myimg1b']);
-						unlink($rutaold.$_SESSION['myimg1b']);
+			if(file_exists($rutaold.$_SESSION['myimg1']) ){
+						@copy($rutaold.$_SESSION['myimg1'], $rutanew.$_SESSION['myimg1']);
+						unlink($rutaold.$_SESSION['myimg1']);
 						/*		
 							print(" <br/>* CHANGE YEAR FACT: 20".$_SESSION['yold']." X 20".$dynew."
 									<br/>- Ok Copy & Unlink Img Name 1.");
@@ -91,23 +91,23 @@ if ($_SESSION['Nivel'] == 'admin'){
 			}else{	//print("<br/>- No Ok Copy & Unlink Img Name 1.");
 						}
 											
-			if(file_exists($rutaold.$_SESSION['myimg2b']) ){
-						@copy($rutaold.$_SESSION['myimg2b'], $rutanew.$_SESSION['myimg2b']);
-						unlink($rutaold.$_SESSION['myimg2b']);
+			if(file_exists($rutaold.$_SESSION['myimg2']) ){
+						@copy($rutaold.$_SESSION['myimg2'], $rutanew.$_SESSION['myimg2']);
+						unlink($rutaold.$_SESSION['myimg2']);
 						/*	print("<br/>- Ok Copy & Unlink Img Name 2.");	*/
 			}else{ 	//print("<br/>- No Ok Copy & Unlink Img Name 2.");
 						}
 											
-			if(file_exists($rutaold.$_SESSION['myimg3b']) ){
-						@copy($rutaold.$_SESSION['myimg3b'], $rutanew.$_SESSION['myimg3b']);
-						unlink($rutaold.$_SESSION['myimg3b']);
+			if(file_exists($rutaold.$_SESSION['myimg3']) ){
+						@copy($rutaold.$_SESSION['myimg3'], $rutanew.$_SESSION['myimg3']);
+						unlink($rutaold.$_SESSION['myimg3']);
 						/*	print("<br/>- Ok Copy & Unlink Img Name 3.");	*/
 			}else{	//print("<br/>- No Ok Copy & Unlink Img Name 3.");
 						}
 											
-			if(file_exists($rutaold.$_SESSION['myimg4b']) ){
-						@copy($rutaold.$_SESSION['myimg4b'], $rutanew.$_SESSION['myimg4b']);
-						unlink($rutaold.$_SESSION['myimg4b']);
+			if(file_exists($rutaold.$_SESSION['myimg4']) ){
+						@copy($rutaold.$_SESSION['myimg4'], $rutanew.$_SESSION['myimg4']);
+						unlink($rutaold.$_SESSION['myimg4']);
 						/*	print("<br/>- Ok Copy & Unlink Img Name 4.");	*/
 			}else{	//print("<br/>- No Ok Copy & Unlink Img Name 4.");
 						}
@@ -153,52 +153,53 @@ if ($_SESSION['Nivel'] == 'admin'){
 		
 		if($_SESSION['fnold'] != $_POST['factnum']){
 			
-			$nombre1 = $_SESSION['myimg1b'];
-			$extension1 = substr($_SESSION['myimg1b'],-3);
+			$nombre1 = $_SESSION['myimg1'];
+			$extension1 = substr($_SESSION['myimg1'],-3);
 			$nombre1n = $_SESSION['fnnew']."_1.".$extension1;
 			$_SESSION['$nombre1n'] = $nombre1n;
 					
-			$nombre2 = $_SESSION['myimg2b'];
-			$extension2 = substr($_SESSION['myimg2b'],-3);
+			$nombre2 = $_SESSION['myimg2'];
+			$extension2 = substr($_SESSION['myimg2'],-3);
 			$nombre2n = $_SESSION['fnnew']."_2.".$extension2;
 			$_SESSION['$nombre2n'] = $nombre2n;
 
-			$nombre3 = $_SESSION['myimg3b'];
-			$extension3 = substr($_SESSION['myimg3b'],-3);
+			$nombre3 = $_SESSION['myimg3'];
+			$extension3 = substr($_SESSION['myimg3'],-3);
 			$nombre3n = $_SESSION['fnnew']."_3.".$extension3;
 			$_SESSION['$nombre3n'] = $nombre3n;
 
-			$nombre4 = $_SESSION['myimg4b'];
-			$extension4 = substr($_SESSION['myimg4b'],-3);
+			$nombre4 = $_SESSION['myimg4'];
+			$extension4 = substr($_SESSION['myimg4'],-3);
 			$nombre4n = $_SESSION['fnnew']."_4.".$extension4;
 			$_SESSION['$nombre4n'] = $nombre4n;
 
-			global $ruta; 	$ruta = "../cbj_Docs/docgastos_20".$dynew."/";
+			global $rutaDir; 	$rutaDir = "../cbj_Docs/docgastos_20".$dynew."/";
 			
-			if( file_exists($ruta.$_SESSION['myimg1b'])){
-						rename($ruta.$_SESSION['myimg1b'], $ruta.$_SESSION['$nombre1n']);
+			if( file_exists($rutaDir.$_SESSION['myimg1'])){
+						rename($rutaDir.$_SESSION['myimg1'], $rutaDir.$_SESSION['$nombre1n']);
 					/*	print("	<br/>* CHANGE FACT NUM: ".$_SESSION['fnold']." X ".$_SESSION['fnnew']."<br/>- Ok Rename Img Name 1.");
 					*/
-			}else{print("<br/>- No Ok Rename Img Name 1. ".$ruta.$_SESSION['$nombre1n']);}
+			}else{print("<br/>- No Ok Rename Img Name 1. ".$rutaDir.$_SESSION['$nombre1n']);}
 
-			if(file_exists($ruta.$_SESSION['myimg2b'])){
-						rename($ruta.$_SESSION['myimg2b'], $ruta.$_SESSION['$nombre2n']);
+			if(file_exists($rutaDir.$_SESSION['myimg2'])){
+						rename($rutaDir.$_SESSION['myimg2'], $rutaDir.$_SESSION['$nombre2n']);
 					/*	print("<br/>- Ok Rename Img Name 2.");	*/
-			}else{print("<br/>- No Ok Rename Img Name 2. ".$ruta.$_SESSION['$nombre2n']);}
+			}else{print("<br/>- No Ok Rename Img Name 2. ".$rutaDir.$_SESSION['$nombre2n']);}
 											
-			if(file_exists($ruta.$_SESSION['myimg3b'])){
-						rename($ruta.$_SESSION['myimg3b'], $ruta.$_SESSION['$nombre3n']);
+			if(file_exists($rutaDir.$_SESSION['myimg3'])){
+						rename($rutaDir.$_SESSION['myimg3'], $rutaDir.$_SESSION['$nombre3n']);
 					/*	print("<br/>- Ok Rename Img Name 3.");	*/
-			}else{print("<br/>- No Ok Rename Img Name 3. ".$ruta.$_SESSION['$nombre3n']);}
+			}else{print("<br/>- No Ok Rename Img Name 3. ".$rutaDir.$_SESSION['$nombre3n']);}
 											
-			if(file_exists($ruta.$_SESSION['myimg4b'])){
-						rename($ruta.$_SESSION['myimg4b'], $ruta.$_SESSION['$nombre4n']);
+			if(file_exists($rutaDir.$_SESSION['myimg4'])){
+						rename($rutaDir.$_SESSION['myimg4'], $rutaDir.$_SESSION['$nombre4n']);
 					/*	print("<br/>- Ok Rename Img Name 4.");	*/
-			}else{print("<br/>- No Ok Rename Img Name 4. ".$ruta.$_SESSION['$nombre4n']);}
+			}else{print("<br/>- No Ok Rename Img Name 4. ".$rutaDir.$_SESSION['$nombre4n']);}
 
 			mf1();
 		}
 
+		/*
 		global $redir;
 		$redir = "<script type='text/javascript'>
 						function redir(){
@@ -207,6 +208,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 					setTimeout('redir()',8000);
 					</script>";
 		print ($redir);
+		*/
 
 	} // FIN PROCESS_FORM()
 
@@ -226,7 +228,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 		
 		if(mysqli_query($db, $sqlfn)){ 
 				// print("<br/>* OK DB UPDATE."); 
-		}else{  print("* MODIFIQUE LA ENTRADA 234: ".mysqli_error($db));
+		}else{  print("* MODIFIQUE LA ENTRADA 225: ".mysqli_error($db));
 				global $texerror; 	$texerror .= "\n\t ".mysqli_error($db);
 					}
 							
@@ -238,6 +240,8 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 	function show_form($errors=[]){
 
+		global $KeyModif;		$KeyModif = 1;
+
 		$_SESSION['idx'] = $_POST['id'];
 
 		//echo '*** '.$_POST['id'].'<br>';
@@ -247,7 +251,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 		global $pend;		$pend = "";
 		require 'Gastos_Botonera.php';
 
-		global $db; 	global $db_name;
+		global $db; 			global $db_name;
 
 		global $valIvaeEnt;		global $valIvaeDec;		
 		global $valReteEnt;		global $valReteDec;
@@ -268,6 +272,8 @@ if ($_SESSION['Nivel'] == 'admin'){
 			$_dnil = $_dni.$_ldni;
 		}
 
+		global $dyt1;
+
 		// DATOS DESDE GASTOS VER
 		if(isset($_POST['oculto2'])){
 			
@@ -275,16 +281,16 @@ if ($_SESSION['Nivel'] == 'admin'){
 			$dyx = substr($_POST['factdate'],0,2);
 			$dmx = substr($_POST['factdate'],3,2);
 			$ddx = substr($_POST['factdate'],-2,2);
+			$dyt1 = "20".$dyx;
 
 			$_SESSION['mold'] = $dmx;
 			$_SESSION['dold'] = $ddx;
 			$_SESSION['yold'] = $dyx;
 		
-			$_SESSION['myimg1b'] = $_POST['myimg1'];
-			//echo "* ".$_SESSION['myimg1b']."<br>";
-			$_SESSION['myimg2b'] = $_POST['myimg2'];
-			$_SESSION['myimg3b'] = $_POST['myimg3'];
-			$_SESSION['myimg4b'] = $_POST['myimg4'];
+			$_SESSION['myimg1'] = $_POST['myimg1'];
+			$_SESSION['myimg2'] = $_POST['myimg2'];
+			$_SESSION['myimg3'] = $_POST['myimg3'];
+			$_SESSION['myimg4'] = $_POST['myimg4'];
 
 			$ivae = strlen(trim($_POST['factivae']));
 			$ivae = $ivae - 3;
@@ -371,7 +377,8 @@ if ($_SESSION['Nivel'] == 'admin'){
 			$_POST['factivae1'] = $valIvaeEnt;		$_POST['factivae2'] = $valIvaeDec;
 			$_POST['factrete1'] = $valReteEnt;		$_POST['factrete2'] = $valReteDec;
 			$_POST['factpvptot1'] = $valToteEnt;	$_POST['factpvptot2'] = $valToteDec;
-			$dyx = $_POST['dy'];
+			$dyx = $_POST['dy'];	$dyt1 = "20".$dyx;
+
 			$defaults = array ( 'id' => $_POST['id'],
 								'proveegastos' => $_POST['proveegastos'],
 								'dy' => $_POST['dy'],
@@ -395,6 +402,8 @@ if ($_SESSION['Nivel'] == 'admin'){
 								'coment' => $_POST['coment']);
 
 		}else{ $defaults = $_POST; }
+
+		global $vname;		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
 
 		// echo "* ".$_SESSION['yold']."<br>";
 

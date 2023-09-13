@@ -29,11 +29,11 @@ session_start();
 
 	function a(){
 			
-		global $ruta; 	$ruta = "../cbj_Docs/grafics/";
+		global $rutaDir; 	$rutaDir = "../cbj_Docs/grafics/";
 
 		/////	DATOS DIARIOS MENSUALES		//////
 		
-		global $IMxT3; 			$IMxT3 = $ruta."IMxT3.php";
+		global $IMxT3; 			$IMxT3 = $rutaDir."IMxT3.php";
 		global $file_IMxT3; 	$file_IMxT3 = file_get_contents($IMxT3);
 		$IMxT3_a = explode(',',$file_IMxT3);
 		$count = count($IMxT3_a);
@@ -42,7 +42,7 @@ session_start();
 		//$_SESSION['IMxT3'] = $IMxT3_a;
 		global $gt; 		$gt = $IMxT3_a;
 
-		if($count < 3){	global $IMxT3; 		$IMxT3 = $ruta."IMxT3.php";
+		if($count < 3){	global $IMxT3; 		$IMxT3 = $rutaDir."IMxT3.php";
 						$file_IMxT3 = "0.00,".file_get_contents($IMxT3);
 						$IMxT3_a = explode(',',$file_IMxT3);
 						$count = count($IMxT3_a);
@@ -51,7 +51,7 @@ session_start();
 						global $gt; 		$gt = $IMxT3_a;
 						}
 		
-		global $IMxD3; 		$IMxD3 = $ruta."IMxD3.php";
+		global $IMxD3; 		$IMxD3 = $rutaDir."IMxD3.php";
 		$file_IMxD3 = file_get_contents($IMxD3);
 		$IMxD3_a = explode(',',$file_IMxD3);
 		//$_SESSION['G_MESES'] = $G_MESES_a;
@@ -60,7 +60,7 @@ session_start();
 		unset($IMxD3_a[$rest]);
 		global $gd; 		$gd = $IMxD3_a;
 
-		if($count < 3){	global $IMxD3; 		$IMxD3 = $ruta."IMxD3.php";
+		if($count < 3){	global $IMxD3; 		$IMxD3 = $rutaDir."IMxD3.php";
 						$file_IMxD3 = "0,".file_get_contents($IMxD3);
 						$IMxD3_a = explode(',',$file_IMxD3);
 						$count = count($IMxD3_a);
@@ -76,7 +76,7 @@ session_start();
 
 	function process_form(){
 
-		global $coordenadax; 	global $ruta; 	global $gt; 	global $gd;
+		global $coordenadax; 	global $rutaDir; 	global $gt; 	global $gd;
 		
 		global $s1; 	$s1 = $_SESSION['ref']; 		$s1 = trim($s1);
 		global $s2; 	$s2 = $_SESSION['usuarios']; 	$s2 = trim($s2);

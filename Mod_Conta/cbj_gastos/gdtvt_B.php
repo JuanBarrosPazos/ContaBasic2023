@@ -847,10 +847,10 @@
 /* FIN PARA SUMAR TOTAL 31 */
 /////////////////////////
 
-	global $ruta;
-	$ruta = "../cbj_Docs/grafics/";
+	global $rutaDir;
+	$rutaDir = "../cbj_Docs/grafics/";
 
-$fh = fopen($ruta.'idTVT.php','w+');
+$fh = fopen($rutaDir.'idTVT.php','w+');
 
 $text = $sumatot01.$sumatot02.$sumatot03.$sumatot04.$sumatot05.$sumatot06.$sumatot07.$sumatot08.$sumatot09.$sumatot10.$sumatot11.$sumatot12.$sumatot13.$sumatot14.$sumatot15.$sumatot16.$sumatot17.$sumatot18.$sumatot19.$sumatot20.$sumatot21.$sumatot22.$sumatot23.$sumatot24.$sumatot25.$sumatot26.$sumatot27.$sumatot28.$sumatot29.$sumatot30.$sumatot31;
 

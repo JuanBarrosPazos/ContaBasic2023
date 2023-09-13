@@ -1,5 +1,7 @@
 <?php
 
+	global $KeyModif;	global $rutPend;
+
 	print("<form name='form_datos' method='post' action='$_SERVER[PHP_SELF]' enctype='multipart/form-data'>
                 <input type='hidden' name='id' value='".@$defaults['id']."' />
                 <input type='hidden' name='proveegastos' value='".$defaults['proveegastos']."' />
@@ -12,35 +14,36 @@
 				<tr>
 					<td style='text-align:right;'>FECHA</td>
 					<td>
-				<div style='float:left'>
-								
-		<select name='dy' title='SELECCIONAR AÑO..' class='botonverde' style='vertical-align: middle' required >
-			<option value=''>YEAR</option>");
+				<div style='float:left'>");
 
+		if(($rutPend == 'Pendientes_')||($KeyModif == 1)){
+
+		print("<input type='hidden' name='dy' value='".@$defaults['dy']."' />
+				<span class='botonverde' >20".@$defaults['dy']."</span>");
+		}else{	
+
+		print("<select name='dy' title='SELECCIONAR AÑO..' class='botonverde' style='vertical-align: middle;' required >
+			<option value=''>YEAR</option>");
 			global $db;
 			global $t1; 		$t1 = "`".$_SESSION['clave']."status`";
 
-			if($rutPend == 'Pendientes_'){
-				$sqly =  "SELECT * FROM $t1 ORDER BY `year` DESC ";
-			}else{
-				$sqly =  "SELECT * FROM $t1 WHERE `stat` = 'open' ORDER BY `year` DESC ";
-			}
+			$sqly =  "SELECT * FROM $t1 WHERE `stat` = 'open' ORDER BY `year` DESC ";
 
 			$qy = mysqli_query($db, $sqly);				
 				
 			if(!$qy){
 					print("* ".mysqli_error($db)."<br/>");
 			}else{
-									
 				while($rowsy = mysqli_fetch_assoc($qy)){
 						print ("<option value='".$rowsy['ycod']."' ");
 							if($rowsy['ycod'] == @$defaults['dy']){
-											print ("selected = 'selected'");
-																				}
+									print ("selected = 'selected'");
+															}
 									print ("> ".$rowsy['year']." </option>");
-				}
-			}  
-																	
+										}
+				}  
+		} // FIN ELSE	
+
 		print ("</select>
 					</div>
 					<div style='float:left'>
@@ -94,8 +97,8 @@
 				<select name='factiva' class='botonverde' required >");
 
 		global $db;
-		global $vname; 		$vname = "`".$_SESSION['clave']."impuestos`";
-		$sqli =  "SELECT * FROM $vname ORDER BY `iva` ASC ";
+		global $vnamei; 		$vnamei = "`".$_SESSION['clave']."impuestos`";
+		$sqli =  "SELECT * FROM $vnamei ORDER BY `iva` ASC ";
 		$qi = mysqli_query($db, $sqli);
 
 			if(!$qi){	print("* ".mysqli_error($db)."</br>");

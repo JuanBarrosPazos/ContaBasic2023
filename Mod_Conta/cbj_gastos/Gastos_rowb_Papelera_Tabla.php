@@ -2,8 +2,8 @@
 	
 	print ("<table class='tableForm' >
 			<tr>
-				<th colspan=16 class='BorderInf'>
-					GASTOS ".$dyt1." - ".mysqli_num_rows($qb)." RESULTADOS
+				<th colspan=14 class='BorderInf'>
+					GASTOS PAPELERA ".$dyt1." - ".mysqli_num_rows($qb)." RESULTADOS
 				</th>
 			</tr>
 			<tr>
@@ -22,8 +22,8 @@
 					".$AddBlack."
 						<a href='Gastos_Crear.php'>&nbsp;&nbsp;&nbsp;</a>
 					".$closeButton."
-					".$DeleteBlack."
-						<a href='Gastos_Papelera_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+					".$MoneypGrey."
+						<a href='Gastos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
 					".$closeButton."
 					".$MoneypWhite."
 						<a href='Gastos_Pendientes_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
@@ -55,47 +55,29 @@
 					<td style='text-align:center;' >
 		<form name='ver' action='$_SERVER[PHP_SELF]' method='POST'>");
 
-		require 'Gastos_rowb_Total.php';
+			require 'Gastos_rowb_Total.php';
 
-		print("".$DetalleBlack.$closeButton."
+			print($DetalleBlack.$closeButton."
 				<input type='hidden' name='ocultoDetalle' value=1 />
 			</form>
 				</td>
+
 				<td style='text-align:center;' >
-			<form name='ver' action='$_SERVER[PHP_SELF]' method='POST'>");
+		<form name='modifica' action='Gastos_Papelera_Recuperar.php' method='POST'>");
 
-		require 'Gastos_rowb_Total.php';
+			require 'Gastos_rowb_Total.php';
 
-		print($FotoBlack.$closeButton."
-				<input type='hidden' name='oculto2' value=1 />
-			</form>						
-				</td>
-				<td style='text-align:center;' >
-			<form name='modifica' action='Gastos_Modificar_02.php' method='POST'>");
-
-		require 'Gastos_rowb_Total.php';
-
-		print($DatosBlack.$closeButton."
-					<input type='hidden' name='oculto2' value=1 />
-			</form>
-					</td>
-
-					<td style='text-align:center;' >
-		<form name='modifica' action='Gastos_Modificar_03.php' method='POST'>");
-
-		require 'Gastos_rowb_Total.php';
-
-		print($MoneyWhite.$closeButton."
+			print($RestoreBlack.$closeButton."
 				<input type='hidden' name='oculto2' value=1 />
 		</form>
 				</td>
 
 				<td style='text-align:center;' >
-			<form name='modifica' action='Gastos_Borrar.php' method='POST'>");
+			<form name='modifica' action='Gastos_Papelera_Borrar.php' method='POST'>");
 
 			require 'Gastos_rowb_Total.php';
 
-		print($DeleteWhite.$closeButton."
+			print($DeleteWhite.$closeButton."
 					<input type='hidden' name='oculto2' value=1 />
 			</form>
 					</td>
@@ -104,22 +86,20 @@
 		} // FIN WHILE
 
 		print("<tr>
-					<td colspan='16' class='BorderInf'></td>
+					<td colspan='14' class='BorderInf'></td>
 				</tr>
 				<tr>
-					<td></td>
 					<td colspan='3' class='BorderDch' align='center'>IMPUESTOS REPERC €</td>
 					<td colspan='3' class='BorderDch' align='center'>RETENCION REPERC €</td>
-					<td colspan='4' class='BorderDch' align='center'>TOTAL €</td>
+					<td colspan='3' class='BorderDch' align='center'>TOTAL €</td>
 					<td colspan='5' rowspan=2 align='center'>
 						<div id='footer'>&copy; Juan Barr&oacute;s Pazos 2016/2023</div>
 					</td>
 				</tr>
 				<tr>
-					<td></td>
 					<td colspan='3' class='BorderDch' align='center'>".$sumaivae." €</td>
 					<td colspan='3' class='BorderDch' align='center'>".$sumarete." €</td>
-					<td colspan='4' class='BorderDch' align='center'>".$sumapvptot." €</td>
+					<td colspan='3' class='BorderDch' align='center'>".$sumapvptot." €</td>
 				</tr>
 					</table>");
 

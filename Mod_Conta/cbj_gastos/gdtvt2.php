@@ -353,10 +353,10 @@
 /////////////////////////
 
 
-	global $ruta;
-	$ruta = "../cbj_Docs/grafics/";
+	global $rutaDir;
+	$rutaDir = "../cbj_Docs/grafics/";
 
-	$fh = fopen($ruta.'GDTVT2.php','w+');
+	$fh = fopen($rutaDir.'GDTVT2.php','w+');
 
 	$text = $sumatot01.$sumatot02.$sumatot03.$sumatot04.$sumatot05.$sumatot06.$sumatot07.$sumatot08.$sumatot09.$sumatot10.$sumatot11.$sumatot12;
 

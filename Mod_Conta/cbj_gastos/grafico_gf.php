@@ -31,11 +31,11 @@ session_start();
 
 	function a(){	
 		
-		global $ruta; 		$ruta = "../cbj_Docs/grafics/";
+		global $rutaDir; 		$rutaDir = "../cbj_Docs/grafics/";
 
 		/////	DATOS DIARIOS TOTALES	//////
 			
-		global $GDTVT2; 		$GDTVT2 = $ruta."GDTVT2.php";
+		global $GDTVT2; 		$GDTVT2 = $rutaDir."GDTVT2.php";
 		global $file_GDTVT2; 	$file_GDTVT2 = file_get_contents($GDTVT2);
 						
 		$GDTVT2_a = explode(',',$file_GDTVT2);
@@ -53,7 +53,7 @@ session_start();
 
 	function process_form(){
 
-		global $coordenadax; 	global $ruta; 	global $gt; 	global $gd;
+		global $coordenadax; 	global $rutaDir; 	global $gt; 	global $gd;
 		
 		global $s1; 		$s1 = $_SESSION['ref']; 		$s1 = trim($s1);
 		global $s2; 		$s2 = $_SESSION['usuarios']; 	$s2 = trim($s2);
