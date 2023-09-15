@@ -42,10 +42,20 @@ session_start();
 	
 		global $db; 			global $db_name;
 		global $vname; 			global $dyt1;		$dyt1 = $_SESSION['dyt1'];
-		echo "** ".$dyt1."<br>";
+		//echo "** ".$dyt1."<br>";
+
+
 		
 		global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastosfeed`";
-		global $vnamei; 		$vnamei = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+		global $vnamei; 		//$vnamei = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+		//echo $_POST['delruta']."<br>";
+		global $vnameRuta;
+		$vnameRuta = str_replace("../cbj_Docs/doc", "", $_POST['delruta']);
+		$vnameRuta = str_replace("/", "", $vnameRuta);
+		$vnamei = "`".$_SESSION['clave'].$vnameRuta."`";
+		//echo $vnamei."<br>";
+
+
 
 		global $rutPend;	$rutPend = '';
 		global $pend;	$pend = "";
@@ -124,6 +134,8 @@ session_start();
 		global $db; 	global $db_name;
 
 		global $papelera;		$papelera = 1;
+		global $papeleraRecup;	$papeleraRecup = 1;
+
 		require 'Modifica03show_form.php';
 
 	} // FIN function show_form($errors=[])

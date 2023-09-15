@@ -1,6 +1,6 @@
 <?php
 
-	print(" <table class='detalle tableForm' style='width:34.4em !important;'>
+	print(" <table class='tableForm' style='width:34.4em !important;'>
 			<tr>
 				<th class='BorderInf'>
 					RAZON SOCIAL: ".strtoupper($_SESSION['minombre'])."

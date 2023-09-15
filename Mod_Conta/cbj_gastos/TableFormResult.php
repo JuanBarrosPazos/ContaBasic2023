@@ -1,6 +1,7 @@
 <?php
  
 	global $iniy;
+	global $vname;		global $vnamei;		if(strlen(trim($vname))==0){ $vname = $vnamei; }else{ }
 
 	print("<table class='tableForm' style='max-width: 610px;' >
 				<tr>

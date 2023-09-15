@@ -70,7 +70,7 @@
 		if(!$ext_correcta4){ $myimg4 = $rowsc['myimg4'];}
 		else{$myimg4 = 'pdf.png';}
 
-		global $rutaDir;		$rutaDir = "pendientes";
+		global $rutaDir;		$rutaDir = "../cbj_Docs/docgastos_pendientes/";
 
 		require 'TableVer02.php';
 

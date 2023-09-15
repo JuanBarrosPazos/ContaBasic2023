@@ -7,9 +7,9 @@
 				</th>
 			</tr>
 			<tr>
-				<th class='BorderInfDch'>ID</th>			
-				<th class='BorderInfDch'>NUMERO</th>			
-				<th class='BorderInfDch'>Y/M/D</th>				
+				<th class='BorderInfDch'>ID</th>
+				<th class='BorderInfDch'>NUMERO</th>
+				<th class='BorderInfDch'>Y/M/D</th>
 				<th class='BorderInfDch'>RAZON SOCIAL</th>
 				<th class='BorderInfDch'>NIF / CIF</th>
 				<th class='BorderInfDch'>IMP %</th>

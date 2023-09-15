@@ -79,6 +79,12 @@
 
 			global $papelera;		$papelera = 1;
 
+			global $rutaDirTr;
+			$rutaDirTr ="<tr>
+							<td style='text-align: right !important;' >RUTA DIR</td>
+							<td>".$rowsc['ruta']."</td>			
+						</tr>";
+
 			require 'TableVer02.php';
 			/*
 			global $redir;

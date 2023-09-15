@@ -1,15 +1,21 @@
 <?php
-	
+
+	global $iniVerTodo;
+	if($iniVerTodo == 1){ 
+		$tableTit = "GASTOS PAPELERA TODOS - "; 
+	}else{ 
+		$tableTit ="GASTOS PAPELERA ".$dyt1." - "; 
+	}
 	print ("<table class='tableForm' >
 			<tr>
 				<th colspan=14 class='BorderInf'>
-					GASTOS PAPELERA ".$dyt1." - ".mysqli_num_rows($qb)." RESULTADOS
+					".$tableTit.mysqli_num_rows($qb)." RESULTADOS
 				</th>
 			</tr>
 			<tr>
-				<th class='BorderInfDch'>ID</th>			
-				<th class='BorderInfDch'>NUMERO</th>			
-				<th class='BorderInfDch'>Y/M/D</th>				
+				<th class='BorderInfDch'>ID</th>
+				<th class='BorderInfDch'>NUMERO</th>
+				<th class='BorderInfDch'>Y/M/D</th>	
 				<th class='BorderInfDch'>RAZON SOCIAL</th>
 				<th class='BorderInfDch'>NIF / CIF</th>
 				<th class='BorderInfDch'>IMP %</th>

@@ -1,6 +1,8 @@
 <?php
 
-    print("<table class='detalle tableForm' style='width:34.4em !important;' >
+	global $rutaDirTr;
+	
+    print("<table class='tableForm' style='width:34.4em !important;' >
 			<tr>
 				<th colspan=2 >
 					RAZON SOCIAL: ".strtoupper($_POST['factnom'])."
@@ -45,7 +47,8 @@
             <tr>
 				<td style='text-align: right !important; width: 50%;'>ID </td>
 				<td style='width: 50%;' >".$_POST['id']."</td>	
-			</tr>		
+			</tr>
+					".$rutaDirTr."	
 			<tr>
 				<td style='text-align: right !important;' >NUMERO</td>
 				<td>".$_POST['factnum']."</td>			

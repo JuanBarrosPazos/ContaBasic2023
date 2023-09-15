@@ -44,7 +44,7 @@
 		
 		if(mysqli_query($db, $sent)){
 
-			//global $title;			$title = 'SE INSERTADO LA FACTURA EN ';
+			//global $title;			$title = 'SE HA INSERTADO LA FACTURA EN ';
 			global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
 			global $Modif2;			$Modif2= "style='display:none; visibility: hidden;'";
 			global $ModImg2;		$ModImg2= "style='display:none; visibility: hidden;'";

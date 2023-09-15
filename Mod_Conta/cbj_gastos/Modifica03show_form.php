@@ -15,7 +15,6 @@
 		
 		$_SESSION['idx'] = $_POST['id'];
 
-
 		if(isset($_POST['oculto2'])){
 			
 			$datex = $_POST['factdate'];
@@ -149,13 +148,12 @@
 
 		global $dyt1; 		$dyt1 = "20".$defaults['dy'];
 		$_SESSION['dyt1'] = $dyt1;
-		echo "* ".$dyt1."<br>";
+		//echo "* ".$dyt1."<br>";
 			
 		require 'TablaIfErrors.php';
 
 		require 'ArrayMesDia.php';
 
-		
 		////////////////////
 		
 		global $rutaDir;		$rutaDir = @$defaults['delruta'];
@@ -172,6 +170,14 @@
 								<input type='checkbox' name='xl' value='yes' ".$checked."/>
 							</td>
 						</tr>";
+
+			global $rutaDirTr;
+			if($papeleraRecup = 1){
+				$rutaDirTr ="<tr>
+								<td style='text-align: right !important;' >RUTA DIR</td>
+								<td>".$rutaDir."</td>			
+							</tr>";
+			}else{ $rutaDirTr =""; }
 
 			//global $titulo; 		$titulo = "MARCAR COMO NO PAGADO ESTE GASTO";
 			//global $titInput;		$titInput = "GUARDAR COMO GASTO PENDIENTE DE PAGO";

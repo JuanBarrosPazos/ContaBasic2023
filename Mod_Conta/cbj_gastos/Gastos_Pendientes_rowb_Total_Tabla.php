@@ -7,9 +7,9 @@
 				</th>
 			</tr>
 			<tr>
-				<th class='BorderInfDch'>ID</th>			
-				<th class='BorderInfDch'>NUMERO</th>			
-				<th class='BorderInfDch'>Y/M/D</th>				
+				<th class='BorderInfDch'>ID</th>
+				<th class='BorderInfDch'>NUMERO</th>
+				<th class='BorderInfDch'>Y/M/D</th>
 				<th class='BorderInfDch'>RAZON SOCIAL</th>
 				<th class='BorderInfDch'>NIF / CIF</th>
 				<th class='BorderInfDch'>IMP %</th>
@@ -21,7 +21,11 @@
 				<th colspan=5 class='BorderInf' style='text-align:center;' >
 					".$AddBlack."
 						<a href='Gastos_Pendientes_Crear.php'>&nbsp;&nbsp;&nbsp;</a>
-					".$closeButton.$MoneypGrey."
+					".$closeButton."
+					".$DeleteBlack."
+						<a href='Gastos_Papelera_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
+					".$closeButton."
+					".$MoneypGrey."
 						<a href='Gastos_Ver.php' >&nbsp;&nbsp;&nbsp;</a>
 					".$closeButton."
 				</th>

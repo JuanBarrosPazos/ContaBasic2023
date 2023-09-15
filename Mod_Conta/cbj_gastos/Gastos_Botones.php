@@ -38,7 +38,7 @@
             break;
         */
         default:
-        echo "** NO SE CUMPLE NADA ** <br>";
+            //echo "** NO SE CUMPLE NADA ** <br>";
             $vnameBot = "`".$_SESSION['clave']."gastos_".date('Y')."`";
             $vname = $vnameBot;
             break;

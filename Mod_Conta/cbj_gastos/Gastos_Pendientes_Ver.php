@@ -19,6 +19,7 @@ session_start();
 
 		master_index();
 		global $limit;  $limit = '';
+		global $iniVerTodo;		$iniVerTodo = '';
 
 		if(isset($_POST['todo'])){	show_form();							
 									ver_todo();
@@ -42,6 +43,7 @@ session_start();
 						info_Dealle();
 		}else{  show_form();
 				global $limit;	$limit = 'LIMIT 20';
+				global $iniVerTodo;		$iniVerTodo = 1;
 				ver_todo(); 
 						}
 								
@@ -207,12 +209,12 @@ session_start();
 				 ////////////////////				  ///////////////////
 
 	function show_form($errors=[]){
-	
+
 		if(isset($_POST['show_formcl'])){
 					$defaults = $_POST;
-		} elseif(isset($_POST['todo'])){
+		}elseif(isset($_POST['todo'])){
 				$defaults = $_POST;
-		} else { $defaults = array ('factnom' => '',
+		}else{ $defaults = array ('factnom' => '',
 									'factnif' => '',
 									'factnum' => '',
 									'Orden' => isset($ordenar));
@@ -225,7 +227,7 @@ session_start();
 
 	}	/* Fin show_form(); */
 
-	
+
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
@@ -339,9 +341,14 @@ session_start();
 
 		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
 
-		global $sqlb;
-		require 'FormConsultaFiltroGt1.php';
-		//$sqlb =  "SELECT * FROM $vname WHERE `factdate` LIKE '$fil' ORDER BY $orden $limit ";
+		global $iniVerTodo;		global $sqlb;
+		if($iniVerTodo == 1){
+				global $limit;
+				$sqlb =  "SELECT * FROM $vname  ORDER BY '`factdate` DESC' $limit";
+		}else{
+			require 'FormConsultaFiltroGt1.php';
+		}
+
 		$qb = mysqli_query($db, $sqlb);
 
 	/////////////////////	

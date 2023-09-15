@@ -19,8 +19,17 @@ session_start();
 
 		if(isset($_POST['oculto2'])){ info_01();
 									  show_form();
-		} elseif(isset($_POST['oculto'])){	process_form();
-											info_02();
+		}elseif(isset($_POST['oculto'])){	
+				// SI NO HA MARCADO PARA BORRAR.
+				if(!isset($_POST['xl'])){
+					print("<div style='text-align:center; margin:auto;'>
+								* HA DE MARCAR LA CASILLA DE CONFIRMACIÓN
+							</div>");
+						show_form();
+				}elseif(isset($_POST['xl'])){
+							process_form();
+							info_02();
+							}
 		} else {show_form();}
 
 	} else { require '../Inclu/table_permisos.php'; } 
@@ -34,15 +43,12 @@ session_start();
 		global $rutPend;	$rutPend = '';
 		global $pend;		$pend = "";
 		require 'Gastos_Botonera.php';
-
-		global $dyt1;
 		
 		require 'Gastos_factdate.php';
 
-		global $db; 		global $db_name;
+		global $db; 		global $db_name; 		
+		global $dyt1;		$dyt1 = "20".$_POST['dy'];
 
-
- 
 		require 'FormatNumber.php';
 
 		/////////////
@@ -96,6 +102,7 @@ session_start();
 		global $rutPend;	$rutPend = '';
 		global $pend;		$pend = "";
 		require 'Gastos_Botonera.php';
+		global $TituloCheck;	$TituloCheck = "CONFIRME EL BORRADO CON EL CHECKBOX";
 
 		global $dyt1;
 		
@@ -149,6 +156,7 @@ session_start();
 				$defaults = array ( 'id' => $_POST['id'],
 									'proveegastos' => $_POST['refprovee'],
 									'refprovee' => $_POST['refprovee'],
+									'xl' => @$_POST['xl'],
 									'dy' => $dyx,
 									'dm' => $dmx,
 									'dd' => $ddx,
@@ -173,8 +181,10 @@ session_start();
 									'myimg4' => $_POST['myimg4'],
 									'vname'  => $_POST['vname'],
 									'delruta' => $DelRuta);
-								}
-	
+	}elseif(isset($_POST['oculto'])){
+					$defaults = $_POST;
+	}
+
 		////////////////////
 
 		global $checked; 	$checked = "";
@@ -182,6 +192,22 @@ session_start();
 		global $titulo; 	$titulo = "ELIMINAR GASTO";
 		global $titInput;	$titInput = "BORRAR GASTO PENDIENTE";
 		global $Borrar2;	$Borrar2= "style='display:none; visibility: hidden;'";
+
+		global $checked;
+		if(@$defaults['xl'] == 'yes') { $checked = "checked='checked'";}else{ $checked = ""; }
+		global $Checkbox;
+		$Checkbox = "<tr>
+						<td colspan='2' style='text-align:center;' >
+							".$TituloCheck." : &nbsp; 
+							<input type='checkbox' name='xl' value='yes' ".$checked."/>
+						</td>
+					</tr>";
+
+		global $rutaDirTr;
+		$rutaDirTr ="<tr>
+						<td style='text-align: right !important;' >RUTA DIR</td>
+						<td>".@$defaults['delruta']."</td>			
+					</tr>";
 
 		require 'TableBorrar.php';
 	

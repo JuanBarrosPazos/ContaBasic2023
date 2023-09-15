@@ -12,7 +12,7 @@
                         $vname = @$_SESSION['vname'];  
                         break;
                 default:
-                        echo "<table class='detalle tableForm'><tr><td>
+                        echo "<table class='tableForm'><tr><td>
                                 ERROR EN VARIABLE VNAME DE BBDD
                                 </td></tr></table>";
                         global $redir;

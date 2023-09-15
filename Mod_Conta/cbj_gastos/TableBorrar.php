@@ -1,5 +1,7 @@
 <?php
 
+	global $rutaDirTr;
+	
 	print("<table class='tableForm' style='width:34.4em !important;' >
 			<tr>
 				<th colspan=2 >".$titulo."</th>
@@ -9,8 +11,6 @@
 			<input type='hidden' name='vname' value='".$defaults['vname']."' />
 			<input type='hidden' name='proveegastos' value='".$defaults['proveegastos']."' />
 
-			<input type='hidden' name='delruta' value='".@$defaults['delruta']."' />".@$defaults['delruta']."
-			
 			<tr>
 				<td style='text-align:right; width:50%;' >RAZON SOCIAL</td>
 				<td style='width:50%;'>
@@ -35,6 +35,9 @@
 			<input type='hidden' name='id' value='".$defaults['id']."' />".$defaults['id']."
 				</td>
 			</tr>
+			<input type='hidden' name='delruta' value='".@$defaults['delruta']."' />
+				".$rutaDirTr."
+
                ".$Checkbox."
 			<tr>
 				<td style='text-align:right;'>NUMERO FACTURA</td>

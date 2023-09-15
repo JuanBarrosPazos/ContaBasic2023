@@ -41,13 +41,13 @@ session_start();
 	function process_form_2(){
 	
 		global $db; 			global $db_name;
-		global $vname; 			global $dyt1;
+		global $vname; 			global $dyt1;		$dyt1 = $_SESSION['dyt1'];
 		
-		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_".$dyt1."/";
+		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_".$_SESSION['dyt1']."/";
 		global $rutanew;		$rutanew  = "../cbj_Docs/docgastos_pendientes/";
 		
 		global $vnamei; 		$vnamei = "`".$_SESSION['clave']."gastos_pendientes`";
-		global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+		global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastos_".$_SESSION['dyt1']."`";
 
 		global $rutPend;	$rutPend = '';
 		global $pend;	$pend = "";
