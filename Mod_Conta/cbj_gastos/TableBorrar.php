@@ -1,7 +1,7 @@
 <?php
 
 	global $rutaDirTr;
-	
+
 	print("<table class='tableForm' style='width:34.4em !important;' >
 			<tr>
 				<th colspan=2 >".$titulo."</th>
@@ -120,9 +120,9 @@
 		</form>");
 
 		//global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
-		require 'Gastos_Botones.php';
-		print("</td>
-			</tr>
-		</table>"); 
+			require 'Gastos_Botones.php';
+			print("</td>
+				</tr>
+			</table>");
 
 ?>

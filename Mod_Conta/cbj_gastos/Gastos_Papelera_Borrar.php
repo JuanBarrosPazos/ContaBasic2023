@@ -204,8 +204,6 @@ session_start();
 
 		////////////////////
 
-		global $checked; 	$checked = "";
-		global $Checkbox; 	$Checkbox = "";
 		global $titulo; 	$titulo = "ELIMINAR FACTURA TOTALMENTE";
 		global $titInput;	$titInput = "BORRAR FACTURA TOTALMENTE";
 		global $Borrar2;	$Borrar2= "style='display:none; visibility: hidden;'";
@@ -213,7 +211,9 @@ session_start();
 		global $papelera;		$papelera = 1;
 		
 		global $checked;
+
 		if(@$defaults['xl'] == 'yes') { $checked = "checked='checked'";}else{ $checked = ""; }
+		
 		global $Checkbox;
 		$Checkbox = "<tr>
 						<td colspan='2' style='text-align:center;' >

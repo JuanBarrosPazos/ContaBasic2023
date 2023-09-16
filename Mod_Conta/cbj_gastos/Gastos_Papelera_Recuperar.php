@@ -74,6 +74,7 @@ session_start();
 		$sent = "INSERT INTO `$db_name`.$vnamei (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]')";
 		
 		if(mysqli_query($db, $sent)){
+			echo "** SE HA GRABADO EN ".$vnamei."<br>";
 
 			//global $title;			$title = 'SE INSERTADO LA FACTURA EN ';
 			global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
@@ -87,7 +88,7 @@ session_start();
 			global $papelera;		$papelera = 1;
 
 			require 'TableFormResult.php';	
-				
+			
 		}else{
 			print("* ERROR L.64: ".mysqli_error($db));
 			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
@@ -97,7 +98,10 @@ session_start();
 		// global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastos_".$dyt1."`";
 		$sqla = "DELETE FROM `$db_name`.$vnamed  WHERE $vnamed.`id` = '$idx'  ";
 
-		if(mysqli_query($db, $sqla)){ //	print("<br/>* OK DELETE DATA."); 
+		if(mysqli_query($db, $sqla)){
+
+			echo "** SE HA BORRADO EN ".$vnamed."<br>";
+
 		}else{
 			print("* ERROR L.88: ".mysqli_error($db));
 			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);

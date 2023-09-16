@@ -88,9 +88,10 @@ session_start();
 
 		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_pendientes/";
 		//echo "* ".$rutaold."<br>";
+		global $rutaDir;	$rutaDir = $rutaold;
 
-		global $db; 	global $db_name;
-		
+		global $db; 		global $db_name;
+
 		require 'Modifica03show_form.php';
 
 	} // FIN function show_form($errors=[])

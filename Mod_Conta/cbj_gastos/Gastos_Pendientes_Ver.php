@@ -247,7 +247,9 @@ session_start();
 	
 	$qc = mysqli_query($db, $sqlb);
 	
-	global $gt; 	$gt = mysqli_num_rows($qc);
+	global $gt; 	
+	if($qc){ $gt = mysqli_num_rows($qc); }else{ }
+	
 	//print("* ".$gt);
 	global $cnt;
 

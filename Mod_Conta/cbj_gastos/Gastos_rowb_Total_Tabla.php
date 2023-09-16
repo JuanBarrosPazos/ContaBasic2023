@@ -112,7 +112,7 @@
 					<td colspan='3' class='BorderDch' align='center'>RETENCION REPERC €</td>
 					<td colspan='4' class='BorderDch' align='center'>TOTAL €</td>
 					<td colspan='5' rowspan=2 align='center'>
-						<div id='footer'>&copy; Juan Barr&oacute;s Pazos 2016/2023</div>
+						<div id='footer' style='font-size:0.9em;' >&copy; J. Barr&oacute;s 2016/23</div>
 					</td>
 				</tr>
 				<tr>

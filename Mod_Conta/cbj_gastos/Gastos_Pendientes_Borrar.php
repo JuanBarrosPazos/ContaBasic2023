@@ -19,8 +19,17 @@ session_start();
 
 		if(isset($_POST['oculto2'])){ info_01();
 									  show_form();
-		} elseif(isset($_POST['oculto'])){	process_form();
-											info_02();
+		}elseif(isset($_POST['oculto'])){	
+				// SI NO HA MARCADO PARA BORRAR.
+				if(!isset($_POST['xl'])){
+					print("<div style='text-align:center; margin:auto;'>
+								* HA DE MARCAR LA CASILLA DE CONFIRMACIÓN
+							</div>");
+						show_form();
+				}elseif(isset($_POST['xl'])){
+							process_form();
+							info_02();
+							}
 		} else {show_form();}
 
 	} else { require '../Inclu/table_permisos.php'; } 
@@ -34,57 +43,43 @@ session_start();
 		global $rutPend;	$rutPend = 'Pendientes_';
 		global $pend;	$pend = "PENDIENTES";
 		require 'Gastos_Botonera.php';
-
-		global $dyt1;
 		
 		require 'Gastos_factdate.php';
 
-		global $db; 		global $db_name;
+		global $db; 		global $db_name; 		
+		global $dyt1;		$dyt1 = "20".$_POST['dy'];
 
-		global $vname; 		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
- 
 		require 'FormatNumber.php';
 
-		/////////////
-			
-		$sqla = "DELETE FROM `$db_name`.$vname  WHERE $vname.`id` = '$_POST[id]'  ";
-			
-		if(mysqli_query($db, $sqla)){ 
-			
-			global $title;			$title = 'SE HA BORRADO EN ';
-			global $Modif2;			$Modif2= "style='display:none; visibility: hidden;'";
-			global $Ver2;			$Ver2= "style='display:none; visibility: hidden;'";
-			global $ModImg2;		$ModImg2= "style='display:none; visibility: hidden;'";
-			global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
-			global $ConteBotones;	$ConteBotones = "style='display:block;'";
-			require 'TableFormResult.php';			
-				
-			$sesionref2 = "docgastos_".$dyt1;
+		global $vnamei; 		$vnamei = "`".$_SESSION['clave']."gastosfeed`";
+		global $sent;
+		$sent = "INSERT INTO `$db_name`.$vnamei (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`, `ruta`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]', '$_POST[delruta]' )";
+		
+		if(mysqli_query($db, $sent)){
 
-			if( file_exists("../cbj_Docs/".$sesionref2."/".$_POST['myimg1']) ){
-				$destination_file = "../cbj_Docs/".$sesionref2."/".$_POST['myimg1'];
-				unlink($destination_file);
+			global $vname; 		$vname = "`".$_SESSION['clave']."gastos_pendientes`";
+			$sqla = "DELETE FROM `$db_name`.$vname  WHERE $vname.`id` = '$_POST[id]'  ";
+			if(mysqli_query($db, $sqla)){
+
+				global $title;			$title = 'SE HA BORRADO EN ';
+				global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
+				global $Modif2;			$Modif2= "style='display:none; visibility: hidden;'";
+				global $ModImg2;		$ModImg2= "style='display:none; visibility: hidden;'";
+				global $PendienteG;		$PendienteG = "style='display:none; visibility: hidden;'";
+				global $Recupera3;		$Recupera3 = "style='display:none; visibility: hidden;'";
+				global $Ver2;			$Ver2= "style='display:none; visibility: hidden;'";
+				global $ConteBotones;	$ConteBotones = "style='display:block;'";
+				require 'TableFormResult.php';
+			}else{ print("* ERROR L.62: ".mysqli_error($db));
+						show_form ();
+						global $texerror; $texerror = "\n\t ".mysqli_error($db);
+							}
+		}else{
+			print("* ERROR L.57: ".mysqli_error($db));
+			show_form ();
+			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 				}
-
-			if( file_exists("../cbj_Docs/".$sesionref2."/".$_POST['myimg2']) ){
-				$destination_file = "../cbj_Docs/".$sesionref2."/".$_POST['myimg2'];
-				unlink($destination_file);
-				}
-
-			if( file_exists("../cbj_Docs/".$sesionref2."/".$_POST['myimg3']) ){
-				$destination_file = "../cbj_Docs/".$sesionref2."/".$_POST['myimg3'];
-				unlink($destination_file);
-				}
-
-			if( file_exists("../cbj_Docs/".$sesionref2."/".$_POST['myimg4']) ){
-				$destination_file = "../cbj_Docs/".$sesionref2."/".$_POST['myimg4'];
-				unlink($destination_file);
-				}
-
-		} else { print("* MODIFIQUE LA ENTRADA 300: ".mysqli_error($db));
-					show_form ();
-					global $texerror; $texerror = "\n\t ".mysqli_error($db);
-					}
+		
 		/*
 		global $redir;
 		$redir = "<script type='text/javascript'>
@@ -105,16 +100,26 @@ session_start();
 	function show_form(){
 	
 		global $rutPend;	$rutPend = 'Pendientes_';
+
 		global $pend;	$pend = "PENDIENTES";
 		require 'Gastos_Botonera.php';
+		global $TituloCheck;	$TituloCheck = "CONFIRME EL BORRADO CON EL CHECKBOX";
 
+		global $dyt1;
+		
 		if(isset($_POST['oculto2'])){
 				
 				$datex = $_POST['factdate'];
 				$dyx = substr($_POST['factdate'],0,2);
 				$dmx = substr($_POST['factdate'],3,2);
 				$ddx = substr($_POST['factdate'],-2,2);
-	
+				$dyt1 = "20".$dyx;
+
+				$_SESSION['myimg1'] = $_POST['myimg1'];
+				$_SESSION['myimg2'] = $_POST['myimg2'];
+				$_SESSION['myimg3'] = $_POST['myimg3'];
+				$_SESSION['myimg4'] = $_POST['myimg4'];
+
 				$ivae = strlen(trim($_POST['factivae']));
 				$ivae = $ivae - 3;
 				$ivaex = $_POST['factivae'];
@@ -150,10 +155,13 @@ session_start();
 				$fil2 = "%".$dnilx."%";
 
 				$_POST['proveegastos'] = $_POST['refprovee'];
-	
+
+				global $DelRuta;		$DelRuta ="../cbj_Docs/docgastos_pendientes/";
+		
 				$defaults = array ( 'id' => $_POST['id'],
 									'proveegastos' => $_POST['refprovee'],
 									'refprovee' => $_POST['refprovee'],
+									'xl' => @$_POST['xl'],
 									'dy' => $dyx,
 									'dm' => $dmx,
 									'dd' => $ddx,
@@ -175,15 +183,37 @@ session_start();
 									'myimg1' => $_POST['myimg1'],	
 									'myimg2' => $_POST['myimg2'],	
 									'myimg3' => $_POST['myimg3'],	
-									'myimg4' => $_POST['myimg4']);
-								}
-	
+									'myimg4' => $_POST['myimg4'],
+									'vname'  => $_POST['vname'],
+									'delruta' => $DelRuta);
+	}elseif(isset($_POST['oculto'])){
+					$defaults = $_POST;
+	}
+
 		////////////////////
 
-		global $checked; 	$checked = "";
-		global $Checkbox; 	$Checkbox = "";
-		global $titulo; 	$titulo = "ELIMINAR GASTO";
+		global $titulo; 	$titulo = "ELIMINAR GASTO PENDIENTE";
 		global $titInput;	$titInput = "BORRAR GASTO PENDIENTE";
+		global $Borrar2;	$Borrar2= "style='display:none; visibility: hidden;'";
+
+		global $checked;
+		
+		if(@$defaults['xl'] == 'yes') { $checked = "checked='checked'";}else{ $checked = ""; }
+
+		global $Checkbox;
+		$Checkbox = "<tr>
+						<td colspan='2' style='text-align:center;' >
+							".$TituloCheck." : &nbsp; 
+							<input type='checkbox' name='xl' value='yes' ".$checked."/>
+						</td>
+					</tr>";
+
+		global $rutaDirTr;
+		$rutaDirTr ="<tr>
+						<td style='text-align: right !important;' >RUTA DIR</td>
+						<td>".@$defaults['delruta']."</td>			
+					</tr>";
+
 		require 'TableBorrar.php';
 	
 	} // FIN function show_form()

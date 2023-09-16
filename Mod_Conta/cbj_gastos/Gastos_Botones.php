@@ -25,6 +25,7 @@
             break;
         case ($rutPend == 'Pendientes_'):
             $vnameBot = "`".$_SESSION['clave']."gastos_pendientes`";
+            global $PendienteG;		$PendienteG = "style='display:none; visibility: hidden;'";
             break;
         case ((isset($_POST['vname']))&&(strlen(trim($_POST['vname'])) != 0)):
             $vnameBot = $_POST['vname'];

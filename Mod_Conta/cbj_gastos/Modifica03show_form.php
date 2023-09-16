@@ -156,13 +156,18 @@
 
 		////////////////////
 		
-		global $rutaDir;		$rutaDir = @$defaults['delruta'];
+		global $rutaDir;		
+		if((strlen(trim(@$defaults['delruta']))) != 0){
+			$rutaDir = @$defaults['delruta'];
+		}else{ }
 		//echo "== ".$rutaDir."<br>";
 
 		if($_POST['proveegastos'] != ''){
 
 			global $checked;
+
 			if(@$defaults['xl'] == 'yes') { $checked = "checked='checked'";}else{ $checked = ""; }
+			
 			global $Checkbox;
 			$Checkbox = "<tr>
 							<td colspan='2' style='text-align:center;' >

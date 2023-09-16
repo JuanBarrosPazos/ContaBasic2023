@@ -291,7 +291,9 @@ if ($_SESSION['Nivel'] == 'admin'){
 			global $_dnil; 	$_dnil = $_dni.$_ldni;
 		
 			$_POST['proveegastos'] = $_POST['refprovee'];
-		
+
+			global $DelRuta;		$DelRuta ="../cbj_Docs/docgastos_pendientes/";
+
 			$defaults = array ( 'id' => $_POST['id'],
 								'proveegastos' => $_POST['refprovee'],
 							   	'refprovee' => $_POST['refprovee'],
@@ -312,7 +314,8 @@ if ($_SESSION['Nivel'] == 'admin'){
 								'factpvp2' => $factpvp2,	
 								'factpvptot1' => $factpvptot1,	
 								'factpvptot2' => $factpvptot2,	
-								'coment' => $_POST['coment']);
+								'coment' => $_POST['coment'],
+								'delruta' => $DelRuta);
 
 		// DATOS DESDE EL FORMULARIO =>
 		}elseif(isset($_POST['oculto'])){

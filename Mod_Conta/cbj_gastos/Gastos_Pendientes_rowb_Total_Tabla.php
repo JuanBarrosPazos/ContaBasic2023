@@ -83,7 +83,7 @@
 			</form>						
 				</td>
 				<td style='text-align:center;' >
-			<form name='modifica' action='Gastos_Pendientes_Modificar.php' method='POST'>");
+			<form name='modifica' action='Gastos_Pendientes_Modificar_02.php' method='POST'>");
 
 		require 'Gastos_rowb_Total.php';
 
@@ -133,8 +133,8 @@
 					<td colspan='3' class='BorderDch' align='center'>RETENCION REPERC €</td>
 					<td colspan='4' class='BorderDch' align='center'>TOTAL €</td>
 					<td colspan='5' rowspan=2 align='center'>
-					<div id='footer'>&copy; Juan Barr&oacute;s Pazos 2016/2023</div>
-							</td>
+						<div id='footer' style='font-size:0.9em;' >&copy; J. Barr&oacute;s 2016/23</div>
+					</td>
 				</tr>
 				<tr>
 					<td></td>
