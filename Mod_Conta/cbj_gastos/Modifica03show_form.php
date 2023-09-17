@@ -15,6 +15,8 @@
 		
 		$_SESSION['idx'] = $_POST['id'];
 
+		global $defaults;
+
 		if(isset($_POST['oculto2'])){
 			
 			$datex = $_POST['factdate'];
@@ -144,7 +146,25 @@
 								'coment' => $_POST['coment'],
 								'vname'  => $_POST['vname'],
 								'delruta' => @$_POST['delruta']);
-						}
+
+		}elseif(isset($_POST['ocultoRecup'])){
+
+				echo "SOY OCULTO RECUP...<br>";
+				$defaults = $_POST;
+
+				global $valIvaeEnt;						global $valIvaeDec;
+				$_POST['factivae1'] = $valIvaeEnt;		$_POST['factivae2'] = $valIvaeDec;
+				$defaults['factivae1'] = $valIvaeEnt;	$defaults['factivae2'] = $valIvaeDec;
+
+				global $valReteEnt; 					global $valReteDec;
+				$_POST['factrete1'] = $valReteEnt;		$_POST['factrete2'] = $valReteDec;
+				$defaults['factrete1'] = $valReteEnt;	$defaults['factrete2'] = $valReteDec;
+
+				global $valToteEnt;						global $valToteDec;	
+				$_POST['factpvptot1'] = $valToteEnt;	$_POST['factpvptot2'] = $valToteDec;
+				$defaults['factpvptot1'] = $valToteEnt;	$defaults['factpvptot2'] = $valToteDec;
+
+			}
 
 		global $dyt1; 		$dyt1 = "20".$defaults['dy'];
 		$_SESSION['dyt1'] = $dyt1;
@@ -159,7 +179,9 @@
 		global $rutaDir;		
 		if((strlen(trim(@$defaults['delruta']))) != 0){
 			$rutaDir = @$defaults['delruta'];
-		}else{ }
+		}elseif((strlen(trim(@$_POST['delruta']))) != 0){
+			$rutaDir = @$_POST['delruta'];
+		}else{  }
 		//echo "== ".$rutaDir."<br>";
 
 		if($_POST['proveegastos'] != ''){
@@ -176,8 +198,9 @@
 							</td>
 						</tr>";
 
-			global $rutaDirTr;
-			if($papeleraRecup = 1){
+			global $papeleraRecup;		global $rutaDirTr;
+
+			if($papeleraRecup == 1){
 				$rutaDirTr ="<tr>
 								<td style='text-align: right !important;' >RUTA DIR</td>
 								<td>".$rutaDir."</td>			

@@ -86,7 +86,8 @@ session_start();
 
 		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_20".$_SESSION['yold']."/";
 		//echo "* ".$rutaold."<br>";
-
+		global $rutaDir; 	$rutaDir = $rutaold;
+		
 		global $db; 	global $db_name;
 
 		require 'Modifica03show_form.php';

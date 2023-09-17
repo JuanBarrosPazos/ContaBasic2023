@@ -105,19 +105,21 @@
 				<input type='hidden' name='myimg4' value='".$defaults['myimg4']."' />
 
 			<tr>
-				<td colspan='2' align='right' >
-				<!--
-					<input type='submit' value='".$titInput."' class='botonnaranja' />
-				-->");
+				<td colspan='2' align='right' >");
 
 			if(strlen(trim($Checkbox)) == 0){
 				echo $DeleteWhite.$closeButton;
 			}else{ 
 				echo $SaveBlack.$closeButton;
 			}
-
-			print("<input type='hidden' name='oculto' value=1 />
-		</form>");
+		
+		global $papeleraRecup;
+		if($papeleraRecup == 1){
+				print("<input type='hidden' name='ocultoRecup' value=1 />
+						</form>");
+		}else{ print("<input type='hidden' name='oculto' value=1 />
+						</form>");
+					}
 
 		//global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
 			require 'Gastos_Botones.php';

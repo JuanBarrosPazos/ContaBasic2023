@@ -134,6 +134,7 @@ session_start();
 						Se ha producido un error: </font>".mysqli_error($db)."</br>");
 		}else{
 			if(mysqli_num_rows($qb) == 0){
+					global $titNoData;		$titNoData = "PAPELERA GASTOS ".$dyt1."<br>";
 					require 'Gastos_NoData.php';
 			}else{ 
 					require 'Gastos_rowb_Papelera_Tabla.php';
@@ -296,7 +297,8 @@ session_start();
 			print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
 		}else{
 			if(mysqli_num_rows($qb) == 0){
-					require 'Gastos_NoData.php';
+				global $titNoData;		$titNoData = "PAPELERA GASTOS ".$dyt1."<br>";
+				require 'Gastos_NoData.php';
 			}else{ 
 					require 'Gastos_rowb_Papelera_Tabla.php';
 				} /* Fin segundo else anidado en if */

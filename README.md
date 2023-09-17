@@ -5,10 +5,39 @@
 ----
 ### TAREAS PENDIENTES
 
+- MODIFICAR NOMBRE DE LA TABLA statusfeedback POR statusfeed PARA SEGUIR UN CRITERIO UNIFORME
+- INTEGRAR BORRAR IMAGEN DE DOCUMENTOS ADJUNTOS Y ASIGNAR UNA POR DEFECTO
+- PAGINACIÓN EN VER TODO SIN FILTRO
+- 
+- 
+
 - COMPROBAR LA EJECUCIÓN DEL CODIGO GASTOS
 - INTEGRAR GASTOS EN INGRESOS
 
 ----
+### 2023/09/17 VERSIÓN Conta_Basic_New V23.04.18
+
+- FIX $rutaDir IN Gastos_Modificar_03.php L.89 AND Modifica03show_form.php L.160
+- VALIDAR RECUPERAR DE LA PAPELERA, CONFIRMAR NO EXISTE LA MISMA FACTURA Y LOS DATOS SON CORRECTOS
+- SE MODIFICA LA LOGICA DE VALIDACIÓN Y RECUPERACIÓN DE DATOS DESDE LA PAPELERA
+- IDENTIFICAR CON CLARIDAD DONDE NO HAY DATOS EN UNA CONSULTA
+- 
+- 
+- COMPROBACIÓN DEL AREA GASTOS, PENDIENTES Y PAPELERA:
+    + Arranque de la aplicación en local y acceso a contabasic
+    + Acceso a gastos y visualización inicial
+    + Comprobación del formulario para consultas y filtro en gastos
+    + Navegación entre opciones del while
+    + Navegación entre opciones de gastos inicio
+    + Ver detalles consulta
+    + Modificar datos de factura y validación
+    + Modifivar documentos adjuntos factura y validación
+    + Modificar nombre de documentos adjuntos al cambiar el número de factura
+    + Enviar facturas a la papelera y recuperarlas
+    + Eliminar facturas de la papelera y documentos adjuntos
+    - 
+
+
 ### 2023/09/16 VERSIÓN Conta_Basic_New V23.04.17
 
 - INTEGRACION DE PAPELERA GASTOS

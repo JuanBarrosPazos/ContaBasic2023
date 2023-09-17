@@ -256,7 +256,7 @@ session_start();
 				}else {print("NO SE HA PODIDO GUARDAR EN ".$destination_file4);}
 	
 			}
-				
+
 			/************* FIN CREAMOS LAS IMAGENES ***************/
 
 			global $iniy; 		$iniy = substr(date('Y'),0,2);

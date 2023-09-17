@@ -144,7 +144,8 @@ session_start();
 						Se ha producido un error: </font>".mysqli_error($db)."</br>");
 		}else{
 			if(mysqli_num_rows($qb) == 0){
-					require 'Gastos_NoData.php';
+				global $titNoData;		$titNoData = "GASTOS ".$dyt1."<br>";
+				require 'Gastos_NoData.php';
 			}else{ 
 					require 'Gastos_rowb_Total_Tabla.php';
 						} /* Fin segundo else anidado en if */
@@ -218,7 +219,7 @@ session_start();
 									'Orden' => isset($ordenar));
 								}
 
-		global $titulo; $titulo = "CONSULTAR GASTOS";
+		global $titulo; 		$titulo = "CONSULTAR GASTOS";
 		global $TitBut1;		$TitBut1 = "VER TODOS LOS GASTOS";		
 		global $TitBut2;		$TitBut2 = "FILTRO BUSQUEDA GASTOS";
 		require 'Inc_Show_Form_01.php';	
@@ -403,7 +404,8 @@ session_start();
 			print("<font color='#FF0000'>Se ha producido un error: </font></br>".mysqli_error($db)."</br>");
 		}else{
 			if(mysqli_num_rows($qb) == 0){
-					require 'Gastos_NoData.php';
+				global $titNoData;		$titNoData = "GASTOS ".$dyt1."<br>";
+				require 'Gastos_NoData.php';
 			}else{ 
 					require 'Gastos_rowb_Total_Tabla.php';
 				} /* Fin segundo else anidado en if */

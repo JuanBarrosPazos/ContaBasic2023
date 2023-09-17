@@ -19,20 +19,63 @@ session_start();
 
 		if(isset($_POST['oculto2'])){	info_01();
 										show_form();
-		} elseif(isset($_POST['oculto'])){
-				// SI NO HA COBRADO LA FACTURA.
+		}elseif(isset($_POST['ocultoRecup'])){
+
+			if($form_errors = validate_form()){
+					show_form($form_errors);
+			}else{ // SI PASA LA VALIDACIÓN
+
+				// SI NO HA MARCADO EL CHECK
 				if(!isset($_POST['xl'])){
 						print("<div style='text-align:center; margin:auto;'>
 									* HA DE MARCAR LA CASILLA DE CONFIRMACIÓN
 								</div>");
 							show_form();
-				}elseif(isset($_POST['xl'])){
-							//print("* SI SELECCIONADO");
-							process_form_2();
-									}
+				}elseif(isset($_POST['xl'])){ // SI HA SELECCIONADO EL CHECK
+						process_form_2(); 
+						echo "HE PASASO LA VALIDACIÓN Y PROCESS_FORM_2()<br>";
+					}
+				}
+
+
+				/*
+				// SI NO HA MARCADO EL CHECK
+				if(!isset($_POST['xl'])){
+						print("<div style='text-align:center; margin:auto;'>
+									* HA DE MARCAR LA CASILLA DE CONFIRMACIÓN
+								</div>");
+							show_form();
+				}elseif(isset($_POST['xl'])){ // SI HA SELECCIONADO EL CHECK
+					if($form_errors = validate_form()){
+						show_form($form_errors);
+					}else{ // SI PASA LA VALIDACIÓN
+							//process_form_2(); 
+							echo "HE PASASO LA VALIDACIÓN <br>";
+							}
+				}
+				*/
+
 		}else{show_form();}
 							
 	}else{ require '../Inclu/table_permisos.php'; } 
+
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
+
+	function validate_form(){
+	
+		global $db; 	global $sqld; 	global $qd; 	global $rowd;
+
+		global $papelera;		$papelera = 1;
+
+		$errors = array();
+		
+		require 'ValidateForm.php';
+
+		return $errors;
+
+	} 
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -44,8 +87,6 @@ session_start();
 		global $vname; 			global $dyt1;		$dyt1 = $_SESSION['dyt1'];
 		//echo "** ".$dyt1."<br>";
 
-
-		
 		global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastosfeed`";
 		global $vnamei; 		//$vnamei = "`".$_SESSION['clave']."gastos_".$dyt1."`";
 		//echo $_POST['delruta']."<br>";
@@ -54,8 +95,6 @@ session_start();
 		$vnameRuta = str_replace("/", "", $vnameRuta);
 		$vnamei = "`".$_SESSION['clave'].$vnameRuta."`";
 		//echo $vnamei."<br>";
-
-
 
 		global $rutPend;	$rutPend = '';
 		global $pend;	$pend = "";
@@ -87,7 +126,7 @@ session_start();
 
 			global $papelera;		$papelera = 1;
 
-			require 'TableFormResult.php';	
+			require 'TableFormResult.php';
 			
 		}else{
 			print("* ERROR L.64: ".mysqli_error($db));
