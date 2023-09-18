@@ -76,7 +76,6 @@
 			global $rutaDir;		//$rutaDir = $_POST['dyt1'];
 			$rutaDir = "../cbj_Docs/docgastos_".substr($_POST['vname'],-5,-1)."/";
         
-
 			require 'TableVer02.php';
 
 	} // FIN function process_form_Detalle()

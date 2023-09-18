@@ -94,6 +94,7 @@
 				unset($_SESSION['midyt1']);	
 			*/
 					
+			$_SESSION['factdate'] = $_POST['factdate'];
 			$_SESSION['miseccion'] = $_SESSION['ref'];
 			$_SESSION['miid'] = $_POST['id'];
 			$_SESSION['mivalor'] = $_POST['factnum'];
@@ -215,9 +216,24 @@
 		print(" <tr>
 					<td style='text-align: center;' >");
 
-					global $ModImg2;		$ModImg2 = "style='display:none; visibility: hidden;'";
-					global $ConteBotones;	$ConteBotones = "style='display:block;'";
-					require 'Gastos_Botones.php';
+			global $ModImg2;		$ModImg2 = "style='display:none; visibility: hidden;'";
+			global $ConteBotones;	$ConteBotones = "style='display:block;'";
+
+			global $a;	$a= "20".(substr($_SESSION['factdate'],0,2));
+			global $vnameStatus; 		$vnameStatus = "`".$_SESSION['clave']."status`";
+			$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
+			$qStauts = mysqli_query($db, $sqlSTatus);
+			$rowStatus = mysqli_fetch_assoc($qStauts);
+	
+			global $style;
+			if($rowStatus['stat']=='close'){
+				global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
+				global $Modif2;			$Modif2= "style='display:none; visibility: hidden;'";
+				global $PendienteG;		$PendienteG = "style='display:none; visibility: hidden;'";
+				global $Recupera3;		$Recupera3 = "style='display:none; visibility: hidden;'";
+			}else{ }
+	
+			require 'Gastos_Botones.php';
 		
 		print("</td>
 				</tr>

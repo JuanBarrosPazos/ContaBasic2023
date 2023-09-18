@@ -46,9 +46,9 @@
 				
 		global $myimg1;		global $myimg2;		global $myimg3;		global $myimg4;
 
-		$extension1 = substr($rowsc['myimg1'],-3);
-		// print($extension1);
-		// $extension1 = end(explode('.', $_FILES['myimg1']['name']) );
+			$extension1 = substr($rowsc['myimg1'],-3);
+			// print($extension1);
+			// $extension1 = end(explode('.', $_FILES['myimg1']['name']) );
 			$ext_correcta1 = in_array($extension1, $ext_permitidas);
 			if(!$ext_correcta1){ $myimg1 = $rowsc['myimg1'];}
 			else{$myimg1 = 'pdf.png';}

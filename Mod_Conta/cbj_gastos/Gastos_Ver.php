@@ -375,7 +375,7 @@ session_start();
 							$sumarete = $sumarete + $verret['factrete'];
 									}
 			}
-					
+
 		/* FIN PARA SUMAR RETENCIONES */
 		/////////////////////////
 
@@ -392,7 +392,7 @@ session_start();
 							$sumaivae = $sumaivae + $ver['factivae'];
 									}
 			}
-					
+
 		/* FIN PARA SUMAR IVA */
 		/////////////////////////
 
@@ -410,7 +410,7 @@ session_start();
 					require 'Gastos_rowb_Total_Tabla.php';
 				} /* Fin segundo else anidado en if */
 		} /* Fin de primer else . */
-				
+
 			global $fil; 	global $sqlb;
 
 			require 'FormConsultaFiltroGt1.php';

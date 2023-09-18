@@ -70,12 +70,13 @@ session_start();
 				global $Ver2;			$Ver2= "style='display:none; visibility: hidden;'";
 				global $ConteBotones;	$ConteBotones = "style='display:block;'";
 				require 'TableFormResult.php';
+
 			}else{ print("* ERROR L.62: ".mysqli_error($db));
 						show_form ();
 						global $texerror; $texerror = "\n\t ".mysqli_error($db);
 							}
 		}else{
-			print("* ERROR L.57: ".mysqli_error($db));
+			print("* ERROR L.56: ".mysqli_error($db));
 			show_form ();
 			global $texerror; 	$texerror = "\n\t ".mysqli_error($db);
 				}
@@ -189,6 +190,8 @@ session_start();
 	}elseif(isset($_POST['oculto'])){
 					$defaults = $_POST;
 	}
+
+	echo "** ".$_SESSION['myimg1']."<br>";
 
 		////////////////////
 

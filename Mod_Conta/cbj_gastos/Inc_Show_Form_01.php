@@ -1,6 +1,6 @@
 <?php
 
-	unset($_SESSION['ImgCbj']);
+	unset($_SESSION['ImgCbj']);		unset($_SESSION['factdate']);
 	unset($_SESSION['myimg1']); 	unset($_SESSION['myimg2']);
 	unset($_SESSION['myimg3']); 	unset($_SESSION['myimg4']);	
 	unset($_SESSION['miseccion']); 	unset($_SESSION['miid']);	

@@ -114,6 +114,11 @@ session_start();
 				$ddx = substr($_POST['factdate'],-2,2);
 				$dyt1 = "20".$dyx;
 
+				$_SESSION['myimg1'] = $_POST['myimg1'];
+				$_SESSION['myimg2'] = $_POST['myimg2'];
+				$_SESSION['myimg3'] = $_POST['myimg3'];
+				$_SESSION['myimg4'] = $_POST['myimg4'];
+
 				$ivae = strlen(trim($_POST['factivae']));
 				$ivae = $ivae - 3;
 				$ivaex = $_POST['factivae'];

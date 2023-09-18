@@ -206,7 +206,7 @@
 			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
 			$i++;
 
-			$rowgri['factpvptot']  = number_format($rowgri['factpvptot']  ,2,".","");
+			$rowgri['factpvptot']  = number_format($rowgri['factpvptot'],2,".","");
 			//if($TriSumTotg == ''){ $TriSumTotg = "0.00"; }else{ }
 			global $sumapvptoti;
 			if($sumapvptoti > 0){

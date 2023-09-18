@@ -1,4 +1,3 @@
-
 ## PROYECTO INICIAL 2016/05/01
 ----
 ## REPOSITORIO ZIP EN MEGA: https://mega.nz/folder/axsFWA7S#NMGqsvoa6KXwZXiq12-Oyw
@@ -9,18 +8,21 @@
 - INTEGRAR BORRAR IMAGEN DE DOCUMENTOS ADJUNTOS Y ASIGNAR UNA POR DEFECTO
 - PAGINACIÓN EN VER TODO SIN FILTRO
 - 
-- 
+- MOVER FACTURA A GASTOS PENDIENTES DE PAGO, SOLO EN EJERCICICOS ABIERTOS...
+
 
 - COMPROBAR LA EJECUCIÓN DEL CODIGO GASTOS
 - INTEGRAR GASTOS EN INGRESOS
 
 ----
-### 2023/09/17 VERSIÓN Conta_Basic_New V23.04.18
+### 2023/09/18 VERSIÓN Conta_Basic_New V23.04.19
 
 - FIX $rutaDir IN Gastos_Modificar_03.php L.89 AND Modifica03show_form.php L.160
 - VALIDAR RECUPERAR DE LA PAPELERA, CONFIRMAR NO EXISTE LA MISMA FACTURA Y LOS DATOS SON CORRECTOS
 - SE MODIFICA LA LOGICA DE VALIDACIÓN Y RECUPERACIÓN DE DATOS DESDE LA PAPELERA
 - IDENTIFICAR CON CLARIDAD DONDE NO HAY DATOS EN UNA CONSULTA
+- OCULTAR BOTONES DE ENVIO A GASTOS PENDIENTES, DE PAGO, MODIFICAR Y BORRADO, EN EJERCICIOS CLOSE...
+    - EN GASTOS VER, GASTOS PENDIENTES VER, PAPELERA VER, VER DETALLES, MODIFICAR IMAGEN... 
 - 
 - 
 - COMPROBACIÓN DEL AREA GASTOS, PENDIENTES Y PAPELERA:
@@ -30,11 +32,15 @@
     + Navegación entre opciones del while
     + Navegación entre opciones de gastos inicio
     + Ver detalles consulta
-    + Modificar datos de factura y validación
-    + Modifivar documentos adjuntos factura y validación
+    + Modificar datos de la factura y validación
+    + Modificar documentos adjuntos a la factura y validación
     + Modificar nombre de documentos adjuntos al cambiar el número de factura
     + Enviar facturas a la papelera y recuperarlas
-    + Eliminar facturas de la papelera y documentos adjuntos
+    + Validación de datos correctos antes de recuperar la factura
+    + Eliminar facturas de la papelera y los documentos adjuntos
+    - 
+    - Mover factura a gastos pendiente de pago, solo en ejercicios abiertos...
+    - 
     - 
 
 

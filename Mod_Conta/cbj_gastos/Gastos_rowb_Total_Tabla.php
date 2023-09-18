@@ -1,8 +1,8 @@
 <?php
-	
+
 	print ("<table class='tableForm' >
 			<tr>
-				<th colspan=16 class='BorderInf'>
+				<th colspan=12 class='BorderInf'>
 					GASTOS ".$dyt1." - ".mysqli_num_rows($qb)." RESULTADOS
 				</th>
 			</tr>
@@ -18,7 +18,7 @@
 				<th class='BorderInfDch'>RET %</th>
 				<th class='BorderInfDch'>RET €</th>
 				<th class='BorderInfDch'>TOTAL</th>
-				<th colspan=5 class='BorderInf' style='text-align:center;' >
+				<th class='BorderInf' style='text-align:center;' >
 					".$AddBlack."
 						<a href='Gastos_Crear.php'>&nbsp;&nbsp;&nbsp;</a>
 					".$closeButton."
@@ -32,6 +32,8 @@
 			</tr>");
 		
 	global $styleBgc; global $i; $i = 1;
+	
+	global $vnameStatus; 		$vnameStatus = "`".$_SESSION['clave']."status`";
 
 	while($rowb = mysqli_fetch_assoc($qb)){
 
@@ -52,7 +54,9 @@
 					<td align='right'>".$rowb['factret']."</td>
 					<td align='right'>".$rowb['factrete']."</td>
 					<td align='right'>".$rowb['factpvptot']."</td>
+
 					<td style='text-align:center;' >
+				<div style='display:inline-block;'>
 		<form name='ver' action='$_SERVER[PHP_SELF]' method='POST'>");
 
 		require 'Gastos_rowb_Total.php';
@@ -60,8 +64,8 @@
 		print("".$DetalleBlack.$closeButton."
 				<input type='hidden' name='ocultoDetalle' value=1 />
 			</form>
-				</td>
-				<td style='text-align:center;' >
+				</div>
+				<div style='display:inline-block;' >
 			<form name='ver' action='$_SERVER[PHP_SELF]' method='POST'>");
 
 		require 'Gastos_rowb_Total.php';
@@ -69,8 +73,21 @@
 		print($FotoBlack.$closeButton."
 				<input type='hidden' name='oculto2' value=1 />
 			</form>						
-				</td>
-				<td style='text-align:center;' >
+				</div>");
+
+		global $a;	$a= "20".(substr($rowb['factdate'],0,2)); 
+		$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
+		$qStauts = mysqli_query($db, $sqlSTatus);
+		$rowStatus = mysqli_fetch_assoc($qStauts);
+
+		global $style;
+		if($rowStatus['stat']=='close'){
+			$style = "style='display:none; visibility: hidden;";
+		}else{
+			$style = "style='display:inline-block;'";
+		}
+
+		print("<div ".$style." >
 			<form name='modifica' action='Gastos_Modificar_02.php' method='POST'>");
 
 		require 'Gastos_rowb_Total.php';
@@ -78,9 +95,8 @@
 		print($DatosBlack.$closeButton."
 					<input type='hidden' name='oculto2' value=1 />
 			</form>
-					</td>
-
-					<td style='text-align:center;' >
+				</div>
+				<div ".$style." >
 		<form name='modifica' action='Gastos_Modificar_03.php' method='POST'>");
 
 		require 'Gastos_rowb_Total.php';
@@ -88,9 +104,8 @@
 		print($MoneyWhite.$closeButton."
 				<input type='hidden' name='oculto2' value=1 />
 		</form>
-				</td>
-
-				<td style='text-align:center;' >
+				</div>
+				<div ".$style." >
 			<form name='modifica' action='Gastos_Borrar.php' method='POST'>");
 
 			require 'Gastos_rowb_Total.php';
@@ -98,20 +113,21 @@
 		print($DeleteWhite.$closeButton."
 					<input type='hidden' name='oculto2' value=1 />
 			</form>
-					</td>
-				</tr>");
+				</div>");
+
+		print("</tr>");
 
 		} // FIN WHILE
 
 		print("<tr>
-					<td colspan='16' class='BorderInf'></td>
+					<td colspan='12' class='BorderInf'></td>
 				</tr>
 				<tr>
 					<td></td>
 					<td colspan='3' class='BorderDch' align='center'>IMPUESTOS REPERC €</td>
 					<td colspan='3' class='BorderDch' align='center'>RETENCION REPERC €</td>
 					<td colspan='4' class='BorderDch' align='center'>TOTAL €</td>
-					<td colspan='5' rowspan=2 align='center'>
+					<td colspan='2' rowspan=2 align='center'>
 						<div id='footer' style='font-size:0.9em;' >&copy; J. Barr&oacute;s 2016/23</div>
 					</td>
 				</tr>
@@ -122,5 +138,7 @@
 					<td colspan='4' class='BorderDch' align='center'>".$sumapvptot." €</td>
 				</tr>
 					</table>");
+
+	//echo "\$dateini: ".$dateini."  \$datefin: ".$datefin."<br>";
 
 ?>

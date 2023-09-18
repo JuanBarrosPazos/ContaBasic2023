@@ -34,6 +34,8 @@
 		
 	global $styleBgc; global $i; $i = 1;
 
+	global $vnameStatus; 		$vnameStatus = "`".$_SESSION['clave']."status`";
+
 	while($rowb = mysqli_fetch_assoc($qb)){
 
 		if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
@@ -48,7 +50,9 @@
 					<td align='center'>".$rowb['factnom']."</td>
 					<td align='left'>".$rowb['factnif']."</td>
 					<td align='right'>".$rowb['ruta']."</td>
-					<td style='text-align:center;' >
+					
+					<td colspan=3 style='text-align:center;' >
+					<div style='display:inline-block;'>
 		<form name='ver' action='$_SERVER[PHP_SELF]' method='POST'>");
 
 			require 'Gastos_rowb_Total.php';
@@ -56,9 +60,21 @@
 			print($DetalleBlack.$closeButton."
 				<input type='hidden' name='ocultoDetalle' value=1 />
 			</form>
-				</td>
+				</div>");
+				
+		global $a;	$a= "20".(substr($rowb['factdate'],0,2)); 
+		$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
+		$qStauts = mysqli_query($db, $sqlSTatus);
+		$rowStatus = mysqli_fetch_assoc($qStauts);
 
-				<td style='text-align:center;' >
+		global $style;
+		if($rowStatus['stat']=='close'){
+			$style = "style='display:none; visibility: hidden;";
+		}else{
+			$style = "style='display:inline-block;'";
+		}
+
+		print("<div ".$style.">
 		<form name='modifica' action='Gastos_Papelera_Recuperar.php' method='POST'>");
 
 			require 'Gastos_rowb_Total.php';
@@ -66,9 +82,10 @@
 			print($RestoreBlack.$closeButton."
 				<input type='hidden' name='oculto2' value=1 />
 		</form>
-				</td>
+				</div>");
+	//}else{ print(""); }
 
-				<td style='text-align:center;' >
+		print("<div style='display:inline-block;'>
 			<form name='modifica' action='Gastos_Papelera_Borrar.php' method='POST'>");
 
 			require 'Gastos_rowb_Total.php';
@@ -76,7 +93,7 @@
 			print($DeleteWhite.$closeButton."
 					<input type='hidden' name='oculto2' value=1 />
 			</form>
-					</td>
+					</div>
 				</tr>");
 
 		} // FIN WHILE
