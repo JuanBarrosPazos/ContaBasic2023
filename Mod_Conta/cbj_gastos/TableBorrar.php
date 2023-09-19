@@ -1,6 +1,6 @@
 <?php
 
-	global $rutaDirTr;
+	global $rutaDirTr;		global $ejerStatus;		global $Checkbox;		global $Checkboxb;
 
 	print("<table class='tableForm' style='width:34.4em !important;' >
 			<tr>
@@ -36,9 +36,11 @@
 				</td>
 			</tr>
 			<input type='hidden' name='delruta' value='".@$defaults['delruta']."' />
+			\$defaults['delruta'] = ".@$defaults['delruta']."
 				".$rutaDirTr."
-
-               ".$Checkbox."
+	            ".$Checkbox."
+				".$ejerStatus."
+				".$Checkboxb."
 			<tr>
 				<td style='text-align:right;'>NUMERO FACTURA</td>
 				<td>
@@ -48,8 +50,9 @@
 			<tr>
 				<td style='text-align:right;'>FECHA</td>
 				<td>
-					20".$defaults['dy']."/".$defaults['dm']."/".$defaults['dd']."
+					20".$defaults['dy']."/".$defaults['dm']."/".$defaults['dd']."<br>
 						<input type='hidden' name='dy' value='".$defaults['dy']."' />
+						\$defaults['dy'] = ".$defaults['dy']." \$_SESSION['newDy'] = ".$_SESSION['newDy']."<br>
 						<input type='hidden' name='dm' value='".$defaults['dm']."' />
 						<input type='hidden' name='dd' value='".$defaults['dd']."' />
 				</td>
@@ -99,10 +102,10 @@
 				</td>
 			</tr>
 
-				<input type='hidden' name='myimg1' value='".$defaults['myimg1']."' />
-				<input type='hidden' name='myimg2' value='".$defaults['myimg2']."' />
-				<input type='hidden' name='myimg3' value='".$defaults['myimg3']."' />
-				<input type='hidden' name='myimg4' value='".$defaults['myimg4']."' />
+				<input type='hidden' name='myimg1' value='".$defaults['myimg1']."' />".$defaults['myimg1']."
+				<input type='hidden' name='myimg2' value='".$defaults['myimg2']."' />".$defaults['myimg2']."
+				<input type='hidden' name='myimg3' value='".$defaults['myimg3']."' />".$defaults['myimg3']."
+				<input type='hidden' name='myimg4' value='".$defaults['myimg4']."' />".$defaults['myimg4']."
 
 			<tr>
 				<td colspan='2' align='right' >");

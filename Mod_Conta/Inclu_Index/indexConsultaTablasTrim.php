@@ -151,8 +151,15 @@
 
 			$gri++;	$mesIniGri = $mesIniGri+3;    $mesFinGri = $mesFinGri+3;
 		}
+		$TotEi = ((abs($sumapvptoti))*100)/(abs($sumapvptoti)); 
+		print("<li>
+					<a href='#' title='ANUAL TOT ".(abs($sumapvptoti))." €'>
+						<span class='label'>".$dyt1."<br>".(abs($sumapvptoti))."</span>
+						<span class='count bgcolord' style='height: ".$TotEi."%'>(".$TotEi.")</span>
+					</a>
+				</li>
 
-		print("	</ul>
+				</ul>
 				</div>
 					</td>
 				</tr>
@@ -357,20 +364,28 @@
 			//if($TriSumTotg == ''){ $TriSumTotg = "0.00"; }else{ }
 			global $sumapvptotg;
 			if($sumapvptotg > 0){
-				$TotE = ($rowg['factpvptot']*100)/$sumapvptotg;
+				$TotEg = ($rowg['factpvptot']*100)/$sumapvptotg;
 			}elseif($sumapvptotg < 0){
-				$TotE = ($rowg['factpvptot']*100)/(abs($sumapvptotg));
-			}else{ $TotE = 0.00;}
+				$TotEg = ($rowg['factpvptot']*100)/(abs($sumapvptotg));
+			}else{ $TotEg = 0.00;}
 
 			print("<li>
 						<a href='#' title='".$rowg['factdate']." ".$rowg['factpvptot']." €'>
 							<span class='label'>".$rowg['factdate']."<br>".$rowg['factpvptot']."</span>
-							<span class='count bgcolorg' style='height: ".$TotE."%'>(".$TotE.")</span>
+							<span class='count bgcolorg' style='height: ".$TotEg."%'>(".$TotEg.")</span>
 						</a>
 					</li>");
 
 			$grg++;	$mesIniGrg = $mesIniGrg+3;    $mesFinGrg = $mesFinGrg+3;
 		}
+
+		$TotEg = ((abs($sumapvptotg))*100)/(abs($sumapvptotg)); 
+		print("<li>
+					<a href='#' title='ANUAL TOT ".(abs($sumapvptotg))." €'>
+						<span class='label'>".$dyt1."<br>".(abs($sumapvptotg))."</span>
+						<span class='count bgcolord' style='height: ".$TotEg."%'>(".$TotEg.")</span>
+					</a>
+				</li>");
 
 		print("	</ul>
 				</div>
@@ -606,6 +621,16 @@
 			$grd++;	$mesIniGrd = $mesIniGrd+3;    $mesFinGrd = $mesFinGrd+3;
 		}
 
+		$TotEd = ((abs($sumapvptotd))*100)/(abs($sumapvptotd)); 
+		print("<li>
+					<a href='#' title='DIFER ANUAL ".(abs($sumapvptotd))." €'>
+						<span class='label'>".$dyt1."<br>".(abs($sumapvptotd))."</span>
+						<span class='count bgcolord' style='height: ".$TotEd."%'>(".$TotEd.")</span>
+					</a>
+				</li>");
+
+
+		
 	print("	</ul>
 				</div>
 					</td>

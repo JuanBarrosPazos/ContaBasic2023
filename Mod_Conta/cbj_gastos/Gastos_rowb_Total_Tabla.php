@@ -81,7 +81,8 @@
 		$rowStatus = mysqli_fetch_assoc($qStauts);
 
 		global $style;
-		if($rowStatus['stat']=='close'){
+		if($rowStatus['stat']==''){
+		//if($rowStatus['stat']=='close'){
 			$style = "style='display:none; visibility: hidden;";
 		}else{
 			$style = "style='display:inline-block;'";

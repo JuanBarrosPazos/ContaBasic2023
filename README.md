@@ -8,14 +8,15 @@
 - INTEGRAR BORRAR IMAGEN DE DOCUMENTOS ADJUNTOS Y ASIGNAR UNA POR DEFECTO
 - PAGINACIÓN EN VER TODO SIN FILTRO
 - 
-- MOVER FACTURA A GASTOS PENDIENTES DE PAGO, SOLO EN EJERCICICOS ABIERTOS...
-
+- 
+- MOVER FACTURA A GASTOS PENDIENTES DE PAGO, SOLO AL ULTIMO EJERCICIO ABIERTO...
+- PONER BOTON PAPELERA EN RESUTADOS DE BORRAR, MODIFICAR...
 
 - COMPROBAR LA EJECUCIÓN DEL CODIGO GASTOS
 - INTEGRAR GASTOS EN INGRESOS
 
 ----
-### 2023/09/18 VERSIÓN Conta_Basic_New V23.04.19
+### 2023/09/19 VERSIÓN Conta_Basic_New V23.04.20
 
 - FIX $rutaDir IN Gastos_Modificar_03.php L.89 AND Modifica03show_form.php L.160
 - VALIDAR RECUPERAR DE LA PAPELERA, CONFIRMAR NO EXISTE LA MISMA FACTURA Y LOS DATOS SON CORRECTOS
@@ -23,6 +24,9 @@
 - IDENTIFICAR CON CLARIDAD DONDE NO HAY DATOS EN UNA CONSULTA
 - OCULTAR BOTONES DE ENVIO A GASTOS PENDIENTES, DE PAGO, MODIFICAR Y BORRADO, EN EJERCICIOS CLOSE...
     - EN GASTOS VER, GASTOS PENDIENTES VER, PAPELERA VER, VER DETALLES, MODIFICAR IMAGEN... 
+- AJUSTE GRAFICAS BALANCES TRIMESTRALES
+- PASO PARAMETROS CORRECTOS DE IMAGENES AL BORRAR, RECUPERAR Y MODIFICAR FACTURA
+- RECUPERO DESDE LA PAPELERA FACTURAS CON STATUS EJERCICIO CLOSE EN EL AÑO ACTUAL, MODIFICANDO EL AÑO DE LA FACTURA...
 - 
 - 
 - COMPROBACIÓN DEL AREA GASTOS, PENDIENTES Y PAPELERA:
@@ -33,13 +37,15 @@
     + Navegación entre opciones de gastos inicio
     + Ver detalles consulta
     + Modificar datos de la factura y validación
-    + Modificar documentos adjuntos a la factura y validación
-    + Modificar nombre de documentos adjuntos al cambiar el número de factura
+    + Modificar documentos adjuntos a la factura y validación (en gastos y gastos pendientes)
+    + Modificar nombre de documentos adjuntos al cambiar el número de factura (en gastos y gastos pendientes)
     + Enviar facturas a la papelera y recuperarlas
     + Validación de datos correctos antes de recuperar la factura
     + Eliminar facturas de la papelera y los documentos adjuntos
+    + Mover factura a gastos pendiente de pago, solo en ejercicios abiertos... (y cualquier ejercicio)
+    + Recuperación desde papelera de facturas con año close, con fecha año actual
     - 
-    - Mover factura a gastos pendiente de pago, solo en ejercicios abiertos...
+    - Recuperación desde gastos pendientes de facturas con año close con fecha año actual
     - 
     - 
 

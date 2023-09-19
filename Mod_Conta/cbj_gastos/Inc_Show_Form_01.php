@@ -5,7 +5,8 @@
 	unset($_SESSION['myimg3']); 	unset($_SESSION['myimg4']);	
 	unset($_SESSION['miseccion']); 	unset($_SESSION['miid']);	
 	unset($_SESSION['mivalor']); 	unset($_SESSION['minombre']);	
-	unset($_SESSION['miref']); 		unset($_SESSION['midyt1']);	
+	unset($_SESSION['miref']); 		unset($_SESSION['midyt1']);
+	unset($_SESSION['stat']);		unset($_SESSION['newDy']);
 
 	global $TitBut1;			global $TitBut2;
 

@@ -41,13 +41,13 @@ session_start();
 	function process_form_2(){
 	
 		global $db; 		global $db_name;
-		global $vname; 		global $dyt1;
+		global $vname; 		global $dyt1;		$dyt1 = $_SESSION['dyt1'];
 		
-		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_pendientes/";
-		global $rutanew;		$rutanew = "../cbj_Docs/docgastos_".$dyt1."/";
+		global $rutaOld;	$rutaOld = "../cbj_Docs/docgastos_pendientes/";
+		global $rutaNew;	$rutaNew = "../cbj_Docs/docgastos_".$dyt1."/";
 
-		global $vnamei; 		$vnamei = "`".$_SESSION['clave']."gastos_".$dyt1."`";
-		global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastos_pendientes`";
+		global $vnamei; 	$vnamei = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+		global $vnamed; 	$vnamed = "`".$_SESSION['clave']."gastos_pendientes`";
 		
 		global $rutPend;	$rutPend = 'Pendientes_';
 		global $pend;	$pend = "PENDIENTES";
@@ -86,9 +86,9 @@ session_start();
 		global $titInput;	$titInput = "GUARDAR GASTO PENDIENTE COMO PAGADO";
 		global $TituloCheck;	$TituloCheck = "SI SE HA PAGADO LA FACTURA MARQUE LA CASILLA";
 
-		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_pendientes/";
-		//echo "* ".$rutaold."<br>";
-		global $rutaDir;	$rutaDir = $rutaold;
+		global $rutaOld;		$rutaOld = "../cbj_Docs/docgastos_pendientes/";
+		//echo "* ".$rutaOld."<br>";
+		global $rutaDir;	$rutaDir = $rutaOld;
 
 		global $db; 		global $db_name;
 

@@ -86,6 +86,13 @@
 			$_ldni = @$rowpv['ldni'];
 			global $_dnil; 		$_dnil = $_dni.$_ldni;
 			
+
+			$sqlImg = "SELECT * FROM $_POST[vname] WHERE `id` = '$_POST[id]' LIMIT 1 ";
+			echo "\$sqlImg = ".$sqlImg."<br>";
+			$qImg = mysqli_query($db, $sqlImg);
+			$rowImg = mysqli_fetch_assoc($qImg);
+
+
 			$_POST['proveegastos'] = $_POST['refprovee'];
 		
 			$defaults = array ( 'id' => $_POST['id'],
@@ -110,10 +117,10 @@
 								'factpvptot1' => $factpvptot1,	
 								'factpvptot2' => $factpvptot2,	
 								'coment' => $_POST['coment'],
-								'myimg1' => $_POST['myimg1'],	
-								'myimg2' => $_POST['myimg2'],	
-								'myimg3' => $_POST['myimg3'],	
-								'myimg4' => $_POST['myimg4'],
+								'myimg1' => $rowImg['myimg1'],	
+								'myimg2' => $rowImg['myimg2'],	
+								'myimg3' => $rowImg['myimg3'],	
+								'myimg4' => $rowImg['myimg4'],
 								'vname'  => $_POST['vname'],
 								'delruta' => @$_POST['delruta']);
 
@@ -144,6 +151,10 @@
 								'factpvptot1' => $_POST['factpvptot1'],	
 								'factpvptot2' => $_POST['factpvptot2'],	
 								'coment' => $_POST['coment'],
+								'myimg1' => $_POST['myimg1'],	
+								'myimg2' => $_POST['myimg2'],	
+								'myimg3' => $_POST['myimg3'],	
+								'myimg4' => $_POST['myimg4'],
 								'vname'  => $_POST['vname'],
 								'delruta' => @$_POST['delruta']);
 
@@ -163,7 +174,7 @@
 				global $valToteEnt;						global $valToteDec;	
 				$_POST['factpvptot1'] = $valToteEnt;	$_POST['factpvptot2'] = $valToteDec;
 				$defaults['factpvptot1'] = $valToteEnt;	$defaults['factpvptot2'] = $valToteDec;
-
+				echo "\$_POST['delruta'] = ".$_POST['delruta']."<br>";
 			}
 
 		global $dyt1; 		$dyt1 = "20".$defaults['dy'];
@@ -176,21 +187,32 @@
 
 		////////////////////
 		
-		global $rutaDir;		
-		if((strlen(trim(@$defaults['delruta']))) != 0){
+		$idx = $_SESSION['idx'];
+		global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastosfeed`";
+		$sqlrt = "SELECT * FROM `$db_name`.$vnamed  WHERE $vnamed.`id` = '$idx' LIMIT 1 ";
+		$qrt = mysqli_query($db,$sqlrt);
+		$rowrt = mysqli_fetch_assoc($qrt);
+		global $rutaOld;	$rutaOld = $rowrt['ruta'];
+		echo "\$RutaOld = ".$rutaOld."<br>";
+
+		global $rutaDir;
+		if((strlen(trim($rutaOld)))!= 0){
+			$rutaDir = $rutaOld;
+		}elseif((strlen(trim(@$defaults['delruta']))) != 0){
 			$rutaDir = @$defaults['delruta'];
 		}elseif((strlen(trim(@$_POST['delruta']))) != 0){
 			$rutaDir = @$_POST['delruta'];
 		}else{  }
-		//echo "== ".$rutaDir."<br>";
 
 		if($_POST['proveegastos'] != ''){
 
-			global $checked;
+			global $checked;		global $checkedb;
 
-			if(@$defaults['xl'] == 'yes') { $checked = "checked='checked'";}else{ $checked = ""; }
-			
 			global $Checkbox;
+			if(@$defaults['xl'] == 'yes'){ $checked = "checked='checked'";}else{ $checked = ""; }
+			global $Checkboxb;
+			if(@$defaults['xlb'] == 'yes'){ $checkedb = "checked='checked'";}else{ $checkedb = ""; }
+			
 			$Checkbox = "<tr>
 							<td colspan='2' style='text-align:center;' >
 								".$TituloCheck." : &nbsp; 
@@ -198,13 +220,47 @@
 							</td>
 						</tr>";
 
-			global $papeleraRecup;		global $rutaDirTr;
+			global $a;	$a = "20".$defaults['dy'];
+			global $vnameStatus; 		$vnameStatus = "`".$_SESSION['clave']."status`";
+			$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
+			echo "\$sqlSTatus = ".$sqlSTatus."<br>";
+			$qStauts = mysqli_query($db, $sqlSTatus);
+			$rowStatus = mysqli_fetch_assoc($qStauts);
+			global $nY;		$nY = date('Y');
+			global $papeleraRecup;		global $ejerStatus;
 
+			global $papeleraRecup;
 			if($papeleraRecup == 1){
+				
+				if($rowStatus['stat']=='close'){
+					$ejerStatus =  "<tr><td colspan=2 style='text-align:center;' >EL EJERCICIO ".$a." ESTÁ CERRADO<br>";
+					if(@$defaults['delruta'] == "../cbj_Docs/docgastos_pendientes/"){
+						$_SESSION['stat'] = "closePendiente";
+						$ejerStatus .=  "SE RECUPERARÁ EN ".@$defaults['delruta']."</td></tr>";
+					}else{
+						$_SESSION['stat'] = 'close';
+						$defaults['delruta'] = "../cbj_Docs/docgastos_".$nY."/";
+						$_SESSION['newDy'] = substr($nY,2,2);
+						$ejerStatus .=  "SE RECUPERARÁ EN ".@$defaults['delruta']."</td></tr>";
+						$Checkboxb = "<tr>
+										<td colspan='2' style='text-align:center;' >
+											CONFIRMO LA NUEVA RUTA : &nbsp; 
+											<input type='checkbox' name='xlb' value='yes' ".$checkedb."/>
+										</td>
+									</tr>";
+					}
+					
+				}else{
+					$_SESSION['stat'] = 'open';
+					$ejerStatus =  "<tr><td colspan=2 style='text-align:center;' >EL EJERCICIO ".$a." ESTÁ ABIERTO</td></tr>"; 
+				}
+
+				global $rutaDirTr;
 				$rutaDirTr ="<tr>
 								<td style='text-align: right !important;' >RUTA DIR</td>
 								<td>".$rutaDir."</td>			
 							</tr>";
+
 			}else{ $rutaDirTr =""; }
 
 			//global $titulo; 		$titulo = "MARCAR COMO NO PAGADO ESTE GASTO";

@@ -105,7 +105,8 @@
 		$rowStatus = mysqli_fetch_assoc($qStauts);
 
 		global $style;
-		if($rowStatus['stat']=='close'){
+		if($rowStatus['stat']==''){
+		//if($rowStatus['stat']=='close'){
 			global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
 			global $Modif2;			$Modif2= "style='display:none; visibility: hidden;'";
 			global $PendienteG;		$PendienteG = "style='display:none; visibility: hidden;'";

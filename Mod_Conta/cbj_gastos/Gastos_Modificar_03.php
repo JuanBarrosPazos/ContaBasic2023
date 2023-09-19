@@ -43,8 +43,8 @@ session_start();
 		global $db; 			global $db_name;
 		global $vname; 			global $dyt1;		$dyt1 = $_SESSION['dyt1'];
 		
-		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_".$_SESSION['dyt1']."/";
-		global $rutanew;		$rutanew  = "../cbj_Docs/docgastos_pendientes/";
+		global $rutaOld;		$rutaOld = "../cbj_Docs/docgastos_".$_SESSION['dyt1']."/";
+		global $rutaNew;		$rutaNew  = "../cbj_Docs/docgastos_pendientes/";
 		
 		global $vnamei; 		$vnamei = "`".$_SESSION['clave']."gastos_pendientes`";
 		global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastos_".$_SESSION['dyt1']."`";
@@ -84,9 +84,9 @@ session_start();
 
 		if(isset($_POST['oculto2'])){ $_SESSION['yold'] = substr($_POST['factdate'],0,2); }else{ }
 
-		global $rutaold;		$rutaold = "../cbj_Docs/docgastos_20".$_SESSION['yold']."/";
-		//echo "* ".$rutaold."<br>";
-		global $rutaDir; 	$rutaDir = $rutaold;
+		global $rutaOld;		$rutaOld = "../cbj_Docs/docgastos_20".$_SESSION['yold']."/";
+		//echo "* ".$rutaOld."<br>";
+		global $rutaDir; 	$rutaDir = $rutaOld;
 		
 		global $db; 	global $db_name;
 

@@ -112,7 +112,9 @@ session_start();
 				 ////////////////////				  ///////////////////
 
 	function show_form(){
-	
+
+		global $db;			global $db_name;
+		
 		global $rutPend;	$rutPend = '';
 		global $pend;		$pend = "";
 		require 'Gastos_Botonera.php';
@@ -227,19 +229,20 @@ session_start();
 						<td>".@$defaults['delruta']."</td>			
 					</tr>";
 
+		/*	OCULTO FUNCIONES CON STATUS CLOSE
 		global $a;	$a= "20".$defaults['dy'];
 		global $vnameStatus; 		$vnameStatus = "`".$_SESSION['clave']."status`";
 		$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
 		$qStauts = mysqli_query($db, $sqlSTatus);
 		$rowStatus = mysqli_fetch_assoc($qStauts);
 
-		global $style;
 		if($rowStatus['stat']=='close'){
 			global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
 			global $Modif2;			$Modif2= "style='display:none; visibility: hidden;'";
 			global $PendienteG;		$PendienteG = "style='display:none; visibility: hidden;'";
 			global $Recupera3;		$Recupera3 = "style='display:none; visibility: hidden;'";
 		}else{ }
+		*/
 
 		require 'TableBorrar.php';
 	

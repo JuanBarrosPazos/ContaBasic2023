@@ -61,7 +61,8 @@
 				<input type='hidden' name='ocultoDetalle' value=1 />
 			</form>
 				</div>");
-				
+
+		/*	OCULTO FUNCIONES CON STATUS CLOSE
 		global $a;	$a= "20".(substr($rowb['factdate'],0,2)); 
 		$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
 		$qStauts = mysqli_query($db, $sqlSTatus);
@@ -73,6 +74,9 @@
 		}else{
 			$style = "style='display:inline-block;'";
 		}
+		*/
+		global $style;
+		$style = "style='display:inline-block;'";
 
 		print("<div ".$style.">
 		<form name='modifica' action='Gastos_Papelera_Recuperar.php' method='POST'>");

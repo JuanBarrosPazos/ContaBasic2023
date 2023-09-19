@@ -78,12 +78,12 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 		if($_SESSION['yold'] != $dynew){
 
-			global $rutaold;		$rutaold = "../cbj_Docs/docgastos_20".$_SESSION['yold']."/";
-			global $rutanew;		$rutanew = "../cbj_Docs/docgastos_20".$dynew."/";
+			global $rutaOld;		$rutaOld = "../cbj_Docs/docgastos_20".$_SESSION['yold']."/";
+			global $rutaNew;		$rutaNew = "../cbj_Docs/docgastos_20".$dynew."/";
 			
-			if(file_exists($rutaold.$_SESSION['myimg1']) ){
-						@copy($rutaold.$_SESSION['myimg1'], $rutanew.$_SESSION['myimg1']);
-						unlink($rutaold.$_SESSION['myimg1']);
+			if(file_exists($rutaOld.$_SESSION['myimg1']) ){
+						@copy($rutaOld.$_SESSION['myimg1'], $rutaNew.$_SESSION['myimg1']);
+						unlink($rutaOld.$_SESSION['myimg1']);
 						/*		
 							print(" <br/>* CHANGE YEAR FACT: 20".$_SESSION['yold']." X 20".$dynew."
 									<br/>- Ok Copy & Unlink Img Name 1.");
@@ -91,29 +91,29 @@ if ($_SESSION['Nivel'] == 'admin'){
 			}else{	//print("<br/>- No Ok Copy & Unlink Img Name 1.");
 						}
 											
-			if(file_exists($rutaold.$_SESSION['myimg2']) ){
-						@copy($rutaold.$_SESSION['myimg2'], $rutanew.$_SESSION['myimg2']);
-						unlink($rutaold.$_SESSION['myimg2']);
+			if(file_exists($rutaOld.$_SESSION['myimg2']) ){
+						@copy($rutaOld.$_SESSION['myimg2'], $rutaNew.$_SESSION['myimg2']);
+						unlink($rutaOld.$_SESSION['myimg2']);
 						/*	print("<br/>- Ok Copy & Unlink Img Name 2.");	*/
 			}else{ 	//print("<br/>- No Ok Copy & Unlink Img Name 2.");
 						}
 											
-			if(file_exists($rutaold.$_SESSION['myimg3']) ){
-						@copy($rutaold.$_SESSION['myimg3'], $rutanew.$_SESSION['myimg3']);
-						unlink($rutaold.$_SESSION['myimg3']);
+			if(file_exists($rutaOld.$_SESSION['myimg3']) ){
+						@copy($rutaOld.$_SESSION['myimg3'], $rutaNew.$_SESSION['myimg3']);
+						unlink($rutaOld.$_SESSION['myimg3']);
 						/*	print("<br/>- Ok Copy & Unlink Img Name 3.");	*/
 			}else{	//print("<br/>- No Ok Copy & Unlink Img Name 3.");
 						}
 											
-			if(file_exists($rutaold.$_SESSION['myimg4']) ){
-						@copy($rutaold.$_SESSION['myimg4'], $rutanew.$_SESSION['myimg4']);
-						unlink($rutaold.$_SESSION['myimg4']);
+			if(file_exists($rutaOld.$_SESSION['myimg4']) ){
+						@copy($rutaOld.$_SESSION['myimg4'], $rutaNew.$_SESSION['myimg4']);
+						unlink($rutaOld.$_SESSION['myimg4']);
 						/*	print("<br/>- Ok Copy & Unlink Img Name 4.");	*/
 			}else{	//print("<br/>- No Ok Copy & Unlink Img Name 4.");
 						}
 											
 			global $sent;								
-			$sent = "INSERT INTO `$db_name`.$vname (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1b]', '$_SESSION[myimg2b]', '$_SESSION[myimg3b]', '$_SESSION[myimg4b]')";
+			$sent = "INSERT INTO `$db_name`.$vname (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]')";
 
 			$idx = $_SESSION['idx'];
 			global $vnamed; 	$vnamed = "`".$_SESSION['clave']."gastos_20".$_SESSION['yold']."`";
