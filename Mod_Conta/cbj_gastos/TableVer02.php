@@ -103,14 +103,19 @@
 		$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
 		$qStauts = mysqli_query($db, $sqlSTatus);
 		$rowStatus = mysqli_fetch_assoc($qStauts);
-
 		global $style;
-		if($rowStatus['stat']==''){
-		//if($rowStatus['stat']=='close'){
-			global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
-			global $Modif2;			$Modif2= "style='display:none; visibility: hidden;'";
-			global $PendienteG;		$PendienteG = "style='display:none; visibility: hidden;'";
-			global $Recupera3;		$Recupera3 = "style='display:none; visibility: hidden;'";
+		//if($rowStatus['stat']==''){
+		if($rowStatus['stat']=='close'){
+			if($rutPend == 'Pendientes_'){
+				global $Modif2;			$Modif2 = "style='display:none; visibility: hidden;'";
+				global $ModImg2;		$ModImg2 = "style='display:none; visibility: hidden;'";
+			}else{
+				global $Modif2;			$Modif2 = "style='display:inline-block;'";
+				global $ModImg2;		$ModImg2 = "style='display:inline-block;'";
+			}
+			//global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
+			//global $PendienteG;		$PendienteG = "style='display:none; visibility: hidden;'";
+			//global $Recupera3;		$Recupera3 = "style='display:none; visibility: hidden;'";
 		}else{ }
 
 			require 'Gastos_Botones.php';

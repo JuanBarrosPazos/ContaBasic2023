@@ -36,7 +36,7 @@
 				</td>
 			</tr>
 			<input type='hidden' name='delruta' value='".@$defaults['delruta']."' />
-			\$defaults['delruta'] = ".@$defaults['delruta']."
+			\$defaults['delruta'] = ".@$defaults['delruta']."<br>
 				".$rutaDirTr."
 	            ".$Checkbox."
 				".$ejerStatus."
@@ -52,7 +52,6 @@
 				<td>
 					20".$defaults['dy']."/".$defaults['dm']."/".$defaults['dd']."<br>
 						<input type='hidden' name='dy' value='".$defaults['dy']."' />
-						\$defaults['dy'] = ".$defaults['dy']." \$_SESSION['newDy'] = ".$_SESSION['newDy']."<br>
 						<input type='hidden' name='dm' value='".$defaults['dm']."' />
 						<input type='hidden' name='dd' value='".$defaults['dd']."' />
 				</td>
@@ -117,7 +116,12 @@
 			}
 		
 		global $papeleraRecup;
-		if($papeleraRecup == 1){
+		global $gastoModif3;
+
+		if($gastoModif3 == 1){
+				print("<input type='hidden' name='ocultoModif3' value=1 />
+						</form>");
+		}elseif($papeleraRecup == 1){
 				print("<input type='hidden' name='ocultoRecup' value=1 />
 						</form>");
 		}else{ print("<input type='hidden' name='oculto' value=1 />

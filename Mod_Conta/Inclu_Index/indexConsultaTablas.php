@@ -475,7 +475,7 @@
 		$TotEd5 = abs(($sumapvptotg*100)/$sumapvptoti);
 	}elseif(($sumapvptotg > 0)&&($sumapvptoti <= 0)){
 		$TotEd5 = abs(($sumapvptotg*100)/$sumapvptotd);
-		echo $TotEd5;
+		//echo $TotEd5;
 	}else{
 		$TotEd5 = 0.00;
 	}

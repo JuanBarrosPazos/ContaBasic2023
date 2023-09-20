@@ -26,7 +26,7 @@ session_start();
 			}else{ // SI PASA LA VALIDACIÓN
 
 				// SI NO HA MARCADO EL CHECK
-				if((!isset($_POST['xl']))||(!isset($_POST['xlb']))){
+				if((!isset($_POST['xl']))||((!isset($_POST['xlb']))&&($_SESSION['stat'] == 'close'))){
 					if(!isset($_POST['xl'])){
 						print("<div style='text-align:center; margin:auto;'>
 									* HA DE MARCAR LA CASILLA DE CONFIRMACIÓN
@@ -121,14 +121,18 @@ session_start();
 		require 'Gastos_Botonera.php';
 		global $title;			$title = 'SE HA INSERTADO LA FACTURA EN ';
 
-		//require 'Modificar03process_form_2.php';
-
-		if($_SESSION['stat'] == 'close'){ $_POST['dy'] = $_SESSION['newDy']; }else{ }
+			if($_SESSION['stat'] == 'close'){ $_POST['dy'] = $_SESSION['newDy']; }else{ }
 		require 'Gastos_factdate.php';
-		//echo $factdate."<br>";
+			if($_SESSION['stat'] == 'close'){
+				//$_POST['dy'] = $_SESSION['newDy'];
+				global $factdate;	$factdate = $_SESSION['newDy']."/".date('m/d');
+			}else{ }
+			//echo $factdate."<br>";
 
 		require 'FormatNumber.php';
 
+		//require 'Modificar03process_form_2.php';
+		
 		$idx = $_SESSION['idx'];
 
 		global $sent;
@@ -156,7 +160,7 @@ session_start();
 						copy($rutaOld.$_SESSION['myimg1'], $rutaNew.$_SESSION['myimg1']);
 			}else{
 				print("<br/>- No Ok Copy Img Name 1 ".$rutaOld.$_SESSION['myimg1']. " TO ".$rutaNew.$_SESSION['myimg1']);}
-
+ 
 			if(file_exists($rutaOld.$_SESSION['myimg2']) ){
 						copy($rutaOld.$_SESSION['myimg2'], $rutaNew.$_SESSION['myimg2']);
 			}else{
@@ -202,7 +206,7 @@ session_start();
 		global $redir;
 		$redir = "<script type='text/javascript'>
 						function redir(){
-						window.location.href='Gastos_Ver.php';
+						window.location.href='Gastos_Papelera_Ver.php';
 					}
 					setTimeout('redir()',8000);
 					</script>";

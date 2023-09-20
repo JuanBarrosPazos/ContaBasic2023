@@ -137,9 +137,9 @@
 								'dd' => $_POST['dd'],
 								'factnum' => strtoupper($_POST['factnum']),
 							//	'factdate' => $_POST['factdate'],
-							   	'refprovee' => $rowprovee['ref'],
-							   	'factnom' => $rowprovee['rsocial'],
-							   	'factnif' => $_dnil,
+							   	'refprovee' => $_POST['ref'],
+							   	'factnom' => $_POST['rsocial'],
+							   	'factnif' => $_POST['factnif'],
 							   	'factiva' => $_POST['factiva'],
 								'factivae1' => $_POST['factivae1'],	
 								'factivae2' => $_POST['factivae2'],	
@@ -158,9 +158,9 @@
 								'vname'  => $_POST['vname'],
 								'delruta' => @$_POST['delruta']);
 
-		}elseif(isset($_POST['ocultoRecup'])){
+		}elseif((isset($_POST['ocultoRecup']))||(isset($_POST['ocultoModif3']))){
 
-				echo "SOY OCULTO RECUP...<br>";
+				//echo "SOY OCULTO RECUP...<br>";
 				$defaults = $_POST;
 
 				global $valIvaeEnt;						global $valIvaeDec;
@@ -174,26 +174,29 @@
 				global $valToteEnt;						global $valToteDec;	
 				$_POST['factpvptot1'] = $valToteEnt;	$_POST['factpvptot2'] = $valToteDec;
 				$defaults['factpvptot1'] = $valToteEnt;	$defaults['factpvptot2'] = $valToteDec;
-				echo "\$_POST['delruta'] = ".$_POST['delruta']."<br>";
+				//echo "\$_POST['delruta'] = ".$_POST['delruta']."<br>";
+
+				
 			}
 
-		global $dyt1; 		$dyt1 = "20".$defaults['dy'];
-		$_SESSION['dyt1'] = $dyt1;
-		//echo "* ".$dyt1."<br>";
-			
 		require 'TablaIfErrors.php';
 
 		require 'ArrayMesDia.php';
 
 		////////////////////
 		
-		$idx = $_SESSION['idx'];
-		global $vnamed; 		$vnamed = "`".$_SESSION['clave']."gastosfeed`";
-		$sqlrt = "SELECT * FROM `$db_name`.$vnamed  WHERE $vnamed.`id` = '$idx' LIMIT 1 ";
-		$qrt = mysqli_query($db,$sqlrt);
-		$rowrt = mysqli_fetch_assoc($qrt);
-		global $rutaOld;	$rutaOld = $rowrt['ruta'];
-		echo "\$RutaOld = ".$rutaOld."<br>";
+		global $rutaOld;	global $papeleraRecup;		global $gastoModif3;
+		if($papeleraRecup == 1){
+			$idx = $_SESSION['idx'];
+			$vnamed = "`".$_SESSION['clave']."gastosfeed`";
+			$sqlrt = "SELECT * FROM `$db_name`.$vnamed  WHERE $vnamed.`id` = '$idx' LIMIT 1 ";
+			$qrt = mysqli_query($db,$sqlrt);
+			$rowrt = mysqli_fetch_assoc($qrt);
+		}elseif($gastoModif3 == 1){
+			$rutaOld = "../cbj_Docs/docgastos_pendientes/";
+			//echo "\$RutaOld = ".$rutaOld."<br>";
+		}else{ }
+
 
 		global $rutaDir;
 		if((strlen(trim($rutaOld)))!= 0){
@@ -229,9 +232,7 @@
 			global $nY;		$nY = date('Y');
 			global $papeleraRecup;		global $ejerStatus;
 
-			global $papeleraRecup;
-			if($papeleraRecup == 1){
-				
+			if(($papeleraRecup == 1)||($gastoModif3 == 1)){
 				if($rowStatus['stat']=='close'){
 					$ejerStatus =  "<tr><td colspan=2 style='text-align:center;' >EL EJERCICIO ".$a." ESTÁ CERRADO<br>";
 					if(@$defaults['delruta'] == "../cbj_Docs/docgastos_pendientes/"){
@@ -241,10 +242,14 @@
 						$_SESSION['stat'] = 'close';
 						$defaults['delruta'] = "../cbj_Docs/docgastos_".$nY."/";
 						$_SESSION['newDy'] = substr($nY,2,2);
-						$ejerStatus .=  "SE RECUPERARÁ EN ".@$defaults['delruta']."</td></tr>";
+						$ejerStatus .=  "SE RECUPERARÁ EN ".@$defaults['delruta']."</td></tr>
+						<tr>
+							<td style='text-align:right;'>FECHA NUEVA</td>
+							<td>20".$_SESSION['newDy']."/".date('m/d')."</td>
+						</tr>";
 						$Checkboxb = "<tr>
 										<td colspan='2' style='text-align:center;' >
-											CONFIRMO LA NUEVA RUTA : &nbsp; 
+											CONFIRMO LA NUEVA RUTA Y FECHA: &nbsp; 
 											<input type='checkbox' name='xlb' value='yes' ".$checkedb."/>
 										</td>
 									</tr>";
@@ -267,6 +272,24 @@
 			//global $titInput;		$titInput = "GUARDAR COMO GASTO PENDIENTE DE PAGO";
 			global $Recupera3;		$Recupera3 = "style='display:none; visibility: hidden;'";
 			global $PendienteG;		$PendienteG = "style='display:none; visibility: hidden;'";
+			
+			//if($rowStatus['stat']==''){
+			if($rowStatus['stat']=='close'){
+				if($rutPend == 'Pendientes_'){
+					global $Modif2;			$Modif2 = "style='display:none; visibility: hidden;'";
+					global $ModImg2;		$ModImg2 = "style='display:none; visibility: hidden;'";
+				}else{
+					global $Modif2;			$Modif2 = "style='display:inline-block;'";
+					global $ModImg2;		$ModImg2 = "style='display:inline-block;'";
+				}
+				//global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
+				//global $PendienteG;		$PendienteG = "style='display:none; visibility: hidden;'";
+				//global $Recupera3;		$Recupera3 = "style='display:none; visibility: hidden;'";
+			}else{ }
+
+		global $dyt1; 		$dyt1 = "20".$defaults['dy'];
+		$_SESSION['dyt1'] = "20".$defaults['dy'];
+
 			require 'TableBorrar.php';
 
 		}

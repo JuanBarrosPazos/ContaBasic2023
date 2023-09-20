@@ -380,6 +380,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 				</form>");
 			
 			global $Modif2;		$Modif2 = "style='display:none; visibility: hidden;'";
+			
 			require 'Gastos_Botones.php';
 
 			print("</td>

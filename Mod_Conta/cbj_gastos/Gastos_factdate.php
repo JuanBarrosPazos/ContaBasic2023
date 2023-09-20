@@ -36,7 +36,8 @@
 
     global $factdate;
     $factdate = @$_POST['dy']."/".@$_POST['dm']."/".@$_POST['dd'];
-
+    //$factdate = $_SESSION['newDy']."/".date('m/d');
+    
 	/*
     $fil = "%".$dy1.$dm1.$dd1."%";
 	if ((@$_POST['dm'] == '')&&(@$_POST['dd'] != '')){$dm1 = '';

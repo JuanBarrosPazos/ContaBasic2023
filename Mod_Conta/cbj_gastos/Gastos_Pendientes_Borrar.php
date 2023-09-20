@@ -51,9 +51,9 @@ session_start();
 
 		require 'FormatNumber.php';
 
-		global $vnamei; 		$vnamei = "`".$_SESSION['clave']."gastosfeed`";
+		global $vnamepap; 		$vnamepap = "`".$_SESSION['clave']."gastosfeed`";
 		global $sent;
-		$sent = "INSERT INTO `$db_name`.$vnamei (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`, `ruta`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]', '$_POST[delruta]' )";
+		$sent = "INSERT INTO `$db_name`.$vnamepap (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`, `ruta`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]', '$_POST[delruta]' )";
 		
 		if(mysqli_query($db, $sent)){
 
@@ -100,6 +100,7 @@ session_start();
 
 	function show_form(){
 	
+		global $db;		global $db_name;
 		global $rutPend;	$rutPend = 'Pendientes_';
 
 		global $pend;	$pend = "PENDIENTES";
@@ -187,11 +188,13 @@ session_start();
 									'myimg4' => $_POST['myimg4'],
 									'vname'  => $_POST['vname'],
 									'delruta' => $DelRuta);
-	}elseif(isset($_POST['oculto'])){
-					$defaults = $_POST;
-	}
+		}elseif(isset($_POST['oculto'])){
+						$defaults = $_POST;
+		}
 
-	echo "** ".$_SESSION['myimg1']."<br>";
+		// SOLO LAS DECLARO PARA REUTILIZAR EL SCRIPT 
+		global $nY;		$nY = date('Y');
+		$_SESSION['newDy'] = substr($nY,2,2);
 
 		////////////////////
 
@@ -216,6 +219,31 @@ session_start();
 						<td style='text-align: right !important;' >RUTA DIR</td>
 						<td>".@$defaults['delruta']."</td>			
 					</tr>";
+
+		global $a;
+		if(isset($_POST['factdate'])){
+			$a= "20".(substr($_POST['factdate'],0,2));
+		}else{
+			$a= "20".(substr($_POST['dy'],0,2));
+		}
+		global $vnameStatus; 		$vnameStatus = "`".$_SESSION['clave']."status`";
+		$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
+		$qStauts = mysqli_query($db, $sqlSTatus);
+		$rowStatus = mysqli_fetch_assoc($qStauts);
+		global $style;
+		//if($rowStatus['stat']==''){
+		if($rowStatus['stat']=='close'){
+			if($rutPend == 'Pendientes_'){
+				global $Modif2;			$Modif2 = "style='display:none; visibility: hidden;'";
+				global $ModImg2;		$ModImg2 = "style='display:none; visibility: hidden;'";
+			}else{
+				global $Modif2;			$Modif2 = "style='display:inline-block;'";
+				global $ModImg2;		$ModImg2 = "style='display:inline-block;'";
+			}
+			//global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
+			//global $PendienteG;		$PendienteG = "style='display:none; visibility: hidden;'";
+			//global $Recupera3;		$Recupera3 = "style='display:none; visibility: hidden;'";
+		}else{ }
 
 		require 'TableBorrar.php';
 	

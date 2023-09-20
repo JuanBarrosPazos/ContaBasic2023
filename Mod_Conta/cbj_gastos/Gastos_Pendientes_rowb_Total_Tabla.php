@@ -41,7 +41,18 @@
 		$i++;
 
 		global $vname; 		global $dyt1;
-				
+		global $a;	$a= "20".(substr($rowb['factdate'],0,2)); 
+		$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
+		$qStauts = mysqli_query($db, $sqlSTatus);
+		$rowStatus = mysqli_fetch_assoc($qStauts);
+		global $style;
+		//OCULTA LOS ELEMENTOS QUE NO QUIERO QUE SE UTILICEN
+		if($rowStatus['stat']=='close'){
+			$style = "style='display:none; visibility: hidden;";
+		}else{
+			$style = "style='display:inline-block;'";
+		}
+
 		print ("<tr class='".$styleBgc."'>
 					<td align='center'>".$rowb['id']."</td>
 					<td align='center'>".$rowb['factnum']."</td>
@@ -65,7 +76,7 @@
 				<input type='hidden' name='ocultoDetalle' value=1 />
 			</form>
 				</div>
-				<div style='display:inline-block;' >
+				<div ".$style." >
 			<form name='ver' action='$_SERVER[PHP_SELF]' method='POST'>");
 
 		require 'Gastos_rowb_Total.php';
@@ -74,19 +85,6 @@
 				<input type='hidden' name='oculto2' value=1 />
 			</form>						
 				</div>");
-
-		global $a;	$a= "20".(substr($rowb['factdate'],0,2)); 
-		$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
-		$qStauts = mysqli_query($db, $sqlSTatus);
-		$rowStatus = mysqli_fetch_assoc($qStauts);
-
-		global $style;
-		if($rowStatus['stat']==''){
-		//if($rowStatus['stat']=='close'){
-			$style = "style='display:none; visibility: hidden;";
-		}else{
-			$style = "style='display:inline-block;'";
-		}
 
 		print("<div ".$style." >
 			<form name='modifica' action='Gastos_Pendientes_Modificar_02.php' method='POST'>");
@@ -98,7 +96,7 @@
 			</form>
 					</div>
 
-					<div ".$style." >
+					<div style='display:inline-block;' >
 		<form name='modifica' action='Gastos_Pendientes_Modificar_03.php' method='POST'>");
 
 		require 'Gastos_rowb_Total.php';
@@ -108,7 +106,7 @@
 		</form>
 				</div>
 
-				<div ".$style." >
+				<div style='display:inline-block;' >
 		<form name='modifica' action='Gastos_Pendientes_Borrar.php' method='POST'>");
 
 		require 'Gastos_rowb_Total.php';

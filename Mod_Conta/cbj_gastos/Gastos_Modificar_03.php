@@ -54,6 +54,9 @@ session_start();
 		require 'Gastos_Botonera.php';
 		global $title;			$title = 'SE HA INSERTADO LA FACTURA EN ';
 
+		require 'Gastos_factdate.php';
+		require 'FormatNumber.php';
+		
 		require 'Modificar03process_form_2.php';
 
 		/*
@@ -75,6 +78,8 @@ session_start();
 
 	function show_form($errors=[]){
 
+		global $db; 	global $db_name;
+
 		global $rutPend;	$rutPend = '';
 		global $pend;	$pend = "";
 		require 'Gastos_Botonera.php';
@@ -88,8 +93,6 @@ session_start();
 		//echo "* ".$rutaOld."<br>";
 		global $rutaDir; 	$rutaDir = $rutaOld;
 		
-		global $db; 	global $db_name;
-
 		require 'Modifica03show_form.php';
 
 	} // FIN function show_form($errors=[])

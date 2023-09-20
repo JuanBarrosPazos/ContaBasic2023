@@ -345,18 +345,22 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
         if($countg > 0){
 			$errors [] = "<font color='#FF0000'>YA EXISTE LA FACTURA EN ".$vnameg." </font>";
 	    }
-
+		
+		if($gastoModif3 == 1){
+			// NO HAGO NADA
+		}else{
 			global $vnamegp; 	$vnamegp = "`".$_SESSION['clave']."gastos_pendientes`";
 			$sqlgp =  "SELECT * FROM `$db_name`.$vnamegp WHERE `factnum` = '$_POST[factnum]'";
 			$qgp = mysqli_query($db, $sqlgp);
 			$countgp = mysqli_num_rows($qgp);
 			//$rowsgp = mysqli_fetch_assoc($qgp);	
-        if($countgp > 0){
-			$errors [] = "<font color='#FF0000'>YA EXISTE LA FACTURA EN ".$vnamegp." </font>";
-	    } 
+			if($countgp > 0){
+				$errors [] = "<font color='#FF0000'>YA EXISTE LA FACTURA EN ".$vnamegp." </font>";
+			} 
+		}
 
 		global $papelera;
-		if(	$papelera == 1){
+		if($papelera == 1){
 			// NO HAGO NADA
 		}else{
 			global $vnamegpap; 	$vnamegpap = "`".$_SESSION['clave']."gastosfeed`";

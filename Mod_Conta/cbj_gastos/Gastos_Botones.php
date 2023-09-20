@@ -7,7 +7,7 @@
     }elseif((!isset($dyt1))&&($dyt1 == '')){	
         $dyt1 = date('Y');
     }else{ }
-    
+
     global $selBotones;
 
     if((isset($_POST['id']))&&(@$_POST['id'] != '')){
@@ -96,7 +96,6 @@
             </div>");
             
     }else{ // INICIO SI NO ES LA PAPELERA DE GASTOS
-
         print("<div ".$Crear.">
                     ".$AddBlack."
                         <a href='Gastos_".$rutPend."Crear.php' >&nbsp;&nbsp;&nbsp;</a>

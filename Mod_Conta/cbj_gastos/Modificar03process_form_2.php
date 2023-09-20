@@ -1,8 +1,7 @@
 <?php
 
-		require 'Gastos_factdate.php';
-
-		require 'FormatNumber.php';
+		//require 'Gastos_factdate.php';
+		//require 'FormatNumber.php';
 
 		if(file_exists($rutaOld.$_SESSION['myimg1'])){
 					copy($rutaOld.$_SESSION['myimg1'], $rutaNew.$_SESSION['myimg1']);

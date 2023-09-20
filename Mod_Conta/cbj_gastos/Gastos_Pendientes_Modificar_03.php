@@ -19,17 +19,32 @@ session_start();
 
 		if(isset($_POST['oculto2'])){	info_01();
 										show_form();
-		} elseif(isset($_POST['oculto'])){
-				// SI NO HA COBRADO LA FACTURA.
+		} elseif(isset($_POST['ocultoModif3'])){
+			if($form_errors = validate_form()){
+				show_form($form_errors);
+		}else{ // SI PASA LA VALIDACIÓN
+
+			// SI NO HA MARCADO EL CHECK
+			if((!isset($_POST['xl']))||((!isset($_POST['xlb']))&&($_SESSION['stat'] == 'close'))){
 				if(!isset($_POST['xl'])){
-						print("<div style='text-align:center; margin:auto;'>
-									* HA DE MARCAR LA CASILLA DE CONFIRMACIÓN
-								</div>");
-							show_form();
-				}elseif(isset($_POST['xl'])){
-							//print("* SI SELECCIONADO");
-							process_form_2();
-									}
+					print("<div style='text-align:center; margin:auto;'>
+								* HA DE MARCAR LA CASILLA DE CONFIRMACIÓN
+							</div>");
+				}else { }
+
+				if((!isset($_POST['xlb']))&&($_SESSION['stat'] == 'close')){
+					print("<div style='text-align:center; margin:auto;'>
+								* HA DE ACEPTAR LA NUEVA RUTA DE RECUPERACIÓN
+							</div>");
+				}else { }
+						show_form();
+
+			}elseif(isset($_POST['xl'])){ // SI HA SELECCIONADO EL CHECK
+					process_form_2(); 
+					echo "HE PASASO LA VALIDACIÓN Y PROCESS_FORM_2()<br>";
+				}
+			}
+
 		}else{show_form();}
 							
 	}else{ require '../Inclu/table_permisos.php'; } 
@@ -38,16 +53,49 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	function process_form_2(){
+	function validate_form(){
 	
-		global $db; 		global $db_name;
-		global $vname; 		global $dyt1;		$dyt1 = $_SESSION['dyt1'];
-		
-		global $rutaOld;	$rutaOld = "../cbj_Docs/docgastos_pendientes/";
-		global $rutaNew;	$rutaNew = "../cbj_Docs/docgastos_".$dyt1."/";
+		global $db; 	global $sqld; 	global $qd; 	global $rowd;
 
-		global $vnamei; 	$vnamei = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+		//global $papelera;		$papelera = 1;
+		global $gastoModif3;	$gastoModif3 = 1;
+		
+		$errors = array();
+		
+		require 'ValidateForm.php';
+
+		return $errors;
+
+	} 
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
+
+	function process_form_2(){
+
+		global $db; 		global $db_name;
+		global $vname; 		global $dyt1;		
+
+		global $rutaNew;	global $vnamei;
+		if($_SESSION['stat'] == 'close'){
+			$dyt1 = "20".$_SESSION['newDy'];
+			$rutaNew = $_POST['delruta'];
+			$vnamei = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+			$_POST['dy'] = $_SESSION['newDy'];
+		}else{
+			$dyt1 = $_SESSION['dyt1'];
+			$rutaNew = "../cbj_Docs/docgastos_".$dyt1."/";
+			$vnamei = "`".$_SESSION['clave']."gastos_".$dyt1."`";
+		}
+
+		echo "* RUTA NEW ".$rutaNew."<br>";
+		echo "* VNAMEI ".$vnamei."<br>";
+
+		global $rutaOld;	$rutaOld = "../cbj_Docs/docgastos_pendientes/";
 		global $vnamed; 	$vnamed = "`".$_SESSION['clave']."gastos_pendientes`";
+		
+		echo "* RUTA OLD ".$rutaOld."<br>";
+		echo "* VNAMED ".$vnamed."<br>";
 		
 		global $rutPend;	$rutPend = 'Pendientes_';
 		global $pend;	$pend = "PENDIENTES";
@@ -56,10 +104,26 @@ session_start();
 
 		require 'Gastos_factdate.php';
 
+		if($_SESSION['stat'] == 'close'){ 
+			//$_POST['dy'] = $_SESSION['newDy'];
+			global $factdate;	$factdate = $_SESSION['newDy']."/".date('m/d');
+		}else{ }
+
 		require 'FormatNumber.php';
 
 		require 'Modificar03process_form_2.php';
-				
+
+		/*
+		global $redir;
+		$redir = "<script type='text/javascript'>
+						function redir(){
+						window.location.href='Gastos_Pendientes_Ver.php';
+					}
+					setTimeout('redir()',8000);
+					</script>";
+		print ($redir);
+		*/
+
 		/*
 			global $dyx; 		$dyx = "20".$_POST['dy'];
 			global $dmx; 		$dmx = "M".$_POST['dm'];
@@ -91,6 +155,8 @@ session_start();
 		global $rutaDir;	$rutaDir = $rutaOld;
 
 		global $db; 		global $db_name;
+
+		global $gastoModif3;	$gastoModif3 = 1;
 
 		require 'Modifica03show_form.php';
 
