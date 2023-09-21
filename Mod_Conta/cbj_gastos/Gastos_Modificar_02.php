@@ -17,15 +17,16 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 	master_index();
 
-	if(isset($_POST['oculto2'])){	info_01();
+	if(isset($_POST['oculto2'])){	
+							info_01();
 							show_form();
-	} elseif(isset($_POST['oculto'])){							
+	}elseif(isset($_POST['oculto'])){							
 			if($form_errors = validate_form()){
 					show_form($form_errors);
 			} else { process_form();
 					 info_02();
 					}
-			} else { show_form(); }
+	}else{ show_form(); }
 
 	} else { require '../Inclu/table_permisos.php'; } 
 
@@ -85,7 +86,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 						@copy($rutaOld.$_SESSION['myimg1'], $rutaNew.$_SESSION['myimg1']);
 						unlink($rutaOld.$_SESSION['myimg1']);
 						/*		
-							print(" <br/>* CHANGE YEAR FACT: 20".$_SESSION['yold']." X 20".$dynew."
+							print(" <br/>* CHANGE YEAR FACT: ".$_SESSION['yold']." X ".$dynew."
 									<br/>- Ok Copy & Unlink Img Name 1.");
 						*/
 			}else{	//print("<br/>- No Ok Copy & Unlink Img Name 1.");
@@ -278,10 +279,10 @@ if ($_SESSION['Nivel'] == 'admin'){
 		if(isset($_POST['oculto2'])){
 			
 			$datex = $_POST['factdate'];
-			$dyx = substr($_POST['factdate'],0,2);
-			$dmx = substr($_POST['factdate'],3,2);
+			$dyx = substr($_POST['factdate'],0,4);
+			$dmx = substr($_POST['factdate'],5,2);
 			$ddx = substr($_POST['factdate'],-2,2);
-			$dyt1 = "20".$dyx;
+			$dyt1 = $dyx;
 
 			$_SESSION['mold'] = $dmx;
 			$_SESSION['dold'] = $ddx;
@@ -354,7 +355,8 @@ if ($_SESSION['Nivel'] == 'admin'){
 								'dm' => $dmx,
 								'dd' => $ddx,
 								'factnum' => strtoupper($_POST['factnum']),
-							//	'factdate' => $_POST['factdate'],
+								'factdate' => $_POST['factdate'],
+								'factini' => $_POST['factini'],
 							   	'factnom' => $_POST['factnom'],
 							   	'factnif' => $_POST['factnif'],
 							   	'factiva' => $_POST['factiva'],
@@ -367,7 +369,8 @@ if ($_SESSION['Nivel'] == 'admin'){
 								'factpvp2' => $factpvp2,	
 								'factpvptot1' => $factpvptot1,	
 								'factpvptot2' => $factpvptot2,	
-								'coment' => $_POST['coment']);
+								'coment' => $_POST['coment'],
+								'factcrea' => $_POST['factcrea']);
 
 		// DATOS DESDE EL FORMULARIO =>
 		}elseif(isset($_POST['oculto'])){
@@ -377,7 +380,7 @@ if ($_SESSION['Nivel'] == 'admin'){
 			$_POST['factivae1'] = $valIvaeEnt;		$_POST['factivae2'] = $valIvaeDec;
 			$_POST['factrete1'] = $valReteEnt;		$_POST['factrete2'] = $valReteDec;
 			$_POST['factpvptot1'] = $valToteEnt;	$_POST['factpvptot2'] = $valToteDec;
-			$dyx = $_POST['dy'];	$dyt1 = "20".$dyx;
+			$dyx = $_POST['dy'];	$dyt1 = $dyx;
 
 			$defaults = array ( 'id' => $_POST['id'],
 								'proveegastos' => $_POST['proveegastos'],
@@ -385,8 +388,9 @@ if ($_SESSION['Nivel'] == 'admin'){
 								'dm' => $_POST['dm'],
 								'dd' => $_POST['dd'],
 								'factnum' => strtoupper($_POST['factnum']),
-							// 	'factdate' => $_POST['factdate'],
-							   	'refprovee' => $_POST['refprovee'],
+							 	'factdate' => $_POST['factdate'],
+								'factini' => $_POST['factini'],
+								'refprovee' => $_POST['refprovee'],
 							   	'factnom' => $_POST['factnom'],
 							   	'factnif' => $_POST['factnif'],
 							   	'factiva' => $_POST['factiva'],
@@ -399,7 +403,8 @@ if ($_SESSION['Nivel'] == 'admin'){
 								'factpvp2' => $_POST['factpvp2'],	
 								'factpvptot1' => $_POST['factpvptot1'],	
 								'factpvptot2' => $_POST['factpvptot2'],	
-								'coment' => $_POST['coment']);
+								'coment' => $_POST['coment'],
+								'factcrea' => $_POST['factcrea']);
 
 		}else{ $defaults = $_POST; }
 

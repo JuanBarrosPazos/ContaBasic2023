@@ -78,7 +78,7 @@ session_start();
 
 		global $rutaNew;	global $vnamei;
 		if($_SESSION['stat'] == 'close'){
-			$dyt1 = "20".$_SESSION['newDy'];
+			$dyt1 = $_SESSION['newDy'];
 			$rutaNew = $_POST['delruta'];
 			$vnamei = "`".$_SESSION['clave']."gastos_".$dyt1."`";
 			$_POST['dy'] = $_SESSION['newDy'];
@@ -106,7 +106,7 @@ session_start();
 
 		if($_SESSION['stat'] == 'close'){ 
 			//$_POST['dy'] = $_SESSION['newDy'];
-			global $factdate;	$factdate = $_SESSION['newDy']."/".date('m/d');
+			global $factdate;	$factdate = $_SESSION['newDy']."-".date('m-d');
 		}else{ }
 
 		require 'FormatNumber.php';
@@ -125,7 +125,7 @@ session_start();
 		*/
 
 		/*
-			global $dyx; 		$dyx = "20".$_POST['dy'];
+			global $dyx; 		$dyx = $_POST['dy'];
 			global $dmx; 		$dmx = "M".$_POST['dm'];
 
 			global $mes;

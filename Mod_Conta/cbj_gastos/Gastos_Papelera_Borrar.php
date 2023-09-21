@@ -47,7 +47,7 @@ session_start();
 		require 'Gastos_factdate.php';
 
 		global $db; 		global $db_name;
-		global $dyt1;		$dyt1 = "20".$_POST['dy'];
+		global $dyt1;		$dyt1 = $_POST['dy'];
 
 		global $vname; 		$vname = "`".$_SESSION['clave']."gastosfeed`";
  
@@ -126,10 +126,10 @@ session_start();
 		if(isset($_POST['oculto2'])){
 				
 			$datex = $_POST['factdate'];
-			$dyx = substr($_POST['factdate'],0,2);
-			$dmx = substr($_POST['factdate'],3,2);
+			$dyx = substr($_POST['factdate'],0,4);
+			$dmx = substr($_POST['factdate'],5,2);
 			$ddx = substr($_POST['factdate'],-2,2);
-			$dyt1 = "20".$dyx;
+			$dyt1 = $dyx;
 
 			$ivae = strlen(trim($_POST['factivae']));
 			$ivae = $ivae - 3;
@@ -178,7 +178,8 @@ session_start();
 								'dm' => $dmx,
 								'dd' => $ddx,
 								'factnum' => $_POST['factnum'],
-							//	'factdate' => $_POST['factdate'],
+								'factdate' => $_POST['factdate'],
+								'factini' => $_POST['factini'],
 								'factnom' => $_POST['factnom'],
 								'factnif' => $_POST['factnif'],
 								'factiva' => $_POST['factiva'],
@@ -196,6 +197,7 @@ session_start();
 								'myimg2' => $_POST['myimg2'],	
 								'myimg3' => $_POST['myimg3'],	
 								'myimg4' => $_POST['myimg4'],
+								'factcrea' => $_POST['factcrea'],
 								'vname'  => $_POST['vname'],
 								'delruta' => $DelRuta /*@$_POST['delruta']*/
 							);
@@ -230,7 +232,7 @@ session_start();
 					</tr>";
 
 		/*	OCULTO FUNCIONES CON STATUS CLOSE
-		global $a;	$a= "20".$defaults['dy'];
+		global $a;	$a= $defaults['dy'];
 		global $vnameStatus; 		$vnameStatus = "`".$_SESSION['clave']."status`";
 		$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
 		$qStauts = mysqli_query($db, $sqlSTatus);

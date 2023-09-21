@@ -60,7 +60,7 @@ session_start();
 		require 'Modificar03process_form_2.php';
 
 		/*
-			global $dyx; 		$dyx = "20".$_POST['dy'];
+			global $dyx; 		$dyx = $_POST['dy'];
 			global $dmx; 		$dmx = "M".$_POST['dm'];
 
 			global $mes;
@@ -87,7 +87,7 @@ session_start();
 		global $titInput;		$titInput = "GUARDAR COMO GASTO PENDIENTE DE PAGO";
 		global $TituloCheck;	$TituloCheck = "SI NO SE HA PAGADO LA FACTURA MARQUE LA CASILLA";
 
-		if(isset($_POST['oculto2'])){ $_SESSION['yold'] = substr($_POST['factdate'],0,2); }else{ }
+		if(isset($_POST['oculto2'])){ $_SESSION['yold'] = substr($_POST['factdate'],0,4); }else{ }
 
 		global $rutaOld;		$rutaOld = "../cbj_Docs/docgastos_20".$_SESSION['yold']."/";
 		//echo "* ".$rutaOld."<br>";

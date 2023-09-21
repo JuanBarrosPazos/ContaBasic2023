@@ -175,7 +175,7 @@ function config_one_cbj(){
   `Direccion` varchar(60) collate utf8_spanish2_ci NOT NULL,
   `Tlf1` int(9) NULL,
   `Tlf2` int(9) NULL,
-  `borrado` datetime collate utf8_spanish2_ci NOT NULL default CURRENT_TIMESTAMP,
+  `borrado` datetime NOT NULL default CURRENT_TIMESTAMP,
  UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
@@ -196,7 +196,8 @@ function config_one_cbj(){
 	$tgb = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname1b (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factdate` date NOT NULL,
+  `factini` date NOT NULL,
   `refprovee` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -211,6 +212,7 @@ function config_one_cbj(){
   `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `factcrea` datetime NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)/*,
   INDEX `refprovee` (`refprovee`),
@@ -281,7 +283,7 @@ function config_one_cbj(){
   `Direccion` varchar(60) collate utf8_spanish2_ci NOT NULL,
   `Tlf1` int(9) NULL,
   `Tlf2` int(9) NULL,
-  `borrado` datetime collate utf8_spanish2_ci NOT NULL default CURRENT_TIMESTAMP,
+  `borrado` datetime NOT NULL default CURRENT_TIMESTAMP,
  UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
@@ -291,7 +293,7 @@ function config_one_cbj(){
 			$table8 = $table8."\t* NO OK TABLA ".$vname6f.". ".mysqli_error($db)."\n";
 			}
 
-				/************** CREAMOS LA TABLA INGRESOS PENDIENTES ***************/
+	/************** CREAMOS LA TABLA INGRESOS PENDIENTES ***************/
 
 	global $tblClientes;
 	$tblClientes = "`".$_SESSION['clave']."clientes`";
@@ -302,7 +304,8 @@ function config_one_cbj(){
 	$tib = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname3b (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factdate` date NOT NULL,
+  `factini` date NOT NULL,
   `refcliente` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -317,6 +320,7 @@ function config_one_cbj(){
   `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `factcrea` datetime NOT NULL,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)/*,
   INDEX `refcliente` (`refcliente`),
@@ -368,22 +372,22 @@ $status2 = "INSERT INTO `$db_name`.$vname11 (`id`, `year`, `ycod`, `stat`, `hidd
 			}
 
 	/************** CREAMOS LA TABLA STATUSFEEDBACK ***************/
-	// OJO A ESTA TABLA, HAY QUE CAMBIAR EL NOMBRE feedback POR statusfeedback ....
+	// OJO A ESTA TABLA, HAY QUE CAMBIAR EL NOMBRE feedback POR statusfeed ....
 	global $vname12;
-	$vname12 = "`".$_SESSION['clave']."statusfeedback`";
+	$vname12 = "`".$_SESSION['clave']."statusfeed`";
 
-	$statusfeedback = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname12 (
+	$statusfeed = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname12 (
 				  `id` int(2) NOT NULL auto_increment,
   				  `year` int(4) NOT NULL,
    				  `ycod` int(2) NOT NULL,
  				  `stat` varchar(5) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'open',
  				  `hidden` varchar(2) COLLATE utf8_spanish2_ci NOT NULL DEFAULT 'no',
-				  `date` datetime collate utf8_spanish2_ci NOT NULL default CURRENT_TIMESTAMP,
+				  `date` datetime NOT NULL default CURRENT_TIMESTAMP,
 				  PRIMARY KEY  (`id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
 	global $table20;
-	if(mysqli_query($db, $statusfeedback)){
+	if(mysqli_query($db, $statusfeed)){
 			$table20 = "\t* OK TABLA ".$vname12.". \n";
 	}else{ print("* NO OK TABLE ".$vname12.". ".mysqli_error($db)."</br>");
 			$table20 = "\t* NO OK TABLA ".$vname12.". ".mysqli_error($db)." \n";
@@ -464,7 +468,8 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	$tg = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname1 (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factdate` date NOT NULL,
+  `factini` date NOT NULL,
   `refprovee` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -479,6 +484,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `factcrea` datetime NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)/*,
   INDEX `refprovee` (`refprovee`),
@@ -515,7 +521,8 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	$tg2 = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname2 (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factdate` date NOT NULL,
+  `factini` date NOT NULL,
   `refprovee` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -530,6 +537,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `factcrea` datetime NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)/*,
   INDEX `refprovee` (`refprovee`),
@@ -566,7 +574,8 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	$tgf = "CREATE TABLE IF NOT EXISTS `$db_name`.$vnamegf (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factdate` date NOT NULL,
+  `factini` date NOT NULL,
   `refprovee` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -581,8 +590,9 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
-  `borrado` datetime collate utf8_spanish2_ci NOT NULL default CURRENT_TIMESTAMP,
+  `factcrea` datetime NOT NULL,
   `ruta` varchar(50) collate utf8_spanish2_ci NOT NULL,
+  `borrado` datetime collate NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
@@ -605,7 +615,8 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	$ti = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname3 (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factdate` date NOT NULL,
+  `factini` date NOT NULL,
   `refcliente` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -620,6 +631,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `factcrea` datetime NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)/*,
   INDEX `refcliente` (`refcliente`),
@@ -656,7 +668,8 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	$ti2 = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname4 (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factdate` date NOT NULL,
+  `factini` date NOT NULL,
   `refcliente` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -671,6 +684,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
+  `factcrea` datetime NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)/*,
   INDEX `refcliente` (`refcliente`),
@@ -701,13 +715,13 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 
 	/************** CREAMOS LA TABLA INGRESOS FEED  ***************/
 
-	global $vnameif;
-	$vnameif = "`".$_SESSION['clave']."ingresosfeed`";
+	global $vnameif; 	$vnameif = "`".$_SESSION['clave']."ingresosfeed`";
 	
 	$tif = "CREATE TABLE IF NOT EXISTS `$db_name`.$vnameif (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
-  `factdate` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factdate` date NOT NULL,
+  `factini` date NOT NULL,
   `refcliente` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -722,8 +736,9 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
-  `borrado` datetime collate utf8_spanish2_ci NOT NULL default CURRENT_TIMESTAMP,
+  `factcrea` datetime NOT NULL,
   `ruta` varchar(50) collate utf8_spanish2_ci NOT NULL,
+  `borrado` datetime NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";

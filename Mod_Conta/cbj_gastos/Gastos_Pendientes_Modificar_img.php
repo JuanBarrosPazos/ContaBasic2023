@@ -219,7 +219,7 @@
 			global $ModImg2;		$ModImg2 = "style='display:none; visibility: hidden;'";
 			global $ConteBotones;	$ConteBotones = "style='display:block;'";
 
-			global $a;	$a= "20".(substr($_SESSION['factdate'],0,2));
+			global $a;	$a= (substr($_SESSION['factdate'],0,4));
 			global $vnameStatus; 		$vnameStatus = "`".$_SESSION['clave']."status`";
 			$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
 			$qStauts = mysqli_query($db, $sqlSTatus);

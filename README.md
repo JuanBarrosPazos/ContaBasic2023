@@ -4,15 +4,7 @@
 ----
 ### TAREAS PENDIENTES
 
-- BORRAR IMAGEN DE DOCUMENTOS ADJUNTOS Y ASIGNAR UNA POR DEFECTO
-- 
-- MODIFICACIONES DE LA BBDD
-+ FECHA ORIGINAL DE LA FACTURA "factdate" INALTERABLE 
-    - (Ahora se modifica al recuperar de pendientes o papelera)!!!
-- CUANDO DE PAGA LA FACTURA "fechapago"
-    - (Se modifica al recuperar de pendientes o papelera)!!!
-- CUANDO SE CREA LA FACTURA "fechacrea" CURRENTTIMESTAMP
-- 
+- BORRAR IMAGEN DE DOCUMENTOS ADJUNTOS Y ASIGNAR UNA POR DEFECTO EN GASTOS PENDIENTES
 - PONER BOTON PAPELERA EN RESUTADOS DE BORRAR, MODIFICAR...
 - 
 - REESTRUCTURAR LA BBDD CON CAMPO FECHA DATE
@@ -24,9 +16,23 @@
 - COMPROBAR LA EJECUCIÓN DEL CODIGO GASTOS
 - 
 - INTEGRAR GASTOS EN INGRESOS
+- 
 
 ----
-### 2023/09/20 VERSIÓN Conta_Basic_New V23.04.21
+### 2023/09/22 VERSIÓN Conta_Basic_New V23.04.21
+
+- SE MODIFICA LA ESTRUCTURA DE LA BBDD
++ FECHA DE LA FACTURA "factdate" 
+    - (Se modifica al recuperar de pendientes o papelera)!!!
++ FECHA INICIAL DE LA FACTURA "factini" INALTERABLE
+    - (Se modifica al recuperar de pendientes o papelera)!!!
++ CUANDO SE CREA LA ENTRADA "factcrea" CURRENTTIMESTAMP
+- SE AJUSTAN LAS SENTENCIAS SQL A LAS MODIFICACIONES DE BBDD
+- 
+- BORRAR IMAGEN DE DOCUMENTOS ADJUNTOS Y ASIGNAR UNA POR DEFECTO EN GASTOS
+- 
+
+### 2023/09/21 VERSIÓN Conta_Basic_New V23.04.20
 
 - REPARACIÓN $rutaDir EN Gastos_Modificar_03.php L.89 Y Modifica03show_form.php L.160
 - VALIDAR RECUPERAR DE LA PAPELERA, CONFIRMAR NO EXISTE LA MISMA FACTURA Y LOS DATOS SON CORRECTOS
@@ -37,9 +43,7 @@
 - AJUSTE GRÁFICAS EN BALANCES TRIMESTRALES
 - PASO PARAMETROS CORRECTOS DE IMAGENES AL BORRAR, RECUPERAR Y MODIFICAR FACTURA
 - RECUPERO DESDE LA PAPELERA FACTURAS CON EJERCICIO STATUS CLOSE EN EL AÑO ACTUAL, MODIFICANDO LA FECHA DE LA FACTURA A HOY...
-- 
 - RECUPERO DESDE GASTOS PENDIENTES LAS FACTURAS CON EJERCICIO STATUS CLOSE EN EL AÑO ACTUAL, MODIFICANDO LA FECHA DE LA FACTURA A HOY...
-- 
 - 
 - COMPROBACIÓN DEL AREA GASTOS, PENDIENTES Y PAPELERA:
     + Arranque de la aplicación en local y acceso a contabasic
@@ -56,11 +60,7 @@
     + Eliminar facturas de la papelera y los documentos adjuntos
     + Mover factura a gastos pendiente de pago, solo en ejercicios abiertos... (y cualquier ejercicio)
     + Recuperación desde papelera de facturas con año close, con fecha año actual
-    - 
-    - Recuperación desde gastos pendientes de facturas con año close con fecha actual
-    - 
-    - 
-
+    + Recuperación desde gastos pendientes de facturas con año close con fecha actual
 
 ### 2023/09/16 VERSIÓN Conta_Basic_New V23.04.17
 

@@ -47,14 +47,14 @@ session_start();
 		require 'Gastos_factdate.php';
 
 		global $db; 		global $db_name; 		
-		global $dyt1;		$dyt1 = "20".$_POST['dy'];
+		global $dyt1;		$dyt1 = $_POST['dy'];
 
 		require 'FormatNumber.php';
 
 		/////////////
 		global $vnamei; 		$vnamei = "`".$_SESSION['clave']."gastosfeed`";
 		global $sent;
-		$sent = "INSERT INTO `$db_name`.$vnamei (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`, `ruta`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]', '$_POST[delruta]' )";
+		$sent = "INSERT INTO `$db_name`.$vnamei (`factnum`, `factdate`, `factini`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`, `factcrea`, `ruta`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[factini]', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]', '$_POST[factcrea]', '$_POST[delruta]' )";
 		
 		if(mysqli_query($db, $sent)){
 
@@ -109,10 +109,10 @@ session_start();
 		if(isset($_POST['oculto2'])){
 				
 				$datex = $_POST['factdate'];
-				$dyx = substr($_POST['factdate'],0,2);
-				$dmx = substr($_POST['factdate'],3,2);
+				$dyx = substr($_POST['factdate'],0,4);
+				$dmx = substr($_POST['factdate'],5,2);
 				$ddx = substr($_POST['factdate'],-2,2);
-				$dyt1 = "20".$dyx;
+				$dyt1 = $dyx;
 
 				$_SESSION['myimg1'] = $_POST['myimg1'];
 				$_SESSION['myimg2'] = $_POST['myimg2'];
@@ -166,7 +166,8 @@ session_start();
 									'dm' => $dmx,
 									'dd' => $ddx,
 									'factnum' => $_POST['factnum'],
-								//	'factdate' => $_POST['factdate'],
+									'factdate' => $_POST['factdate'],
+									'factini' => $_POST['factini'],
 									'factnom' => $_POST['factnom'],
 									'factnif' => $_POST['factnif'],
 									'factiva' => $_POST['factiva'],
@@ -185,6 +186,7 @@ session_start();
 									'myimg3' => $_POST['myimg3'],	
 									'myimg4' => $_POST['myimg4'],
 									'vname'  => $_POST['vname'],
+									'factcrea' => $_POST['factcrea'],
 									'delruta' => $DelRuta);
 	}elseif(isset($_POST['oculto'])){
 					$defaults = $_POST;

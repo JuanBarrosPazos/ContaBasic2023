@@ -151,7 +151,10 @@
 
 			$gri++;	$mesIniGri = $mesIniGri+3;    $mesFinGri = $mesFinGri+3;
 		}
-		$TotEi = ((abs($sumapvptoti))*100)/(abs($sumapvptoti)); 
+		if($sumapvptoti > 0){
+			$TotEi = ((abs($sumapvptoti))*100)/(abs($sumapvptoti)); 
+		}else{ $TotEi = 0.00; }
+
 		print("<li>
 					<a href='#' title='ANUAL TOT ".(abs($sumapvptoti))." €'>
 						<span class='label'>".$dyt1."<br>".(abs($sumapvptoti))."</span>
@@ -379,7 +382,10 @@
 			$grg++;	$mesIniGrg = $mesIniGrg+3;    $mesFinGrg = $mesFinGrg+3;
 		}
 
-		$TotEg = ((abs($sumapvptotg))*100)/(abs($sumapvptotg)); 
+		if($sumapvptotg > 0){
+			$TotEg = ((abs($sumapvptotg))*100)/(abs($sumapvptotg)); 
+		}else{ $TotEg = 0.00; }
+
 		print("<li>
 					<a href='#' title='ANUAL TOT ".(abs($sumapvptotg))." €'>
 						<span class='label'>".$dyt1."<br>".(abs($sumapvptotg))."</span>
@@ -601,7 +607,7 @@
 			/* */
 
 			global $sumapvptotd;
-			$calculo = $rowgri['factpvptot']  - $rowgrg['factpvptot'];
+			$calculo = $rowgri['factpvptot'] - $rowgrg['factpvptot'];
 			$rowd['factpvptot'] = number_format(abs($calculo) ,2,".","");
 			if($sumapvptotd > 0){
 				$TotEd = ($rowd['factpvptot']*100)/$sumapvptotd;
@@ -611,25 +617,30 @@
 
 		if(	$rowd['factpvptot'] >= 0){ $bgRed = ""; }else{ $bgRed = "style='background: #ff5e00 !important;'"; }
 
-			print("<li>
-						<a href='#' title='".$rowd['factdate']." ".$rowd['factpvptot']." €'>
-							<span class='label' ".$bgRed.">".$rowd['factdate']."<br>".$rowd['factpvptot']."</span>
-							<span class='count bgcolorir' style='height: ".$TotEd."%'>(".$TotEd.")</span>
-						</a>
-					</li>");
+		print("<li>
+					<a href='#' title='".$rowd['factdate']." ".$rowd['factpvptot']." €'>
+						<span class='label' ".$bgRed.">".$rowd['factdate']."<br>".$rowd['factpvptot']."</span>
+						<span class='count bgcolorir' style='height: ".$TotEd."%'>(".$TotEd.")</span>
+					</a>
+				</li>");
 
 			$grd++;	$mesIniGrd = $mesIniGrd+3;    $mesFinGrd = $mesFinGrd+3;
 		}
 
-		$TotEd = ((abs($sumapvptotd))*100)/(abs($sumapvptotd)); 
+		if(	$sumapvptotd >= 0){ $bgRed = ""; }else{ $bgRed = "style='background: #ff5e00 !important;'"; }
+
+		if($sumapvptotd > 0){
+			$TotEd = ((abs($sumapvptotd))*100)/(abs($sumapvptotd)); 
+		}elseif($sumapvptotd < 0){
+			$TotEd = ((abs($sumapvptotd))*100)/(abs($sumapvptotd));
+		}else{ $TotEd = 0.00; }
+
 		print("<li>
-					<a href='#' title='DIFER ANUAL ".(abs($sumapvptotd))." €'>
-						<span class='label'>".$dyt1."<br>".(abs($sumapvptotd))."</span>
+					<a href='#' title='DIFER ANUAL ".$sumapvptotd." €'>
+						<span class='label' ".$bgRed.">".$dyt1."<br>".$sumapvptotd."</span>
 						<span class='count bgcolord' style='height: ".$TotEd."%'>(".$TotEd.")</span>
 					</a>
 				</li>");
-
-
 		
 	print("	</ul>
 				</div>

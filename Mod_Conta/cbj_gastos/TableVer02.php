@@ -54,8 +54,16 @@
 				<td>".$_POST['factnum']."</td>			
 			</tr>		
 			<tr>
-				<td style='text-align: right !important;' >FECHA </td>
+				<td style='text-align: right !important;' >FECHA ACTUAL</td>
 				<td>".$_POST['factdate']."</td>				
+			</tr>		
+			<tr>
+				<td style='text-align: right !important;' >FECHA INICIAL</td>
+				<td>".$_POST['factini']."</td>				
+			</tr>		
+			<tr>
+				<td style='text-align: right !important;' >FECHA CREACIÓN</td>
+				<td>".$_POST['factcrea']."</td>				
 			</tr>		
 			<tr>
 				<td style='text-align: right !important;'>RAZON SOCIAL</td>
@@ -98,7 +106,7 @@
 	global $Ver2;			$Ver2 = "style='display:none; visibility: hidden;'";
 	global $ConteBotones;	$ConteBotones = "style='display:block;'";
 	
-		global $a;	$a= "20".(substr($_POST['factdate'],0,2));
+		global $a;	$a= (substr($_POST['factdate'],0,4));
 		global $vnameStatus; 		$vnameStatus = "`".$_SESSION['clave']."status`";
 		$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
 		$qStauts = mysqli_query($db, $sqlSTatus);

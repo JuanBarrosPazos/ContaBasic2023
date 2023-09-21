@@ -103,8 +103,9 @@ session_start();
 		global $db; 		global $db_name;
 
 		if(strlen(trim($factrete)) == 0){ $factrete = 0.0; }else{ }
-
-		$sqla = "INSERT INTO `$db_name`.$vname (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[refprovee]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$new_name1', '$new_name2', '$new_name3', '$new_name4')";
+		global $factcrea;	$factcrea = date('Y-m-i H:i:s');
+		
+		$sqla = "INSERT INTO `$db_name`.$vname (`factnum`, `factdate`, `factini`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`, `factcrea`) VALUES ('$_POST[factnum]', '$factdate', '$factdate', '$_POST[refprovee]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$new_name1', '$new_name2', '$new_name3', '$new_name4' '$factcrea')";
 		
 		// SE CUMPLE EL QUERY
 		if(mysqli_query($db, $sqla)){ 
@@ -334,7 +335,8 @@ session_start();
 									'dm' => $_POST['dm'],
 									'dd' => $_POST['dd'],
 									'factnum' => strtoupper($_POST['factnum']),
-								// 	'factdate' => $_POST['factdate'],
+								 	'factdate' => @$_POST['factdate'],
+									'factini' => @$_POST['factini'],
 								   	'refprovee' => @$rowprovee['ref'],
 								   	'factnom' => @$rowprovee['rsocial'],
 								   	'factnif' => @$_dnil,
@@ -352,14 +354,16 @@ session_start();
 									'myimg1' => @$_POST['myimg1'],	
 									'myimg2' => @$_POST['myimg2'],	
 									'myimg3' => @$_POST['myimg3'],	
-									'myimg4' => @$_POST['myimg4']);
+									'myimg4' => @$_POST['myimg4'],
+									'factcrea' => @$_POST['factcrea']);
 
 		}else{ $defaults = array ( 'proveegastos' => @$_POST['proveegastos'],
 									'dy' => '',
 									'dm' => '',
 									'dd' => '',
 									'factnum' => strtoupper(@$_POST['factnum']),
-								// 'factdate' => $_POST['factdate'],
+									'factdate' => $_POST['factdate'],
+									'factini' => $_POST['factini'],
 								   	'refprovee' => @$rowprovee['ref'],
 								   	'factnom' => @$rowprovee['rsocial'],
 								   	'factnif' => @$_dnil,
@@ -377,7 +381,8 @@ session_start();
 									'myimg1' => '',	
 									'myimg2' => '',	
 									'myimg3' => '',	
-									'myimg4' => '');
+									'myimg4' => '',
+									'factcrea' => $_POST['factcrea']);
 							}
 
 		require 'ArrayMesDia.php';

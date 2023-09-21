@@ -19,7 +19,7 @@
 		if(($rutPend == 'Pendientes_')||($KeyModif == 1)){
 
 		print("<input type='hidden' name='dy' value='".@$defaults['dy']."' />
-				<span class='botonverde' >20".@$defaults['dy']."</span>");
+				<span class='botonverde'>".@$defaults['dy']."</span>");
 		}else{	
 
 		print("<select name='dy' title='SELECCIONAR AÑO..' class='botonverde' style='vertical-align: middle;' required >
@@ -35,8 +35,8 @@
 					print("* ".mysqli_error($db)."<br/>");
 			}else{
 				while($rowsy = mysqli_fetch_assoc($qy)){
-						print ("<option value='".$rowsy['ycod']."' ");
-							if($rowsy['ycod'] == @$defaults['dy']){
+						print ("<option value='20".$rowsy['ycod']."' ");
+							if(("20".$rowsy['ycod']) == @$defaults['dy']){
 									print ("selected = 'selected'");
 															}
 									print ("> ".$rowsy['year']." </option>");
@@ -72,6 +72,11 @@
 					</div>
 					</td>
 				</tr>
+
+		<input type='hidden' name='factdate'value='".@$defaults['dy']."-".@$defaults['dm']."-".@$defaults['dd']."' />
+		<input type='hidden' name='factini'value='".@$defaults['factini']."' />
+		<input type='hidden' name='factcrea'value='".@$defaults['factcrea']."' />
+	
 				<tr>
 					<td style='text-align:right;'>RAZON SOCIAL</td>
 					<td>

@@ -7,7 +7,7 @@
 					copy($rutaOld.$_SESSION['myimg1'], $rutaNew.$_SESSION['myimg1']);
 					//unlink($rutaOld.$_SESSION['myimg1']);
 					/*	
-					print(" <br/>* CHANGE YEAR FACT: 20".$_SESSION['yold']." X 20".$dyt1."
+					print(" <br/>* CHANGE YEAR FACT: ".$_SESSION['yold']." X ".$dyt1."
 									<br/>- Ok Copy & Unlink Img Name 1.");
 					*/
 		}else{
@@ -39,7 +39,7 @@
 		$_SESSION['vname'] = $vnamei;
 		
 		global $sent;
-		$sent = "INSERT INTO `$db_name`.$vnamei (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]')";
+		$sent = "INSERT INTO `$db_name`.$vnamei (`factnum`, `factdate`, `factini`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`, `factcrea`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[factini]', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]', '$_POST[factcrea]')";
 		
 		if(mysqli_query($db, $sent)){
 

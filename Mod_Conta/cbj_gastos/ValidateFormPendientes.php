@@ -290,7 +290,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 
 		global $dyt1;		
 		if((isset($_POST['dy']))&&(strlen(trim($_POST['dy'])) != 0)){
-        	$dyt1 = "20".$_POST['dy'];
+        	$dyt1 = $_POST['dy'];
 		}else{ $dyt1 = date('Y'); }
                                                                     
 		/* INICIO VERIFICO EL NUMERO DE LA FACTURA EN TODAS LAS TABLAS ACTIVAS MENOS PAPELERA STATUS */

@@ -31,6 +31,7 @@
                 <input type='hidden' name='id' value='".$rowb['id']."' />
                 <input type='hidden' name='factnum' value='".$rowb['factnum']."' />
                 <input type='hidden' name='factdate' value='".$rowb['factdate']."' />
+                <input type='hidden' name='factini' value='".$rowb['factini']."' />
                 <input type='hidden' name='factnom' value='".$rowb['factnom']."' />
                 <input type='hidden' name='factnif' value='".$rowb['factnif']."' />
                 <input type='hidden' name='factiva' value='".$rowb['factiva']."' />
@@ -47,6 +48,8 @@
                 <input type='hidden' name='myimg2' value='".@$rowb['myimg2']."' />
                 <input type='hidden' name='myimg3' value='".@$rowb['myimg3']."' />
                 <input type='hidden' name='myimg4' value='".@$rowb['myimg4']."' />
+                
+                <input type='hidden' name='factcrea' value='".$rowb['factcrea']."' />
                 
                 <input type='hidden' name='delruta' value='".@$rowb['ruta']."' />");
 

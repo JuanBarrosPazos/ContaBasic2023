@@ -14,7 +14,7 @@
 
 		global $destination_file;
 		$destination_file = $rutaDir.$safe_filename;
-		
+
 	    if(file_exists($rutaDir.$nombre) ){
 						unlink($rutaDir.$nombre);
 		}elseif(move_uploaded_file($_FILES['myimg']['tmp_name'], $destination_file)){
@@ -36,7 +36,7 @@
 			$new_name = $_SESSION['mivalor']."_".$dt.".".$extension;
 			$rename_filename = $rutaDir.$new_name;								
 			rename($destination_file, $rename_filename);
-			
+
 			global $db; 		global $db_name;
 
 			global $mivalor; 	$imgcamp = "`".$_SESSION['imgcamp']."`";

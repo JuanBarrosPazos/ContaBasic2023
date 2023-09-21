@@ -16,6 +16,6 @@
 	}
 
 	$sqlb =  "SELECT * FROM $vname $filtro ORDER BY $orden $limit";
-	//echo "--- ".$sqlb."<br>";
+	echo "--- ".$sqlb."<br>";
 
 ?>

@@ -75,7 +75,7 @@
 			</form>						
 				</div>");
 
-		global $a;	$a= "20".(substr($rowb['factdate'],0,2)); 
+		global $a;	$a= (substr($rowb['factdate'],0,4)); 
 		$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
 		$qStauts = mysqli_query($db, $sqlSTatus);
 		$rowStatus = mysqli_fetch_assoc($qStauts);

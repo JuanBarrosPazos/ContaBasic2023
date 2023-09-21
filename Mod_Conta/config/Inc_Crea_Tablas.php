@@ -303,9 +303,9 @@ $status2 = "INSERT INTO `$db_name`.$vname11 (`id`, `year`, `ycod`, `stat`, `hidd
 	/************** CREAMOS LA TABLA STATUSFEEDBACK ***************/
 
 	global $vname12;
-	$vname12 = "`".$_SESSION['clave']."statusfeedback`";
+	$vname12 = "`".$_SESSION['clave']."statusfeed`";
 
-	$statusfeedback = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname12 (
+	$statusfeed = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname12 (
 				  `id` int(2) NOT NULL auto_increment,
   				  `year` int(4) NOT NULL,
    				  `ycod` int(2) NOT NULL,
@@ -315,7 +315,7 @@ $status2 = "INSERT INTO `$db_name`.$vname11 (`id`, `year`, `ycod`, `stat`, `hidd
 				  PRIMARY KEY  (`id`)
 				) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_spanish2_ci AUTO_INCREMENT=1 ";
 		
-	if(mysqli_query($db, $statusfeedback)){
+	if(mysqli_query($db, $statusfeed)){
 			global $table20;
 			$table20 = "\t* OK TABLA ".$vname12.". \n";
 		} else { print("* NO OK TABLE ".$vname12.". ".mysqli_error($db)."</br>");

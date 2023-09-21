@@ -48,14 +48,27 @@
 				</td>
 			</tr>
 			<tr>
-				<td style='text-align:right;'>FECHA</td>
+				<td style='text-align:right;'>FECHA ACTUAL</td>
 				<td>
-					20".$defaults['dy']."/".$defaults['dm']."/".$defaults['dd']."<br>
+					".$defaults['dy']."-".$defaults['dm']."-".$defaults['dd']."<br>
 						<input type='hidden' name='dy' value='".$defaults['dy']."' />
 						<input type='hidden' name='dm' value='".$defaults['dm']."' />
 						<input type='hidden' name='dd' value='".$defaults['dd']."' />
 				</td>
 			</tr>
+			<tr>
+				<td style='text-align:right;'>FECHA INICIAL</td>
+				<td>
+			<input type='hidden' name='factini' value='".$defaults['factini']."' />".$defaults['factini']."
+				</td>
+			</tr>
+			<tr>
+				<td style='text-align:right;'>FECHA CREACION</td>
+				<td>
+			<input type='hidden' name='factcrea' value='".$defaults['factcrea']."' />".$defaults['factcrea']."
+				</td>
+			</tr>
+
 			<tr>
 				<td style='text-align:right;'>SUBTOTAL</td>
 				<td>

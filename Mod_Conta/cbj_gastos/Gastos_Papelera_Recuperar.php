@@ -125,7 +125,7 @@ session_start();
 		require 'Gastos_factdate.php';
 			if($_SESSION['stat'] == 'close'){
 				//$_POST['dy'] = $_SESSION['newDy'];
-				global $factdate;	$factdate = $_SESSION['newDy']."/".date('m/d');
+				global $factdate;	$factdate = $_SESSION['newDy']."-".date('m-d');
 			}else{ }
 			//echo $factdate."<br>";
 
@@ -136,7 +136,7 @@ session_start();
 		$idx = $_SESSION['idx'];
 
 		global $sent;
-		$sent = "INSERT INTO `$db_name`.$vnamei (`factnum`, `factdate`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]')";
+		$sent = "INSERT INTO `$db_name`.$vnamei (`factnum`, `factdate`, `factini`, `refprovee`, `factnom`, `factnif`, `factiva`, `factivae`, `factpvp`, `factret`, `factrete`, `factpvptot`,`coment`, `myimg1`, `myimg2`, `myimg3`, `myimg4`, `factcrea`) VALUES ('$_POST[factnum]', '$factdate', '$_POST[factini]', '$_POST[proveegastos]', '$_POST[factnom]', '$_POST[factnif]', '$_POST[factiva]', '$factivae', '$factpvp', '$_POST[factret]', '$factrete', '$factpvptot', '$_POST[coment]', '$_SESSION[myimg1]', '$_SESSION[myimg2]', '$_SESSION[myimg3]', '$_SESSION[myimg4]', '$_POST[factcrea]')";
 		
 		if(mysqli_query($db, $sent)){
 			
@@ -228,7 +228,7 @@ session_start();
 		global $titInput;	$titInput = "RECUPERAR FACTURA";
 		global $TituloCheck;	$TituloCheck = "SI DESEA RECUPERAR LA FACTURA MARQUE LA CASILLA";
 
-		if(isset($_POST['oculto2'])){ $_SESSION['yold'] = substr($_POST['factdate'],0,2); }else{ }
+		if(isset($_POST['oculto2'])){ $_SESSION['yold'] = substr($_POST['factdate'],0,4); }else{ }
 
 		global $db; 	global $db_name;
 

@@ -36,7 +36,7 @@ session_start();
 
 		global $db; 		global $db_name;	
 		
-		global $vname; 		$vname = "`".$_SESSION['clave']."statusfeedback`";
+		global $vname; 		$vname = "`".$_SESSION['clave']."statusfeed`";
 		global $id; 		$id = $_POST['id'];
 		global $year; 		$year = $_POST['year'];
 		global $ycod; 		$ycod = substr(trim($_POST['year']),-2,2);
@@ -246,7 +246,7 @@ function ver_feedback(){
 		
 	global $db; 		global $db_name;
 	
-	global $vname; 		$vname = "`".$_SESSION['clave']."statusfeedback`";
+	global $vname; 		$vname = "`".$_SESSION['clave']."statusfeed`";
 
 	$sqlb =  "SELECT * FROM $vname ORDER BY `year` DESC ";
 	$qb = mysqli_query($db, $sqlb);

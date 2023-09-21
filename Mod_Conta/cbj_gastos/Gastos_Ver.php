@@ -37,6 +37,10 @@ session_start();
 						process_form_img();
 		}elseif(isset($_POST['cero'])){
 						process_form_img();
+		}elseif(isset($_POST['borraimg'])){
+			
+						process_form_img();
+
 		}elseif(isset($_POST['ocultoDetalle'])){ 
 						process_form_Detalle();
 						info_Dealle();
@@ -491,15 +495,15 @@ function info(){
 	global $dm;
 	if($_POST['dm'] == ''){$dm = "MES TODOS";}else{$dm = $_POST['dm'];}
 	global $dy;
-	if($_POST['dy'] == ''){ $dy = date('Y');} else{$dy = "20".$_POST['dy'];}
+	if($_POST['dy'] == ''){ $dy = date('Y');} else{$dy = $_POST['dy'];}
 	
 	global $orden;
 	if((isset($_POST['Orden']))&&($_POST['Orden']!= '')){
 		$orden = $_POST['Orden'];
 	}else{ $orden = '`id` ASC'; }
 
-	if(isset($_POST['todo'])){$TitBut = "\n\tFiltro => TODOS LOS GASTOS. ".$orden."\n\tDATE: ".$dy."/".$dm."/".$dd.".";}
-	else{$TitBut = "\n\tFiltro => \n\tDATE: ".$dy."/".$dm."/".$dd.".\n\tR. Social: ".$_POST['factnom'].".\n\tDNI: ".$_POST['factnif'].".\n\tNº FACTURA: ".$_POST['factnum'].".";}
+	if(isset($_POST['todo'])){$TitBut = "\n\tFiltro => TODOS LOS GASTOS. ".$orden."\n\tDATE: ".$dy."-".$dm."-".$dd.".";}
+	else{$TitBut = "\n\tFiltro => \n\tDATE: ".$dy."-".$dm."-".$dd.".\n\tR. Social: ".$_POST['factnom'].".\n\tDNI: ".$_POST['factnif'].".\n\tNº FACTURA: ".$_POST['factnum'].".";}
 
 	$ActionTime = date('H:i:s');
 

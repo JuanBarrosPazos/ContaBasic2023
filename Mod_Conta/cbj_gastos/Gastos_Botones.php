@@ -3,7 +3,7 @@
     global $dyt1;	global $db;     global $db_name;
 
     if((isset($dyx))&&($dyx != '')){
-        $dyt1 = "20".$dyx;
+        $dyt1 = $dyx;
     }elseif((!isset($dyt1))&&($dyt1 == '')){	
         $dyt1 = date('Y');
     }else{ }

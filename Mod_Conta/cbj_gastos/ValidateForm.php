@@ -293,7 +293,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
 
 		global $dyt1;		
 		if((isset($_POST['dy']))&&(strlen(trim($_POST['dy'])) != 0)){
-        	$dyt1 = "20".$_POST['dy'];
+        	$dyt1 = $_POST['dy'];
 		}else{ $dyt1 = date('Y'); }
                                                                     
 		/* INICIO VERIFICO EL NUMERO DE LA FACTURA EN TODAS LAS TABLAS ACTIVAS MENOS PAPELERA STATUS */
@@ -345,7 +345,7 @@ $errors [] = "FACTURA NUMERO <font color='#FF0000'>Solo mayusculas, números sin
         if($countg > 0){
 			$errors [] = "<font color='#FF0000'>YA EXISTE LA FACTURA EN ".$vnameg." </font>";
 	    }
-		
+		global $gastoModif3;
 		if($gastoModif3 == 1){
 			// NO HAGO NADA
 		}else{

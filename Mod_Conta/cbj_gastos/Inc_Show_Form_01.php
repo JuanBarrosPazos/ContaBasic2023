@@ -56,8 +56,8 @@
 		
 	if(!$qy){print("* ".mysqli_error($db)."<br/>");
 	}else{while($rowsy = mysqli_fetch_assoc($qy)){
-						print ("<option value='".$rowsy['ycod']."' ");
-							if($rowsy['ycod'] == @$defaults['dy']){
+						print ("<option value='20".$rowsy['ycod']."' ");
+							if("20".($rowsy['ycod']) == @$defaults['dy']){
 										print ("selected = 'selected'");
 									}
 										print ("> ".$rowsy['year']." </option>");
@@ -176,8 +176,8 @@
 			
 		if(!$qy){print("* ".mysqli_error($db)."<br/>");
 		}else{while($rowsy = mysqli_fetch_assoc($qy)){
-							print ("<option value='".$rowsy['ycod']."' ");
-								if($rowsy['ycod'] == @$defaults['dy']){
+							print ("<option value='20".$rowsy['ycod']."' ");
+								if("20".($rowsy['ycod']) == @$defaults['dy']){
 											print ("selected = 'selected'");
 										}
 											print ("> ".$rowsy['year']." </option>");

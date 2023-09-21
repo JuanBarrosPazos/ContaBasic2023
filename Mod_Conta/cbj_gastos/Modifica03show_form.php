@@ -20,8 +20,8 @@
 		if(isset($_POST['oculto2'])){
 			
 			$datex = $_POST['factdate'];
-			$dyx = substr($_POST['factdate'],0,2);
-			$dmx = substr($_POST['factdate'],3,2);
+			$dyx = substr($_POST['factdate'],0,4);
+			$dmx = substr($_POST['factdate'],5,2);
 			$ddx = substr($_POST['factdate'],-2,2);
 
 			$_SESSION['yold'] = $dyx;
@@ -103,7 +103,8 @@
 								'dm' => $dmx,
 								'dd' => $ddx,
 								'factnum' => strtoupper($_POST['factnum']),
-							//	'factdate' => $_POST['factdate'],
+								'factdate' => $_POST['factdate'],
+								'factini' => $_POST['factini'],
 							   	'factnom' => $_POST['factnom'],
 							   	'factnif' => $_POST['factnif'],
 							   	'factiva' => $_POST['factiva'],
@@ -122,7 +123,8 @@
 								'myimg3' => $rowImg['myimg3'],	
 								'myimg4' => $rowImg['myimg4'],
 								'vname'  => $_POST['vname'],
-								'delruta' => @$_POST['delruta']);
+								'delruta' => @$_POST['delruta'],
+								'factcrea' => $_POST['factcrea']);
 
 		}elseif(isset($_POST['oculto'])){
 					$defaults = $_POST;
@@ -136,7 +138,8 @@
 								'dm' => $_POST['dm'],
 								'dd' => $_POST['dd'],
 								'factnum' => strtoupper($_POST['factnum']),
-							//	'factdate' => $_POST['factdate'],
+								'factdate' => $_POST['factdate'],
+								'factini' => $_POST['factini'],
 							   	'refprovee' => $_POST['ref'],
 							   	'factnom' => $_POST['rsocial'],
 							   	'factnif' => $_POST['factnif'],
@@ -155,6 +158,7 @@
 								'myimg2' => $_POST['myimg2'],	
 								'myimg3' => $_POST['myimg3'],	
 								'myimg4' => $_POST['myimg4'],
+								'factcrea' => $_POST['factcrea'],
 								'vname'  => $_POST['vname'],
 								'delruta' => @$_POST['delruta']);
 
@@ -223,7 +227,7 @@
 							</td>
 						</tr>";
 
-			global $a;	$a = "20".$defaults['dy'];
+			global $a;	$a = $defaults['dy'];
 			global $vnameStatus; 		$vnameStatus = "`".$_SESSION['clave']."status`";
 			$sqlSTatus =  "SELECT * FROM $vnameStatus WHERE `year`='$a' LIMIT 1 ";
 			echo "\$sqlSTatus = ".$sqlSTatus."<br>";
@@ -241,11 +245,11 @@
 					}else{
 						$_SESSION['stat'] = 'close';
 						$defaults['delruta'] = "../cbj_Docs/docgastos_".$nY."/";
-						$_SESSION['newDy'] = substr($nY,2,2);
+						$_SESSION['newDy'] = date('Y');
 						$ejerStatus .=  "SE RECUPERARÁ EN ".@$defaults['delruta']."</td></tr>
 						<tr>
 							<td style='text-align:right;'>FECHA NUEVA</td>
-							<td>20".$_SESSION['newDy']."/".date('m/d')."</td>
+							<td>".$_SESSION['newDy']."-".date('m-d')."</td>
 						</tr>";
 						$Checkboxb = "<tr>
 										<td colspan='2' style='text-align:center;' >
@@ -287,8 +291,8 @@
 				//global $Recupera3;		$Recupera3 = "style='display:none; visibility: hidden;'";
 			}else{ }
 
-		global $dyt1; 		$dyt1 = "20".$defaults['dy'];
-		$_SESSION['dyt1'] = "20".$defaults['dy'];
+		global $dyt1; 		$dyt1 = $defaults['dy'];
+		$_SESSION['dyt1'] = $defaults['dy'];
 
 			require 'TableBorrar.php';
 
