@@ -90,24 +90,13 @@
 
 		$ActionTime = date('H:i:s');
 
-		global $dir;
-		if ($_SESSION['Nivel'] == 'admin'){ 
-					$dir = "../cbj_Docs/log";
-					}
-
 		if ($_SESSION['usuarios'] != $_SESSION['ref']){$a = "DEL USUARIO ".$_SESSION['usuarios'].". ";}
 		else{$a = " DEL USUARIO ".$_SESSION['ref'].". ";}
 
 		global $text;
 		$text = "\n- GASTO DETALLES ".$a.$ActionTime.".\n\tRAZON SOCIAL: ".strtoupper($_POST['factnom']).".\n\tNIF: ".$_POST['factnif']."\n\tFACTURA IN Nº: ".$_POST['factnum'].".";
 
-		$logdocu = $_SESSION['ref'];
-		$logdate = date('Y-m-d');
-		$logtext = $text."\n";
-		$filename = $dir."/".$logdate."_".$logdocu.".log";
-		$log = fopen($filename, 'ab+');
-		fwrite($log, $logtext);
-		fclose($log);
+		require 'WriteLog.php';
 
 	}
 

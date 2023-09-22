@@ -251,21 +251,10 @@ session_start();
 
 		$ActionTime = date('H:i:s');
 
-		global $dir;
-		if ($_SESSION['Nivel'] == 'admin'){ 
-					$dir = "../cbj_Docs/log";
-					}
-		
 		global $text;
 		$text = "\n- GASTO PENDIENTE MODIFICAR SELECCIONADO FACTURA PAGADA ".$ActionTime.".\n\tNº FACTURA: ".$_POST['factnum'].".\n\tDATE FACTURA: ".$_POST['factdate'].".\n\tRAZON SOCIAL: ".$_POST['factnom'].".\n\tNIF: ".$_POST['factnif'].".\n\tTIPO IVA %: ".$_POST['factiva'].".\n\tIMP €: ".$_POST['factivae'].".\n\tNETO €: ".$_POST['factpvp'].".\n\tTOTAL €: ".$_POST['factpvptot'];
 	
-		$logdocu = $_SESSION['ref'];
-		$logdate = date('Y-m-d');
-		$logtext = $text."\n";
-		$filename = $dir."/".$logdate."_".$logdocu.".log";
-		$log = fopen($filename, 'ab+');
-		fwrite($log, $logtext);
-		fclose($log);
+		require 'WriteLog.php';
 
 	}
 
@@ -280,25 +269,15 @@ session_start();
 
 	$ActionTime = date('H:i:s');
 
-	global $dir;
-	if ($_SESSION['Nivel'] == 'admin'){ 
-				$dir = "../cbj_Docs/log";
-				}
-	
 	global $text;
 	$text = "\n- GASTO PENDIENTE MODIFICADO FACTURA PAGADA ".$ActionTime.".\n\tNº FACTURA: ".$_POST['factnum'].".\n\tDATE FACTURA: ".$factdate.".\n\tRAZON SOCIAL: ".$_POST['factnom'].".\n\tNIF: ".$_POST['factnif'].".\n\tTIPO IVA %: ".$_POST['factiva'].".\n\tIMP €: ".$factivae.".\n\tNETO €: ".$factpvp.".\n\tTOTAL €: ".$factpvptot;
 
 		$logname = $_SESSION['Nombre'];	
 		$logape = $_SESSION['Apellidos'];	
 		$logname = trim($logname);	
-		$logape = trim($logape);	
-		$logdocu = $_SESSION['ref'];
-		$logdate = date('Y-m-d');
-		$logtext = $text."\n";
-		$filename = $dir."/".$logdate."_".$logdocu.".log";
-		$log = fopen($filename, 'ab+');
-		fwrite($log, $logtext);
-		fclose($log);
+		$logape = trim($logape);
+
+		require 'WriteLog.php';
 
 	}
 

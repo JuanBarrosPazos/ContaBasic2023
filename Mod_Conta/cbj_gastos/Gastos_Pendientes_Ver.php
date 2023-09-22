@@ -38,6 +38,8 @@ session_start();
 						process_form_img();
 		}elseif(isset($_POST['cero'])){
 						process_form_img();
+		}elseif(isset($_POST['borraimg'])){
+						process_form_img();
 		}elseif(isset($_POST['ocultoDetalle'])){ 
 						process_form_Detalle();
 						info_Dealle();

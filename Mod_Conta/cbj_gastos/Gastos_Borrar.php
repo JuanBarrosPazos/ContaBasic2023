@@ -226,27 +226,16 @@ session_start();
 
 	function info_01(){
 
-	global $db;
+		global $db;
 	
 		$TitBut = "\n\tFiltro => \n\tDATE: ".$_POST['factdate'].".\n\tR. Social: ".$_POST['factnom'].".\n\tDNI: ".$_POST['factnif'].".\n\tNº FACTURA: ".$_POST['factnum'].".";
 
 		$ActionTime = date('H:i:s');
 
-		global $dir;
-		if ($_SESSION['Nivel'] == 'admin'){ 
-					$dir = "../cbj_Docs/log";
-					}
-		
 		global $text;
 		$text = "\n- GASTO SELECCIONADO MODIFICAR ".$ActionTime.$TitBut;
 		
-		$logdocu = $_SESSION['ref'];
-		$logdate = date('Y-m-d');
-		$logtext = $text."\n";
-		$filename = $dir."/".$logdate."_".$logdocu.".log";
-		$log = fopen($filename, 'ab+');
-		fwrite($log, $logtext);
-		fclose($log);
+		require 'WriteLog.php';
 
 	}
 
@@ -261,25 +250,15 @@ session_start();
 		
 		$ActionTime = date('H:i:s');
 
-		global $dir;
-		if ($_SESSION['Nivel'] == 'admin'){ 
-					$dir = "../cbj_Docs/log";
-					}
-		
 		global $text;
 		$text = "\n- GASTO MODIFICADO ".$ActionTime.".\n\tNº FACTURA: ".$_POST['factnum'].".\n\tDATE FACTURA: ".$factdate.".\n\tRAZON SOCIAL: ".$_POST['factnom'].".\n\tNIF: ".$_POST['factnif'].".\n\tTIPO IVA %: ".$_POST['factiva'].".\n\tIMP €: ".$factivae.".\n\tNETO €: ".$factpvp.".\n\tTOTAL €: ".$factpvptot;
 
 		$logname = $_SESSION['Nombre'];	
 		$logape = $_SESSION['Apellidos'];	
 		$logname = trim($logname);	
-		$logape = trim($logape);	
-		$logdocu = $_SESSION['ref'];
-		$logdate = date('Y-m-d');
-		$logtext = $text."\n";
-		$filename = $dir."/".$logdate."_".$logdocu.".log";
-		$log = fopen($filename, 'ab+');
-		fwrite($log, $logtext);
-		fclose($log);
+		$logape = trim($logape);
+			
+		require 'WriteLog.php';
 
 	}
 
