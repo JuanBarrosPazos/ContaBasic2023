@@ -16,7 +16,7 @@
 					<td>
 				<div style='float:left'>");
 
-		if(($rutPend == 'Pendientes_')||($KeyModif == 1)){
+		if(($rutPend == 'Pendientes')||($KeyModif == 1)){
 
 		print("<input type='hidden' name='dy' value='".@$defaults['dy']."' />
 				<span class='botonverde'>".@$defaults['dy']."</span>");

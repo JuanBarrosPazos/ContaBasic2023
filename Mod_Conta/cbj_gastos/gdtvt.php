@@ -6,12 +6,14 @@
 
 	if(@$_POST['dy'] == ''){ $dy = date('Y');	
 							 } else {$dy = $_POST['dy'];}
-	$dm = "/".@$_POST['dm']."/";
+	$dm = "-".@$_POST['dm']."-";
 	global $fil;
 	global $db;												
 
 	global $vname; 		//$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";
-
+	
+	//echo "** ".$vname."<br>";
+	//echo "** ".$_SESSION['$grafVname']."<br>";
 
 /////////////////////////
 /* PARA SUMAR TOTAL 01 */

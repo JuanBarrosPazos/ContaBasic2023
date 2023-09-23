@@ -42,7 +42,7 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
  
 <!-- Inicio GESTIÓN DE GASTOS -->
 
-  	<li><a href='".$rutaGastos."Gastos_Ver.php' >GASTOS</a></li>
+  	<li><a href='".$rutaGastos."Ver.php' >GASTOS</a></li>
 
 <!-- Fin GESTIÓN DE GASTOS -->
 

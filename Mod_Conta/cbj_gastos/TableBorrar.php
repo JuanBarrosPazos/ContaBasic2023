@@ -142,7 +142,7 @@
 					}
 
 		//global $Borrar2;		$Borrar2= "style='display:none; visibility: hidden;'";
-			require 'Gastos_Botones.php';
+			require 'Botones.php';
 			print("</td>
 				</tr>
 			</table>");

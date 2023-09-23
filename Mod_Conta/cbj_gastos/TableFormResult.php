@@ -46,7 +46,7 @@
 				<tr>
 					<td colspan='4' align='center'>");
 					
-					require 'Gastos_Botones.php';
+					require 'Botones.php';
 		
 			print("</td>
 				</tr>

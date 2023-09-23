@@ -114,7 +114,7 @@
 		global $style;
 		//if($rowStatus['stat']==''){
 		if($rowStatus['stat']=='close'){
-			if($rutPend == 'Pendientes_'){
+			if($rutPend == 'Pendientes'){
 				global $Modif2;			$Modif2 = "style='display:none; visibility: hidden;'";
 				global $ModImg2;		$ModImg2 = "style='display:none; visibility: hidden;'";
 			}else{
@@ -126,7 +126,7 @@
 			//global $Recupera3;		$Recupera3 = "style='display:none; visibility: hidden;'";
 		}else{ }
 
-			require 'Gastos_Botones.php';
+			require 'Botones.php';
 
 		print("</td></tr></table>");
 
