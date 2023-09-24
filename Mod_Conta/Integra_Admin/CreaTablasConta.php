@@ -1,10 +1,12 @@
 <?php
 
+	// EL ORDEN DE CONSTRUCCIÓN ESTÁ BASADO EN LA CLAVE FORANEA, SI SE UTILIZA...
+
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	function ini_log_cbj(){
+	function ini_log_cb23(){
 
 		$ActionTime = date('H:i:s');
 
@@ -29,7 +31,7 @@
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-function config_one_cbj(){
+function config_one_cb23(){
 	
 	global $data1;
 	if(file_exists('../Mod_Conta/config/year.txt')){unlink("../Mod_Conta/config/year.txt");
@@ -71,25 +73,25 @@ function config_one_cbj(){
 				/*		****	*/
 
 	global $data5;
-	if(!file_exists('../Mod_Conta/cbj_Docs/year.txt')){
+	if(!file_exists('../Mod_Conta/cb23_Docs/year.txt')){
 			if(file_exists('../Mod_Conta/config/year_Init_System.txt')){
-				copy("../Mod_Conta/config/year_Init_System.txt", "../Mod_Conta/cbj_Docs/year.txt");
-		$data5 = "\n \t RENAME ../Mod_Conta/config/year_Init_System.txt TO "."../Mod_Conta/cbj_Docs/year.txt";
+				copy("../Mod_Conta/config/year_Init_System.txt", "../Mod_Conta/cb23_Docs/year.txt");
+		$data5 = "\n \t RENAME ../Mod_Conta/config/year_Init_System.txt TO "."../Mod_Conta/cb23_Docs/year.txt";
 			} else {
 		//print("DON'T RENAME ../Mod_Conta/config/year_Init_System.txt TO ../Mod_Conta/config/year.txt </br>");
-		$data5 = "\n \t RENAME ../Mod_Conta/config/year_Init_System.txt TO ../Mod_Conta/cbj_Docs/year.txt";
+		$data5 = "\n \t RENAME ../Mod_Conta/config/year_Init_System.txt TO ../Mod_Conta/cb23_Docs/year.txt";
 				}
 			}else{ $data5 = "";}
 
 	/*
 	global $data6;
-	if(!file_exists('../Mod_Conta/cbj_Docs/ayear.php')){
+	if(!file_exists('../Mod_Conta/cb23_Docs/ayear.php')){
 			if(file_exists('../Mod_Conta/config/ayear_Init_System.php')){
-				copy("../Mod_Conta/config/ayear_Init_System.php", "../Mod_Conta/cbj_Docs/ayear.php");
-		$data6 = "\n \t RENAME ../Mod_Conta/config/ayear_Init_System.php TO ../Mod_Conta/cbj_Docs/ayear.php";
+				copy("../Mod_Conta/config/ayear_Init_System.php", "../Mod_Conta/cb23_Docs/ayear.php");
+		$data6 = "\n \t RENAME ../Mod_Conta/config/ayear_Init_System.php TO ../Mod_Conta/cb23_Docs/ayear.php";
 			} else {
-	//print("DON'T RENAME ../Mod_Conta/config/ayear_Init_System.php TO ../Mod_Conta/cbj_Docs/ayear.php </br>");
-		$data6 = "\n \t RENAME ../Mod_Conta/config/ayear_Init_System.php TO ../Mod_Conta/cbj_Docs/ayear.php";
+	//print("DON'T RENAME ../Mod_Conta/config/ayear_Init_System.php TO ../Mod_Conta/cb23_Docs/ayear.php </br>");
+		$data6 = "\n \t RENAME ../Mod_Conta/config/ayear_Init_System.php TO ../Mod_Conta/cb23_Docs/ayear.php";
 				}
 			}else{ $data6 = "";}
 	*/
@@ -98,11 +100,11 @@ function config_one_cbj(){
 	global $text; 
 	$text = "MOD_CONTA SUSTITUCION DE ARCHIVOS:".$data1/*.$data2*/.$data3/*.$data4*/.$data5/*.$data6*/;
 
-	ini_log_cbj();
+	ini_log_cb23();
 
-	} // FIN function config_one_cbj()
+	} // FIN function config_one_cb23()
 	
-	config_one_cbj();
+	config_one_cb23();
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -192,12 +194,13 @@ function config_one_cbj(){
 		
 	global $vname1b;
 	$vname1b = "`".$_SESSION['clave']."gastos_pendientes`";
-	
+
 	$tgb = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname1b (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factnumini` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` date NOT NULL,
-  `factini` date NOT NULL,
+  `factdateini` date NOT NULL,
   `refprovee` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -213,6 +216,7 @@ function config_one_cbj(){
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `factcrea` datetime NOT NULL,
+  `factmodif` datetime NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)/*,
   INDEX `refprovee` (`refprovee`),
@@ -304,8 +308,9 @@ function config_one_cbj(){
 	$tib = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname3b (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factnumini` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` date NOT NULL,
-  `factini` date NOT NULL,
+  `factdateini` date NOT NULL,
   `refcliente` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -321,6 +326,7 @@ function config_one_cbj(){
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `factcrea` datetime NOT NULL,
+  `factmodif` datetime NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)/*,
   INDEX `refcliente` (`refcliente`),
@@ -440,7 +446,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 		$text = $text.PHP_EOL.$dbconecterror;
 		$text = $text.PHP_EOL.$data0.$table4.$table5.$table6.$table7.$table8.$table9.$table10.$table11.$table12.$table13.$table14.$table15.$table16.$table17.$table18.$table19.$table20.$table21.$table22."\n";
 
-		ini_log_cbj();
+		ini_log_cb23();
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -449,12 +455,12 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	/************		SE CREAN TABLAS Y DIRECTORIOS ADICIONALES DESDE CONFIG2		*****************/
 
 	global $data1;
-	$carpeta = "../Mod_Conta/cbj_Docs";
+	$carpeta = "../Mod_Conta/cb23_Docs";
 	if (!file_exists($carpeta)) {
 		mkdir($carpeta, 0777, true);
-		$data1 = "\t* OK DIRECTORIO ../Mod_Conta/cbj_Docs. \n";
+		$data1 = "\t* OK DIRECTORIO ../Mod_Conta/cb23_Docs. \n";
 	}else{	//print("* NO HA CREADO EL DIRECTORIO ".$carpeta."\n");
-			$data1 = "\t* YA EXISTE EL DIRECTORIO ../Mod_Conta/cbj_Docs. \n";
+			$data1 = "\t* YA EXISTE EL DIRECTORIO ../Mod_Conta/cb23_Docs. \n";
 			}
 
 	/************** CREAMOS LA TABLA GASTOS  ***************/
@@ -468,8 +474,9 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	$tg = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname1 (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factnumini` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` date NOT NULL,
-  `factini` date NOT NULL,
+  `factdateini` date NOT NULL,
   `refprovee` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -484,7 +491,8 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
-  `factcrea` datetime NOT NULL default CURRENT_TIMESTAMP,
+  `factcrea` datetime NOT NULL,
+  `factmodif` datetime NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)/*,
   INDEX `refprovee` (`refprovee`),
@@ -502,12 +510,12 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 // CREA EL DIRECTORIO DE DOC GASTOS.
 
 	$vn1 = "docgastos_".date('Y');
-	$carpeta1 = "../Mod_Conta/cbj_Docs/".$vn1;
+	$carpeta1 = "../Mod_Conta/cb23_Docs/".$vn1;
 	global $data2;
 	if (!file_exists($carpeta1)) {
 		mkdir($carpeta1, 0777, true);
-		copy("../Mod_Conta/cbj_Images/untitled.png", $carpeta1."/untitled.png");
-		copy("../Mod_Conta/cbj_Images/pdf.png", $carpeta1."/pdf.png");
+		copy("../Mod_Conta/cb23_Images/untitled.png", $carpeta1."/untitled.png");
+		copy("../Mod_Conta/cb23_Images/pdf.png", $carpeta1."/pdf.png");
 		$data2 = "\t* OK DIRECTORIO ".$carpeta1."\n";
 	}else{ //print("* NO OK EL DIRECTORIO ".$carpeta1."\n");
 			$data2 = "\t* YA EXISTE EL DIRECTORIO ".$carpeta1."\n";
@@ -521,8 +529,9 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	$tg2 = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname2 (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factnumini` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` date NOT NULL,
-  `factini` date NOT NULL,
+  `factdateini` date NOT NULL,
   `refprovee` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -537,7 +546,8 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
-  `factcrea` datetime NOT NULL default CURRENT_TIMESTAMP,
+  `factcrea` datetime NOT NULL,
+  `factmodif` datetime NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)/*,
   INDEX `refprovee` (`refprovee`),
@@ -555,12 +565,12 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 // CREA EL DIRECTORIO DE GASTOS DE AÑO ANTERIOR.
 
 	$vn2 = "docgastos_".(date('Y')-1);
-	$carpeta2 = "../Mod_Conta/cbj_Docs/".$vn2;
+	$carpeta2 = "../Mod_Conta/cb23_Docs/".$vn2;
 	global $data4;
 	if (!file_exists($carpeta2)) {
 			mkdir($carpeta2, 0777, true);
-			copy("../Mod_Conta/cbj_Images/untitled.png", $carpeta2."/untitled.png");
-			copy("../Mod_Conta/cbj_Images/pdf.png", $carpeta2."/pdf.png");
+			copy("../Mod_Conta/cb23_Images/untitled.png", $carpeta2."/untitled.png");
+			copy("../Mod_Conta/cb23_Images/pdf.png", $carpeta2."/pdf.png");
 			$data4 = "\t* OK DIRECTORIO ".$carpeta2."\n";
 	}else{//print("* YA EXISTE EL DIRECTORIO DIRECTORIO ".$carpeta2."\n");
 			$data4 = "\t* YA EXISTE EL DIRECTORIO ".$carpeta2."\n";
@@ -574,8 +584,9 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	$tgf = "CREATE TABLE IF NOT EXISTS `$db_name`.$vnamegf (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factnumini` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` date NOT NULL,
-  `factini` date NOT NULL,
+  `factdateini` date NOT NULL,
   `refprovee` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -591,6 +602,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `factcrea` datetime NOT NULL,
+  `factmodif` datetime NOT NULL,
   `ruta` varchar(50) collate utf8_spanish2_ci NOT NULL,
   `borrado` datetime collate NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
@@ -615,8 +627,9 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	$ti = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname3 (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factnumini` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` date NOT NULL,
-  `factini` date NOT NULL,
+  `factdateini` date NOT NULL,
   `refcliente` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -631,7 +644,8 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
-  `factcrea` datetime NOT NULL default CURRENT_TIMESTAMP,
+  `factcrea` datetime NOT NULL,
+  `factmodif` datetime NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)/*,
   INDEX `refcliente` (`refcliente`),
@@ -649,12 +663,12 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 // CREA EL DIRECTORIO DE INGRESOS DEL AÑO.
 
 	$vn3 = "docingresos_".date('Y');
-	$carpeta3 = "../Mod_Conta/cbj_Docs/".$vn3;
+	$carpeta3 = "../Mod_Conta/cb23_Docs/".$vn3;
 	global $data6;
 	if (!file_exists($carpeta3)) {
 			mkdir($carpeta3, 0777, true);
-			copy("../Mod_Conta/cbj_Images/untitled.png", $carpeta3."/untitled.png");
-			copy("../Mod_Conta/cbj_Images/pdf.png", $carpeta3."/pdf.png");
+			copy("../Mod_Conta/cb23_Images/untitled.png", $carpeta3."/untitled.png");
+			copy("../Mod_Conta/cb23_Images/pdf.png", $carpeta3."/pdf.png");
 			$data6 = "\t* OK DIRECTORIO ".$carpeta3."\n";
 	}else{ //print("* NO OK EL DIRECTORIO ".$carpeta3."\n");
 			$data6 = "\t* YA EXISTE EL DIRECTORIO ".$carpeta3."\n";
@@ -668,8 +682,9 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	$ti2 = "CREATE TABLE IF NOT EXISTS `$db_name`.$vname4 (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factnumini` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` date NOT NULL,
-  `factini` date NOT NULL,
+  `factdateini` date NOT NULL,
   `refcliente` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -684,7 +699,8 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg2` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
-  `factcrea` datetime NOT NULL default CURRENT_TIMESTAMP,
+  `factcrea` datetime NOT NULL,
+  `factmodif` datetime NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
   UNIQUE KEY `id` (`id`)/*,
   INDEX `refcliente` (`refcliente`),
@@ -702,12 +718,12 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 // CREA EL DIRECTORIO DE INGRESOS DEL AÑO ANTERIOR.
 
 	$vn4 = "docingresos_".(date('Y')-1);
-	$carpeta4 = "../Mod_Conta/cbj_Docs/".$vn4;
+	$carpeta4 = "../Mod_Conta/cb23_Docs/".$vn4;
 	global $data8;
 	if (!file_exists($carpeta4)) {
 			mkdir($carpeta4, 0777, true);
-			copy("../Mod_Conta/cbj_Images/untitled.png", $carpeta4."/untitled.png");
-			copy("../Mod_Conta/cbj_Images/pdf.png", $carpeta4."/pdf.png");
+			copy("../Mod_Conta/cb23_Images/untitled.png", $carpeta4."/untitled.png");
+			copy("../Mod_Conta/cb23_Images/pdf.png", $carpeta4."/pdf.png");
 			$data8 = "\t* OK DIRECTORIO ".$carpeta4."\n";
 	} else { //print("* NO OK EL DIRECTORIO ".$carpeta4."\n");
 			 $data8 = "\t* YA EXISTE EL DIRECTORIO ".$carpeta4."\n";
@@ -720,8 +736,9 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 	$tif = "CREATE TABLE IF NOT EXISTS `$db_name`.$vnameif (
   `id` int(4) NOT NULL auto_increment,
   `factnum` varchar(20) collate utf8_spanish2_ci NOT NULL,
+  `factnumini` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factdate` date NOT NULL,
-  `factini` date NOT NULL,
+  `factdateini` date NOT NULL,
   `refcliente` varchar(20) collate utf8_spanish2_ci NOT NULL,
   `factnom` varchar(22) collate utf8_spanish2_ci NOT NULL,
   `factnif` varchar(20) collate utf8_spanish2_ci NOT NULL,
@@ -737,6 +754,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
   `myimg3` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `myimg4` varchar(30) collate utf8_spanish2_ci NOT NULL default 'untitled.png',
   `factcrea` datetime NOT NULL,
+  `factmodif` datetime NOT NULL,
   `ruta` varchar(50) collate utf8_spanish2_ci NOT NULL,
   `borrado` datetime NOT NULL default CURRENT_TIMESTAMP,
   PRIMARY KEY  (`id`),
@@ -764,7 +782,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 		$text = $text.PHP_EOL.$dbconecterror;
 		$text = $text.PHP_EOL.$data1.$data2.$data3.$data4.$data5.$data6.$data7.$data8."\n";
 
-		ini_log_cbj();
+		ini_log_cb23();
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -775,7 +793,7 @@ $retencion2 = "INSERT INTO `$db_name`.$vname13 (`id`, `ret`, `name`) VALUES
 		/************	CONFIGURACIÓN ANUAL PARA MOD_CONTA	*****************/
 
 function modif2a(){
-	$filename = "../Mod_Conta/cbj_Docs/ayear.php";
+	$filename = "../Mod_Conta/cb23_Docs/ayear.php";
 	
 	$contenido = "<?php\n \$dy = array ('' => 'YEAR',\n'".date('y')."' => '".date('Y')."',\n'".(date('y')-1)."' => '".(date('Y')-1)."',\n);\n?>";
 	
@@ -787,7 +805,7 @@ function modif2a(){
 }
 
 function modif2b(){
-	$filename = "../Mod_Conta/cbj_Docs/year.txt";
+	$filename = "../Mod_Conta/cb23_Docs/year.txt";
 	$fw2 = fopen($filename, 'w+');
 	$date = "".date('Y')."";
 	fwrite($fw2, $date);
@@ -816,7 +834,7 @@ function modif3b(){
 	fclose($fw2);
 }
 
-function ayear_cbj(){
+function ayear_cb23(){
 	$filename = "../Mod_Conta/config/year.txt";
 	$fw2 = fopen($filename, 'r+');
 	$fget = fgets($fw2);
@@ -830,9 +848,9 @@ function ayear_cbj(){
 			modif3b();
 		}
 
-} // FIN function ayear_cbj()
+} // FIN function ayear_cb23()
 
-	ayear_cbj();
+	ayear_cb23();
 
 				   ////////////////////				   ////////////////////
 ////////////////////				////////////////////				////////////////////
@@ -843,41 +861,41 @@ function ayear_cbj(){
 	function crear_dir(){
 
 	// ESTA FUNCIÓN LA TENGO INTEGRADA EN MOD_ADMIN DENTRO DE function crear_tablas()
-		global $data0; 		$carpeta = "../Mod_Conta/cbj_Docs/temp";
+		global $data0; 		$carpeta = "../Mod_Conta/cb23_Docs/temp";
 		if (!file_exists($carpeta)) {
 			mkdir($carpeta, 0777, true);
-			$data0 = $data0."\t* OK DIRECTORIO ../Mod_Conta/cbj_Docs/temp. \n";
+			$data0 = $data0."\t* OK DIRECTORIO ../Mod_Conta/cb23_Docs/temp. \n";
 			}
 			else{	//print("* NO HA CREADO EL DIRECTORIO ".$carpeta."\n");
-					$data0 = $data0."\t* YA EXISTE EL DIRECTORIO ../Mod_Conta/cbj_Docs/temp. \n";
+					$data0 = $data0."\t* YA EXISTE EL DIRECTORIO ../Mod_Conta/cb23_Docs/temp. \n";
 				}
 	
-		$carpeta = "../Mod_Conta/cbj_Docs/log";
+		$carpeta = "../Mod_Conta/cb23_Docs/log";
 		if (!file_exists($carpeta)) {
 			mkdir($carpeta, 0777, true);
-			$data0 = $data0."\t* OK DIRECTORIO ../Mod_Conta/cbj_Docs/log. \n";
+			$data0 = $data0."\t* OK DIRECTORIO ../Mod_Conta/cb23_Docs/log. \n";
 			}
 			else{	//print("* NO HA CREADO EL DIRECTORIO ".$carpeta."\n");
-					$data0 = $data0."\t* YA EXISTE EL DIRECTORIO ../Mod_Conta/cbj_Docs/log. \n";
+					$data0 = $data0."\t* YA EXISTE EL DIRECTORIO ../Mod_Conta/cb23_Docs/log. \n";
 				}
 	
-		$carpeta = "../Mod_Conta/cbj_Docs/grafics";
+		$carpeta = "../Mod_Conta/cb23_Docs/grafics";
 		if (!file_exists($carpeta)) {
 			mkdir($carpeta, 0777, true);
-			$data0 = $data0."\t* OK DIRECTORIO ../Mod_Conta/cbj_Docs/grafics. \n";
+			$data0 = $data0."\t* OK DIRECTORIO ../Mod_Conta/cb23_Docs/grafics. \n";
 			}
 			else{	//print("* NO HA CREADO EL DIRECTORIO ".$carpeta."\n");
-					$data0 = $data0."\t* YA EXISTE EL DIRECTORIO ../Mod_Conta/cbj_Docs/grafics. \n";
+					$data0 = $data0."\t* YA EXISTE EL DIRECTORIO ../Mod_Conta/cb23_Docs/grafics. \n";
 				}
 
 /*	DEPECRATED...
 	// CREA EL DIRECTORIO DE IMAGEN DE USUARIO.
 	
 		$vn1 = "img_admin";
-		$carpetaimg = "../Mod_Conta/cbj_Docs/".$vn1;
+		$carpetaimg = "../Mod_Conta/cb23_Docs/".$vn1;
 		if (!file_exists($carpetaimg)) {
 			mkdir($carpetaimg, 0777, true);
-			copy("config/cbj_Images/untitled.png", $carpetaimg."/untitled.png");
+			copy("config/cb23_Images/untitled.png", $carpetaimg."/untitled.png");
 			$data0 = $data0."\t* OK DIRECTORIO ".$carpetaimg."\n";
 			}
 			else{//print("* NO OK EL DIRECTORIO ".$carpetaimg."\n");
@@ -888,10 +906,10 @@ function ayear_cbj(){
 	// CREA EL DIRECTORIO DE IMAGEN DE PROVEEDOR GASTOS.
 	
 		$vn1 = "img_proveedores";
-		$carpetaimg1 = "../Mod_Conta/cbj_Docs/".$vn1;
+		$carpetaimg1 = "../Mod_Conta/cb23_Docs/".$vn1;
 		if (!file_exists($carpetaimg1)) {
 			mkdir($carpetaimg1, 0777, true);
-			copy("config/cbj_Images/untitled.png", $carpetaimg1."/untitled.png");
+			copy("config/cb23_Images/untitled.png", $carpetaimg1."/untitled.png");
 			$data0 = $data0."\t* OK DIRECTORIO ".$carpetaimg1."\n";
 			}
 			else{//print("* NO OK EL DIRECTORIO ".$carpetaimg1."\n");
@@ -901,10 +919,10 @@ function ayear_cbj(){
 	// CREA EL DIRECTORIO DE IMAGEN DE PROVEEDOR INGRESOS.
 	
 		$vn1 = "img_clientes";
-		$carpetaimg2 = "../Mod_Conta/cbj_Docs/".$vn1;
+		$carpetaimg2 = "../Mod_Conta/cb23_Docs/".$vn1;
 		if (!file_exists($carpetaimg2)) {
 			mkdir($carpetaimg2, 0777, true);
-			copy("config/cbj_Images/untitled.png", $carpetaimg2."/untitled.png");
+			copy("config/cb23_Images/untitled.png", $carpetaimg2."/untitled.png");
 			$data0 = $data0."\t* OK DIRECTORIO ".$carpetaimg2."\n";
 			}
 			else{//print("* NO OK EL DIRECTORIO ".$carpetaimg2."\n");
@@ -914,10 +932,10 @@ function ayear_cbj(){
 	// CREA EL DIRECTORIO GRAFICS.
 	
 		$vn1 = "grafics";
-		$carpetaimg2 = "../Mod_Conta/cbj_Docs/".$vn1;
+		$carpetaimg2 = "../Mod_Conta/cb23_Docs/".$vn1;
 		if (!file_exists($carpetaimg2)) {
 			mkdir($carpetaimg2, 0777, true);
-			copy("config/cbj_Images/untitled.png", $carpetaimg2."/untitled.png");
+			copy("config/cb23_Images/untitled.png", $carpetaimg2."/untitled.png");
 			$data0 = $data0."\t* OK DIRECTORIO ".$carpetaimg2."\n";
 			}
 			else{//print("* YA EXISTE EL DIRECTORIO ".$carpetaimg2."\n");
@@ -927,11 +945,11 @@ function ayear_cbj(){
 	// CREA EL DIRECTORIO DE DOC GASTOS PENDIENTES.
 	
 		$vn1b = "docgastos_pendientes";
-		$carpeta1b = "../Mod_Conta/cbj_Docs/".$vn1b;
+		$carpeta1b = "../Mod_Conta/cb23_Docs/".$vn1b;
 		if (!file_exists($carpeta1b)) {
 			mkdir($carpeta1b, 0777, true);
-			copy("config/cbj_Images/untitled.png", $carpeta1b."/untitled.png");
-			copy("config/cbj_Images/pdf.png", $carpeta1b."/pdf.png");
+			copy("config/cb23_Images/untitled.png", $carpeta1b."/untitled.png");
+			copy("config/cb23_Images/pdf.png", $carpeta1b."/pdf.png");
 			$data0 = $data0."\t* OK DIRECTORIO ".$carpeta1b."\n";
 			}
 			else{//print("* YA EXISTE EL DIRECTORIO ".$carpeta1b."\n");
@@ -941,11 +959,11 @@ function ayear_cbj(){
 	// CREA EL DIRECTORIO DE IMAGENES.
 	
 		$vn3b = "docingresos_pendientes";
-		$carpeta3b = "../Mod_Conta/cbj_Docs/".$vn3b;
+		$carpeta3b = "../Mod_Conta/cb23_Docs/".$vn3b;
 		if (!file_exists($carpeta3b)) {
 			mkdir($carpeta3b, 0777, true);
-			copy("config/cbj_Images/untitled.png", $carpeta3b."/untitled.png");
-			copy("config/cbj_Images/pdf.png", $carpeta3b."/pdf.png");
+			copy("config/cb23_Images/untitled.png", $carpeta3b."/untitled.png");
+			copy("config/cb23_Images/pdf.png", $carpeta3b."/pdf.png");
 			$data0 = $data0."\t* OK DIRECTORIO ".$carpeta3b."\n";
 			}
 			else{//print("* NO OK EL DIRECTORIO ".$carpeta3b."\n");
@@ -959,15 +977,11 @@ function ayear_cbj(){
 	global $text;
 	$text = " CONFIG INIT ".$datein.".\n** index.php function crear_dir() \n".$data0."\n";
 
-	ini_log_cbj();
+	ini_log_cb23();
 		
 	} // FIN function crear_dir()
 
 	crear_dir();
-
-				   ////////////////////				   ////////////////////
-////////////////////				////////////////////				////////////////////
-				 ////////////////////				  ///////////////////
 
 
 				   ////////////////////				   ////////////////////

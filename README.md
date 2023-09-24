@@ -16,12 +16,12 @@
 - 
 
 ----
-### 2023/09/24 VERSIÓN Conta_Basic_New V23.04.23
+### 2023/09/24 VERSIÓN Conta_Basic_New V23.04.25
 
 - MODIFICACIÓN NOMBRE ARCHIVOS EN Mod_Conta/cbj_gastos/
 - OPTIMIZACIÓN GENERAL DEL CÓDIGO
 - 
-- SE MODIFICA LA ESTRUCTURA DE LA BBDD
+- SE MODIFICA LA ESTRUCTURA DE LA BBDD Y DIRECTORIOS
 + MODIFICAR NOMBRE DE LA TABLA statusfeedback POR statusfeed PARA SEGUIR UN CRITERIO UNIFORME
 + FECHA DE LA FACTURA "factdate" 
     - (Se modifica al recuperar de pendientes o papelera)!!!

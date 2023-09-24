@@ -25,7 +25,7 @@ session_start();
 /*		*/
 	function modif(){
 																	
-		$filename = "cbj_Docs/ayear.php";
+		$filename = "cb23_Docs/ayear.php";
 		$fw1 = fopen($filename, 'r+');
 		$contenido = fread($fw1,filesize($filename));
 		fclose($fw1);
@@ -47,7 +47,7 @@ session_start();
 
 	function modif2(){
 
-		$filename = "cbj_Docs/year.txt";
+		$filename = "cb23_Docs/year.txt";
 		$fw2 = fopen($filename, 'w+');
 		$date = "".date('Y')."";
 		fwrite($fw2, $date);
@@ -104,11 +104,11 @@ session_start();
 	// CREA EL DIRECTORIO DE INGRESOS DE ESTE AÑO
 
 		$vn3 = "docingresos_".date('Y');
-		$carpeta3 = "cbj_Docs/".$vn3;
+		$carpeta3 = "cb23_Docs/".$vn3;
 		if (!file_exists($carpeta3)) {
 				mkdir($carpeta3, 0777, true);
-				copy("cbj_Images/untitled.png", $carpeta3."/untitled.png");
-				copy("cbj_Images/pdf.png", $carpeta3."/pdf.png");
+				copy("cb23_Images/untitled.png", $carpeta3."/untitled.png");
+				copy("cb23_Images/pdf.png", $carpeta3."/pdf.png");
 				global $dat4b;
 				$dat4b = "\tCREADO EL DIRECTORIO ".$carpeta3.".\n";
 			} else{ 
@@ -160,11 +160,11 @@ session_start();
 
 			// CREA EL DIRECTORIO DE DOC GASTOS.
 				$vn1 = "docgastos_".date('Y');
-				$carpeta1 = "cbj_Docs/".$vn1;
+				$carpeta1 = "cb23_Docs/".$vn1;
 				if (!file_exists($carpeta1)) {
 					mkdir($carpeta1, 0777, true);
-					copy("cbj_Images/untitled.png", $carpeta1."/untitled.png");
-					copy("cbj_Images/pdf.png", $carpeta1."/pdf.png");
+					copy("cb23_Images/untitled.png", $carpeta1."/untitled.png");
+					copy("cb23_Images/pdf.png", $carpeta1."/pdf.png");
 					global $dat5b;
 					$dat5b = "\tCREADO EL DIRECTORIO ".$carpeta1.".\n";
 				} else{print("* NO HA CREADO EL DIRECTORIO ".$carpeta1."\n");
@@ -212,13 +212,13 @@ session_start();
 
 	function ayear(){
 
-		$filename = "cbj_Docs/year.txt";
+		$filename = "cb23_Docs/year.txt";
 		$fw2 = fopen($filename, 'r+');
 		$fget = fgets($fw2);
 		fclose($fw2);
 		
-		$carpeta1 = "cbj_Docs/docgastos_".date('Y');
-		$carpeta2 = "cbj_Docs/docingresos_".date('Y');
+		$carpeta1 = "cb23_Docs/docgastos_".date('Y');
+		$carpeta2 = "cb23_Docs/docingresos_".date('Y');
 
 		if($fget == date('Y')){
 			/*print("<div style='clear:both'></div>
@@ -239,7 +239,7 @@ session_start();
 									global $dat2;
 									global $text; 	$text = $dat2."\n";
 									}
-		ini_log_cbj();
+		ini_log_cb23();
 
 	} // FIN FUNCTION ayear()
 
@@ -445,7 +445,7 @@ session_start();
 ////////////////////				////////////////////				////////////////////
 				 ////////////////////				  ///////////////////
 
-	function ini_log_cbj(){
+	function ini_log_cb23(){
 
 		$ActionTime = date('H:i:s');
 
