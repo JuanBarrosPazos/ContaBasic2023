@@ -47,7 +47,7 @@
 					<td colspan='4' align='center'>");
 					
 					require 'Botones.php';
-		
+
 			print("</td>
 				</tr>
 			</table>");	

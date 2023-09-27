@@ -14,7 +14,7 @@
     // $tipo_correcto = preg_match('/^image\/(gif|png|jpg|bmp)$/', $_FILES['myimg']['type']);
 
     if($_FILES['myimg']['size'] == 0){
-        $errors [] = "**Ha de seleccionar una fotograf&iacute;a.";
+        $errors [] = "Ha de seleccionar un documento imagen scaner o pdf";
     }elseif(!$ext_correcta){
         $errors [] = "La extension no esta admitida: ".$_FILES['myimg']['name'];
     }/*	elseif(!$tipo_correcto){

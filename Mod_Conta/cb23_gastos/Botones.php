@@ -176,7 +176,10 @@
 
             }else{ }
 
-                print("<div class='BorderIzd BorderDch' style='display:inline-block;' >
+                print(" <div class='BorderIzd BorderDch' style='display:inline-block;' >
+                            ".$DeleteBlack."
+                                <a href='PapeleraVer.php' >&nbsp;&nbsp;&nbsp;</a>
+                            ".$closeButton."
                             ".$CancelBlack."
                                 <a href='".$rutPend."Ver.php' >&nbsp;&nbsp;&nbsp;</a>
                             ".$closeButton."
