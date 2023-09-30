@@ -161,7 +161,7 @@
 				</tr>
 			</table>");	 
 
-		echo "<br>** ".$sqlc."<br";
+		//echo "<br>** ".$sqlc."<br";
 
 
 

@@ -267,65 +267,8 @@ if ($_SESSION['Nivel'] == 'admin'){
 
 		// DATOS DESDE GASTOS VER
 		if(isset($_POST['oculto2'])){
-			
-			$datex = $_POST['factdate'];
-			$dyx = substr($_POST['factdate'],0,4);
-			$dmx = substr($_POST['factdate'],5,2);
-			$ddx = substr($_POST['factdate'],-2,2);
-			$dyt1 = $dyx;
 
-			$_SESSION['mold'] = $dmx;
-			$_SESSION['dold'] = $ddx;
-			$_SESSION['yold'] = $dyx;
-		
-			$_SESSION['myimg1'] = $_POST['myimg1'];
-			$_SESSION['myimg2'] = $_POST['myimg2'];
-			$_SESSION['myimg3'] = $_POST['myimg3'];
-			$_SESSION['myimg4'] = $_POST['myimg4'];
-
-			$ivae = strlen(trim($_POST['factivae']));
-			$ivae = $ivae - 3;
-			$ivaex = $_POST['factivae'];
-			$ivae1 = substr($_POST['factivae'],0,$ivae);
-			$ivae2 = substr($_POST['factivae'],-2,2);
-			$_SESSION['ivae1'] = $ivae1;
-			$_SESSION['ivae2'] = $ivae2;
-
-			$rete = strlen(trim($_POST['factrete']));
-			$rete = $rete - 3;
-			$retex = $_POST['factrete'];
-			$rete1 = substr($_POST['factrete'],0,$rete);
-			$rete2 = substr($_POST['factrete'],-2,2);
-			$_SESSION['rete1'] = $rete1;
-			$_SESSION['rete2'] = $rete2;
-
-			$factpvp = strlen(trim($_POST['factpvp']));
-			$factpvp = $factpvp - 3;
-			$factpvpx = $_POST['factpvp'];
-			$factpvp1 = substr($_POST['factpvp'],0,$factpvp);
-			$factpvp2 = substr($_POST['factpvp'],-2,2);
-			$_SESSION['factpvp1'] = $factpvp1;
-			$_SESSION['factpvp2'] = $factpvp2;
-			
-			$factpvptot = strlen(trim($_POST['factpvptot']));
-			$factpvptot = $factpvptot - 3;
-			$factpvptotx = $_POST['factpvptot'];
-			$factpvptot1 = substr($_POST['factpvptot'],0,$factpvptot);
-			$factpvptot2 = substr($_POST['factpvptot'],-2,2);
-			$_SESSION['factpvptot1'] = $factpvptot1;
-			$_SESSION['factpvptot2'] = $factpvptot2;
-			
-			$dnie = strlen(trim($_POST['factnif']));
-			$dnie = $dnie - 1;
-			$dnix = $_POST['factnif'];
-			$dninx = substr($_POST['factnif'],0,$dnie);
-			$dnilx = substr($_POST['factnif'],-1,1);
-			$dninx = trim($dninx);
-			$dnilx = trim($dnilx);
-			$fil1 = "%".$dninx."%";
-			$fil2 = "%".$dnilx."%";
-
-			$_SESSION['fnold'] = $_POST['factnum'];
+			require 'FunctShowFormOculto2Var.php';
 
 			$sx =  "SELECT * FROM $sesionref WHERE `dni` LIKE '$fil1' LIMIT 1 ";
 			$qx = mysqli_query($db, $sx);
@@ -336,70 +279,17 @@ if ($_SESSION['Nivel'] == 'admin'){
 			$_ldni = @$rowpv['ldni'];
 			global $_dnil; 	$_dnil = $_dni.$_ldni;
 		
-			$_POST['proveegastos'] = $_POST['refprovee'];
-		
-			$defaults = array ( 'id' => $_POST['id'],
-								'proveegastos' => $_POST['refprovee'],
-							   	'refprovee' => $_POST['refprovee'],
-								'dy' => $dyx,
-								'dm' => $dmx,
-								'dd' => $ddx,
-								'factnum' => strtoupper($_POST['factnum']),
-								'factnumini' => strtoupper($_POST['factnumini']),
-								'factdate' => $_POST['factdate'],
-								'factdateini' => $_POST['factdateini'],
-							   	'factnom' => $_POST['factnom'],
-							   	'factnif' => $_POST['factnif'],
-							   	'factiva' => $_POST['factiva'],
-								'factivae1' => $ivae1,	
-								'factivae2' => $ivae2,	
-							   	'factret' => $_POST['factret'],
-								'factrete1' => $rete1,	
-								'factrete2' => $rete2,	
-								'factpvp1' => $factpvp1,	
-								'factpvp2' => $factpvp2,	
-								'factpvptot1' => $factpvptot1,	
-								'factpvptot2' => $factpvptot2,	
-								'coment' => $_POST['coment'],
-								'factcrea' => $_POST['factcrea'],
-								'factmodif' => $_POST['factmodif']);
+			global $DelRuta;		$DelRuta ="";
+			
+			global $VarArray;	$VarArray = 1;
+			require 'ArrayTotal.php';
 
 		// DATOS DESDE EL FORMULARIO =>
 		}elseif(isset($_POST['oculto'])){
 
-			// DATOS DEL FORMULARIO MODIFICAR
-
-			$_POST['factivae1'] = $valIvaeEnt;		$_POST['factivae2'] = $valIvaeDec;
-			$_POST['factrete1'] = $valReteEnt;		$_POST['factrete2'] = $valReteDec;
-			$_POST['factpvptot1'] = $valToteEnt;	$_POST['factpvptot2'] = $valToteDec;
-			$dyx = $_POST['dy'];	$dyt1 = $dyx;
-
-			$defaults = array ( 'id' => $_POST['id'],
-								'proveegastos' => $_POST['proveegastos'],
-								'dy' => $_POST['dy'],
-								'dm' => $_POST['dm'],
-								'dd' => $_POST['dd'],
-								'factnum' => strtoupper($_POST['factnum']),
-								'factnumini' => strtoupper($_POST['factnumini']),
-								'factdate' => $_POST['factdate'],
-								'factdateini' => $_POST['factdateini'],
-								'refprovee' => $_POST['refprovee'],
-							   	'factnom' => $_POST['factnom'],
-							   	'factnif' => $_POST['factnif'],
-							   	'factiva' => $_POST['factiva'],
-								'factivae1' => $_POST['factivae1'],	
-								'factivae2' => $_POST['factivae2'],	
-							   	'factret' => $_POST['factret'],
-								'factrete1' => $_POST['factrete1'],	
-								'factrete2' => $_POST['factrete2'],	
-								'factpvp1' => $_POST['factpvp1'],	
-								'factpvp2' => $_POST['factpvp2'],	
-								'factpvptot1' => $_POST['factpvptot1'],	
-								'factpvptot2' => $_POST['factpvptot2'],	
-								'coment' => $_POST['coment'],
-								'factcrea' => $_POST['factcrea'],
-								'factmodif' => $_POST['factmodif']);
-
+			global $VarArray;	$VarArray = 2;
+			require 'ArrayTotal.php';
+			
 		}else{ $defaults = $_POST; }
 
 		global $vname;		$vname = "`".$_SESSION['clave']."gastos_".$dyt1."`";

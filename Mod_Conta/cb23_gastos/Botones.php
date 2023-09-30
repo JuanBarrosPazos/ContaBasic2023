@@ -49,7 +49,7 @@
     //echo "*-* ".$vnameBot."<br>";
     global $sqlBot;		$sqlBot = "SELECT * FROM `$db_name`.$vnameBot $selBotones LIMIT 1 ";
     //echo "** ".$rutPend;
-    echo "<br>-*- ".$sqlBot."<br>";
+    //echo "<br>-*- ".$sqlBot."<br>";
     $qBot = mysqli_query($db, $sqlBot);
     $countBot = mysqli_num_rows($qBot);
     $rowb = mysqli_fetch_assoc($qBot);
@@ -106,7 +106,9 @@
                     ".$MoneypGrey."
                         <a href='Ver.php' >&nbsp;&nbsp;&nbsp;</a>
                     ".$closeButton."
-
+                    ".$DeleteBlack."
+                        <a href='PapeleraVer.php' >&nbsp;&nbsp;&nbsp;</a>
+                    ".$closeButton."
                     ".$MoneypWhite."
                         <a href='PendientesVer.php' >&nbsp;&nbsp;&nbsp;</a>
                     ".$closeButton."
@@ -177,9 +179,6 @@
             }else{ }
 
                 print(" <div class='BorderIzd BorderDch' style='display:inline-block;' >
-                            ".$DeleteBlack."
-                                <a href='PapeleraVer.php' >&nbsp;&nbsp;&nbsp;</a>
-                            ".$closeButton."
                             ".$CancelBlack."
                                 <a href='".$rutPend."Ver.php' >&nbsp;&nbsp;&nbsp;</a>
                             ".$closeButton."

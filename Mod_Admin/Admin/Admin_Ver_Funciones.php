@@ -131,7 +131,7 @@ function ver_todo(){
 	global $twhile;
 	//$twhile = "TODOS USUARIOS CONSULTA";
 	$twhile = "";
-	
+
 		global $ruta;
 		$ruta = "";
 	require 'Admin_Botonera.php';

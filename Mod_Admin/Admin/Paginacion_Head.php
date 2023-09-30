@@ -8,7 +8,7 @@
 	// DEFINO EL NUMERO DE ARTICULOS POR PÁGINA
 	global $nitem;
 	$nitem = 3;
-	
+
 	global $page;
 
     if (isset($_POST["page"])) {

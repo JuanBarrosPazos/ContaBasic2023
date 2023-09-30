@@ -124,89 +124,18 @@ session_start();
 		global $dyt1;
 
 		if(isset($_POST['oculto2'])){
-				
-			$datex = $_POST['factdate'];
-			$dyx = substr($_POST['factdate'],0,4);
-			$dmx = substr($_POST['factdate'],5,2);
-			$ddx = substr($_POST['factdate'],-2,2);
-			$dyt1 = $dyx;
 
-			$ivae = strlen(trim($_POST['factivae']));
-			$ivae = $ivae - 3;
-			$ivaex = $_POST['factivae'];
-			$ivae1 = substr($_POST['factivae'],0,$ivae);
-			$ivae2 = substr($_POST['factivae'],-2,2);
-	
-			$rete = strlen(trim($_POST['factrete']));
-			$rete = $rete - 3;
-			$retex = $_POST['factrete'];
-			$rete1 = substr($_POST['factrete'],0,$rete);
-			$rete2 = substr($_POST['factrete'],-2,2);
-	
-			$factpvp = strlen(trim($_POST['factpvp']));
-			$factpvp = $factpvp - 3;
-			$factpvpx = $_POST['factpvp'];
-			$factpvp1 = substr($_POST['factpvp'],0,$factpvp);
-			$factpvp2 = substr($_POST['factpvp'],-2,2);
-				
-			$factpvptot = strlen(trim($_POST['factpvptot']));
-			$factpvptot = $factpvptot - 3;
-			$factpvptotx = $_POST['factpvptot'];
-			$factpvptot1 = substr($_POST['factpvptot'],0,$factpvptot);
-			$factpvptot2 = substr($_POST['factpvptot'],-2,2);
-				
-			$dnie = strlen(trim($_POST['factnif']));
-			$dnie = $dnie - 1;
-			$dnix = $_POST['factnif'];
-			$dninx = substr($_POST['factnif'],0,$dnie);
-			$dnilx = substr($_POST['factnif'],-1,1);
-			$dninx = trim($dninx);
-			$dnilx = trim($dnilx);
-			$fil1 = "%".$dninx."%";
-			$fil2 = "%".$dnilx."%";
+			require 'FunctShowFormOculto2Var.php';
 
-			$_POST['proveegastos'] = $_POST['refprovee'];
-	
 			$sesionref2 = "docgastos_".$dyt1;
 			global $DelRuta;		$DelRuta ="../cb23_Docs/".$sesionref2."/";
-	
-			$defaults = array ( 'id' => $_POST['id'],
-								'proveegastos' => $_POST['refprovee'],
-								'refprovee' => $_POST['refprovee'],
-								'xl' => @$_POST['xl'],
-								'dy' => $dyx,
-								'dm' => $dmx,
-								'dd' => $ddx,
-								'factnum' => $_POST['factnum'],
-								'factnumini' => $_POST['factnumini'],
-								'factdate' => $_POST['factdate'],
-								'factdateini' => $_POST['factdateini'],
-								'factnom' => $_POST['factnom'],
-								'factnif' => $_POST['factnif'],
-								'factiva' => $_POST['factiva'],
-								'factivae1' => $ivae1,	
-								'factivae2' => $ivae2,	
-								'factret' => $_POST['factret'],
-								'factrete1' => $rete1,	
-								'factrete2' => $rete2,	
-								'factpvp1' => $factpvp1,	
-								'factpvp2' => $factpvp2,	
-								'factpvptot1' => $factpvptot1,	
-								'factpvptot2' => $factpvptot2,	
-								'coment' => $_POST['coment'],	
-								'myimg1' => $_POST['myimg1'],	
-								'myimg2' => $_POST['myimg2'],	
-								'myimg3' => $_POST['myimg3'],	
-								'myimg4' => $_POST['myimg4'],
-								'factcrea' => $_POST['factcrea'],
-								'factmodif' => $_POST['factmodif'],
-								'vname'  => $_POST['vname'],
-								'delruta' => $DelRuta /*@$_POST['delruta']*/
-							);
 
+			global $VarArray;	$VarArray = 1;
+			require 'ArrayTotal.php';
+			
 	}elseif(isset($_POST['oculto'])){
-		$defaults = $_POST;
-			}
+			$defaults = $_POST;
+	}
 
 		////////////////////
 

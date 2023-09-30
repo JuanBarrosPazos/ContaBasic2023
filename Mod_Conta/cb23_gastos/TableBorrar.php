@@ -36,7 +36,6 @@
 				</td>
 			</tr>
 			<input type='hidden' name='delruta' value='".@$defaults['delruta']."' />
-			\$defaults['delruta'] = ".@$defaults['delruta']."<br>
 				".$rutaDirTr."
 	            ".$Checkbox."
 				".$ejerStatus."
@@ -126,11 +125,10 @@
 				</td>
 			</tr>
 
-				<input type='hidden' name='myimg1' value='".$defaults['myimg1']."' />".$defaults['myimg1']."
-				<input type='hidden' name='myimg2' value='".$defaults['myimg2']."' />".$defaults['myimg2']."
-				<input type='hidden' name='myimg3' value='".$defaults['myimg3']."' />".$defaults['myimg3']."
-				<input type='hidden' name='myimg4' value='".$defaults['myimg4']."' />".$defaults['myimg4']."
-
+				<input type='hidden' name='myimg1' value='".$defaults['myimg1']."' />
+				<input type='hidden' name='myimg2' value='".$defaults['myimg2']."' />
+				<input type='hidden' name='myimg3' value='".$defaults['myimg3']."' />
+				<input type='hidden' name='myimg4' value='".$defaults['myimg4']."' />
 			<tr>
 				<td colspan='2' align='right' >");
 

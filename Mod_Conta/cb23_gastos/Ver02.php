@@ -35,7 +35,7 @@
 		//	print("** ".$_POST['vname']." / ".$_POST['dyt1']);
 			
 		$sqlc =  "SELECT * FROM `$db_name`.$vname WHERE `id` = '$_POST[id]'";
-		echo "* ".$sqlc."<br>";
+		//echo "* ".$sqlc."<br>";
 
 		$qc = mysqli_query($db, $sqlc);
 		$rowsc = mysqli_fetch_assoc($qc);
