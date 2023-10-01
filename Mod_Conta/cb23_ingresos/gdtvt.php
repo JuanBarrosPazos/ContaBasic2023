@@ -1,20 +1,28 @@
 <?php
 
-/////////////////////////////////////////////////////////////////////////////////////////////////
+				   ////////////////////				   ////////////////////
+////////////////////				////////////////////				////////////////////
+				 ////////////////////				  ///////////////////
 
-	if(@$_POST['dy'] == ''){ $dy = date('y');	
+	if(@$_POST['dy'] == ''){ $dy = date('Y');	
 							 } else {$dy = $_POST['dy'];}
-	$dm = "/".@$_POST['dm']."/";
+	$dm = "-".@$_POST['dm']."-";
 	global $fil;
 	global $db;												
 
-	global $vname; 		$vname = "`".$_SESSION['clave']."ingresos_".$dyt1."`";
+	global $vname; 		//$vname = "`".$_SESSION['clave']."ingresos_".$dyt1."`";
+	
+	//echo "** ".$vname."<br>";
+	//echo "** ".$_SESSION['$grafVname']."<br>";
 
 /////////////////////////
 /* PARA SUMAR TOTAL 01 */
 
 	$fil = $dy.$dm."01";
-	$sql01 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql01 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql01 =  $sqlb;
 	$qb01 = mysqli_query($db, $sql01);
 
 	if($qb01){
@@ -38,7 +46,10 @@
 /* PARA SUMAR TOTAL 02 */
 
 	$fil = $dy.$dm."02";
-	$sql02 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql02 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql02 = $sqlb;
 	$qb02 = mysqli_query($db, $sql02);
 
 	if($qb02){
@@ -62,7 +73,10 @@
 /* PARA SUMAR TOTAL 03 */
 
 	$fil = $dy.$dm."03";
-	$sql03 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql03 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql03 = $sqlb;
 	$qb03 = mysqli_query($db, $sql03);
 
 	if($qb03){
@@ -86,7 +100,10 @@
 /* PARA SUMAR TOTAL 04 */
 
 	$fil = $dy.$dm."04";
-	$sql04 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql04 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql04 = $sqlb;
 	$qb04 = mysqli_query($db, $sql04);
 
 	if($qb04){
@@ -110,7 +127,10 @@
 /* PARA SUMAR TOTAL 05 */
 
 	$fil = $dy.$dm."05";
-	$sql05 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql05 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql05 = $sqlb;
 	$qb05 = mysqli_query($db, $sql05);
 
 	if($qb05){
@@ -134,7 +154,10 @@
 /* PARA SUMAR TOTAL 06 */
 
 	$fil = $dy.$dm."06";
-	$sql06 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql06 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql06 = $sqlb;
 	$qb06 = mysqli_query($db, $sql06);
 
 	if($qb06){
@@ -158,7 +181,10 @@
 /* PARA SUMAR TOTAL 07 */
 
 	$fil = $dy.$dm."07";
-	$sql07 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql07 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql07 = $sqlb;
 	$qb07 = mysqli_query($db, $sql07);
 
 	if($qb07){
@@ -182,7 +208,10 @@
 /* PARA SUMAR TOTAL 08 */
 
 	$fil = $dy.$dm."08";
-	$sql08 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql08 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql08 = $sqlb;
 	$qb08 = mysqli_query($db, $sql08);
 
 	if($qb08){
@@ -206,7 +235,10 @@
 /* PARA SUMAR TOTAL 09 */
 
 	$fil = $dy.$dm."09";
-	$sql09 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql09 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql09 = $sqlb;
 	$qb09 = mysqli_query($db, $sql09);
 
 	if($qb09){
@@ -230,7 +262,10 @@
 /* PARA SUMAR TOTAL 10 */
 
 	$fil = $dy.$dm."10";
-	$sql10 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql10 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql10 = $sqlb;
 	$qb10 = mysqli_query($db, $sql10);
 
 	if($qb10){
@@ -254,7 +289,10 @@
 /* PARA SUMAR TOTAL 11 */
 
 	$fil = $dy.$dm."11";
-	$sql11 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql11 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql11 = $sqlb;
 	$qb11 = mysqli_query($db, $sql11);
 
 	if($qb11){
@@ -278,7 +316,10 @@
 /* PARA SUMAR TOTAL 12 */
 
 	$fil = $dy.$dm."12";
-	$sql12 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql12 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql12 = $sqlb;
 	$qb12 = mysqli_query($db, $sql12);
 
 	if($qb12){
@@ -302,7 +343,10 @@
 /* PARA SUMAR TOTAL 13 */
 
 	$fil = $dy.$dm."13";
-	$sql13 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql13 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql13 = $sqlb;
 	$qb13 = mysqli_query($db, $sql13);
 
 	if($qb13){
@@ -326,7 +370,10 @@
 /* PARA SUMAR TOTAL 14 */
 
 	$fil = $dy.$dm."14";
-	$sql14 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql14 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql14 = $sqlb;
 	$qb14 = mysqli_query($db, $sql14);
 
 	if($qb14){
@@ -350,7 +397,10 @@
 /* PARA SUMAR TOTAL 15 */
 
 	$fil = $dy.$dm."15";
-	$sql15 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql15 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql15 = $sqlb;
 	$qb15 = mysqli_query($db, $sql15);
 
 	if($qb15){
@@ -374,7 +424,10 @@
 /* PARA SUMAR TOTAL 16 */
 
 	$fil = $dy.$dm."16";
-	$sql16 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql16 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql16 = $sqlb;
 	$qb16 = mysqli_query($db, $sql16);
 
 	if($qb16){
@@ -398,7 +451,10 @@
 /* PARA SUMAR TOTAL 17 */
 
 	$fil = $dy.$dm."17";
-	$sql17 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql17 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql17 = $sqlb;
 	$qb17 = mysqli_query($db, $sql17);
 
 	if($qb17){
@@ -422,7 +478,10 @@
 /* PARA SUMAR TOTAL 18 */
 
 	$fil = $dy.$dm."18";
-	$sql18 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql18 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql18 = $sqlb;
 	$qb18 = mysqli_query($db, $sql18);
 
 	if($qb18){
@@ -446,7 +505,10 @@
 /* PARA SUMAR TOTAL 19 */
 
 	$fil = $dy.$dm."19";
-	$sql19 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql19 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql19 = $sqlb;
 	$qb19 = mysqli_query($db, $sql19);
 
 	if($qb19){
@@ -470,7 +532,10 @@
 /* PARA SUMAR TOTAL 20 */
 
 	$fil = $dy.$dm."20";
-	$sql20 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql20 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql20 = $sqlb;
 	$qb20 = mysqli_query($db, $sql20);
 
 	if($qb20){
@@ -494,7 +559,10 @@
 /* PARA SUMAR TOTAL 21 */
 
 	$fil = $dy.$dm."21";
-	$sql21 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql21 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql21 = $sqlb;
 	$qb21 = mysqli_query($db, $sql21);
 
 	if($qb21){
@@ -518,7 +586,10 @@
 /* PARA SUMAR TOTAL 22 */
 
 	$fil = $dy.$dm."22";
-	$sql22 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql22 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql22 = $sqlb;
 	$qb22 = mysqli_query($db, $sql22);
 
 	if($qb22){
@@ -542,7 +613,10 @@
 /* PARA SUMAR TOTAL 23 */
 
 	$fil = $dy.$dm."23";
-	$sql23 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql23 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql23 = $sqlb;
 	$qb23 = mysqli_query($db, $sql23);
 
 	if($qb23){
@@ -566,7 +640,10 @@
 /* PARA SUMAR TOTAL 24 */
 
 	$fil = $dy.$dm."24";
-	$sql24 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql24 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql24 = $sqlb;
 	$qb24 = mysqli_query($db, $sql24);
 
 	if($qb24){
@@ -590,7 +667,10 @@
 /* PARA SUMAR TOTAL 25 */
 
 	$fil = $dy.$dm."25";
-	$sql25 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql25 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql25 = $sqlb;
 	$qb25 = mysqli_query($db, $sql25);
 
 	if($qb25){
@@ -614,7 +694,10 @@
 /* PARA SUMAR TOTAL 26 */
 
 	$fil = $dy.$dm."26";
-	$sql26 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql26 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql26 = $sqlb;
 	$qb26 = mysqli_query($db, $sql26);
 
 	if($qb26){
@@ -638,7 +721,10 @@
 /* PARA SUMAR TOTAL 27 */
 
 	$fil = $dy.$dm."27";
-	$sql27 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql27 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql27 = $sqlb;
 	$qb27 = mysqli_query($db, $sql27);
 
 	if($qb27){
@@ -662,7 +748,10 @@
 /* PARA SUMAR TOTAL 28 */
 
 	$fil = $dy.$dm."28";
-	$sql28 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql28 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql28 = $sqlb;
 	$qb28 = mysqli_query($db, $sql28);
 
 	if($qb28){
@@ -686,7 +775,10 @@
 /* PARA SUMAR TOTAL 29 */
 
 	$fil = $dy.$dm."29";
-	$sql29 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql29 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql29 = $sqlb;
 	$qb29 = mysqli_query($db, $sql29);
 
 	if($qb29){
@@ -710,7 +802,10 @@
 /* PARA SUMAR TOTAL 30 */
 
 	$fil = $dy.$dm."30";
-	$sql30 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql30 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql30 = $sqlb;
 	$qb30 = mysqli_query($db, $sql30);
 
 	if($qb30){
@@ -734,7 +829,10 @@
 /* PARA SUMAR TOTAL 31 */
 
 	$fil = $dy.$dm."31";
-	$sql31 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	//$sql31 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
+	global $sqlb;
+	require 'FormConsultaFiltroGt1.php';
+	$sql31 = $sqlb;
 	$qb31 = mysqli_query($db, $sql31);
 
 	if($qb31){
@@ -754,14 +852,14 @@
 /* FIN PARA SUMAR TOTAL 31 */
 /////////////////////////
 
-	global $ruta;
-	$ruta = "../cb23_Docs/grafics/";
+	global $rutaDir;
+	$rutaDir = "../cb23_Docs/grafics/";
 
-$fh = fopen($ruta.'idTVT.php','w+');
+	$fh = fopen($rutaDir.'idTVT.php','w+');
 
-$text = $sumatot01.$sumatot02.$sumatot03.$sumatot04.$sumatot05.$sumatot06.$sumatot07.$sumatot08.$sumatot09.$sumatot10.$sumatot11.$sumatot12.$sumatot13.$sumatot14.$sumatot15.$sumatot16.$sumatot17.$sumatot18.$sumatot19.$sumatot20.$sumatot21.$sumatot22.$sumatot23.$sumatot24.$sumatot25.$sumatot26.$sumatot27.$sumatot28.$sumatot29.$sumatot30.$sumatot31;
+	$text = $sumatot01.$sumatot02.$sumatot03.$sumatot04.$sumatot05.$sumatot06.$sumatot07.$sumatot08.$sumatot09.$sumatot10.$sumatot11.$sumatot12.$sumatot13.$sumatot14.$sumatot15.$sumatot16.$sumatot17.$sumatot18.$sumatot19.$sumatot20.$sumatot21.$sumatot22.$sumatot23.$sumatot24.$sumatot25.$sumatot26.$sumatot27.$sumatot28.$sumatot29.$sumatot30.$sumatot31;
 
-fwrite($fh, $text);
+	fwrite($fh, $text);
 fclose($fh);
 
 ?>

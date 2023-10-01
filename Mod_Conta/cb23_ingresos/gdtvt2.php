@@ -2,8 +2,8 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////////////
 
-	if($_POST['dy'] == ''){ $dy = date('y');	
-							 } else {$dy = $_POST['dy'];}
+	if($_POST['dy'] == ''){ $dy = date('Y'); } else {$dy = $_POST['dy'];}
+
 	//$dm = "/".$_POST['dm']."/";
 	
 	global $db;	 		global $db_name; 		global $fil;
@@ -14,14 +14,17 @@
 	//$fnum = "%".$fnum."%";
 	//$fnom = "%".$fnom."%";
 	
-	global $vname; 		$vname = "`".$_SESSION['clave']."ingresos_".$dyt1."`";
+	global $vname; 		//$vname = "`".$_SESSION['clave']."ingresos_".$dyt1."`";
+
+	global $sqlb;
+	require 'FormConsultaFiltroGt2.php';
 
 /////////////////////////
 /* PARA SUMAR TOTAL 01 */
 
 	$fil = "%".$dy."/01%";
 	//$sql01 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql01 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+	$sql01 =  $sqlb;
 	$qb01 = mysqli_query($db, $sql01);
 
 	if($qb01){
@@ -46,7 +49,10 @@ $sql01 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/02%";
 	//$sql02 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql02 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+
+	global $sqlb;
+	require 'FormConsultaFiltroGt2.php';
+	$sql02 =  $sqlb;
 	$qb02 = mysqli_query($db, $sql02);
 
 	if($qb02){
@@ -71,7 +77,10 @@ $sql02 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/03%";
 	//$sql03 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql03 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+
+	global $sqlb;
+	require 'FormConsultaFiltroGt2.php';
+	$sql03 =  $sqlb;
 	$qb03 = mysqli_query($db, $sql03);
 
 	if($qb03){
@@ -96,7 +105,10 @@ $sql03 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/04%";
 	//$sql04 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql04 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+
+	global $sqlb;
+	require 'FormConsultaFiltroGt2.php';
+	$sql04 =  $sqlb;
 	$qb04 = mysqli_query($db, $sql04);
 
 	if($qb04){
@@ -121,7 +133,10 @@ $sql04 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/05%";
 	//$sql05 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql05 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+
+	global $sqlb;
+	require 'FormConsultaFiltroGt2.php';
+	$sql05 =  $sqlb;
 	$qb05 = mysqli_query($db, $sql05);
 
 	if($qb05){
@@ -146,7 +161,10 @@ $sql05 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/06%";
 	//$sql06 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql06 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+
+	global $sqlb;
+	require 'FormConsultaFiltroGt2.php';
+	$sql06 =  $sqlb;
 	$qb06 = mysqli_query($db, $sql06);
 
 	if($qb06){
@@ -171,7 +189,10 @@ $sql06 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/07%";
 	//$sql07 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql07 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+
+	global $sqlb;
+	require 'FormConsultaFiltroGt2.php';
+	$sql07 =  $sqlb;
 	$qb07 = mysqli_query($db, $sql07);
 
 	if($qb07){
@@ -196,7 +217,10 @@ $sql07 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/08%";
 	//$sql08 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql08 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+
+	global $sqlb;
+	require 'FormConsultaFiltroGt2.php';
+	$sql08 =  $sqlb;
 	$qb08 = mysqli_query($db, $sql08);
 
 	if($qb08){
@@ -221,7 +245,10 @@ $sql08 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/09%";
 	//$sql09 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql09 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+
+	global $sqlb;
+	require 'FormConsultaFiltroGt2.php';
+	$sql09 =  $sqlb;
 	$qb09 = mysqli_query($db, $sql09);
 
 	if($qb09){
@@ -246,7 +273,10 @@ $sql09 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/10%";
 	//$sql10 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql10 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+
+	global $sqlb;
+	require 'FormConsultaFiltroGt2.php';
+	$sql10 =  $sqlb;
 	$qb10 = mysqli_query($db, $sql10);
 
 	if($qb10){
@@ -271,7 +301,10 @@ $sql10 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/11%";
 	//$sql11 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql11 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+
+	global $sqlb;
+	require 'FormConsultaFiltroGt2.php';
+	$sql11 =  $sqlb;
 	$qb11 = mysqli_query($db, $sql11);
 
 	if($qb11){
@@ -296,7 +329,10 @@ $sql11 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 
 	$fil = "%".$dy."/12%";
 	//$sql12 =  "SELECT * FROM $vname WHERE `factdate` = '$fil' ";
-$sql12 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$fil' OR `factnif` = '$fnif' AND  `factdate` LIKE '$fil' OR `refcliente` = '$fnom' AND  `factdate` LIKE '$fil' ORDER BY $orden ";
+
+	global $sqlb;
+	require 'FormConsultaFiltroGt2.php';
+	$sql12 =  $sqlb;
 	$qb12 = mysqli_query($db, $sql12);
 
 	if($qb12){
@@ -317,14 +353,14 @@ $sql12 =  "SELECT * FROM $vname WHERE `factnum` = '$fnum' AND `factdate` LIKE '$
 /////////////////////////
 
 
-	global $ruta;
-	$ruta = "../cb23_Docs/grafics/";
+	global $rutaDir;
+	$rutaDir = "../cb23_Docs/grafics/";
 
-$fh = fopen($ruta.'GDTVT2.php','w+');
+	$fh = fopen($rutaDir.'GDTVT2.php','w+');
 
-$text = $sumatot01.$sumatot02.$sumatot03.$sumatot04.$sumatot05.$sumatot06.$sumatot07.$sumatot08.$sumatot09.$sumatot10.$sumatot11.$sumatot12;
+	$text = $sumatot01.$sumatot02.$sumatot03.$sumatot04.$sumatot05.$sumatot06.$sumatot07.$sumatot08.$sumatot09.$sumatot10.$sumatot11.$sumatot12;
 
-fwrite($fh, $text);
-fclose($fh);
+	fwrite($fh, $text);
+	fclose($fh);
 
 ?>

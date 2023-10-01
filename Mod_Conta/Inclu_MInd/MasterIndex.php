@@ -48,7 +48,7 @@ Hello: ".$_SESSION['Nombre'][0]." ".$_SESSION['Apellidos'].".</br>
 
 <!-- Inicio GESTIÓN DE INGRESOS -->
 
-  	<li><a href='".$rutaIngresos."Ingresos_Ver.php' >INGRESOS</a></li>
+  	<li><a href='".$rutaIngresos."Ver.php' >INGRESOS</a></li>
 	
 <!-- Fin GESTIÓN DE INGRESOS -->
 

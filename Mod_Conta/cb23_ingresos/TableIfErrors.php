@@ -1,7 +1,7 @@
 <?php
 
     if ($errors){
-        print("<table style='border:none; margin:auto;'>
+        print("<table class='tableForm' >
                     <th style='text-align:left'>
                     <font color='#FF0000'>* SOLUCIONE ESTOS ERRORES:</font><br/>
                     </th>

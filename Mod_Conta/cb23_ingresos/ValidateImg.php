@@ -1,6 +1,6 @@
 <?php
 
-	if($_FILES['myimg1']['size'] == 0){}
+	if($_FILES['myimg1']['size'] == 0){	}
 	else{
 			
 		$limite = 500 * 1024;
@@ -23,7 +23,7 @@
 				$errors [] = "Este tipo de archivo no esta admitido: ".$_FILES['myimg1']['name'];
 				}
 		*/	
-	
+
 		elseif ($_FILES['myimg1']['size'] > $limite){
 		$tamanho1 = $_FILES['myimg1']['size'] / 1024;
 		$errors [] = "El archivo".$_FILES['myimg1']['name']." es mayor de 500 KBytes. ".$tamanho1." KB";

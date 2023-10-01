@@ -113,4 +113,73 @@
 
     }else{ }
 
+
+	if($VarArray == 4){
+
+		//$defaults = $_POST;
+		$defaults = array ( 'proveegastos' => @$_POST['proveegastos'],
+							'dy' => $_POST['dy'],
+							'dm' => $_POST['dm'],
+							'dd' => $_POST['dd'],
+							'factnum' => strtoupper($_POST['factnum']),
+							'factnumini' => strtoupper($_POST['factnum']),
+						 	'factdate' => @$_POST['factdate'],
+							'factdateini' => @$_POST['factdateini'],
+						   	'refprovee' => @$rowprovee['ref'],
+						   	'factnom' => @$rowprovee['rsocial'],
+						   	'factnif' => @$_dnil,
+						   	'factiva' => $_POST['factiva'],
+							'factivae1' => $_POST['factivae1'],	
+							'factivae2' => $_POST['factivae2'],	
+						   	'factret' => $_POST['factret'],
+							'factrete1' => $_POST['factrete1'],	
+							'factrete2' => $_POST['factrete2'],	
+							'factpvp1' => $_POST['factpvp1'],	
+							'factpvp2' => $_POST['factpvp2'],	
+							'factpvptot1' => $_POST['factpvptot1'],	
+							'factpvptot2' => $_POST['factpvptot2'],	
+							'coment' => $_POST['coment'],	
+							'myimg1' => @$_POST['myimg1'],	
+							'myimg2' => @$_POST['myimg2'],	
+							'myimg3' => @$_POST['myimg3'],	
+							'myimg4' => @$_POST['myimg4'],
+							'factcrea' => @$_POST['factcrea'],
+							'factmodif' => @$_POST['factmodif']);
+
+	}else{ }
+
+	if($VarArray == 5){
+
+		$defaults = array ( 'proveegastos' => @$_POST['proveegastos'],
+							'dy' => '',
+							'dm' => '',
+							'dd' => '',
+							'factnum' => strtoupper(@$_POST['factnum']),
+							'factnumini' => strtoupper(@$_POST['factnum']),
+							'factdate' => @$_POST['factdate'],
+							'factdateini' => @$_POST['factdateini'],
+							'refprovee' => @$rowprovee['ref'],
+							'factnom' => @$rowprovee['rsocial'],
+							'factnif' => @$_dnil,
+							'factiva' => '00',
+							'factivae1' => '00',	
+							'factivae2' => '00',	
+							'factret' => '00',
+							'factrete1' => '00',	
+							'factrete2' => '00',	
+							'factpvp1' => '',	
+							'factpvp2' => '',	
+							'factpvptot1' => '00',
+							'factpvptot2' => '00',	
+							'coment' => '',	
+							'myimg1' => '',	
+							'myimg2' => '',	
+							'myimg3' => '',	
+							'myimg4' => '',
+							'factcrea' => @$_POST['factcrea'],
+							'factmodif' => @$_POST['factmodif']);
+
+	}else{ }
+
+	
 ?>

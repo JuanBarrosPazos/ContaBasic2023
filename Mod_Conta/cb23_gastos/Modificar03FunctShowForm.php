@@ -2,7 +2,7 @@
 
 		global $sesionref; 		$sesionref = "`".$_SESSION['clave']."clientes`";
 		
-		if(isset($_POST['provegastos'])){
+		if(isset($_POST['proveegastos'])){
 			$sqlx =  "SELECT * FROM $sesionref WHERE `ref` = '$_POST[proveedores]'";
 			$qx = mysqli_query($db, $sqlx);
 			$rowprovee = mysqli_fetch_assoc($qx);

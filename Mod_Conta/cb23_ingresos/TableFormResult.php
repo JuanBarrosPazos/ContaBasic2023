@@ -1,10 +1,11 @@
 <?php
  
 	global $iniy;
+	global $vname;		global $vnamei;		if(strlen(trim($vname))==0){ $vname = $vnamei; }else{ }
 
-	$tabla = "<table align='center' style='margin-top:10px'>
+	print("<table class='tableForm' style='max-width: 610px;' >
 				<tr>
-					<th colspan=4 class='BorderInf'>
+					<th colspan=4 >
 						".$title.strtoupper($vname)."
 					</th>
 				</tr>
@@ -21,32 +22,34 @@
 					<td>".$_POST['factnif']."</td>
 				</tr>
 				<tr>
-					<td style='text-align:right;'>IMPUESTOS %</td>
-					<td>".$_POST['factiva']."</td>
-					<td style='text-align:right;'>IMPUESTOS €</td>
-					<td>".$factivae."</td>
+					<td style='text-align:right;'>IMPUESTOS</td>
+					<td>".$_POST['factiva']." %</td>
+					<td style='text-align:right;'>RETENCIONES</td>
+					<td>".$_POST['factret']." %</td>
 				</tr>
 				<tr>
-					<td style='text-align:right;'>RETENCIONES %</td>
-					<td>".$_POST['factret']."</td>
-					<td style='text-align:right;'>RETENCIONES €</td>
-					<td>".$factivae."</td>
+					<td></td>
+					<td>".$factivae." €</td>
+					<td></td>
+					<td>".$factrete." €</td>
 				</tr>
 				<tr>
 					<td style='text-align:right;'>SUBTOTAL</td>
-					<td>".$factpvp."</td>
+					<td>".$factpvp." €</td>
 					<td style='text-align:right;'>TOTAL</td>
-					<td>".$factpvptot."</td>
+					<td>".$factpvptot." €</td>
 				</tr>
 				<tr>
 					<td style='text-align:right;'>DESCRIPCION</td>
 					<td colspan='3' style='text-align:left;'>".$_POST['coment']."</td>
 				</tr>
 				<tr>
-					<td colspan='4' align='center'>
-							".$link1.$link2."
-					</td>
+					<td colspan='4' align='center'>");
+					
+					require 'Botones.php';
+
+			print("</td>
 				</tr>
-			</table>";	
+			</table>");	
 
 ?>

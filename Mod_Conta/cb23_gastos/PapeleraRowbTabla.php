@@ -17,8 +17,8 @@
 				<th class='BorderInfDch'>NUMERO</th>
 				<th class='BorderInfDch'>Y/M/D</th>	
 				<th class='BorderInfDch'>RAZON SOCIAL</th>
-				<th class='BorderInfDch'>RUTA</th>
-				<th class='BorderInfDch'>TOTAL</th>
+				<th class='BorderInfDch'>REF.</th>
+				<th class='BorderInfDch'>RUTA ORIGEN</th>
 				<th colspan=5 class='BorderInf' style='text-align:center;' >
 					".$AddBlack."
 						<a href='Crear.php'>&nbsp;&nbsp;&nbsp;</a>

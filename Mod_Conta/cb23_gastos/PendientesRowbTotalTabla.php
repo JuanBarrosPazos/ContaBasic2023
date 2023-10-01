@@ -107,7 +107,7 @@
 				</div>
 
 				<div style='display:inline-block;' >
-		<form name='modifica' action='GastosPapeleraVer02.php' method='POST'>");
+		<form name='modifica' action='PapeleraVer02.php' method='POST'>");
 
 		require 'VerRowbTotal.php';
 
