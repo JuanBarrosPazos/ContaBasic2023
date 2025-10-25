@@ -13,9 +13,9 @@ session_start();
 				 ////////////////////				  ///////////////////
 
 	if ($_SESSION['Nivel'] == 'admin'){
+							ayear();
 							status_close();
 							process_form();
-							ayear();
 	} else { require 'Inclu/table_permisos.php'; }	
 
 				   ////////////////////				   ////////////////////

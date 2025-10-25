@@ -346,7 +346,7 @@ function show_form($errors=[]){
 				<tr>
 					<td style='text-align:right;'>TELEÉFONO 2&nbsp;&nbsp;</td>
 					<td>
-		<input type='text'  name='Tlf2' size=12 maxlength=9 pattern='[0-9]{9,9}' placeholder='TELEFONO 2' value='".$defaults['Tlf2']."' />
+		<input type='text' name='Tlf2' size=12 maxlength=9 pattern='[0-9]{9,9}' placeholder='TELEFONO 2' value='".$defaults['Tlf2']."' />
 					</td>
 				</tr>
 				<tr>

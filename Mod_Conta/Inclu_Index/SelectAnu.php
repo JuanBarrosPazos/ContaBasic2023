@@ -1,7 +1,10 @@
 <?php
 
     $sqli = "SELECT * FROM $vnamei WHERE `factdate` $sent ";
+    //echo $sqli."<br>";
     $sqlg = "SELECT * FROM $vnameg WHERE `factdate` $sent ";
+    //echo $sqlg."<br>";
+  
     /* INGRESOS SUMAR PVPTOT */
     $OperSqlToti = "SUM(`factpvptot`)";
     $sqlSumToti = "SELECT $OperSqlToti AS 'YearSumToti' FROM $vnamei WHERE `factdate` $sent ";

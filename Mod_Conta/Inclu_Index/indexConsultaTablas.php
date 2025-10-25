@@ -29,6 +29,7 @@
 	global $sent; 		//$sent = "LIKE '".$dyt1y."/".$dm1."/%'";	
 	global $sqli;		//$sqli = "SELECT * FROM $vnamei WHERE `factdate` $sent ORDER BY `id` ASC ";
 	global $sqlg; 		//$sqlg = "SELECT * FROM $vnameg WHERE `factdate` $sent ORDER BY `id` ASC ";
+	
 	/* INGRESOS SUMAR PVPTOT */
 	global $OperSqlToti;    //$OperSqlToti = "SUM(`factpvptot`)";
 	global $sqlSumToti; 	//$sqlSumToti = "SELECT $OperSqlToti AS 'YearSumToti' FROM $vnamei WHERE `factdate` $sent ";
@@ -53,45 +54,68 @@
 	
 	/* LOGICA */
 
+	//echo $dm1."<br>";
 	 switch (true) {
+		/* CONSULTA MESES DEL AÑO */ 
+		case ($dm1 == "M01" || $dm1 == "M02" || $dm1 == "M03" || $dm1 == "M04" || $dm1 == "M05" || $dm1 == "M06" || $dm1 == "M07" || $dm1 == "M08" || $dm1 == "M09" || $dm1 == "M10" || $dm1 == "M11" || $dm1 == "M12" ):
+			global $dyIni;	global $dyFin;
+			if($dm1 == "M01"){ $dyIni = "-01-01"; $dyFin = "-01-31"; }
+			elseif($dm1 == "M02"){ $dyIni = "-02-01"; $dyFin = "-02-31"; }
+			elseif($dm1 == "M03"){ $dyIni = "-03-01"; $dyFin = "-03-31"; }
+			elseif($dm1 == "M04"){ $dyIni = "-04-01"; $dyFin = "-04-31"; }
+			elseif($dm1 == "M05"){ $dyIni = "-05-01"; $dyFin = "-05-31"; }
+			elseif($dm1 == "M06"){ $dyIni = "-06-01"; $dyFin = "-06-31"; }
+			elseif($dm1 == "M07"){ $dyIni = "-07-01"; $dyFin = "-07-31"; }
+			elseif($dm1 == "M08"){ $dyIni = "-08-01"; $dyFin = "-08-31"; }
+			elseif($dm1 == "M09"){ $dyIni = "-09-01"; $dyFin = "-09-31"; }
+			elseif($dm1 == "M10"){ $dyIni = "-10-01"; $dyFin = "-10-31"; }
+			elseif($dm1 == "M11"){ $dyIni = "-11-01"; $dyFin = "-11-31"; }
+			elseif($dm1 == "M12"){ $dyIni = "-12-01"; $dyFin = "-12-31"; }
+			else { }
+			$betwIng = $betwIni = $dyt1y.$dyIni;
+			$betwFing = $betwFini = $dyt1y.$dyFin;
+			require 'Inclu_Index/SelectTrimes.php';
+			break;
+		
+		/* CONSULTA TRIMESTRES */
 		case ($dm1 == "TRI1"):
-			$betwIng = $betwIni = $dyt1y."/01/01";
-			$betwFing = $betwFini = $dyt1y."/03/31";
+			$betwIng = $betwIni = $dyt1y."-01-01";
+			$betwFing = $betwFini = $dyt1y."-03-31";
 			require 'Inclu_Index/SelectTrimes.php';
 			break;
 		
 		case ($dm1 == "TRI2"):
-			$betwIng = $betwIni = $dyt1y."/04/01";
-			$betwFing = $betwFini = $dyt1y."/06/31";
+			$betwIng = $betwIni = $dyt1y."-04-01";
+			$betwFing = $betwFini = $dyt1y."-06-31";
 			require 'Inclu_Index/SelectTrimes.php';
 			break;
 		
 		case ($dm1 == "TRI3"):
-			$betwIng = $betwIni = $dyt1y."/07/01";
-			$betwFing = $betwFini = $dyt1y."/09/31";
+			$betwIng = $betwIni = $dyt1y."-07-01";
+			$betwFing = $betwFini = $dyt1y."-09-31";
 			require 'Inclu_Index/SelectTrimes.php';
 			break;
 		
 		case ($dm1 == "TRI4"):
-			$betwIng = $betwIni = $dyt1y."/10/01";
-			$betwFing = $betwFini = $dyt1y."/12/31";
+			$betwIng = $betwIni = $dyt1y."-10-01";
+			$betwFing = $betwFini = $dyt1y."-12-31";
 			require 'Inclu_Index/SelectTrimes.php';
 			break;
 		
+		/* CONSULTA ANUAL */
 		case ($dm1 == "ANU"):
 			$dm1 = "";
-			$sent = "LIKE '".$dyt1y."/%' ORDER BY $orden ";
+			$sent = "LIKE '".$dyt1."-%' ORDER BY $orden ";
 			require 'inclu_Index/SelectAnu.php';
 			break;
-		
+		/* */
 		default:
 			$dm1 = substr($dm1,1,2);
-			$sent = "LIKE '".$dyt1y."/".$dm1."/%' ORDER BY $orden ";
+			$sent = "LIKE '".$dyt1."-".$dm1."-%' ORDER BY $orden ";
 			require 'inclu_Index/SelectAnu.php';
 			break;
 
 	 } // FIN SWITCH CASE
-
 
 	//echo "* ".$dm1."<br>";
 	//echo "<br>".$sqli."<br>";
@@ -106,28 +130,33 @@
 	////////////////////		***********  		////////////////////
 
 	$qbi = mysqli_query($db, $sqli);
+	global $counti;		$counti = mysqli_num_rows($qbi);
+	//echo "** ".$counti."<br>";
 
 /////////////////////	
 /* PARA SUMAR PVPTOT */
 
-    //echo $sqlSumToti."<br>";
-    $qrySumToti = mysqli_query($db, $sqlSumToti);
-    $SumToti = mysqli_fetch_assoc($qrySumToti);
 	global $sumapvptoti;
-    $sumapvptoti = $SumToti['YearSumToti'];
-	$sumapvptoti  = number_format($sumapvptoti ,2,".","");
+	if($counti > 0){
+		//echo $sqlSumToti."<br>";
+		$qrySumToti = mysqli_query($db, $sqlSumToti);
+		$SumToti = mysqli_fetch_assoc($qrySumToti);
+		$sumapvptoti = $SumToti['YearSumToti'];
+		$sumapvptoti  = number_format($sumapvptoti ,2,".","");
+	}else{ $sumapvptoti = "0.00"; }
 
 /* FIN PARA SUMAR PVPTOT */
 /////////////////////////
 
 /////////////////////	
 /* PARA SUMAR RETENCION TOT */	
-
-    $qrySumRetei = mysqli_query($db, $sqlSumRetei);
-    $SumRetei = mysqli_fetch_assoc($qrySumRetei);
 	global $sumaretei;
-    $sumaretei = $SumRetei['YearSumRetei'];
-	$sumaretei  = number_format($sumaretei ,2,".","");
+	if($counti > 0){
+		$qrySumRetei = mysqli_query($db, $sqlSumRetei);
+		$SumRetei = mysqli_fetch_assoc($qrySumRetei);
+		$sumaretei = $SumRetei['YearSumRetei'];
+		$sumaretei  = number_format($sumaretei ,2,".","");
+	}else{ $sumaretei = "0.00"; }
 
 /* FIN PARA SUMAR RETENCION TOT */
 /////////////////////////
@@ -135,11 +164,13 @@
 /////////////////////	
 /* PARA SUMAR IVA */	
 
-    $qrySumIvai = mysqli_query($db, $sqlSumIvai);
-    $SumIvai = mysqli_fetch_assoc($qrySumIvai);
 	global $sumaivaei;
-    $sumaivaei = $SumIvai['YearSumIvai'];
-	$sumaivaei  = number_format($sumaivaei ,2,".","");
+	if($counti > 0){
+		$qrySumIvai = mysqli_query($db, $sqlSumIvai);
+		$SumIvai = mysqli_fetch_assoc($qrySumIvai);
+		$sumaivaei = $SumIvai['YearSumIvai'];
+		$sumaivaei  = number_format($sumaivaei ,2,".","");
+	}else{ $sumaivaei = "0.00"; }
 
 /* FIN PARA SUMAR IVA */
 /////////////////////////
@@ -172,7 +203,6 @@
 						<td class='resultadosi' align='center'>".$sumapvptoti." €</td>
 					</tr>
 				</table>");
-
 		} else { print ("<div style='clear:both'></div>
 			<div class='divTablaIndex'>
 			<table class='tabla tableForm' >
@@ -233,28 +263,46 @@
 				<th>SUB TOT</th><th>RET REPER</th><th>TOTAL €</th>			
 			</tr>");
 
-		global $styleBgc; global $i; $i = 1;
+		global $styleBgc; 
+		if($counti > 0){
 
-		while($rowi = mysqli_fetch_assoc($qbi)){
+			global $i; $i = 1;
+			while($rowi = mysqli_fetch_assoc($qbi)){
 
-			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
-			$i++;
+				if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd"; }
+				$i++;
 
-		global $dyt1;
-		//if($rowi['tot']!= 0.00){
-		print (	"<tr class='".$styleBgc."' >
-					<td align='right'>".$dyt1."</td>
-					<td align='right'>".$rowi['factdate']."</td>
-					<td align='right'>".$rowi['factivae']." €</td>
-					<td  align='right'>".$rowi['factpvp']." €</td>
-					<td align='right'>".$rowi['factrete']." €</td>
-					<td align='right'>".$rowi['factpvptot']." €</td>
-				</tr>");
-				
-						//}
-		} /* Fin del while.*/ 
+			global $dyt1;
+			//if($rowi['tot']!= 0.00){
+			print (	"<tr class='".$styleBgc."' >
+						<td align='right'>".$dyt1."</td>
+						<td align='right'>".$rowi['factdate']."</td>
+						<td align='right'>".$rowi['factivae']." €</td>
+						<td  align='right'>".$rowi['factpvp']." €</td>
+						<td align='right'>".$rowi['factrete']." €</td>
+						<td align='right'>".$rowi['factpvptot']." €</td>
+					</tr>");
+					
+							//}
+			} /* Fin del while.*/ 
 
-		print("</table>");
+		}else{
+			/*
+			$TriSumSubToti = "0.00";
+			$TriSumRetei ="0.00";
+			$TriSumToti = "0.00";
+			print (	"<tr class='".$styleBgc."'>
+						<td align='center' >".$dyt1."</td>
+						<td align='right' >".$dyt1."</td>
+						<td align='right' >0.00 €</td>
+						<td align='right' >0.00 €</td>
+						<td align='right' >0.00 €</td>
+						<td align='right' >0.00 €</td>
+					</tr>");
+			*/
+			}      
+
+			print("</table>");
 		} /* Fin segundo else anidado en if */
 
 	} /* Fin de primer else . */
@@ -267,17 +315,20 @@
                         /* TABLA BALANCE GASTOS */
 	////////////////////		***********  		////////////////////
 
-	global $qbg;	$qbg = mysqli_query($db, $sqlg);
+	global $qbg;		$qbg = mysqli_query($db, $sqlg);
+	global $countg;		$countg = mysqli_num_rows($qbg);
 
 /////////////////////	
 /* PARA SUMAR PVPTOT */
 
-    //echo $sqlSumTot."<br>";
-    $qrySumTotg = mysqli_query($db, $sqlSumTotg);
-    $SumTotg = mysqli_fetch_assoc($qrySumTotg);
 	global $sumapvptotg;
-    $sumapvptotg = $SumTotg['YearSumTotg'];
-	$sumapvptotg  = number_format($sumapvptotg ,2,".","");
+	if($countg > 0){
+		//echo $sqlSumTot."<br>";
+		$qrySumTotg = mysqli_query($db, $sqlSumTotg);
+		$SumTotg = mysqli_fetch_assoc($qrySumTotg);
+		$sumapvptotg = $SumTotg['YearSumTotg'];
+		$sumapvptotg  = number_format($sumapvptotg ,2,".","");
+	}else{ $sumapvptotg = "0.00"; }
 
 /* FIN PARA SUMAR PVPTOT */
 /////////////////////////
@@ -285,12 +336,14 @@
 /////////////////////	
 /* PARA SUMAR RETENCION TOT */
 
-    //echo $sqlSumRete."<br>";
-    $qrySumReteg = mysqli_query($db, $sqlSumReteg);
-    $SumReteg = mysqli_fetch_assoc($qrySumReteg);
 	global $sumareteg;
-    $sumareteg = $SumReteg['YearSumReteg'];
-	$sumareteg  = number_format($sumareteg ,2,".","");
+	if($countg > 0){
+		//echo $sqlSumRete."<br>";
+		$qrySumReteg = mysqli_query($db, $sqlSumReteg);
+		$SumReteg = mysqli_fetch_assoc($qrySumReteg);
+		$sumareteg = $SumReteg['YearSumReteg'];
+		$sumareteg  = number_format($sumareteg ,2,".","");
+	}else{ $sumareteg = "0.00"; }
 			
 /* FIN PARA SUMAR RETENCION TOT */
 /////////////////////////
@@ -298,12 +351,14 @@
 /////////////////////	
 /* PARA SUMAR IVA */
 
-    //echo $sqlSumIva."<br>";
-    $qrySumIvag = mysqli_query($db, $sqlSumIvag);
-    $SumIvag = mysqli_fetch_assoc($qrySumIvag);
 	global $sumaivaeg;
-    $sumaivaeg = $SumIvag['YearSumIvag'];
-	$sumaivaeg  = number_format($sumaivaeg ,2,".","");
+	if($countg > 0){
+		//echo $sqlSumIva."<br>";
+		$qrySumIvag = mysqli_query($db, $sqlSumIvag);
+		$SumIvag = mysqli_fetch_assoc($qrySumIvag);
+		$sumaivaeg = $SumIvag['YearSumIvag'];
+		$sumaivaeg  = number_format($sumaivaeg ,2,".","");
+	}else{ $sumaivaeg = "0.00"; }
 			
 /* FIN PARA SUMAR IVA */
 /////////////////////////
@@ -393,27 +448,37 @@
 					<th>SUBTOT</th><th>RET REPER</th><th>TOTAL €</th>	
 				</tr>");
 			
-		global $styleBgc; global $i; $i = 1;
-
-	while($rowg = mysqli_fetch_assoc($qbg)){
-
-		if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd'"; }
-
-		$i++;
-
-	global $dyt1;
-	//if($rowb['tot']!= 0.00){
-			print (	"<tr class='".$styleBgc."'>
-						<td align='right'>".$dyt1."</td>
-						<td align='right'>".$rowg['factdate']."</td>
-						<td align='right'>".$rowg['factivae']." €</td>
-						<td align='right'>".$rowg['factpvp']." €</td>
-						<td align='right'>".$rowg['factrete']." €</td>
-						<td align='right'>".$rowg['factpvptot']." €</td>
-					</tr>");
-					//}
+	global $styleBgc; 
+	if($countg > 0){
+		global $i; $i = 1;
+		while($rowg = mysqli_fetch_assoc($qbg)){
+			if(($i%2) == 0){ $styleBgc = "bgctdb"; }else{ $styleBgc = "bgctd'"; }
+			$i++;
+			global $dyt1;
+			//if($rowb['tot']!= 0.00){
+					print (	"<tr class='".$styleBgc."'>
+								<td align='right'>".$dyt1."</td>
+								<td align='right'>".$rowg['factdate']."</td>
+								<td align='right'>".$rowg['factivae']." €</td>
+								<td align='right'>".$rowg['factpvp']." €</td>
+								<td align='right'>".$rowg['factrete']." €</td>
+								<td align='right'>".$rowg['factpvptot']." €</td>
+							</tr>");
+							//}
 		} /* Fin del while.*/ 
-
+	}else{
+		/*
+		global $dyt1;
+		print (	"<tr class='".$styleBgc."'>
+					<td align='center' >".$dyt1."</td>
+					<td align='right' >".$dyt1."</td>
+					<td align='right' >0.00 €</td>
+					<td align='right' >0.00 €</td>
+					<td align='right' >0.00 €</td>
+					<td align='right' >0.00 €</td>
+				</tr>");
+		*/
+	}
 		print("</table>");
 			} /* Fin segundo else anidado en if */
 		} /* Fin de primer else . */
@@ -430,7 +495,6 @@
 
 /* OPERACIONES PARA DIFER */	
 
-	
 	global $sumapvptoti; 		global $sumaretei; 		global $sumaivaei;
 	global $sumapvptotg; 		global $sumareteg; 		global $sumaivaeg;
 	global $sumapvptotd; 		global $sumareted; 		global $sumaivaed;
@@ -480,14 +544,13 @@
 		$TotEd5 = 0.00;
 	}
 
-
 	global $bgRed;
 	if(	$sumaivaed >= 0){ $bgivaed = ""; }else{ $bgivaed = "style='background: #ff5e00 !important;'"; }
 	if(	$sumareted >= 0){ $bgreted = ""; }else{ $bgreted = "style='background: #ff5e00 !important;'"; }
 	if(	$sumapvptotd >= 0){ $bgpvptotd = ""; }else{ $bgpvptotd = "style='background: #ff5e00 !important;'"; }
 
 	if(($TotEd1 == 0.00)&&($TotEd2 == 0.00)&&($TotEd3 == 0.00)&&($TotEd4 == 0.00)&&($TotEd5 == 0.00)){			
-				print ("<table class='tabla tableForm' >
+		print ("<table class='tabla tableForm' >
 					<tr>
 						<th colspan='3' class='resultadosd'>
 							DIFERENCIA INGRESOS / GASTOS 

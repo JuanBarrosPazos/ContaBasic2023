@@ -2,8 +2,11 @@
 
     
     $sqli = "SELECT * FROM $vnamei WHERE (`factdate` BETWEEN '$betwIni' AND '$betwFini') ORDER BY $orden";
+    //echo $sqli."<br>";
     $sqlg = "SELECT * FROM $vnameg WHERE (`factdate` BETWEEN '$betwIng' AND '$betwFing') ORDER BY $orden ";
+    //echo $sqlg."<br>";
     $sent = "(`factdate` BETWEEN '$betwIni' AND '$betwFini') ORDER BY $orden ";
+
     /* INGRESOS SUMAR PVPTOT */
     $OperSqlToti = "SUM(`factpvptot`)";
     $sqlSumToti = "SELECT $OperSqlToti AS 'YearSumToti' FROM $vnamei WHERE $sent ";
